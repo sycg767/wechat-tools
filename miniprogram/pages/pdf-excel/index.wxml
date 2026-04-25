@@ -6,7 +6,7 @@
       accept="pdf" 
       title="选择 PDF 文件" 
       description="支持表格识别与提取"
-      bind:select="handleFileSelected"
+      bind:selected="handleFileSelected"
     />
     
     <view class="action-area" wx:if="{{selectedFile}}">

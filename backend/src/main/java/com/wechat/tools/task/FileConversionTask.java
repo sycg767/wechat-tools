@@ -432,15 +432,13 @@ public class FileConversionTask {
         StringBuilder sb = new StringBuilder();
         OcrChar previous = null;
         for (OcrChar current : chars) {
-            if (previous != null) {
+            if (previous == null) {
+                sb.append("«").append(current.left()).append("»");
+            } else {
                 int gap = current.left() - previous.right();
-                int spaceThreshold = Math.max(6, Math.max(medianCharWidth, Math.max(previous.width(), current.width())));
-                if (gap > spaceThreshold * 3) {
-                    sb.append('\t');
-                } else if (gap > spaceThreshold * 2) {
-                    sb.append("    ");
-                } else if (gap > spaceThreshold) {
-                    sb.append("  ");
+                // 零容忍间距探测：只要间距超过 0.1 像素，即视为新列
+                if (gap > 0.1) {
+                    sb.append("\t«").append(current.left()).append("»");
                 }
             }
             sb.append(current.text());
@@ -519,15 +517,13 @@ public class FileConversionTask {
 
         OcrLine previous = null;
         for (OcrLine current : row) {
-            if (previous != null) {
+            if (previous == null) {
+                sb.append("«").append(current.left()).append("»");
+            } else {
                 int gap = current.left() - previous.right();
-                int gapThreshold = Math.max(8, Math.max(medianWordWidth / 3, Math.max(previous.height(), current.height())));
-                if (gap > gapThreshold * 3) {
-                    sb.append('\t');
-                } else if (gap > gapThreshold * 2) {
-                    sb.append("    ");
-                } else if (gap > gapThreshold) {
-                    sb.append("  ");
+                // 零容忍间距探测：只要间距超过 0.1 像素，即视为新列
+                if (gap > 0.1) {
+                    sb.append("\t«").append(current.left()).append("»");
                 }
             }
             sb.append(current.words());
@@ -560,41 +556,38 @@ public class FileConversionTask {
                 return;
             }
 
-            TextPosition first = textPositions.get(0);
-            float currentY = first.getYDirAdj();
-            float currentX = first.getXDirAdj();
-            float currentHeight = first.getHeightDir();
+            // 核心改进：逐个字符检查间距，因为 PDFBox 可能会将多个列的文本合并到一个 writeString 调用中
+            for (TextPosition current : textPositions) {
+                float currentY = current.getYDirAdj();
+                float currentX = current.getXDirAdj();
+                float currentHeight = current.getHeightDir();
 
-            if (previousY >= 0) {
-                float lineThreshold = Math.max(4f, Math.max(previousHeight, currentHeight) / 2f);
-                if (Math.abs(currentY - previousY) > lineThreshold) {
-                    writeLineSeparator();
-                    previousX = -1;
-                    previousEndX = -1;
-                } else if (previousEndX >= 0) {
-                    float gap = currentX - previousEndX;
-                    float averageWidth = 0;
-                    for (TextPosition position : textPositions) {
-                        averageWidth += position.getWidthDirAdj();
-                    }
-                    averageWidth = averageWidth / textPositions.size();
-                    float spaceThreshold = Math.max(6f, averageWidth);
-                    if (gap > spaceThreshold * 3) {
-                        output.write("\t");
-                    } else if (gap > spaceThreshold * 2) {
-                        output.write("    ");
-                    } else if (gap > spaceThreshold) {
-                        output.write("  ");
+                if (previousY >= 0) {
+                    float lineThreshold = Math.max(4f, Math.max(previousHeight, currentHeight) / 2f);
+                    if (Math.abs(currentY - previousY) > lineThreshold) {
+                        writeLineSeparator();
+                        previousX = -1;
+                        previousEndX = -1;
+                    } else if (previousEndX >= 0) {
+                        float gap = currentX - previousEndX;
+                        // 零容忍间距探测：只要间距超过 0.1 像素，即视为新列
+                        // 使用更精确的坐标（放大10倍），避免舍入误差导致列合并
+                        if (gap > 0.1f) {
+                            output.write("\t«" + (int)(currentX * 10) + "»");
+                        }
                     }
                 }
-            }
 
-            output.write(text);
-            previousX = currentX;
-            TextPosition last = textPositions.get(textPositions.size() - 1);
-            previousEndX = last.getXDirAdj() + last.getWidthDirAdj();
-            previousY = currentY;
-            previousHeight = currentHeight;
+                if (previousX == -1) {
+                    output.write("«" + (int)(currentX * 10) + "»");
+                }
+                output.write(current.getUnicode());
+
+                previousX = currentX;
+                previousEndX = currentX + current.getWidthDirAdj();
+                previousY = currentY;
+                previousHeight = currentHeight;
+            }
         }
 
         @Override
@@ -658,6 +651,13 @@ public class FileConversionTask {
             List<Integer> anchors = buildGlobalColumnAnchors(lines);
             List<List<String>> rows = new ArrayList<>();
             for (String line : lines) {
+                String cleanLine = stripCoordinateMarkers(line);
+                // 识别标题行：长度较长且不符合数据行特征，且制表符较少
+                boolean isTitle = cleanLine.length() > 20 && !looksLikeDataRow(cleanLine) && line.chars().filter(c -> c == '\t').count() < 3;
+                if (isTitle) {
+                    rows.add(List.of(cleanLine));
+                    continue;
+                }
                 List<String> cells = mapLineToCells(line, anchors);
                 if (!cells.isEmpty()) {
                     rows.add(cells);
@@ -697,8 +697,14 @@ public class FileConversionTask {
     }
 
     private boolean isPageMarkerLine(String line) {
-        String trimmed = line == null ? "" : line.trim();
-        return trimmed.matches("---\\s*第\\s*\\d+\\s*页\\s*---");
+        if (line == null) return false;
+        String trimmed = line.trim();
+        // 使用更通用的模式匹配页码，不依赖特定业务词汇
+        return trimmed.matches("---\\s*.*\\s*\\d+\\s*.*\\s*---") || // --- 第 1 页 --- 或 --- Page 1 ---
+               trimmed.matches(".*[\\(\\[【].*\\d+.*[\\)\\]】].*") && (trimmed.contains("页") || trimmed.toLowerCase().contains("page")) || // 【第 1 页】
+               trimmed.matches("(?i).*page\\s*\\d+.*") || // Page 1
+               trimmed.matches(".*\\d+\\s*/\\s*\\d+.*") || // 1 / 12
+               trimmed.matches("^第\\s*\\d+\\s*页$");
     }
 
     private List<String> collectTableLines(String text) {
@@ -707,11 +713,12 @@ public class FileConversionTask {
         Map<String, Integer> frequencies = new LinkedHashMap<>();
         for (String rawLine : sourceLines) {
             String line = normalizeRawLine(rawLine);
-            if (line.isEmpty() || isPageMarkerLine(line)) {
+            String cleanLine = stripCoordinateMarkers(line);
+            if (cleanLine.isEmpty() || isPageMarkerLine(cleanLine)) {
                 continue;
             }
             normalizedLines.add(line);
-            String fingerprint = line.replaceAll("\\d", "#").trim();
+            String fingerprint = cleanLine.replaceAll("\\d", "#").trim();
             if (fingerprint.length() >= 2) {
                 frequencies.merge(fingerprint, 1, Integer::sum);
             }
@@ -755,11 +762,22 @@ public class FileConversionTask {
         if (trimmed.isEmpty()) {
             return true;
         }
-        if (trimmed.matches("第\\s*\\d+\\s*页") || trimmed.matches("[-—]{2,}.*[-—]{2,}")) {
+
+        // 移除硬编码的业务关键词，改用纯启发式逻辑
+        // 1. 匹配分割线
+        if (trimmed.matches("[-—=_*]{3,}")) {
             return true;
         }
-        String fingerprint = trimmed.replaceAll("\\d", "#");
-        return repeatedNoise.contains(fingerprint);
+
+        // 2. 检查是否为高频重复的非数据行（通过 fingerprint 识别）
+        // fingerprint 将数字替换为 #，如果这种结构的行在文档中多次出现且不是数据行，则视为噪声
+        String cleanLine = stripCoordinateMarkers(trimmed);
+        String fingerprint = cleanLine.replaceAll("\\d", "#");
+        if (repeatedNoise.contains(fingerprint) && !looksLikeDataRow(cleanLine)) {
+            return true;
+        }
+
+        return false;
     }
 
     private boolean isContinuationHeader(String current, String previous) {
@@ -780,50 +798,70 @@ public class FileConversionTask {
     }
 
     private List<Integer> buildGlobalColumnAnchors(List<String> lines) {
-        List<Integer> splitPositions = new ArrayList<>();
+        Map<Integer, Integer> positionFrequencies = new HashMap<>();
+        int dataRowCount = 0;
         for (String line : lines) {
-            splitPositions.addAll(findSplitPositions(line));
+            if (looksLikeDataRow(stripCoordinateMarkers(line))) {
+                List<Integer> linePositions = findCoordinatePositions(line);
+                // 排除第一个坐标（行首坐标）
+                for (int i = 1; i < linePositions.size(); i++) {
+                    positionFrequencies.merge(linePositions.get(i), 1, Integer::sum);
+                }
+                dataRowCount++;
+            }
         }
-        if (splitPositions.isEmpty()) {
+
+        if (positionFrequencies.isEmpty() || dataRowCount == 0) {
             return List.of();
         }
-        Collections.sort(splitPositions);
+
+        // 进一步降低阈值到 5%，确保即使只有极少数行识别出微小间距，也能保留该列
+        int minOccurrence = Math.max(2, (int)(dataRowCount * 0.05));
+
+        List<Integer> potentialAnchors = new ArrayList<>();
+        for (Map.Entry<Integer, Integer> entry : positionFrequencies.entrySet()) {
+            if (entry.getValue() >= minOccurrence) {
+                potentialAnchors.add(entry.getKey());
+            }
+        }
+        Collections.sort(potentialAnchors);
+
         List<Integer> anchors = new ArrayList<>();
-        int currentSum = splitPositions.get(0);
-        int currentCount = 1;
-        for (int i = 1; i < splitPositions.size(); i++) {
-            int value = splitPositions.get(i);
-            int average = currentSum / currentCount;
-            if (Math.abs(value - average) <= 3) {
-                currentSum += value;
-                currentCount++;
-                continue;
+        if (potentialAnchors.isEmpty()) return anchors;
+
+        List<Integer> currentCluster = new ArrayList<>();
+        currentCluster.add(potentialAnchors.get(0));
+
+        for (int i = 1; i < potentialAnchors.size(); i++) {
+            int pos = potentialAnchors.get(i);
+            // 坐标聚类范围缩小到 1 像素，以区分极其接近的列
+            if (pos - currentCluster.get(currentCluster.size() - 1) <= 1) {
+                currentCluster.add(pos);
+            } else {
+                anchors.add(median(currentCluster, currentCluster.get(0)));
+                currentCluster.clear();
+                currentCluster.add(pos);
             }
-            if (currentCount >= 2) {
-                anchors.add(currentSum / currentCount);
-            }
-            currentSum = value;
-            currentCount = 1;
         }
-        if (currentCount >= 2) {
-            anchors.add(currentSum / currentCount);
+        if (!currentCluster.isEmpty()) {
+            anchors.add(median(currentCluster, currentCluster.get(0)));
         }
+
         return anchors;
     }
 
-    private List<Integer> findSplitPositions(String line) {
+    private List<Integer> findCoordinatePositions(String line) {
         List<Integer> positions = new ArrayList<>();
-        String content = removeLeadingIndent(line);
-        Matcher matcher = Pattern.compile("\\t+|[ 　]{2,}").matcher(content);
+        Matcher matcher = Pattern.compile("«(\\d+)»").matcher(line);
         while (matcher.find()) {
-            positions.add(matcher.start());
+            positions.add(Integer.parseInt(matcher.group(1)));
         }
         return positions;
     }
 
     private List<String> mapLineToCells(String line, List<Integer> anchors) {
         if (anchors == null || anchors.isEmpty()) {
-            return splitLineToCells(line);
+            return splitLineToCells(stripCoordinateMarkers(line));
         }
         List<LineSegment> segments = splitLineToSegments(line);
         if (segments.isEmpty()) {
@@ -831,16 +869,16 @@ public class FileConversionTask {
         }
         List<String> anchoredCells = new ArrayList<>(Collections.nCopies(anchors.size() + 1, ""));
         for (LineSegment segment : segments) {
-            int index = resolveAnchorIndex(segment.start(), anchors);
+            int index = resolveAnchorIndex(segment.x(), anchors);
             String existing = anchoredCells.get(index);
-            anchoredCells.set(index, existing.isEmpty() ? segment.text() : existing + "\n" + segment.text());
+            anchoredCells.set(index, existing.isEmpty() ? segment.text() : existing + " " + segment.text());
         }
         return trimTrailingEmptyCells(anchoredCells);
     }
 
-    private int resolveAnchorIndex(int start, List<Integer> anchors) {
+    private int resolveAnchorIndex(int x, List<Integer> anchors) {
         for (int i = 0; i < anchors.size(); i++) {
-            if (start <= anchors.get(i) + 1) {
+            if (x < anchors.get(i)) {
                 return i;
             }
         }
@@ -848,23 +886,15 @@ public class FileConversionTask {
     }
 
     private List<LineSegment> splitLineToSegments(String line) {
-        String content = removeLeadingIndent(line);
-        if (content.isEmpty()) {
-            return List.of();
-        }
         List<LineSegment> segments = new ArrayList<>();
-        Matcher matcher = Pattern.compile("\\t+|[ 　]{2,}").matcher(content);
-        int start = 0;
+        // 匹配 «坐标»文本
+        Matcher matcher = Pattern.compile("«(\\d+)»([^«\\t\\r\\n]+)").matcher(line);
         while (matcher.find()) {
-            String cell = content.substring(start, matcher.start()).trim();
-            if (!cell.isEmpty()) {
-                segments.add(new LineSegment(start, cell));
+            int x = Integer.parseInt(matcher.group(1));
+            String text = matcher.group(2).trim();
+            if (!text.isEmpty()) {
+                segments.add(new LineSegment(x, text));
             }
-            start = matcher.end();
-        }
-        String tail = content.substring(start).trim();
-        if (!tail.isEmpty()) {
-            segments.add(new LineSegment(start, tail));
         }
         return segments;
     }
@@ -894,7 +924,8 @@ public class FileConversionTask {
     }
 
     private List<String> splitLineToCells(String line) {
-        String normalized = line == null ? "" : line.replaceAll("\\s+$", "");
+        String cleanLine = stripCoordinateMarkers(line);
+        String normalized = cleanLine.replaceAll("\\s+$", "");
         if (normalized.isBlank()) {
             return List.of();
         }
@@ -904,6 +935,11 @@ public class FileConversionTask {
             return filterCells(content.split("\\t+"), false);
         }
         return filterCells(content.split("[ 　]{2,}"), false);
+    }
+
+    private String stripCoordinateMarkers(String text) {
+        if (text == null) return "";
+        return text.replaceAll("«\\d+»", "");
     }
 
     private String removeLeadingIndent(String line) {
@@ -1082,25 +1118,48 @@ public class FileConversionTask {
             return value;
         }
         String normalized = value.replace('O', '0').replace('o', '0').replace('I', '1').replace('l', '1');
-        return normalized.replace('.', '-').replace('/', '-');
+        // 移除将点号替换为横杠的逻辑，保留数字成绩中的小数点（如 16.9）
+        return normalized.replace('/', '-');
     }
 
     private boolean looksLikeDataRow(String line) {
+        if (line == null || line.length() < 5) return false;
+        
+        // 核心优化：如果行内包含 2 个以上的坐标标记，极可能是数据行
+        // 降低门槛，确保即使部分列被合并，该行仍能贡献有效的列锚点
+        if (countCoordinateMarkers(line) >= 2) return true;
+
+        // 如果包含长数字（如 10 位以上的考生编号），肯定是数据行
+        if (line.matches(".*\\d{10,}.*")) return true;
+        
         List<String> cells = splitLineToCells(line);
-        if (cells.size() >= 3) {
-            return true;
-        }
-        long digitCount = line.chars().filter(Character::isDigit).count();
-        return digitCount >= 4;
+        // 如果列数很多，极可能是数据行
+        if (cells.size() >= 5) return true;
+        
+        long digitCount = stripCoordinateMarkers(line).chars().filter(Character::isDigit).count();
+        // 如果数字比例很高，也可能是数据行
+        double digitRatio = (double) digitCount / line.length();
+        if (digitRatio > 0.25 && digitCount >= 4) return true;
+        
+        return false;
     }
 
     private boolean looksLikeHeaderRow(String line) {
-        List<String> cells = splitLineToCells(line);
+        String cleanLine = stripCoordinateMarkers(line);
+        List<String> cells = splitLineToCells(cleanLine);
         if (cells.size() < 2) {
             return false;
         }
-        long digitCount = line.chars().filter(Character::isDigit).count();
-        return digitCount <= Math.max(2, line.length() / 8);
+        long digitCount = cleanLine.chars().filter(Character::isDigit).count();
+        return digitCount <= Math.max(2, cleanLine.length() / 8);
+    }
+
+    private int countCoordinateMarkers(String line) {
+        if (line == null) return 0;
+        int count = 0;
+        Matcher m = Pattern.compile("«\\d+»").matcher(line);
+        while (m.find()) count++;
+        return count;
     }
 
     private int countFilledCells(List<String> row) {
@@ -1132,14 +1191,15 @@ public class FileConversionTask {
         if (original == null || original.isBlank()) {
             return addition.trim();
         }
-        return original + "\n" + addition.trim();
+        // 使用空格而不是换行符来合并，防止单元格内换行
+        return original + " " + addition.trim();
     }
 
     private String joinCells(List<String> row) {
         return String.join(" ", row).trim();
     }
 
-    private record LineSegment(int start, String text) {
+    private record LineSegment(int x, String text) {
     }
 
     private String buildDocxFileName(String originalFileName) {

@@ -78,39 +78,6 @@ public class ToolController {
                 : file.getOriginalFilename();
             if (resolvedFileName == null || !resolvedFileName.toLowerCase().endsWith(".pdf")) {
                 return Result.error(400, "请上传 PDF 文件");
-                @PostMapping("/pdf-to-excel")
-                public Result<String> pdfToExcel(@RequestParam("file") MultipartFile file,
-                                                 @RequestParam(value = "originalFileName", required = false) String originalFileName) {
-                    try {
-                        if (file.isEmpty()) {
-                            return Result.error(400, "文件不能为空");
-                        }
-                        String resolvedFileName = originalFileName != null && !originalFileName.isBlank()
-                            ? originalFileName.trim()
-                            : file.getOriginalFilename();
-                        if (resolvedFileName == null || !resolvedFileName.toLowerCase().endsWith(".pdf")) {
-                            return Result.error(400, "请上传 PDF 文件");
-                        }
-            
-                        // 先保存文件
-                        String sourceFileId = fileStorageService.uploadFile(
-                            resolvedFileName,
-                            file.getInputStream(),
-                            file.getSize(),
-                            file.getContentType()
-                        );
-            
-                        String taskId = taskService.createTask("pdf-excel", resolvedFileName);
-            
-                        // 异步处理
-                        fileConversionTask.processPdfToExcel(taskId, sourceFileId, resolvedFileName);
-            
-                        return Result.success(taskId, "任务已创建");
-                    } catch (Exception e) {
-                        return Result.error("PDF 转 Excel 失败：" + e.getMessage());
-                    }
-                }
-            
             }
 
             // 先保存文件
@@ -129,6 +96,70 @@ public class ToolController {
             return Result.success(taskId, "任务已创建");
         } catch (Exception e) {
             return Result.error("PDF 转 Word 失败：" + e.getMessage());
+        }
+    }
+
+    @PostMapping("/compress-image")
+    public Result<String> compressImage(@RequestParam("file") MultipartFile file,
+                                        @RequestParam(value = "quality", defaultValue = "0.8") double quality,
+                                        @RequestParam(value = "originalFileName", required = false) String originalFileName) {
+        try {
+            if (file.isEmpty()) {
+                return Result.error(400, "文件不能为空");
+            }
+            String resolvedFileName = originalFileName != null && !originalFileName.isBlank()
+                ? originalFileName.trim()
+                : file.getOriginalFilename();
+
+            // 先保存文件
+            String sourceFileId = fileStorageService.uploadFile(
+                resolvedFileName,
+                file.getInputStream(),
+                file.getSize(),
+                file.getContentType()
+            );
+
+            String taskId = taskService.createTask("compress-image", resolvedFileName);
+
+            // 异步处理
+            fileConversionTask.processCompressImage(taskId, sourceFileId, resolvedFileName, quality);
+
+            return Result.success(taskId, "任务已创建");
+        } catch (Exception e) {
+            return Result.error("图片压缩失败：" + e.getMessage());
+        }
+    }
+
+    @PostMapping("/pdf-to-excel")
+    public Result<String> pdfToExcel(@RequestParam("file") MultipartFile file,
+                                     @RequestParam(value = "originalFileName", required = false) String originalFileName) {
+        try {
+            if (file.isEmpty()) {
+                return Result.error(400, "文件不能为空");
+            }
+            String resolvedFileName = originalFileName != null && !originalFileName.isBlank()
+                ? originalFileName.trim()
+                : file.getOriginalFilename();
+            if (resolvedFileName == null || !resolvedFileName.toLowerCase().endsWith(".pdf")) {
+                return Result.error(400, "请上传 PDF 文件");
+            }
+
+            // 先保存文件
+            String sourceFileId = fileStorageService.uploadFile(
+                resolvedFileName,
+                file.getInputStream(),
+                file.getSize(),
+                file.getContentType()
+            );
+
+            String taskId = taskService.createTask("pdf-excel", resolvedFileName);
+
+            // 异步处理
+            fileConversionTask.processPdfToExcel(taskId, sourceFileId, resolvedFileName);
+
+            return Result.success(taskId, "任务已创建");
+        } catch (Exception e) {
+            return Result.error("PDF 转 Excel 失败：" + e.getMessage());
         }
     }
 

@@ -1,3 +1,8 @@
 {
-  "navigationBarTitleText": "PDF 转 Excel"
+  "navigationBarTitleText": "PDF 转 Excel",
+  "usingComponents": {
+    "file-picker": "/components/file-picker/index",
+    "progress-bar": "/components/progress-bar/index",
+    "result-card": "/components/result-card/index"
+  }
 }

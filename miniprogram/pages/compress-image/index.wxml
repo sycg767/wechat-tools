@@ -1,8 +1,35 @@
 <view class="container">
   <view class="section-title">图片压缩</view>
+  
   <view class="card">
-    <view class="todo-title">该工具骨架已创建</view>
-    <view class="todo-desc">下一步接入后端 `/api/tool/compress-image` 接口与质量调节。</view>
-    <button class="primary-btn" bindtap="handleTodo">了解当前状态</button>
+    <file-picker 
+      accept="image" 
+      title="选择图片" 
+      description="支持 JPG、PNG、WebP 格式"
+      bind:selected="handleFileSelected"
+    />
+    
+    <view class="config-area" wx:if="{{selectedFile}}">
+      <view class="config-item">
+        <view class="config-label">压缩质量: {{quality}}%</view>
+        <slider 
+          min="10" 
+          max="100" 
+          value="{{quality}}" 
+          show-value 
+          activeColor="#07c160"
+          bindchange="handleQualityChange"
+        />
+      </view>
+      
+      <button class="primary-btn" bindtap="handleSubmit">开始压缩</button>
+    </view>
+  </view>
+
+  <view class="tips-card">
+    <view class="tips-title">使用提示</view>
+    <view class="tips-item">1. 质量越低，文件越小，但图片会越模糊</view>
+    <view class="tips-item">2. 建议质量设置在 60%-80% 之间以平衡大小和清晰度</view>
+    <view class="tips-item">3. 压缩完成后可在“任务列表”中查看历史</view>
   </view>
 </view>
