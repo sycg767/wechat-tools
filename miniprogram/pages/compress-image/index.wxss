@@ -1,12 +1,22 @@
 @import "../../app.wxss";
 
-.todo-title {
-  font-size: 30rpx;
-  font-weight: 600;
-  margin-bottom: 16rpx;
+.estimate-box {
+  margin: 20rpx 0 28rpx;
+  padding: 20rpx 24rpx;
+  border-radius: 16rpx;
+  background: #f3f9f4;
+  border: 1rpx solid #d4ead7;
 }
 
-.todo-desc {
-  margin-bottom: 24rpx;
-  color: #4e5969;
+.estimate-title {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #2c5c33;
+  margin-bottom: 10rpx;
+}
+
+.estimate-row {
+  font-size: 24rpx;
+  color: #3f4a44;
+  line-height: 1.7;
 }

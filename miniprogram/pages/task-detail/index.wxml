@@ -13,9 +13,15 @@
 
   <view wx:if="{{task && task.status === 'SUCCESS'}}" class="card result-action-card">
     <view class="result-action-title">处理完成</view>
-    <view wx:if="{{task.canOpen}}" class="result-action-desc">点击打开文件，然后在文档界面中自行转发。</view>
+
+    <view wx:if="{{task.isImage}}" class="result-action-desc">你可以先预览压缩图，再点击“保存到相册”落地到手机。</view>
+    <view wx:elif="{{task.canOpen}}" class="result-action-desc">点击打开文件，然后在文档界面中自行转发。</view>
     <view wx:else class="result-action-desc">当前结果文件类型暂不支持在小程序内直接打开。</view>
-    <button wx:if="{{task.canOpen}}" class="primary-btn" bindtap="handleOpenFile">打开文件</button>
+
+    <button wx:if="{{task.canOpen}}" class="primary-btn" bindtap="handleOpenFile">
+      {{task.isImage ? '预览图片' : '打开文件'}}
+    </button>
+    <button wx:if="{{task.isImage}}" class="primary-btn" bindtap="handleSaveImage">保存到相册</button>
   </view>
 
   <view wx:if="{{task && task.status === 'FAIL'}}" class="card fail-card">

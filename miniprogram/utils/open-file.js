@@ -1,4 +1,5 @@
-const SUPPORTED_FILE_TYPES = ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf']
+const SUPPORTED_DOCUMENT_TYPES = ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf']
+const SUPPORTED_IMAGE_TYPES = ['jpg', 'jpeg', 'png', 'webp']
 
 function getFileType(fileName = '') {
   if (!fileName.includes('.')) {
@@ -7,22 +8,75 @@ function getFileType(fileName = '') {
   return fileName.split('.').pop().toLowerCase()
 }
 
-function canOpenFile(fileName = '') {
-  return SUPPORTED_FILE_TYPES.includes(getFileType(fileName))
+function isImageFile(fileName = '') {
+  return SUPPORTED_IMAGE_TYPES.includes(getFileType(fileName))
 }
 
-function openFile(url, fileName = '') {
-  return new Promise((resolve, reject) => {
-    const fileType = getFileType(fileName)
-    if (!canOpenFile(fileName)) {
-      reject(new Error('当前文件类型不支持直接打开，请改用支持的文档格式'))
-      return
-    }
+function canOpenFile(fileName = '') {
+  const fileType = getFileType(fileName)
+  return SUPPORTED_DOCUMENT_TYPES.includes(fileType) || SUPPORTED_IMAGE_TYPES.includes(fileType)
+}
 
+function downloadToTempFile(url) {
+  return new Promise((resolve, reject) => {
+    wx.downloadFile({
+      url,
+      success: (res) => {
+        if (res.statusCode !== 200) {
+          reject(new Error('下载失败'))
+          return
+        }
+        resolve(res.tempFilePath)
+      },
+      fail: (error) => {
+        reject(new Error(error.errMsg || '下载失败'))
+      }
+    })
+  })
+}
+
+function previewImage(url) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tempFilePath = await downloadToTempFile(url)
+      wx.previewImage({
+        current: tempFilePath,
+        urls: [tempFilePath],
+        success: () => resolve(),
+        fail: (error) => reject(new Error(error.errMsg || '预览图片失败'))
+      })
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+function saveImageToAlbum(url) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const tempFilePath = await downloadToTempFile(url)
+      wx.saveImageToPhotosAlbum({
+        filePath: tempFilePath,
+        success: () => resolve(),
+        fail: (error) => {
+          const msg = error.errMsg || ''
+          if (msg.includes('auth deny') || msg.includes('auth denied')) {
+            reject(new Error('请先允许小程序保存到相册权限'))
+            return
+          }
+          reject(new Error(msg || '保存到相册失败'))
+        }
+      })
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+function openDocument(url, fileName, fileType) {
+  return new Promise((resolve, reject) => {
     wx.showLoading({ title: '打开中' })
-    
-    // 微信小程序 wx.downloadFile 下载后的临时路径是随机生成的哈希名
-    // 为了让 openDocument 预览时显示正确的文件名，我们需要手动重命名临时文件
+
     wx.downloadFile({
       url,
       success: (res) => {
@@ -33,9 +87,8 @@ function openFile(url, fileName = '') {
         }
 
         const fs = wx.getFileSystemManager()
-        // 构造一个带有正确文件名的临时路径
         const tempPath = `${wx.env.USER_DATA_PATH}/${fileName}`
-        
+
         fs.saveFile({
           tempFilePath: res.tempFilePath,
           filePath: tempPath,
@@ -54,8 +107,7 @@ function openFile(url, fileName = '') {
               }
             })
           },
-          fail: (error) => {
-            // 如果 saveFile 失败，尝试直接打开（虽然文件名可能不对）
+          fail: () => {
             wx.openDocument({
               filePath: res.tempFilePath,
               showMenu: true,
@@ -80,7 +132,22 @@ function openFile(url, fileName = '') {
   })
 }
 
+function openFile(url, fileName = '') {
+  const fileType = getFileType(fileName)
+  if (!canOpenFile(fileName)) {
+    return Promise.reject(new Error('当前文件类型暂不支持在小程序内直接打开'))
+  }
+
+  if (isImageFile(fileName)) {
+    return previewImage(url)
+  }
+
+  return openDocument(url, fileName, fileType)
+}
+
 module.exports = {
   openFile,
-  canOpenFile
+  canOpenFile,
+  isImageFile,
+  saveImageToAlbum
 }
