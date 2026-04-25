@@ -1,16 +1,11 @@
 com\wechat\tools\task\FileConversionTask$OcrChar.class
-com\wechat\tools\task\FileConversionTask$PositionedText.class
 com\wechat\tools\service\impl\FileStorageServiceImpl.class
 com\wechat\tools\task\FileConversionTask$LayoutAwarePdfTextStripper.class
-com\wechat\tools\task\FileConversionTask$BaiduTableRecognitionResult.class
-com\wechat\tools\task\FileConversionTask$PositionCollectingTextStripper.class
-com\wechat\tools\task\FileConversionTask$TableLineCollector.class
 com\wechat\tools\task\FileConversionTask.class
 com\wechat\tools\service\impl\TaskServiceImpl.class
 com\wechat\tools\task\FileConversionTask$ReconstructedLine.class
 com\wechat\tools\WechatToolsApplication.class
 com\wechat\tools\task\FileConversionTask$LineSegment.class
 com\wechat\tools\task\FileCleanupTask.class
-com\wechat\tools\task\FileConversionTask$TableGrid.class
 com\wechat\tools\task\FileConversionTask$OcrLine.class
 com\wechat\tools\task\FileConversionTask$OcrServiceDecision.class

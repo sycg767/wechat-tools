@@ -431,13 +431,13 @@ public class FileConversionTask {
     private String buildLineText(List<OcrChar> chars, int medianCharWidth) {
         StringBuilder sb = new StringBuilder();
         OcrChar previous = null;
+        int splitThreshold = Math.max(18, medianCharWidth * 2);
         for (OcrChar current : chars) {
             if (previous == null) {
                 sb.append("«").append(current.left()).append("»");
             } else {
                 int gap = current.left() - previous.right();
-                // 零容忍间距探测：只要间距超过 0.1 像素，即视为新列
-                if (gap > 0.1) {
+                if (gap >= splitThreshold) {
                     sb.append("\t«").append(current.left()).append("»");
                 }
             }
@@ -516,13 +516,13 @@ public class FileConversionTask {
         }
 
         OcrLine previous = null;
+        int splitThreshold = Math.max(20, medianWordWidth);
         for (OcrLine current : row) {
             if (previous == null) {
                 sb.append("«").append(current.left()).append("»");
             } else {
                 int gap = current.left() - previous.right();
-                // 零容忍间距探测：只要间距超过 0.1 像素，即视为新列
-                if (gap > 0.1) {
+                if (gap >= splitThreshold) {
                     sb.append("\t«").append(current.left()).append("»");
                 }
             }
@@ -570,9 +570,9 @@ public class FileConversionTask {
                         previousEndX = -1;
                     } else if (previousEndX >= 0) {
                         float gap = currentX - previousEndX;
-                        // 零容忍间距探测：只要间距超过 0.1 像素，即视为新列
-                        // 使用更精确的坐标（放大10倍），避免舍入误差导致列合并
-                        if (gap > 0.1f) {
+                        float currentWidth = Math.max(current.getWidthDirAdj(), 1f);
+                        float splitThreshold = Math.max(4f, Math.max(previousHeight, currentHeight) * 0.45f + currentWidth * 0.35f);
+                        if (gap >= splitThreshold) {
                             output.write("\t«" + (int)(currentX * 10) + "»");
                         }
                     }
@@ -650,23 +650,50 @@ public class FileConversionTask {
             List<String> lines = collectTableLines(text);
             List<Integer> anchors = buildGlobalColumnAnchors(lines);
             List<List<String>> rows = new ArrayList<>();
+            List<List<String>> headerRows = new ArrayList<>();
+            String currentMajor = "";
             for (String line : lines) {
                 String cleanLine = stripCoordinateMarkers(line);
-                // 识别标题行：长度较长且不符合数据行特征，且制表符较少
+                List<String> splitLines = splitCompoundMajorAndDataLine(line);
+                if (!splitLines.isEmpty()) {
+                    currentMajor = stripCoordinateMarkers(splitLines.get(0));
+                    line = splitLines.get(1);
+                    cleanLine = stripCoordinateMarkers(line);
+                }
+
+                if (isMajorGroupLine(cleanLine)) {
+                    currentMajor = cleanLine;
+                    continue;
+                }
+
+                boolean headerLike = looksLikeHeaderRow(cleanLine) && !looksLikeDataRow(cleanLine);
+                if (headerLike) {
+                    List<String> headerCells = mapLineToCells(line, anchors);
+                    if (!headerCells.isEmpty()) {
+                        headerRows.add(headerCells);
+                    }
+                    continue;
+                }
                 boolean isTitle = cleanLine.length() > 20 && !looksLikeDataRow(cleanLine) && line.chars().filter(c -> c == '\t').count() < 3;
                 if (isTitle) {
                     rows.add(List.of(cleanLine));
                     continue;
                 }
+
                 List<String> cells = mapLineToCells(line, anchors);
                 if (!cells.isEmpty()) {
-                    rows.add(cells);
+                    if (looksLikeRecordRow(cleanLine, cells)) {
+                        rows.add(applyMajorToRecord(cells, currentMajor));
+                    } else {
+                        rows.add(cells);
+                    }
                 }
             }
 
             rows = mergeContinuationRows(rows);
             rows = mergeHeaderRows(rows);
             rows = carryForwardLeadingCells(rows);
+            rows = prependExtractedHeaderRow(rows, headerRows);
 
             int rowIndex = 0;
             int maxColumnCount = 1;
@@ -726,7 +753,7 @@ public class FileConversionTask {
 
         Set<String> repeatedNoise = new HashSet<>();
         for (Map.Entry<String, Integer> entry : frequencies.entrySet()) {
-            if (entry.getValue() >= 3 && !looksLikeDataRow(entry.getKey())) {
+            if (entry.getValue() >= 2 && !looksLikeDataRow(entry.getKey())) {
                 repeatedNoise.add(entry.getKey());
             }
         }
@@ -763,21 +790,18 @@ public class FileConversionTask {
             return true;
         }
 
-        // 移除硬编码的业务关键词，改用纯启发式逻辑
-        // 1. 匹配分割线
         if (trimmed.matches("[-—=_*]{3,}")) {
             return true;
         }
 
-        // 2. 检查是否为高频重复的非数据行（通过 fingerprint 识别）
-        // fingerprint 将数字替换为 #，如果这种结构的行在文档中多次出现且不是数据行，则视为噪声
         String cleanLine = stripCoordinateMarkers(trimmed);
         String fingerprint = cleanLine.replaceAll("\\d", "#");
         if (repeatedNoise.contains(fingerprint) && !looksLikeDataRow(cleanLine)) {
             return true;
         }
 
-        return false;
+        String normalizedFingerprint = normalizeDataFingerprint(trimmed);
+        return repeatedNoise.contains(normalizedFingerprint) && looksLikeHeaderRow(cleanLine) && !looksLikeRecordRow(cleanLine, splitLineToCells(cleanLine));
     }
 
     private boolean isContinuationHeader(String current, String previous) {
@@ -786,37 +810,42 @@ public class FileConversionTask {
         if (currentLine.isEmpty() || previousLine.isEmpty()) {
             return false;
         }
-        if (currentLine.equals(previousLine)) {
+        if (normalizeHeaderText(currentLine).equals(normalizeHeaderText(previousLine))) {
             return true;
         }
         if (!looksLikeHeaderRow(currentLine) || !looksLikeHeaderRow(previousLine)) {
             return false;
         }
-        List<String> currentCells = splitLineToCells(currentLine);
-        List<String> previousCells = splitLineToCells(previousLine);
+        List<String> currentCells = normalizeHeaderCells(splitLineToCells(currentLine));
+        List<String> previousCells = normalizeHeaderCells(splitLineToCells(previousLine));
         return !currentCells.isEmpty() && currentCells.equals(previousCells);
     }
 
     private List<Integer> buildGlobalColumnAnchors(List<String> lines) {
         Map<Integer, Integer> positionFrequencies = new HashMap<>();
-        int dataRowCount = 0;
+        int sampleRowCount = 0;
         for (String line : lines) {
-            if (looksLikeDataRow(stripCoordinateMarkers(line))) {
-                List<Integer> linePositions = findCoordinatePositions(line);
-                // 排除第一个坐标（行首坐标）
-                for (int i = 1; i < linePositions.size(); i++) {
-                    positionFrequencies.merge(linePositions.get(i), 1, Integer::sum);
-                }
-                dataRowCount++;
+            String cleanLine = stripCoordinateMarkers(line);
+            boolean recordLike = looksLikeRecordRow(cleanLine, splitLineToCells(cleanLine));
+            boolean headerLike = looksLikeHeaderRow(cleanLine) && !looksLikeDataRow(cleanLine);
+            if (!recordLike && !headerLike) {
+                continue;
             }
+            List<Integer> linePositions = findCoordinatePositions(line);
+            if (linePositions.size() <= 1) {
+                continue;
+            }
+            for (int i = 0; i < linePositions.size(); i++) {
+                positionFrequencies.merge(linePositions.get(i), 1, Integer::sum);
+            }
+            sampleRowCount++;
         }
 
-        if (positionFrequencies.isEmpty() || dataRowCount == 0) {
+        if (positionFrequencies.isEmpty() || sampleRowCount == 0) {
             return List.of();
         }
 
-        // 进一步降低阈值到 5%，确保即使只有极少数行识别出微小间距，也能保留该列
-        int minOccurrence = Math.max(2, (int)(dataRowCount * 0.05));
+        int minOccurrence = Math.max(2, (int)(sampleRowCount * 0.08));
 
         List<Integer> potentialAnchors = new ArrayList<>();
         for (Map.Entry<Integer, Integer> entry : positionFrequencies.entrySet()) {
@@ -834,8 +863,7 @@ public class FileConversionTask {
 
         for (int i = 1; i < potentialAnchors.size(); i++) {
             int pos = potentialAnchors.get(i);
-            // 坐标聚类范围缩小到 1 像素，以区分极其接近的列
-            if (pos - currentCluster.get(currentCluster.size() - 1) <= 1) {
+            if (pos - currentCluster.get(currentCluster.size() - 1) <= 36) {
                 currentCluster.add(pos);
             } else {
                 anchors.add(median(currentCluster, currentCluster.get(0)));
@@ -848,6 +876,54 @@ public class FileConversionTask {
         }
 
         return anchors;
+    }
+
+    private List<List<String>> prependExtractedHeaderRow(List<List<String>> rows, List<List<String>> headerRows) {
+        if (rows.isEmpty()) {
+            return rows;
+        }
+        List<String> header = buildDynamicHeader(headerRows, rows.get(0).size());
+        if (header.isEmpty()) {
+            return rows;
+        }
+        List<List<String>> normalized = new ArrayList<>();
+        normalized.add(header);
+        normalized.addAll(rows);
+        return normalized;
+    }
+
+    private List<String> buildDynamicHeader(List<List<String>> headerRows, int targetSize) {
+        if (headerRows == null || headerRows.isEmpty() || targetSize <= 0) {
+            return List.of();
+        }
+        List<List<String>> mergedHeaders = mergeHeaderRows(headerRows);
+        List<String> header = new ArrayList<>(Collections.nCopies(targetSize, ""));
+        for (List<String> row : mergedHeaders) {
+            int limit = Math.min(targetSize, row.size());
+            for (int i = 0; i < limit; i++) {
+                String normalizedCell = normalizeHeaderLabel(row.get(i));
+                if (normalizedCell.isEmpty()) {
+                    continue;
+                }
+                String existing = header.get(i);
+                if (existing.isEmpty()) {
+                    header.set(i, normalizedCell);
+                } else if (!existing.contains(normalizedCell)) {
+                    header.set(i, existing + "/" + normalizedCell);
+                }
+            }
+        }
+        return trimTrailingEmptyCells(header);
+    }
+
+    private String normalizeHeaderLabel(String text) {
+        String value = stripCoordinateMarkers(text == null ? "" : text)
+            .replaceAll("[ \t　]+", "")
+            .trim();
+        if (value.isEmpty()) {
+            return "";
+        }
+        return value;
     }
 
     private List<Integer> findCoordinatePositions(String line) {
@@ -865,9 +941,9 @@ public class FileConversionTask {
         }
         List<LineSegment> segments = splitLineToSegments(line);
         if (segments.isEmpty()) {
-            return List.of();
+            return splitLineToCells(stripCoordinateMarkers(line));
         }
-        List<String> anchoredCells = new ArrayList<>(Collections.nCopies(anchors.size() + 1, ""));
+        List<String> anchoredCells = new ArrayList<>(Collections.nCopies(anchors.size(), ""));
         for (LineSegment segment : segments) {
             int index = resolveAnchorIndex(segment.x(), anchors);
             String existing = anchoredCells.get(index);
@@ -877,12 +953,19 @@ public class FileConversionTask {
     }
 
     private int resolveAnchorIndex(int x, List<Integer> anchors) {
-        for (int i = 0; i < anchors.size(); i++) {
-            if (x < anchors.get(i)) {
-                return i;
+        if (anchors.isEmpty()) {
+            return 0;
+        }
+        int bestIndex = 0;
+        int bestDistance = Math.abs(x - anchors.get(0));
+        for (int i = 1; i < anchors.size(); i++) {
+            int distance = Math.abs(x - anchors.get(i));
+            if (distance < bestDistance) {
+                bestDistance = distance;
+                bestIndex = i;
             }
         }
-        return anchors.size();
+        return bestIndex;
     }
 
     private List<LineSegment> splitLineToSegments(String line) {
@@ -961,6 +1044,84 @@ public class FileConversionTask {
             }
         }
         return trimTrailingEmptyCells(cells);
+    }
+
+    private String normalizeHeaderText(String line) {
+        if (line == null) {
+            return "";
+        }
+        return stripCoordinateMarkers(line)
+            .replaceAll("[ \\t　]+", "")
+            .replaceAll("[：:、，,；;（）()【】\\[\\]\\-—_/]", "")
+            .trim();
+    }
+
+    private List<String> normalizeHeaderCells(List<String> cells) {
+        List<String> normalized = new ArrayList<>();
+        for (String cell : cells) {
+            String value = normalizeHeaderText(cell);
+            if (!value.isEmpty()) {
+                normalized.add(value);
+            }
+        }
+        return normalized;
+    }
+
+    private boolean isMajorGroupLine(String line) {
+        if (line == null) {
+            return false;
+        }
+        String cleanLine = stripCoordinateMarkers(line).trim();
+        if (cleanLine.isEmpty()) {
+            return false;
+        }
+        if (cleanLine.matches(".*\\d{10,}.*")) {
+            return false;
+        }
+        return cleanLine.matches("^\\d{6,}\\S{2,}.*") || cleanLine.matches("^[一二三四五六七八九十A-Za-z0-9]+.+(专业|方向|工程|科学|学院).*");
+    }
+
+    private List<String> splitCompoundMajorAndDataLine(String line) {
+        if (line == null) {
+            return List.of();
+        }
+        String cleanLine = stripCoordinateMarkers(line).trim();
+        Matcher plainMatcher = Pattern.compile("^(\\d{6,}\\S*?)\\s+(\\d{10,}.*)$").matcher(cleanLine);
+        if (!plainMatcher.matches()) {
+            return List.of();
+        }
+
+        String major = plainMatcher.group(1).trim();
+        String dataStart = plainMatcher.group(2).trim();
+        int dataIndex = cleanLine.indexOf(dataStart);
+        if (dataIndex < 0) {
+            return List.of();
+        }
+
+        String original = line.trim();
+        int originalIndex = locateDataStartInOriginal(original, dataStart);
+        if (originalIndex < 0) {
+            return List.of();
+        }
+
+        String data = original.substring(originalIndex).trim();
+        if (major.isEmpty() || data.isEmpty()) {
+            return List.of();
+        }
+        return List.of(major, data);
+    }
+
+    private int locateDataStartInOriginal(String original, String dataStart) {
+        Matcher matcher = Pattern.compile("«\\d+»").matcher(original);
+        int lastMarker = -1;
+        while (matcher.find()) {
+            lastMarker = matcher.start();
+            String candidate = stripCoordinateMarkers(original.substring(lastMarker)).trim();
+            if (candidate.startsWith(dataStart)) {
+                return lastMarker;
+            }
+        }
+        return -1;
     }
 
     private List<List<String>> mergeContinuationRows(List<List<String>> rows) {
@@ -1089,6 +1250,39 @@ public class FileConversionTask {
         return alignedColumns >= 1;
     }
 
+    private List<String> applyMajorToRecord(List<String> cells, String major) {
+        List<String> row = new ArrayList<>(cells);
+        if (row.isEmpty()) {
+            return row;
+        }
+        if (row.get(0) == null || row.get(0).isBlank()) {
+            row.set(0, major == null ? "" : major.trim());
+        }
+        return row;
+    }
+
+    private boolean looksLikeRecordRow(String line, List<String> cells) {
+        String cleanLine = stripCoordinateMarkers(line).trim();
+        if (cleanLine.matches(".*\\d{10,}.*")) {
+            return true;
+        }
+        if (cells.isEmpty()) {
+            return false;
+        }
+        if (!cells.get(0).matches("\\d{10,}")) {
+            return false;
+        }
+        return cells.size() >= 3;
+    }
+
+    private String normalizeDataFingerprint(String line) {
+        String cleanLine = stripCoordinateMarkers(normalizeRawLine(line));
+        return cleanLine
+            .replaceAll("\\d+", "#")
+            .replaceAll("[ \\t　]+", "")
+            .trim();
+    }
+
     private String normalizeCellValue(String value) {
         String trimmed = value == null ? "" : value.trim();
         if (trimmed.isEmpty()) {
@@ -1124,24 +1318,22 @@ public class FileConversionTask {
 
     private boolean looksLikeDataRow(String line) {
         if (line == null || line.length() < 5) return false;
-        
-        // 核心优化：如果行内包含 2 个以上的坐标标记，极可能是数据行
-        // 降低门槛，确保即使部分列被合并，该行仍能贡献有效的列锚点
-        if (countCoordinateMarkers(line) >= 2) return true;
 
-        // 如果包含长数字（如 10 位以上的考生编号），肯定是数据行
-        if (line.matches(".*\\d{10,}.*")) return true;
-        
-        List<String> cells = splitLineToCells(line);
-        // 如果列数很多，极可能是数据行
-        if (cells.size() >= 5) return true;
-        
-        long digitCount = stripCoordinateMarkers(line).chars().filter(Character::isDigit).count();
-        // 如果数字比例很高，也可能是数据行
-        double digitRatio = (double) digitCount / line.length();
-        if (digitRatio > 0.25 && digitCount >= 4) return true;
-        
-        return false;
+        String cleanLine = stripCoordinateMarkers(line);
+        List<String> cells = splitLineToCells(cleanLine);
+        if (looksLikeRecordRow(cleanLine, cells)) {
+            return true;
+        }
+
+        if (looksLikeHeaderRow(cleanLine)) {
+            return false;
+        }
+
+        if (countCoordinateMarkers(line) >= 4 && cells.size() >= 4) return true;
+
+        long digitCount = cleanLine.chars().filter(Character::isDigit).count();
+        double digitRatio = cleanLine.isEmpty() ? 0 : (double) digitCount / cleanLine.length();
+        return digitRatio > 0.35 && digitCount >= 6;
     }
 
     private boolean looksLikeHeaderRow(String line) {
