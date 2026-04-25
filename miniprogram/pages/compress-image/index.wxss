@@ -1,0 +1,12 @@
+@import "../../app.wxss";
+
+.todo-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  margin-bottom: 16rpx;
+}
+
+.todo-desc {
+  margin-bottom: 24rpx;
+  color: #4e5969;
+}

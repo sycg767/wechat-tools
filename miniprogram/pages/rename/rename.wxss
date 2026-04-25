@@ -1,0 +1,84 @@
+@import "../../app.wxss";
+
+.page-header {
+  margin-bottom: 40rpx;
+  padding-left: 8rpx;
+}
+
+.page-title {
+  font-size: 44rpx;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 12rpx;
+}
+
+.page-desc {
+  font-size: 26rpx;
+  color: var(--text-second);
+}
+
+.form-card {
+  opacity: 0.5;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.form-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.form-item {
+  margin-bottom: 40rpx;
+}
+
+.label {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.name-input {
+  width: 100%;
+  height: 100rpx;
+  background: #F2F2F7;
+  border-radius: var(--border-radius-md);
+  padding: 0 80rpx 0 32rpx;
+  font-size: 30rpx;
+  color: var(--text-main);
+  box-sizing: border-box;
+  border: 2rpx solid transparent;
+  transition: all 0.2s ease;
+}
+
+.name-input:focus {
+  background: #ffffff;
+  border-color: var(--primary-color);
+}
+
+.input-placeholder {
+  color: var(--text-placeholder);
+}
+
+.input-clear {
+  position: absolute;
+  right: 24rpx;
+  width: 40rpx;
+  height: 40rpx;
+  background: #C7C7CC;
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  z-index: 2;
+}

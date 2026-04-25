@@ -1,0 +1,26 @@
+<view class="picker-container">
+  <view class="picker-area {{file ? 'has-file' : ''}}" bindtap="chooseFile" hover-class="picker-area-hover">
+    <view class="picker-icon-box">
+      <view class="picker-icon {{file ? 'icon-file-active' : 'icon-upload'}}"></view>
+    </view>
+    
+    <block wx:if="{{!file}}">
+      <view class="picker-main-text">点击选择文件</view>
+      <view class="picker-sub-text">支持 PDF、Word、图片等格式</view>
+    </block>
+    
+    <block wx:else>
+      <view class="file-display">
+        <view class="file-name">{{file.name}}</view>
+        <view class="file-meta">
+          <text class="file-size">{{fileSizeText}}</text>
+          <text class="file-change">点击更换</text>
+        </view>
+      </view>
+    </block>
+  </view>
+  
+  <view class="picker-tips" wx:if="{{!file}}">
+    <view class="tip-item">最大支持 100MB 文件</view>
+  </view>
+</view>

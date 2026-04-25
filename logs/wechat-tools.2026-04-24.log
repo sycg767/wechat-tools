@@ -1,0 +1,579 @@
+2026-04-24 20:04:33 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2026-04-24 20:04:33 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Starting WechatToolsApplication using Java 23.0.1 with PID 76572 (C:\Users\X\Desktop\wechat-tools\backend\target\classes started by x in C:\Users\X\Desktop\wechat-tools)
+2026-04-24 20:04:33 [restartedMain] DEBUG c.w.tools.WechatToolsApplication - Running with Spring Boot v3.2.4, Spring v6.1.5
+2026-04-24 20:04:33 [restartedMain] INFO  c.w.tools.WechatToolsApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-24 20:04:33 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-24 20:04:33 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-24 20:04:34 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-24 20:04:34 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - An older version [1.3.1] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [2.0.5]
+2026-04-24 20:04:34 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.3.1] using APR version [1.7.4].
+2026-04-24 20:04:34 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 3.0.14 4 Jun 2024]
+2026-04-24 20:04:34 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-24 20:04:34 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-24 20:04:34 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-24 20:04:34 [restartedMain] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2026-04-24 20:04:34 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1391 ms
+2026-04-24 20:04:35 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'fileController' defined in file [C:\Users\X\Desktop\wechat-tools\backend\target\classes\com\wechat\tools\controller\FileController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'fileStorageServiceImpl': Invocation of init method failed
+2026-04-24 20:04:35 [restartedMain] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2026-04-24 20:04:35 [restartedMain] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-04-24 20:04:35 [restartedMain] ERROR o.s.boot.SpringApplication - Application run failed
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'fileController' defined in file [C:\Users\X\Desktop\wechat-tools\backend\target\classes\com\wechat\tools\controller\FileController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'fileStorageServiceImpl': Invocation of init method failed
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1355)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1192)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:962)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343)
+	at com.wechat.tools.WechatToolsApplication.main(WechatToolsApplication.java:13)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'fileStorageServiceImpl': Invocation of init method failed
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:222)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInitialization(AbstractAutowireCapableBeanFactory.java:422)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1778)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782)
+	... 22 common frames omitted
+Caused by: java.lang.RuntimeException: 初始化 MinIO bucket 失败
+	at com.wechat.tools.service.impl.FileStorageServiceImpl.initBucket(FileStorageServiceImpl.java:33)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:457)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeInitMethods(InitDestroyAnnotationBeanPostProcessor.java:401)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:219)
+	... 35 common frames omitted
+Caused by: java.net.ConnectException: Failed to connect to localhost/[0:0:0:0:0:0:0:1]:9000
+	at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:297)
+	at okhttp3.internal.connection.RealConnection.connect(RealConnection.kt:207)
+	at okhttp3.internal.connection.ExchangeFinder.findConnection(ExchangeFinder.kt:226)
+	at okhttp3.internal.connection.ExchangeFinder.findHealthyConnection(ExchangeFinder.kt:106)
+	at okhttp3.internal.connection.ExchangeFinder.find(ExchangeFinder.kt:74)
+	at okhttp3.internal.connection.RealCall.initExchange$okhttp(RealCall.kt:255)
+	at okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.kt:32)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:95)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109)
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201)
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+	Suppressed: java.net.ConnectException: Failed to connect to localhost/127.0.0.1:9000
+		... 19 common frames omitted
+	Caused by: java.net.ConnectException: Connection refused: getsockopt
+		at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+		at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682)
+		at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542)
+		at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592)
+		at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+		at java.base/java.net.Socket.connect(Socket.java:760)
+		at okhttp3.internal.platform.Platform.connectSocket(Platform.kt:128)
+		at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295)
+		... 18 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:760)
+	at okhttp3.internal.platform.Platform.connectSocket(Platform.kt:128)
+	at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295)
+	... 18 common frames omitted
+2026-04-24 20:13:40 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2026-04-24 20:13:40 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Starting WechatToolsApplication using Java 23.0.1 with PID 77040 (C:\Users\X\Desktop\wechat-tools\backend\target\classes started by x in C:\Users\X\Desktop\wechat-tools)
+2026-04-24 20:13:40 [restartedMain] DEBUG c.w.tools.WechatToolsApplication - Running with Spring Boot v3.2.4, Spring v6.1.5
+2026-04-24 20:13:40 [restartedMain] INFO  c.w.tools.WechatToolsApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-24 20:13:40 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-24 20:13:40 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-24 20:13:42 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-24 20:13:42 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - An older version [1.3.1] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [2.0.5]
+2026-04-24 20:13:42 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.3.1] using APR version [1.7.4].
+2026-04-24 20:13:42 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 3.0.14 4 Jun 2024]
+2026-04-24 20:13:42 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-24 20:13:42 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-24 20:13:42 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-24 20:13:42 [restartedMain] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2026-04-24 20:13:42 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1937 ms
+2026-04-24 20:13:43 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-04-24 20:13:43 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-04-24 20:13:43 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/api'
+2026-04-24 20:13:43 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Started WechatToolsApplication in 3.693 seconds (process running for 5.09)
+2026-04-24 20:18:28 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2026-04-24 20:18:28 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Starting WechatToolsApplication using Java 23.0.1 with PID 69416 (C:\Users\X\Desktop\wechat-tools\backend\target\classes started by x in C:\Users\X\Desktop\wechat-tools)
+2026-04-24 20:18:28 [restartedMain] DEBUG c.w.tools.WechatToolsApplication - Running with Spring Boot v3.2.4, Spring v6.1.5
+2026-04-24 20:18:28 [restartedMain] INFO  c.w.tools.WechatToolsApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-24 20:18:28 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-24 20:18:28 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-24 20:18:29 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-24 20:18:29 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - An older version [1.3.1] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [2.0.5]
+2026-04-24 20:18:29 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.3.1] using APR version [1.7.4].
+2026-04-24 20:18:29 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 3.0.14 4 Jun 2024]
+2026-04-24 20:18:29 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-24 20:18:29 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-24 20:18:29 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-24 20:18:29 [restartedMain] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2026-04-24 20:18:29 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1406 ms
+2026-04-24 20:18:30 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-04-24 20:18:30 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-04-24 20:18:30 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/api'
+2026-04-24 20:18:30 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Started WechatToolsApplication in 2.667 seconds (process running for 3.665)
+2026-04-24 20:26:21 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 2 class path changes (0 additions, 2 deletions, 0 modifications)
+2026-04-24 20:26:21 [Thread-5] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2026-04-24 20:26:22 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Starting WechatToolsApplication using Java 23.0.1 with PID 69416 (C:\Users\X\Desktop\wechat-tools\backend\target\classes started by x in C:\Users\X\Desktop\wechat-tools)
+2026-04-24 20:26:22 [restartedMain] DEBUG c.w.tools.WechatToolsApplication - Running with Spring Boot v3.2.4, Spring v6.1.5
+2026-04-24 20:26:22 [restartedMain] INFO  c.w.tools.WechatToolsApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-24 20:26:22 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-24 20:26:22 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - An older version [1.3.1] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [2.0.5]
+2026-04-24 20:26:22 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.3.1] using APR version [1.7.4].
+2026-04-24 20:26:22 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 3.0.14 4 Jun 2024]
+2026-04-24 20:26:22 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-24 20:26:22 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-24 20:26:22 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-24 20:26:22 [restartedMain] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2026-04-24 20:26:22 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 300 ms
+2026-04-24 20:26:22 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'fileController' defined in file [C:\Users\X\Desktop\wechat-tools\backend\target\classes\com\wechat\tools\controller\FileController.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'taskServiceImpl': Lookup method resolution failed
+2026-04-24 20:26:22 [restartedMain] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2026-04-24 20:26:22 [restartedMain] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-04-24 20:26:22 [restartedMain] ERROR o.s.boot.SpringApplication - Application run failed
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'fileController' defined in file [C:\Users\X\Desktop\wechat-tools\backend\target\classes\com\wechat\tools\controller\FileController.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'taskServiceImpl': Lookup method resolution failed
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1355)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1192)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:962)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343)
+	at com.wechat.tools.WechatToolsApplication.main(WechatToolsApplication.java:13)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'taskServiceImpl': Lookup method resolution failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.checkLookupMethods(AutowiredAnnotationBeanPostProcessor.java:497)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:367)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1294)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1189)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782)
+	... 22 common frames omitted
+Caused by: java.lang.IllegalStateException: Failed to introspect Class [com.wechat.tools.service.impl.TaskServiceImpl] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@7675828b]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:483)
+	at org.springframework.util.ReflectionUtils.doWithLocalMethods(ReflectionUtils.java:320)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.checkLookupMethods(AutowiredAnnotationBeanPostProcessor.java:475)
+	... 36 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: com/wechat/tools/common/TaskStatusResult
+	at java.base/java.lang.Class.getDeclaredMethods0(Native Method)
+	at java.base/java.lang.Class.privateGetDeclaredMethods(Class.java:3650)
+	at java.base/java.lang.Class.getDeclaredMethods(Class.java:2735)
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:465)
+	... 38 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.wechat.tools.common.TaskStatusResult
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:528)
+	at java.base/java.lang.Class.forName0(Native Method)
+	at java.base/java.lang.Class.forName(Class.java:578)
+	at java.base/java.lang.Class.forName(Class.java:557)
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:121)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:528)
+	... 42 common frames omitted
+2026-04-24 20:26:23 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Starting WechatToolsApplication using Java 23.0.1 with PID 69416 (C:\Users\X\Desktop\wechat-tools\backend\target\classes started by x in C:\Users\X\Desktop\wechat-tools)
+2026-04-24 20:26:23 [restartedMain] DEBUG c.w.tools.WechatToolsApplication - Running with Spring Boot v3.2.4, Spring v6.1.5
+2026-04-24 20:26:23 [restartedMain] INFO  c.w.tools.WechatToolsApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-24 20:26:24 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-24 20:26:24 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - An older version [1.3.1] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [2.0.5]
+2026-04-24 20:26:24 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.3.1] using APR version [1.7.4].
+2026-04-24 20:26:24 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 3.0.14 4 Jun 2024]
+2026-04-24 20:26:24 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-24 20:26:24 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-24 20:26:24 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-24 20:26:24 [restartedMain] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2026-04-24 20:26:24 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 371 ms
+2026-04-24 20:26:24 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'toolController' defined in file [C:\Users\X\Desktop\wechat-tools\backend\target\classes\com\wechat\tools\controller\ToolController.class]: Unsatisfied dependency expressed through constructor parameter 1: No qualifying bean of type 'com.wechat.tools.task.FileConversionTask' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2026-04-24 20:26:24 [restartedMain] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2026-04-24 20:26:24 [restartedMain] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-04-24 20:26:24 [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 1 of constructor in com.wechat.tools.controller.ToolController required a bean of type 'com.wechat.tools.task.FileConversionTask' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.wechat.tools.task.FileConversionTask' in your configuration.
+
+2026-04-24 20:26:25 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Starting WechatToolsApplication using Java 23.0.1 with PID 69416 (C:\Users\X\Desktop\wechat-tools\backend\target\classes started by x in C:\Users\X\Desktop\wechat-tools)
+2026-04-24 20:26:25 [restartedMain] DEBUG c.w.tools.WechatToolsApplication - Running with Spring Boot v3.2.4, Spring v6.1.5
+2026-04-24 20:26:25 [restartedMain] INFO  c.w.tools.WechatToolsApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-24 20:26:26 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-24 20:26:26 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - An older version [1.3.1] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [2.0.5]
+2026-04-24 20:26:26 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.3.1] using APR version [1.7.4].
+2026-04-24 20:26:26 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 3.0.14 4 Jun 2024]
+2026-04-24 20:26:26 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-24 20:26:26 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-24 20:26:26 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-24 20:26:26 [restartedMain] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2026-04-24 20:26:26 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 318 ms
+2026-04-24 20:26:26 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-04-24 20:26:26 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-04-24 20:26:26 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/api'
+2026-04-24 20:26:26 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Started WechatToolsApplication in 0.53 seconds (process running for 479.847)
+2026-04-24 20:26:26 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-04-24 20:33:01 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 2 class path changes (0 additions, 2 deletions, 0 modifications)
+2026-04-24 20:33:01 [Thread-7] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2026-04-24 20:33:01 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Starting WechatToolsApplication using Java 23.0.1 with PID 69416 (C:\Users\X\Desktop\wechat-tools\backend\target\classes started by x in C:\Users\X\Desktop\wechat-tools)
+2026-04-24 20:33:01 [restartedMain] DEBUG c.w.tools.WechatToolsApplication - Running with Spring Boot v3.2.4, Spring v6.1.5
+2026-04-24 20:33:01 [restartedMain] INFO  c.w.tools.WechatToolsApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-24 20:33:01 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-24 20:33:01 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - An older version [1.3.1] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [2.0.5]
+2026-04-24 20:33:01 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.3.1] using APR version [1.7.4].
+2026-04-24 20:33:01 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 3.0.14 4 Jun 2024]
+2026-04-24 20:33:01 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-24 20:33:01 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-24 20:33:01 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-24 20:33:01 [restartedMain] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2026-04-24 20:33:01 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 227 ms
+2026-04-24 20:33:01 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-04-24 20:33:01 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-04-24 20:33:01 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/api'
+2026-04-24 20:33:01 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Started WechatToolsApplication in 0.39 seconds (process running for 875.441)
+2026-04-24 20:33:01 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-04-24 20:33:03 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 2 class path changes (2 additions, 0 deletions, 0 modifications)
+2026-04-24 20:33:03 [Thread-17] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2026-04-24 20:33:03 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Starting WechatToolsApplication using Java 23.0.1 with PID 69416 (C:\Users\X\Desktop\wechat-tools\backend\target\classes started by x in C:\Users\X\Desktop\wechat-tools)
+2026-04-24 20:33:03 [restartedMain] DEBUG c.w.tools.WechatToolsApplication - Running with Spring Boot v3.2.4, Spring v6.1.5
+2026-04-24 20:33:03 [restartedMain] INFO  c.w.tools.WechatToolsApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-24 20:33:03 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-24 20:33:03 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - An older version [1.3.1] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [2.0.5]
+2026-04-24 20:33:03 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.3.1] using APR version [1.7.4].
+2026-04-24 20:33:03 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 3.0.14 4 Jun 2024]
+2026-04-24 20:33:03 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-24 20:33:03 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-24 20:33:03 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-24 20:33:03 [restartedMain] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2026-04-24 20:33:03 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 248 ms
+2026-04-24 20:33:03 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-04-24 20:33:03 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-04-24 20:33:03 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/api'
+2026-04-24 20:33:03 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Started WechatToolsApplication in 0.395 seconds (process running for 877.31)
+2026-04-24 20:33:03 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-04-24 20:35:48 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-24 20:35:48 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-24 20:35:48 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-04-24 21:00:00 [scheduling-1] INFO  c.wechat.tools.task.FileCleanupTask - 文件清理任务完成，删除过期文件数量: 0
+2026-04-24 21:33:45 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2026-04-24 21:33:45 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Starting WechatToolsApplication using Java 23.0.1 with PID 18980 (C:\Users\X\Desktop\wechat-tools\backend\target\classes started by x in C:\Users\X\Desktop\wechat-tools)
+2026-04-24 21:33:45 [restartedMain] DEBUG c.w.tools.WechatToolsApplication - Running with Spring Boot v3.2.4, Spring v6.1.5
+2026-04-24 21:33:45 [restartedMain] INFO  c.w.tools.WechatToolsApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-24 21:33:45 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-24 21:33:45 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-24 21:33:46 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-24 21:33:46 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - An older version [1.3.1] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [2.0.5]
+2026-04-24 21:33:46 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.3.1] using APR version [1.7.4].
+2026-04-24 21:33:46 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 3.0.14 4 Jun 2024]
+2026-04-24 21:33:46 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-24 21:33:46 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-24 21:33:46 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-24 21:33:46 [restartedMain] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2026-04-24 21:33:46 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1291 ms
+2026-04-24 21:33:47 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-04-24 21:33:47 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-04-24 21:33:47 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/api'
+2026-04-24 21:33:47 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Started WechatToolsApplication in 2.621 seconds (process running for 3.663)
+2026-04-24 21:35:13 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-24 21:35:13 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-24 21:35:13 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-04-24 21:49:18 [async-task-2] WARN  org.docx4j.utils.ResourceUtils - Couldn't get resource: docx4j.properties
+2026-04-24 21:49:18 [async-task-2] WARN  org.docx4j.Docx4jProperties - Couldn't find/read docx4j.properties; docx4j.properties not found via classloader.
+2026-04-24 21:49:18 [async-task-2] INFO  o.d.o.p.WordprocessingMLPackage - Using paper size: A4
+2026-04-24 21:49:18 [async-task-2] INFO  o.d.o.p.WordprocessingMLPackage - Landscape orientation: false
+2026-04-24 21:49:18 [async-task-2] INFO  org.docx4j.jaxb.Context - java.vendor=Oracle Corporation
+2026-04-24 21:49:18 [async-task-2] INFO  org.docx4j.jaxb.Context - java.version=23.0.1
+2026-04-24 21:49:18 [async-task-2] INFO  org.docx4j.jaxb.Context - java.vm.name=Java HotSpot(TM) 64-Bit Server VM
+2026-04-24 21:49:20 [async-task-2] INFO  org.docx4j.jaxb.Context - JAXB Reference Implementation is in use.
+2026-04-24 21:49:20 [async-task-2] INFO  o.d.o.p.r.RelationshipsPart - adding part with proposed name: /word/document.xml
+2026-04-24 21:49:20 [async-task-2] INFO  org.docx4j.XmlUtils - setProperty com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl
+2026-04-24 21:49:20 [async-task-2] WARN  org.docx4j.XmlUtils - actual SAXParserFactory: com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl
+2026-04-24 21:49:20 [async-task-2] INFO  org.docx4j.XmlUtils - setProperty com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl
+2026-04-24 21:49:20 [async-task-2] WARN  org.docx4j.XmlUtils - actual DocumentBuilderFactory: com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl
+2026-04-24 21:49:20 [async-task-2] INFO  o.d.o.p.r.RelationshipsPart - adding part with proposed name: /word/styles.xml
+2026-04-24 21:49:20 [async-task-2] INFO  org.docx4j.utils.XPathFactoryUtil - xpath implementation: org.docx4j.org.apache.xpath.jaxp.XPathFactoryImpl
+2026-04-24 21:49:20 [async-task-2] INFO  o.d.o.p.r.RelationshipsPart - adding part with proposed name: /docProps/core.xml
+2026-04-24 21:49:20 [async-task-2] INFO  o.d.o.p.r.RelationshipsPart - adding part with proposed name: /docProps/app.xml
+2026-04-24 21:49:20 [async-task-2] INFO  o.d.o.p.r.RelationshipsPart - adding part with proposed name: /word/settings.xml
+2026-04-24 21:49:20 [async-task-2] INFO  o.d.jaxb.NamespacePrefixMapperUtils - Using ri.NamespacePrefixMapper, which is suitable for the JAXB RI
+2026-04-24 21:49:20 [async-task-2] INFO  o.d.jaxb.NamespacePrefixMapperUtils - Using ri.NamespacePrefixMapperRelationshipsPart, which is suitable for the JAXB RI
+2026-04-24 22:00:00 [scheduling-1] INFO  c.wechat.tools.task.FileCleanupTask - 文件清理任务完成，删除过期文件数量: 0
+2026-04-24 23:11:40 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2026-04-24 23:11:40 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Starting WechatToolsApplication using Java 23.0.1 with PID 75084 (C:\Users\X\Desktop\wechat-tools\backend\target\classes started by x in C:\Users\X\Desktop\wechat-tools)
+2026-04-24 23:11:40 [restartedMain] DEBUG c.w.tools.WechatToolsApplication - Running with Spring Boot v3.2.4, Spring v6.1.5
+2026-04-24 23:11:40 [restartedMain] INFO  c.w.tools.WechatToolsApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-24 23:11:40 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-24 23:11:40 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-24 23:11:41 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-24 23:11:41 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - An older version [1.3.1] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [2.0.5]
+2026-04-24 23:11:41 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.3.1] using APR version [1.7.4].
+2026-04-24 23:11:41 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 3.0.14 4 Jun 2024]
+2026-04-24 23:11:41 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-24 23:11:41 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-24 23:11:41 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-24 23:11:41 [restartedMain] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2026-04-24 23:11:41 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1225 ms
+2026-04-24 23:11:42 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-04-24 23:11:42 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-04-24 23:11:42 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/api'
+2026-04-24 23:11:42 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Started WechatToolsApplication in 2.491 seconds (process running for 3.428)
+2026-04-24 23:11:51 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2026-04-24 23:11:52 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Starting WechatToolsApplication using Java 23.0.1 with PID 75144 (C:\Users\X\Desktop\wechat-tools\backend\target\classes started by x in C:\Users\X\Desktop\wechat-tools)
+2026-04-24 23:11:52 [restartedMain] DEBUG c.w.tools.WechatToolsApplication - Running with Spring Boot v3.2.4, Spring v6.1.5
+2026-04-24 23:11:52 [restartedMain] INFO  c.w.tools.WechatToolsApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-24 23:11:52 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-24 23:11:52 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-24 23:11:52 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-24 23:11:52 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - An older version [1.3.1] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [2.0.5]
+2026-04-24 23:11:52 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.3.1] using APR version [1.7.4].
+2026-04-24 23:11:52 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 3.0.14 4 Jun 2024]
+2026-04-24 23:11:53 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-24 23:11:53 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-24 23:11:53 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-24 23:11:53 [restartedMain] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2026-04-24 23:11:53 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 960 ms
+2026-04-24 23:11:53 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-04-24 23:11:53 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-04-24 23:11:53 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/api'
+2026-04-24 23:11:53 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Started WechatToolsApplication in 2.008 seconds (process running for 2.762)
+2026-04-24 23:12:30 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
+2026-04-24 23:12:30 [Thread-5] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2026-04-24 23:12:30 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Starting WechatToolsApplication using Java 23.0.1 with PID 75144 (C:\Users\X\Desktop\wechat-tools\backend\target\classes started by x in C:\Users\X\Desktop\wechat-tools)
+2026-04-24 23:12:30 [restartedMain] DEBUG c.w.tools.WechatToolsApplication - Running with Spring Boot v3.2.4, Spring v6.1.5
+2026-04-24 23:12:30 [restartedMain] INFO  c.w.tools.WechatToolsApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-24 23:12:31 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-24 23:12:31 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - An older version [1.3.1] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [2.0.5]
+2026-04-24 23:12:31 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.3.1] using APR version [1.7.4].
+2026-04-24 23:12:31 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 3.0.14 4 Jun 2024]
+2026-04-24 23:12:31 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-24 23:12:31 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-24 23:12:31 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-24 23:12:31 [restartedMain] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2026-04-24 23:12:31 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 480 ms
+2026-04-24 23:12:31 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'fileController' defined in file [C:\Users\X\Desktop\wechat-tools\backend\target\classes\com\wechat\tools\controller\FileController.class]: Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'com.wechat.tools.service.FileStorageService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2026-04-24 23:12:31 [restartedMain] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2026-04-24 23:12:31 [restartedMain] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-04-24 23:12:31 [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in com.wechat.tools.controller.FileController required a bean of type 'com.wechat.tools.service.FileStorageService' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.wechat.tools.service.FileStorageService' in your configuration.
+
+2026-04-24 23:12:33 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Starting WechatToolsApplication using Java 23.0.1 with PID 75144 (C:\Users\X\Desktop\wechat-tools\backend\target\classes started by x in C:\Users\X\Desktop\wechat-tools)
+2026-04-24 23:12:33 [restartedMain] DEBUG c.w.tools.WechatToolsApplication - Running with Spring Boot v3.2.4, Spring v6.1.5
+2026-04-24 23:12:33 [restartedMain] INFO  c.w.tools.WechatToolsApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-24 23:12:34 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-24 23:12:34 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - An older version [1.3.1] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [2.0.5]
+2026-04-24 23:12:34 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.3.1] using APR version [1.7.4].
+2026-04-24 23:12:34 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 3.0.14 4 Jun 2024]
+2026-04-24 23:12:34 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-24 23:12:34 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-24 23:12:34 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-24 23:12:34 [restartedMain] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2026-04-24 23:12:34 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 298 ms
+2026-04-24 23:12:34 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-04-24 23:12:34 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-04-24 23:12:34 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/api'
+2026-04-24 23:12:34 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Started WechatToolsApplication in 0.541 seconds (process running for 43.643)
+2026-04-24 23:12:34 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-04-24 23:12:45 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-24 23:12:45 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-24 23:12:45 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-04-24 23:12:45 [async-task-1] WARN  org.docx4j.utils.ResourceUtils - Couldn't get resource: docx4j.properties
+2026-04-24 23:12:45 [async-task-1] WARN  org.docx4j.Docx4jProperties - Couldn't find/read docx4j.properties; docx4j.properties not found via classloader.
+2026-04-24 23:12:45 [async-task-1] INFO  o.d.o.p.WordprocessingMLPackage - Using paper size: A4
+2026-04-24 23:12:45 [async-task-1] INFO  o.d.o.p.WordprocessingMLPackage - Landscape orientation: false
+2026-04-24 23:12:45 [async-task-1] INFO  org.docx4j.jaxb.Context - java.vendor=Oracle Corporation
+2026-04-24 23:12:45 [async-task-1] INFO  org.docx4j.jaxb.Context - java.version=23.0.1
+2026-04-24 23:12:45 [async-task-1] INFO  org.docx4j.jaxb.Context - java.vm.name=Java HotSpot(TM) 64-Bit Server VM
+2026-04-24 23:12:47 [async-task-1] INFO  org.docx4j.jaxb.Context - JAXB Reference Implementation is in use.
+2026-04-24 23:12:47 [async-task-1] INFO  o.d.o.p.r.RelationshipsPart - adding part with proposed name: /word/document.xml
+2026-04-24 23:12:47 [async-task-1] INFO  org.docx4j.XmlUtils - setProperty com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl
+2026-04-24 23:12:47 [async-task-1] WARN  org.docx4j.XmlUtils - actual SAXParserFactory: com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl
+2026-04-24 23:12:47 [async-task-1] INFO  org.docx4j.XmlUtils - setProperty com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl
+2026-04-24 23:12:47 [async-task-1] WARN  org.docx4j.XmlUtils - actual DocumentBuilderFactory: com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl
+2026-04-24 23:12:47 [async-task-1] INFO  o.d.o.p.r.RelationshipsPart - adding part with proposed name: /word/styles.xml
+2026-04-24 23:12:47 [async-task-1] INFO  org.docx4j.utils.XPathFactoryUtil - xpath implementation: org.docx4j.org.apache.xpath.jaxp.XPathFactoryImpl
+2026-04-24 23:12:47 [async-task-1] INFO  o.d.o.p.r.RelationshipsPart - adding part with proposed name: /docProps/core.xml
+2026-04-24 23:12:47 [async-task-1] INFO  o.d.o.p.r.RelationshipsPart - adding part with proposed name: /docProps/app.xml
+2026-04-24 23:12:47 [async-task-1] INFO  o.d.o.p.r.RelationshipsPart - adding part with proposed name: /word/settings.xml
+2026-04-24 23:12:47 [async-task-1] INFO  o.d.jaxb.NamespacePrefixMapperUtils - Using ri.NamespacePrefixMapper, which is suitable for the JAXB RI
+2026-04-24 23:12:47 [async-task-1] INFO  o.d.jaxb.NamespacePrefixMapperUtils - Using ri.NamespacePrefixMapperRelationshipsPart, which is suitable for the JAXB RI
+2026-04-24 23:15:01 [async-task-2] INFO  o.d.o.p.WordprocessingMLPackage - Using paper size: A4
+2026-04-24 23:15:01 [async-task-2] INFO  o.d.o.p.WordprocessingMLPackage - Landscape orientation: false
+2026-04-24 23:15:01 [async-task-2] INFO  o.d.o.p.r.RelationshipsPart - adding part with proposed name: /word/document.xml
+2026-04-24 23:15:01 [async-task-2] INFO  o.d.o.p.r.RelationshipsPart - adding part with proposed name: /word/styles.xml
+2026-04-24 23:15:01 [async-task-2] INFO  o.d.o.p.r.RelationshipsPart - adding part with proposed name: /docProps/core.xml
+2026-04-24 23:15:01 [async-task-2] INFO  o.d.o.p.r.RelationshipsPart - adding part with proposed name: /docProps/app.xml
+2026-04-24 23:15:01 [async-task-2] INFO  o.d.o.p.r.RelationshipsPart - adding part with proposed name: /word/settings.xml
+2026-04-24 23:23:04 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 3 class path changes (0 additions, 3 deletions, 0 modifications)
+2026-04-24 23:23:04 [Thread-7] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2026-04-24 23:23:04 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Starting WechatToolsApplication using Java 23.0.1 with PID 75144 (C:\Users\X\Desktop\wechat-tools\backend\target\classes started by x in C:\Users\X\Desktop\wechat-tools)
+2026-04-24 23:23:04 [restartedMain] DEBUG c.w.tools.WechatToolsApplication - Running with Spring Boot v3.2.4, Spring v6.1.5
+2026-04-24 23:23:04 [restartedMain] INFO  c.w.tools.WechatToolsApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-24 23:23:04 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-24 23:23:04 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - An older version [1.3.1] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [2.0.5]
+2026-04-24 23:23:04 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.3.1] using APR version [1.7.4].
+2026-04-24 23:23:04 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 3.0.14 4 Jun 2024]
+2026-04-24 23:23:04 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-24 23:23:04 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-24 23:23:04 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-24 23:23:04 [restartedMain] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2026-04-24 23:23:04 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 601 ms
+2026-04-24 23:23:04 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'fileController': Resolution of declared constructors on bean Class [com.wechat.tools.controller.FileController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@1b02b7a2] failed
+2026-04-24 23:23:04 [restartedMain] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2026-04-24 23:23:04 [restartedMain] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-04-24 23:23:04 [restartedMain] ERROR o.s.boot.SpringApplication - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'fileController': Resolution of declared constructors on bean Class [com.wechat.tools.controller.FileController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@1b02b7a2] failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:383)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1294)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1189)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:962)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343)
+	at com.wechat.tools.WechatToolsApplication.main(WechatToolsApplication.java:13)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50)
+Caused by: java.lang.NoClassDefFoundError: com/wechat/tools/service/FileStorageService
+	at java.base/java.lang.Class.getDeclaredConstructors0(Native Method)
+	at java.base/java.lang.Class.privateGetDeclaredConstructors(Class.java:3621)
+	at java.base/java.lang.Class.getDeclaredConstructors(Class.java:2786)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:378)
+	... 21 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.wechat.tools.service.FileStorageService
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:528)
+	at java.base/java.lang.Class.forName0(Native Method)
+	at java.base/java.lang.Class.forName(Class.java:578)
+	at java.base/java.lang.Class.forName(Class.java:557)
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:121)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:528)
+	... 25 common frames omitted
+2026-04-24 23:23:07 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Starting WechatToolsApplication using Java 23.0.1 with PID 75144 (C:\Users\X\Desktop\wechat-tools\backend\target\classes started by x in C:\Users\X\Desktop\wechat-tools)
+2026-04-24 23:23:07 [restartedMain] DEBUG c.w.tools.WechatToolsApplication - Running with Spring Boot v3.2.4, Spring v6.1.5
+2026-04-24 23:23:07 [restartedMain] INFO  c.w.tools.WechatToolsApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-24 23:23:07 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-24 23:23:07 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - An older version [1.3.1] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [2.0.5]
+2026-04-24 23:23:07 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.3.1] using APR version [1.7.4].
+2026-04-24 23:23:07 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 3.0.14 4 Jun 2024]
+2026-04-24 23:23:07 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-24 23:23:07 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-24 23:23:07 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-24 23:23:07 [restartedMain] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2026-04-24 23:23:07 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 389 ms
+2026-04-24 23:23:08 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-04-24 23:23:08 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-04-24 23:23:08 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/api'
+2026-04-24 23:23:08 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Started WechatToolsApplication in 0.742 seconds (process running for 677.387)
+2026-04-24 23:23:08 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-04-24 23:23:09 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 2 class path changes (2 additions, 0 deletions, 0 modifications)
+2026-04-24 23:23:09 [Thread-14] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2026-04-24 23:23:09 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Starting WechatToolsApplication using Java 23.0.1 with PID 75144 (C:\Users\X\Desktop\wechat-tools\backend\target\classes started by x in C:\Users\X\Desktop\wechat-tools)
+2026-04-24 23:23:09 [restartedMain] DEBUG c.w.tools.WechatToolsApplication - Running with Spring Boot v3.2.4, Spring v6.1.5
+2026-04-24 23:23:09 [restartedMain] INFO  c.w.tools.WechatToolsApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-24 23:23:09 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-24 23:23:09 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - An older version [1.3.1] of the Apache Tomcat Native library is installed, while Tomcat recommends a minimum version of [2.0.5]
+2026-04-24 23:23:09 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - Loaded Apache Tomcat Native library [1.3.1] using APR version [1.7.4].
+2026-04-24 23:23:09 [restartedMain] INFO  o.a.c.core.AprLifecycleListener - OpenSSL successfully initialized [OpenSSL 3.0.14 4 Jun 2024]
+2026-04-24 23:23:09 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-04-24 23:23:09 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-24 23:23:09 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-04-24 23:23:09 [restartedMain] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2026-04-24 23:23:09 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 238 ms
+2026-04-24 23:23:10 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-04-24 23:23:10 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-04-24 23:23:10 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/api'
+2026-04-24 23:23:10 [restartedMain] INFO  c.w.tools.WechatToolsApplication - Started WechatToolsApplication in 0.405 seconds (process running for 679.271)
+2026-04-24 23:23:10 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged

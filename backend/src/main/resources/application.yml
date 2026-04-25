@@ -1,0 +1,43 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: wechat-tools-backend
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  task:
+    scheduling:
+      pool:
+        size: 2
+
+storage:
+  local:
+    base-path: storage
+
+file:
+  cleanup:
+    enabled: true
+    max-age-hours: 24
+
+baidu:
+  ocr:
+    app-id: "123037453"
+    api-key: "ZJYL89aGvJPhOIcBYK9Js2AT"
+    secret-key: "DAaH0xXJ40avLUuPuz5NdvqH2spkbSKC"
+    enabled: true # 默认关闭，配置好密钥后改为 true
+
+logging:
+  level:
+    root: INFO
+    com.wechat.tools: DEBUG
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'

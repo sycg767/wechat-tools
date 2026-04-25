@@ -1,0 +1,26 @@
+<view class="container">
+  <view class="page-header">
+    <view class="page-title">PDF 转 Word</view>
+    <view class="page-desc">智能提取 PDF 文字并转换为可编辑的 Word 文档</view>
+  </view>
+
+  <file-picker file="{{selectedFile}}" bind:selected="handleFileSelected" />
+
+  <view class="card form-card {{selectedFile ? 'form-active' : ''}}">
+    <view class="info-box">
+      <view class="info-icon">!</view>
+      <view class="info-text">系统将自动识别 PDF 中的文字内容并保持基础段落格式。</view>
+    </view>
+    
+    <button
+      class="btn btn-primary {{!selectedFile ? 'btn-disabled' : ''}}"
+      bindtap="handleSubmit"
+      hover-class="btn-hover"
+    >
+      开始转换
+    </button>
+  </view>
+
+  <!-- 结果展示 -->
+  <result-card wx:if="{{taskId}}" taskId="{{taskId}}" bind:complete="handleTaskComplete" />
+</view>

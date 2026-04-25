@@ -1,0 +1,26 @@
+<view class="card result-card">
+  <view class="result-header">
+    <view class="success-icon-box">
+      <view class="success-icon"></view>
+    </view>
+    <view class="result-title">处理完成</view>
+  </view>
+  
+  <view class="result-body">
+    <view class="file-info-row">
+      <view class="info-label">结果文件</view>
+      <view class="info-value">{{fileName || '已生成'}}</view>
+    </view>
+    <view class="file-info-row" wx:if="{{url}}">
+      <view class="info-label">下载链接</view>
+      <view class="info-value url-text">{{url}}</view>
+    </view>
+  </view>
+
+  <view class="result-footer">
+    <button class="btn btn-primary" bindtap="handleDownload" hover-class="btn-hover">
+      立即下载
+    </button>
+    <view class="share-tip">文件将在 24 小时后自动清理</view>
+  </view>
+</view>

@@ -1,0 +1,24 @@
+.detail-card,
+.result-action-card,
+.fail-card {
+  margin-top: 24rpx;
+}
+
+.detail-row {
+  margin-bottom: 12rpx;
+  color: #4e5969;
+  word-break: break-all;
+}
+
+.result-action-title,
+.fail-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  margin-bottom: 12rpx;
+}
+
+.result-action-desc,
+.fail-desc {
+  margin-bottom: 20rpx;
+  color: #4e5969;
+}

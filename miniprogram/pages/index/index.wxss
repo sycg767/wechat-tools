@@ -1,0 +1,166 @@
+@import "../../app.wxss";
+
+.hero-section {
+  position: relative;
+  padding: 60rpx 40rpx 80rpx;
+  background: linear-gradient(135deg, #007AFF 0%, #0056B3 100%);
+  border-radius: 0 0 60rpx 60rpx;
+  margin: -32rpx -32rpx 40rpx -32rpx;
+  overflow: hidden;
+  color: #ffffff;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-title {
+  font-size: 52rpx;
+  font-weight: 800;
+  letter-spacing: 2rpx;
+  margin-bottom: 16rpx;
+}
+
+.hero-subtitle {
+  font-size: 28rpx;
+  opacity: 0.9;
+  font-weight: 300;
+}
+
+.hero-bg-circle {
+  position: absolute;
+  right: -100rpx;
+  top: -100rpx;
+  width: 400rpx;
+  height: 400rpx;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+  padding: 0 10rpx;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 36rpx;
+}
+
+.section-more {
+  font-size: 26rpx;
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+.tool-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.tool-item-wrapper {
+  width: 100%;
+}
+
+.tool-item {
+  background: var(--card-bg);
+  border-radius: 32rpx;
+  padding: 32rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: var(--shadow);
+  transition: all 0.2s ease;
+}
+
+.tool-item-hover .tool-item {
+  transform: translateY(-4rpx);
+  box-shadow: 0 12rpx 32rpx rgba(0, 0, 0, 0.08);
+}
+
+.tool-icon-box {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 24rpx;
+  margin-right: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* 不同工具的图标颜色 */
+.icon-rename { background: #E5F1FF; }
+.icon-pdf-word { background: #FFF0F0; }
+.icon-pdf-excel { background: #F0FFF4; }
+.icon-image { background: #FFF9E6; }
+.icon-tasks { background: #F5F5F7; }
+
+.tool-icon-inner {
+  width: 48rpx;
+  height: 48rpx;
+  border: 4rpx solid currentColor;
+  border-radius: 8rpx;
+  opacity: 0.8;
+}
+
+.icon-rename .tool-icon-inner { color: #007AFF; }
+.icon-pdf-word .tool-icon-inner { color: #FF3B30; border-radius: 4rpx; }
+.icon-pdf-excel .tool-icon-inner { color: #34C759; }
+.icon-image .tool-icon-inner { color: #FF9500; border-radius: 50%; }
+.icon-tasks .tool-icon-inner { color: #86868B; }
+
+.tool-info {
+  flex: 1;
+}
+
+.tool-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 4rpx;
+}
+
+.tool-tag {
+  display: inline-block;
+  font-size: 20rpx;
+  padding: 2rpx 12rpx;
+  background: var(--primary-light);
+  color: var(--primary-color);
+  border-radius: 20rpx;
+  font-weight: 500;
+}
+
+.tool-arrow {
+  width: 40rpx;
+  height: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow-icon {
+  width: 16rpx;
+  height: 16rpx;
+  border-top: 4rpx solid #D1D1D6;
+  border-right: 4rpx solid #D1D1D6;
+  transform: rotate(45deg);
+}
+
+.tool-disabled {
+  opacity: 0.6;
+  filter: grayscale(1);
+}
+
+.footer-tips {
+  text-align: center;
+  font-size: 24rpx;
+  color: var(--text-second);
+  margin-top: 60rpx;
+  padding-bottom: 40rpx;
+}

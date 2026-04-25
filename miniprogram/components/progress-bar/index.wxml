@@ -1,0 +1,10 @@
+<view class="card progress-card">
+  <view class="progress-header">
+    <view class="progress-text">{{text || '正在处理中...'}}</view>
+    <view class="progress-percentage">{{percent || 0}}%</view>
+  </view>
+  <view class="progress-track">
+    <view class="progress-fill" style="width: {{percent || 0}}%"></view>
+  </view>
+  <view class="progress-tip">请勿关闭页面，处理完成后将自动弹出结果</view>
+</view>

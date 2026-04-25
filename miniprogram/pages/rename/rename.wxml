@@ -1,0 +1,35 @@
+<view class="container">
+  <view class="page-header">
+    <view class="page-title">文件重命名</view>
+    <view class="page-desc">快速修改文件名称，支持各种格式</view>
+  </view>
+
+  <file-picker file="{{selectedFile}}" bind:selected="handleFileSelected" />
+
+  <view class="card form-card {{selectedFile ? 'form-active' : ''}}">
+    <view class="form-item">
+      <view class="label">新文件名</view>
+      <view class="input-wrapper">
+        <input
+          class="name-input"
+          placeholder="请输入新文件名 (无需后缀)"
+          placeholder-class="input-placeholder"
+          bindinput="handleNameInput"
+          value="{{newName}}"
+        />
+        <view class="input-clear" wx:if="{{newName}}" bindtap="clearInput">×</view>
+      </view>
+    </view>
+    
+    <button
+      class="btn btn-primary {{!selectedFile || !newName ? 'btn-disabled' : ''}}"
+      bindtap="handleSubmit"
+      hover-class="btn-hover"
+    >
+      立即重命名
+    </button>
+  </view>
+
+  <!-- 结果展示 -->
+  <result-card wx:if="{{taskId}}" taskId="{{taskId}}" bind:complete="handleTaskComplete" />
+</view>

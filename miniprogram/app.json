@@ -1,0 +1,24 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/rename/rename",
+    "pages/pdf-word/index",
+    "pages/tasks/index",
+    "pages/task-detail/index",
+    "pages/pdf-excel/index",
+    "pages/compress-image/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "实用工具箱",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f7f8fa"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 60000,
+    "uploadFile": 60000
+  }
+}

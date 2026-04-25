@@ -1,0 +1,1162 @@
+package com.wechat.tools.task;
+
+import com.baidu.aip.ocr.AipOcr;
+import net.coobird.thumbnailator.Thumbnails;
+import com.wechat.tools.common.TaskStatusResult;
+import com.wechat.tools.service.FileStorageService;
+import com.wechat.tools.service.TaskService;
+import net.sourceforge.tess4j.Tesseract;
+import org.apache.pdfbox.Loader;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.rendering.PDFRenderer;
+import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.pdfbox.text.TextPosition;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
+import org.docx4j.wml.ObjectFactory;
+import org.docx4j.wml.P;
+import org.docx4j.wml.R;
+import org.docx4j.wml.Text;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+@Component
+public class FileConversionTask {
+
+    private final TaskService taskService;
+    private final FileStorageService fileStorageService;
+
+    @Value("${baidu.ocr.app-id:}")
+    private String baiduAppId;
+
+    @Value("${baidu.ocr.api-key:}")
+    private String baiduApiKey;
+
+    @Value("${baidu.ocr.secret-key:}")
+    private String baiduSecretKey;
+
+    @Value("${baidu.ocr.enabled:false}")
+    private boolean baiduOcrEnabled;
+
+    public FileConversionTask(TaskService taskService, FileStorageService fileStorageService) {
+        this.taskService = taskService;
+        this.fileStorageService = fileStorageService;
+    }
+
+    @Async("taskExecutor")
+    public void processRename(String taskId, String sourceFileId, String newFileName) {
+        try {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 50));
+            
+            byte[] fileData;
+            try (java.io.InputStream is = fileStorageService.downloadFile(sourceFileId)) {
+                fileData = is.readAllBytes();
+            }
+
+            String resultFileId = fileStorageService.uploadFile(
+                newFileName,
+                new ByteArrayInputStream(fileData),
+                fileData.length,
+                "application/octet-stream"
+            );
+            String resultUrl = fileStorageService.getFileUrl(resultFileId, newFileName);
+            taskService.updateTaskStatus(taskId, TaskStatusResult.success(taskId, resultUrl, newFileName));
+            
+            // 清理临时上传的源文件
+            fileStorageService.deleteFile(sourceFileId);
+        } catch (Exception e) {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "重命名失败: " + e.getMessage()));
+        }
+    }
+
+    @Async("taskExecutor")
+    public void processPdfToWord(String taskId, String sourceFileId, String originalFileName) {
+        try {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 10));
+
+            byte[] fileData;
+            try (java.io.InputStream is = fileStorageService.downloadFile(sourceFileId)) {
+                fileData = is.readAllBytes();
+            }
+
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 30));
+            String text = extractPdfTextWithOcr(taskId, fileData);
+
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 80));
+            byte[] docxBytes = createWordDocument(text);
+
+            String resultFileName = buildDocxFileName(originalFileName);
+            String resultFileId = fileStorageService.uploadFile(
+                resultFileName,
+                new ByteArrayInputStream(docxBytes),
+                docxBytes.length,
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            );
+            String resultUrl = fileStorageService.getFileUrl(resultFileId, resultFileName);
+            taskService.updateTaskStatus(taskId, TaskStatusResult.success(taskId, resultUrl, resultFileName));
+
+            // 清理临时上传的源文件
+            fileStorageService.deleteFile(sourceFileId);
+        } catch (Exception e) {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "转换失败: " + e.getMessage()));
+        }
+    }
+
+    @Async("taskExecutor")
+    public void processCompressImage(String taskId, String sourceFileId, String originalFileName, double quality) {
+        try {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 20));
+
+            byte[] fileData;
+            try (java.io.InputStream is = fileStorageService.downloadFile(sourceFileId)) {
+                fileData = is.readAllBytes();
+            }
+
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 50));
+            
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            Thumbnails.of(new ByteArrayInputStream(fileData))
+                .scale(1.0)
+                .outputQuality(quality)
+                .toOutputStream(baos);
+            
+            byte[] compressedData = baos.toByteArray();
+
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 80));
+            
+            String resultFileId = fileStorageService.uploadFile(
+                originalFileName,
+                new ByteArrayInputStream(compressedData),
+                compressedData.length,
+                "image/jpeg"
+            );
+            String resultUrl = fileStorageService.getFileUrl(resultFileId, originalFileName);
+            taskService.updateTaskStatus(taskId, TaskStatusResult.success(taskId, resultUrl, originalFileName));
+
+            // 清理临时上传的源文件
+            fileStorageService.deleteFile(sourceFileId);
+        } catch (Exception e) {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "压缩失败: " + e.getMessage()));
+        }
+    }
+
+    @Async("taskExecutor")
+    public void processPdfToExcel(String taskId, String sourceFileId, String originalFileName) {
+        try {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 10));
+
+            byte[] fileData;
+            try (java.io.InputStream is = fileStorageService.downloadFile(sourceFileId)) {
+                fileData = is.readAllBytes();
+            }
+
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 30));
+            String text = extractPdfTextWithOcr(taskId, fileData);
+
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 70));
+            byte[] excelBytes = createExcelDocument(text);
+
+            String resultFileName = buildXlsxFileName(originalFileName);
+            String resultFileId = fileStorageService.uploadFile(
+                resultFileName,
+                new ByteArrayInputStream(excelBytes),
+                excelBytes.length,
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            );
+            String resultUrl = fileStorageService.getFileUrl(resultFileId, resultFileName);
+            taskService.updateTaskStatus(taskId, TaskStatusResult.success(taskId, resultUrl, resultFileName));
+
+            // 清理临时上传的源文件
+            fileStorageService.deleteFile(sourceFileId);
+        } catch (Exception e) {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "转换失败: " + e.getMessage()));
+        }
+    }
+
+    private String extractPdfTextWithOcr(String taskId, byte[] fileData) throws Exception {
+        try (PDDocument document = Loader.loadPDF(fileData)) {
+            String text = extractPdfTextWithLayout(document);
+
+            // 如果提取出的文本为空或长度极短，则判定为扫描件，启动 OCR
+            // 增加逻辑：如果文本中包含大量乱码（不可见字符比例高），也触发 OCR
+            if (isScanOrCorrupted(text)) {
+                return performOcrOnPdf(taskId, document);
+            }
+            return text;
+        }
+    }
+
+    private String extractPdfTextWithLayout(PDDocument document) throws Exception {
+        LayoutAwarePdfTextStripper stripper = new LayoutAwarePdfTextStripper();
+        stripper.setSortByPosition(true);
+        return stripper.getText(document);
+    }
+
+    private boolean isScanOrCorrupted(String text) {
+        if (text == null || text.trim().length() < 20) {
+            return true;
+        }
+        // 简单判断：如果文本中中文字符和英文字符比例过低，可能是乱码或扫描件
+        long validChars = text.chars().filter(c -> Character.isLetterOrDigit(c) || Character.isSpaceChar(c)).count();
+        return (double) validChars / text.length() < 0.5;
+    }
+
+    private String performOcrOnPdf(String taskId, PDDocument document) throws Exception {
+        if (baiduOcrEnabled && !baiduApiKey.isEmpty()) {
+            return performBaiduOcr(taskId, document);
+        }
+        
+        Tesseract tesseract = new Tesseract();
+        tesseract.setLanguage("chi_sim+eng");
+
+        StringBuilder sb = new StringBuilder();
+        PDFRenderer pdfRenderer = new PDFRenderer(document);
+        int pageCount = document.getNumberOfPages();
+
+        for (int i = 0; i < pageCount; i++) {
+            int progress = 30 + (int) (((double) (i + 1) / pageCount) * 40);
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, progress));
+
+            BufferedImage image = pdfRenderer.renderImageWithDPI(i, 300, org.apache.pdfbox.rendering.ImageType.GRAY);
+            String pageText = tesseract.doOCR(image);
+            
+            if (pageText != null) {
+                pageText = pageText.replaceAll("(?m)^\\s*$", "").trim();
+            }
+            
+            sb.append("--- 第 ").append(i + 1).append(" 页 ---\n");
+            sb.append(pageText).append("\n\n");
+        }
+        return sb.toString();
+    }
+
+    private String performBaiduOcr(String taskId, PDDocument document) throws Exception {
+        AipOcr client = new AipOcr(baiduAppId, baiduApiKey, baiduSecretKey);
+        StringBuilder sb = new StringBuilder();
+        PDFRenderer pdfRenderer = new PDFRenderer(document);
+        int pageCount = document.getNumberOfPages();
+
+        for (int i = 0; i < pageCount; i++) {
+            int progress = 30 + (int) (((double) (i + 1) / pageCount) * 50);
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, progress));
+
+            BufferedImage image = pdfRenderer.renderImageWithDPI(i, 300);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(image, "jpg", baos);
+            byte[] imgData = baos.toByteArray();
+
+            OcrServiceDecision decision = decideBaiduOcrService(image, pageCount);
+            JSONObject res = invokeBaiduOcr(client, imgData, decision);
+            sb.append("--- 第 ").append(i + 1).append(" 页 ---\n");
+            sb.append(buildPageTextFromBaiduResult(res)).append("\n\n");
+        }
+        return sb.toString();
+    }
+
+    private OcrServiceDecision decideBaiduOcrService(BufferedImage image, int pageCount) {
+        int width = Math.max(image.getWidth(), 1);
+        int height = Math.max(image.getHeight(), 1);
+        boolean verySmallPage = width < 1200 || height < 1200;
+        boolean simpleSinglePage = pageCount == 1 && width * height < 1_500_000;
+
+        if (verySmallPage && simpleSinglePage) {
+            return new OcrServiceDecision("basicAccurateGeneral", false, true);
+        }
+        return new OcrServiceDecision("accurateGeneral", true, true);
+    }
+
+    private JSONObject invokeBaiduOcr(AipOcr client, byte[] imgData, OcrServiceDecision decision) {
+        HashMap<String, String> options = new HashMap<>();
+        options.put("probability", "true");
+        if (decision.withPosition()) {
+            options.put("recognize_granularity", "small");
+            options.put("vertexes_location", "true");
+        }
+
+        return switch (decision.methodName()) {
+            case "basicGeneral" -> client.basicGeneral(imgData, options);
+            case "basicAccurateGeneral" -> client.basicAccurateGeneral(imgData, options);
+            case "enhancedGeneral" -> client.enhancedGeneral(imgData, options);
+            default -> client.accurateGeneral(imgData, options);
+        };
+    }
+
+    private String buildPageTextFromBaiduResult(JSONObject res) {
+        if (!res.has("words_result")) {
+            return "";
+        }
+
+        JSONArray array = res.getJSONArray("words_result");
+        List<OcrChar> chars = extractChars(array);
+        if (!chars.isEmpty()) {
+            return buildTextFromChars(chars);
+        }
+        return buildTextFromWords(array);
+    }
+
+    private List<OcrChar> extractChars(JSONArray array) {
+        List<OcrChar> chars = new ArrayList<>();
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject item = array.getJSONObject(i);
+            JSONArray charArray = item.optJSONArray("chars");
+            if (charArray == null) {
+                continue;
+            }
+            for (int j = 0; j < charArray.length(); j++) {
+                JSONObject charItem = charArray.optJSONObject(j);
+                if (charItem == null) {
+                    continue;
+                }
+                String text = charItem.optString("char", "");
+                if (text.isBlank()) {
+                    continue;
+                }
+                JSONObject location = charItem.optJSONObject("location");
+                if (location == null) {
+                    continue;
+                }
+                int left = location.optInt("left", 0);
+                int top = location.optInt("top", 0);
+                int width = Math.max(location.optInt("width", 0), 1);
+                int height = Math.max(location.optInt("height", 0), 1);
+                chars.add(new OcrChar(text, left, top, width, height));
+            }
+        }
+        return chars;
+    }
+
+    private String buildTextFromChars(List<OcrChar> chars) {
+        List<ReconstructedLine> lines = reconstructLines(chars);
+        if (lines.isEmpty()) {
+            return "";
+        }
+
+        int minLeft = lines.stream().mapToInt(ReconstructedLine::left).min().orElse(0);
+        int medianCharWidth = median(chars.stream().map(OcrChar::width).toList(), 12);
+        int medianCharHeight = median(chars.stream().map(OcrChar::height).toList(), 16);
+        StringBuilder sb = new StringBuilder();
+        ReconstructedLine previous = null;
+
+        for (ReconstructedLine line : lines) {
+            if (previous != null) {
+                int verticalGap = line.top() - previous.bottom();
+                int blankLineThreshold = Math.max(medianCharHeight, Math.max(previous.height(), line.height()));
+                sb.append(verticalGap > blankLineThreshold ? "\n\n" : "\n");
+            }
+
+            int indentUnit = Math.max(8, medianCharWidth);
+            int indent = Math.max(0, (line.left() - minLeft) / indentUnit);
+            if (indent > 0) {
+                sb.append(" ".repeat(indent));
+            }
+            sb.append(buildLineText(line.chars(), medianCharWidth));
+            previous = line;
+        }
+
+        return sb.toString().trim();
+    }
+
+    private List<ReconstructedLine> reconstructLines(List<OcrChar> chars) {
+        List<OcrChar> sortedChars = new ArrayList<>(chars);
+        sortedChars.sort(Comparator.comparingInt(OcrChar::centerY).thenComparingInt(OcrChar::left));
+
+        int medianCharHeight = median(sortedChars.stream().map(OcrChar::height).toList(), 16);
+        List<List<OcrChar>> groups = new ArrayList<>();
+        List<OcrChar> currentGroup = new ArrayList<>();
+        double currentCenterY = 0;
+        int currentHeight = medianCharHeight;
+
+        for (OcrChar ocrChar : sortedChars) {
+            if (currentGroup.isEmpty()) {
+                currentGroup.add(ocrChar);
+                currentCenterY = ocrChar.centerY();
+                currentHeight = ocrChar.height();
+                continue;
+            }
+
+            int lineThreshold = Math.max(4, Math.max(medianCharHeight, Math.max(currentHeight, ocrChar.height())) / 2);
+            if (Math.abs(ocrChar.centerY() - currentCenterY) <= lineThreshold) {
+                currentGroup.add(ocrChar);
+                currentCenterY = currentGroup.stream().mapToInt(OcrChar::centerY).average().orElse(ocrChar.centerY());
+                currentHeight = Math.max(currentHeight, ocrChar.height());
+                continue;
+            }
+
+            groups.add(new ArrayList<>(currentGroup));
+            currentGroup.clear();
+            currentGroup.add(ocrChar);
+            currentCenterY = ocrChar.centerY();
+            currentHeight = ocrChar.height();
+        }
+
+        if (!currentGroup.isEmpty()) {
+            groups.add(new ArrayList<>(currentGroup));
+        }
+
+        List<ReconstructedLine> lines = new ArrayList<>();
+        for (List<OcrChar> group : groups) {
+            group.sort(Comparator.comparingInt(OcrChar::left));
+            int left = group.stream().mapToInt(OcrChar::left).min().orElse(0);
+            int top = group.stream().mapToInt(OcrChar::top).min().orElse(0);
+            int height = group.stream().mapToInt(OcrChar::height).max().orElse(medianCharHeight);
+            lines.add(new ReconstructedLine(group, left, top, height));
+        }
+        lines.sort(Comparator.comparingInt(ReconstructedLine::top).thenComparingInt(ReconstructedLine::left));
+        return lines;
+    }
+
+    private String buildLineText(List<OcrChar> chars, int medianCharWidth) {
+        StringBuilder sb = new StringBuilder();
+        OcrChar previous = null;
+        for (OcrChar current : chars) {
+            if (previous != null) {
+                int gap = current.left() - previous.right();
+                int spaceThreshold = Math.max(6, Math.max(medianCharWidth, Math.max(previous.width(), current.width())));
+                if (gap > spaceThreshold * 3) {
+                    sb.append('\t');
+                } else if (gap > spaceThreshold * 2) {
+                    sb.append("    ");
+                } else if (gap > spaceThreshold) {
+                    sb.append("  ");
+                }
+            }
+            sb.append(current.text());
+            previous = current;
+        }
+        return sb.toString().trim();
+    }
+
+    private String buildTextFromWords(JSONArray array) {
+        List<OcrLine> words = new ArrayList<>();
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject item = array.getJSONObject(i);
+            String text = item.optString("words", "").trim();
+            if (text.isEmpty()) {
+                continue;
+            }
+
+            JSONObject location = item.optJSONObject("location");
+            int left = location != null ? location.optInt("left", 0) : 0;
+            int top = location != null ? location.optInt("top", 0) : 0;
+            int width = location != null ? location.optInt("width", 0) : 0;
+            int height = location != null ? Math.max(location.optInt("height", 0), 1) : 1;
+            words.add(new OcrLine(text, left, top, width, height));
+        }
+
+        if (words.isEmpty()) {
+            return "";
+        }
+
+        words.sort(Comparator.comparingInt(OcrLine::top).thenComparingInt(OcrLine::left));
+        int minLeft = words.stream().mapToInt(OcrLine::left).min().orElse(0);
+        int medianWordWidth = median(words.stream().map(OcrLine::width).toList(), 24);
+        StringBuilder sb = new StringBuilder();
+        List<OcrLine> currentRow = new ArrayList<>();
+        OcrLine previousRowAnchor = null;
+
+        for (OcrLine word : words) {
+            if (currentRow.isEmpty()) {
+                currentRow.add(word);
+                continue;
+            }
+
+            OcrLine anchor = currentRow.get(0);
+            int sameLineThreshold = Math.max(4, Math.max(anchor.height(), word.height()) / 2);
+            if (Math.abs(word.top() - anchor.top()) <= sameLineThreshold) {
+                currentRow.add(word);
+                continue;
+            }
+
+            appendWordRow(sb, currentRow, minLeft, medianWordWidth, previousRowAnchor);
+            previousRowAnchor = currentRow.get(0);
+            currentRow = new ArrayList<>();
+            currentRow.add(word);
+        }
+
+        appendWordRow(sb, currentRow, minLeft, medianWordWidth, previousRowAnchor);
+        return sb.toString().trim();
+    }
+
+    private void appendWordRow(StringBuilder sb, List<OcrLine> row, int minLeft, int medianWordWidth, OcrLine previousRowAnchor) {
+        if (row.isEmpty()) {
+            return;
+        }
+        row.sort(Comparator.comparingInt(OcrLine::left));
+        OcrLine first = row.get(0);
+        if (previousRowAnchor != null) {
+            int verticalGap = first.top() - previousRowAnchor.top();
+            int blankLineThreshold = Math.max(previousRowAnchor.height(), first.height()) * 2;
+            sb.append(verticalGap > blankLineThreshold ? "\n\n" : "\n");
+        }
+
+        int indent = Math.max(0, (first.left() - minLeft) / 24);
+        if (indent > 0) {
+            sb.append(" ".repeat(indent));
+        }
+
+        OcrLine previous = null;
+        for (OcrLine current : row) {
+            if (previous != null) {
+                int gap = current.left() - previous.right();
+                int gapThreshold = Math.max(8, Math.max(medianWordWidth / 3, Math.max(previous.height(), current.height())));
+                if (gap > gapThreshold * 3) {
+                    sb.append('\t');
+                } else if (gap > gapThreshold * 2) {
+                    sb.append("    ");
+                } else if (gap > gapThreshold) {
+                    sb.append("  ");
+                }
+            }
+            sb.append(current.words());
+            previous = current;
+        }
+    }
+
+    private int median(List<Integer> values, int fallback) {
+        if (values.isEmpty()) {
+            return fallback;
+        }
+        List<Integer> sorted = new ArrayList<>(values);
+        sorted.sort(Integer::compareTo);
+        return sorted.get(sorted.size() / 2);
+    }
+
+    private static class LayoutAwarePdfTextStripper extends PDFTextStripper {
+        private float previousX = -1;
+        private float previousEndX = -1;
+        private float previousY = -1;
+        private float previousHeight = -1;
+
+        private LayoutAwarePdfTextStripper() throws java.io.IOException {
+            super();
+        }
+
+        @Override
+        protected void writeString(String text, List<TextPosition> textPositions) throws java.io.IOException {
+            if (textPositions == null || textPositions.isEmpty()) {
+                return;
+            }
+
+            TextPosition first = textPositions.get(0);
+            float currentY = first.getYDirAdj();
+            float currentX = first.getXDirAdj();
+            float currentHeight = first.getHeightDir();
+
+            if (previousY >= 0) {
+                float lineThreshold = Math.max(4f, Math.max(previousHeight, currentHeight) / 2f);
+                if (Math.abs(currentY - previousY) > lineThreshold) {
+                    writeLineSeparator();
+                    previousX = -1;
+                    previousEndX = -1;
+                } else if (previousEndX >= 0) {
+                    float gap = currentX - previousEndX;
+                    float averageWidth = 0;
+                    for (TextPosition position : textPositions) {
+                        averageWidth += position.getWidthDirAdj();
+                    }
+                    averageWidth = averageWidth / textPositions.size();
+                    float spaceThreshold = Math.max(6f, averageWidth);
+                    if (gap > spaceThreshold * 3) {
+                        output.write("\t");
+                    } else if (gap > spaceThreshold * 2) {
+                        output.write("    ");
+                    } else if (gap > spaceThreshold) {
+                        output.write("  ");
+                    }
+                }
+            }
+
+            output.write(text);
+            previousX = currentX;
+            TextPosition last = textPositions.get(textPositions.size() - 1);
+            previousEndX = last.getXDirAdj() + last.getWidthDirAdj();
+            previousY = currentY;
+            previousHeight = currentHeight;
+        }
+
+        @Override
+        protected void startPage(org.apache.pdfbox.pdmodel.PDPage page) throws java.io.IOException {
+            super.startPage(page);
+            previousX = -1;
+            previousEndX = -1;
+            previousY = -1;
+            previousHeight = -1;
+        }
+    }
+
+    private record OcrChar(String text, int left, int top, int width, int height) {
+        private int right() {
+            return left + width;
+        }
+
+        private int centerY() {
+            return top + height / 2;
+        }
+    }
+
+    private record ReconstructedLine(List<OcrChar> chars, int left, int top, int height) {
+        private int bottom() {
+            return top + height;
+        }
+    }
+
+    private record OcrLine(String words, int left, int top, int width, int height) {
+        private int right() {
+            return left + width;
+        }
+    }
+
+    private record OcrServiceDecision(String methodName, boolean withPosition, boolean highAccuracy) {
+    }
+
+    private byte[] createWordDocument(String text) throws Exception {
+        WordprocessingMLPackage wordPackage = WordprocessingMLPackage.createPackage();
+        ObjectFactory factory = new ObjectFactory();
+        String[] paragraphs = text.split("\\R{2,}");
+        for (String paragraphText : paragraphs) {
+            P paragraph = factory.createP();
+            R run = factory.createR();
+            Text wordText = factory.createText();
+            wordText.setValue(paragraphText == null || paragraphText.isBlank() ? " " : paragraphText.trim());
+            run.getContent().add(wordText);
+            paragraph.getContent().add(run);
+            wordPackage.getMainDocumentPart().addObject(paragraph);
+        }
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+            wordPackage.save(outputStream);
+            return outputStream.toByteArray();
+        }
+    }
+
+    private byte[] createExcelDocument(String text) throws Exception {
+        try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+            Sheet sheet = workbook.createSheet("Sheet1");
+            List<String> lines = collectTableLines(text);
+            List<Integer> anchors = buildGlobalColumnAnchors(lines);
+            List<List<String>> rows = new ArrayList<>();
+            for (String line : lines) {
+                List<String> cells = mapLineToCells(line, anchors);
+                if (!cells.isEmpty()) {
+                    rows.add(cells);
+                }
+            }
+
+            rows = mergeContinuationRows(rows);
+            rows = mergeHeaderRows(rows);
+            rows = carryForwardLeadingCells(rows);
+
+            int rowIndex = 0;
+            int maxColumnCount = 1;
+            for (List<String> rowData : rows) {
+                if (isEffectivelyEmptyRow(rowData)) {
+                    continue;
+                }
+                org.apache.poi.ss.usermodel.Row row = sheet.createRow(rowIndex++);
+                for (int columnIndex = 0; columnIndex < rowData.size(); columnIndex++) {
+                    String value = normalizeCellValue(rowData.get(columnIndex));
+                    if (value.isEmpty()) {
+                        continue;
+                    }
+                    Cell cell = row.createCell(columnIndex);
+                    cell.setCellValue(value);
+                }
+                maxColumnCount = Math.max(maxColumnCount, rowData.size());
+            }
+            if (rowIndex == 0) {
+                sheet.createRow(0).createCell(0).setCellValue("");
+            }
+            for (int columnIndex = 0; columnIndex < maxColumnCount; columnIndex++) {
+                sheet.autoSizeColumn(columnIndex);
+            }
+            workbook.write(outputStream);
+            return outputStream.toByteArray();
+        }
+    }
+
+    private boolean isPageMarkerLine(String line) {
+        String trimmed = line == null ? "" : line.trim();
+        return trimmed.matches("---\\s*第\\s*\\d+\\s*页\\s*---");
+    }
+
+    private List<String> collectTableLines(String text) {
+        String[] sourceLines = text == null ? new String[0] : text.split("\\R");
+        List<String> normalizedLines = new ArrayList<>();
+        Map<String, Integer> frequencies = new LinkedHashMap<>();
+        for (String rawLine : sourceLines) {
+            String line = normalizeRawLine(rawLine);
+            if (line.isEmpty() || isPageMarkerLine(line)) {
+                continue;
+            }
+            normalizedLines.add(line);
+            String fingerprint = line.replaceAll("\\d", "#").trim();
+            if (fingerprint.length() >= 2) {
+                frequencies.merge(fingerprint, 1, Integer::sum);
+            }
+        }
+
+        Set<String> repeatedNoise = new HashSet<>();
+        for (Map.Entry<String, Integer> entry : frequencies.entrySet()) {
+            if (entry.getValue() >= 3 && !looksLikeDataRow(entry.getKey())) {
+                repeatedNoise.add(entry.getKey());
+            }
+        }
+
+        List<String> lines = new ArrayList<>();
+        String previous = null;
+        for (String line : normalizedLines) {
+            if (isRepeatedHeaderFooter(line, repeatedNoise)) {
+                continue;
+            }
+            if (previous != null && isContinuationHeader(line, previous)) {
+                continue;
+            }
+            lines.add(line);
+            previous = line;
+        }
+        return lines;
+    }
+
+    private String normalizeRawLine(String line) {
+        if (line == null) {
+            return "";
+        }
+        return line.replace('\u00A0', ' ')
+            .replace('\u2003', ' ')
+            .replace('\u3000', '　')
+            .replaceAll("[ \t　]+$", "")
+            .trim();
+    }
+
+    private boolean isRepeatedHeaderFooter(String line, Set<String> repeatedNoise) {
+        String trimmed = normalizeRawLine(line);
+        if (trimmed.isEmpty()) {
+            return true;
+        }
+        if (trimmed.matches("第\\s*\\d+\\s*页") || trimmed.matches("[-—]{2,}.*[-—]{2,}")) {
+            return true;
+        }
+        String fingerprint = trimmed.replaceAll("\\d", "#");
+        return repeatedNoise.contains(fingerprint);
+    }
+
+    private boolean isContinuationHeader(String current, String previous) {
+        String currentLine = normalizeRawLine(current);
+        String previousLine = normalizeRawLine(previous);
+        if (currentLine.isEmpty() || previousLine.isEmpty()) {
+            return false;
+        }
+        if (currentLine.equals(previousLine)) {
+            return true;
+        }
+        if (!looksLikeHeaderRow(currentLine) || !looksLikeHeaderRow(previousLine)) {
+            return false;
+        }
+        List<String> currentCells = splitLineToCells(currentLine);
+        List<String> previousCells = splitLineToCells(previousLine);
+        return !currentCells.isEmpty() && currentCells.equals(previousCells);
+    }
+
+    private List<Integer> buildGlobalColumnAnchors(List<String> lines) {
+        List<Integer> splitPositions = new ArrayList<>();
+        for (String line : lines) {
+            splitPositions.addAll(findSplitPositions(line));
+        }
+        if (splitPositions.isEmpty()) {
+            return List.of();
+        }
+        Collections.sort(splitPositions);
+        List<Integer> anchors = new ArrayList<>();
+        int currentSum = splitPositions.get(0);
+        int currentCount = 1;
+        for (int i = 1; i < splitPositions.size(); i++) {
+            int value = splitPositions.get(i);
+            int average = currentSum / currentCount;
+            if (Math.abs(value - average) <= 3) {
+                currentSum += value;
+                currentCount++;
+                continue;
+            }
+            if (currentCount >= 2) {
+                anchors.add(currentSum / currentCount);
+            }
+            currentSum = value;
+            currentCount = 1;
+        }
+        if (currentCount >= 2) {
+            anchors.add(currentSum / currentCount);
+        }
+        return anchors;
+    }
+
+    private List<Integer> findSplitPositions(String line) {
+        List<Integer> positions = new ArrayList<>();
+        String content = removeLeadingIndent(line);
+        Matcher matcher = Pattern.compile("\\t+|[ 　]{2,}").matcher(content);
+        while (matcher.find()) {
+            positions.add(matcher.start());
+        }
+        return positions;
+    }
+
+    private List<String> mapLineToCells(String line, List<Integer> anchors) {
+        if (anchors == null || anchors.isEmpty()) {
+            return splitLineToCells(line);
+        }
+        List<LineSegment> segments = splitLineToSegments(line);
+        if (segments.isEmpty()) {
+            return List.of();
+        }
+        List<String> anchoredCells = new ArrayList<>(Collections.nCopies(anchors.size() + 1, ""));
+        for (LineSegment segment : segments) {
+            int index = resolveAnchorIndex(segment.start(), anchors);
+            String existing = anchoredCells.get(index);
+            anchoredCells.set(index, existing.isEmpty() ? segment.text() : existing + "\n" + segment.text());
+        }
+        return trimTrailingEmptyCells(anchoredCells);
+    }
+
+    private int resolveAnchorIndex(int start, List<Integer> anchors) {
+        for (int i = 0; i < anchors.size(); i++) {
+            if (start <= anchors.get(i) + 1) {
+                return i;
+            }
+        }
+        return anchors.size();
+    }
+
+    private List<LineSegment> splitLineToSegments(String line) {
+        String content = removeLeadingIndent(line);
+        if (content.isEmpty()) {
+            return List.of();
+        }
+        List<LineSegment> segments = new ArrayList<>();
+        Matcher matcher = Pattern.compile("\\t+|[ 　]{2,}").matcher(content);
+        int start = 0;
+        while (matcher.find()) {
+            String cell = content.substring(start, matcher.start()).trim();
+            if (!cell.isEmpty()) {
+                segments.add(new LineSegment(start, cell));
+            }
+            start = matcher.end();
+        }
+        String tail = content.substring(start).trim();
+        if (!tail.isEmpty()) {
+            segments.add(new LineSegment(start, tail));
+        }
+        return segments;
+    }
+
+    private List<String> trimTrailingEmptyCells(List<String> cells) {
+        int lastIndex = cells.size() - 1;
+        while (lastIndex >= 0 && cells.get(lastIndex).isBlank()) {
+            lastIndex--;
+        }
+        if (lastIndex < 0) {
+            return List.of();
+        }
+        List<String> trimmed = new ArrayList<>();
+        for (int i = 0; i <= lastIndex; i++) {
+            trimmed.add(cells.get(i).trim());
+        }
+        return trimmed;
+    }
+
+    private boolean isEffectivelyEmptyRow(List<String> row) {
+        for (String cell : row) {
+            if (cell != null && !cell.isBlank()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private List<String> splitLineToCells(String line) {
+        String normalized = line == null ? "" : line.replaceAll("\\s+$", "");
+        if (normalized.isBlank()) {
+            return List.of();
+        }
+
+        String content = removeLeadingIndent(normalized);
+        if (content.contains("\t")) {
+            return filterCells(content.split("\\t+"), false);
+        }
+        return filterCells(content.split("[ 　]{2,}"), false);
+    }
+
+    private String removeLeadingIndent(String line) {
+        return line == null ? "" : line.replaceFirst("^[ 　]+", "");
+    }
+
+    private List<String> filterCells(String[] rawCells, boolean preserveEmptyCells) {
+        List<String> cells = new ArrayList<>();
+        for (String rawCell : rawCells) {
+            if (rawCell == null) {
+                if (preserveEmptyCells) {
+                    cells.add("");
+                }
+                continue;
+            }
+            String trimmed = rawCell.trim();
+            if (!trimmed.isEmpty() || preserveEmptyCells) {
+                cells.add(trimmed);
+            }
+        }
+        return trimTrailingEmptyCells(cells);
+    }
+
+    private List<List<String>> mergeContinuationRows(List<List<String>> rows) {
+        List<List<String>> merged = new ArrayList<>();
+        for (List<String> row : rows) {
+            if (merged.isEmpty()) {
+                merged.add(new ArrayList<>(row));
+                continue;
+            }
+            List<String> previous = merged.get(merged.size() - 1);
+            if (!shouldMergeContinuationRow(previous, row)) {
+                merged.add(new ArrayList<>(row));
+                continue;
+            }
+            int targetColumn = findPrimaryContinuationColumn(previous, row);
+            List<String> combined = new ArrayList<>(previous);
+            ensureRowSize(combined, Math.max(previous.size(), row.size()));
+            for (int i = 0; i < row.size(); i++) {
+                String current = row.get(i);
+                if (current == null || current.isBlank()) {
+                    continue;
+                }
+                if (i == targetColumn || combined.get(i).isBlank()) {
+                    combined.set(i, appendCellText(combined.get(i), current));
+                }
+            }
+            merged.set(merged.size() - 1, trimTrailingEmptyCells(combined));
+        }
+        return merged;
+    }
+
+    private boolean shouldMergeContinuationRow(List<String> previous, List<String> current) {
+        int previousFilled = countFilledCells(previous);
+        int currentFilled = countFilledCells(current);
+        if (previousFilled < 2 || currentFilled == 0 || currentFilled > Math.max(2, previousFilled / 2 + 1)) {
+            return false;
+        }
+        if (looksLikeHeaderRow(joinCells(current)) || looksLikeDataRow(joinCells(current))) {
+            return false;
+        }
+        int firstFilled = firstFilledIndex(current);
+        return firstFilled >= 0 && firstFilled < current.size();
+    }
+
+    private int findPrimaryContinuationColumn(List<String> previous, List<String> current) {
+        for (int i = 0; i < Math.min(previous.size(), current.size()); i++) {
+            if (!current.get(i).isBlank() && !previous.get(i).isBlank()) {
+                return i;
+            }
+        }
+        return Math.max(0, firstFilledIndex(current));
+    }
+
+    private List<List<String>> mergeHeaderRows(List<List<String>> rows) {
+        if (rows.size() < 2) {
+            return rows;
+        }
+        List<List<String>> merged = new ArrayList<>();
+        int index = 0;
+        while (index < rows.size()) {
+            if (index < rows.size() - 1 && shouldMergeHeaderRows(rows.get(index), rows.get(index + 1))) {
+                merged.add(mergeTwoRows(rows.get(index), rows.get(index + 1)));
+                index += 2;
+                continue;
+            }
+            merged.add(new ArrayList<>(rows.get(index)));
+            index++;
+        }
+        return merged;
+    }
+
+    private boolean shouldMergeHeaderRows(List<String> first, List<String> second) {
+        String firstText = joinCells(first);
+        String secondText = joinCells(second);
+        if (!looksLikeHeaderRow(firstText) || !looksLikeHeaderRow(secondText)) {
+            return false;
+        }
+        int firstFilled = countFilledCells(first);
+        int secondFilled = countFilledCells(second);
+        return Math.abs(firstFilled - secondFilled) <= 1 && Math.max(firstFilled, secondFilled) >= 2;
+    }
+
+    private List<String> mergeTwoRows(List<String> first, List<String> second) {
+        int size = Math.max(first.size(), second.size());
+        List<String> merged = new ArrayList<>(Collections.nCopies(size, ""));
+        for (int i = 0; i < size; i++) {
+            String top = i < first.size() ? first.get(i) : "";
+            String bottom = i < second.size() ? second.get(i) : "";
+            if (!top.isBlank() && !bottom.isBlank() && !top.equals(bottom)) {
+                merged.set(i, top + " / " + bottom);
+            } else {
+                merged.set(i, top.isBlank() ? bottom : top);
+            }
+        }
+        return trimTrailingEmptyCells(merged);
+    }
+
+    private List<List<String>> carryForwardLeadingCells(List<List<String>> rows) {
+        List<List<String>> normalized = new ArrayList<>();
+        List<String> previous = null;
+        for (List<String> row : rows) {
+            List<String> current = new ArrayList<>(row);
+            if (previous != null && shouldCarryForwardLeadingCell(previous, current)) {
+                ensureRowSize(current, previous.size());
+                current.set(0, previous.get(0));
+            }
+            normalized.add(current);
+            previous = current;
+        }
+        return normalized;
+    }
+
+    private boolean shouldCarryForwardLeadingCell(List<String> previous, List<String> current) {
+        if (previous.isEmpty() || current.isEmpty() || previous.get(0).isBlank() || !current.get(0).isBlank()) {
+            return false;
+        }
+        if (countFilledCells(previous) < 2 || countFilledCells(current) < 2) {
+            return false;
+        }
+        int alignedColumns = 0;
+        for (int i = 1; i < Math.min(previous.size(), current.size()); i++) {
+            if (!previous.get(i).isBlank() && !current.get(i).isBlank()) {
+                alignedColumns++;
+            }
+        }
+        return alignedColumns >= 1;
+    }
+
+    private String normalizeCellValue(String value) {
+        String trimmed = value == null ? "" : value.trim();
+        if (trimmed.isEmpty()) {
+            return "";
+        }
+        String normalized = normalizeOcrDate(trimmed);
+        return normalizeOcrValue(normalized);
+    }
+
+    private String normalizeOcrValue(String value) {
+        if (!value.matches("[0-9OIlBSozZ,.:/%+\\-]+")) {
+            return value;
+        }
+        return value
+            .replace('O', '0')
+            .replace('o', '0')
+            .replace('I', '1')
+            .replace('l', '1')
+            .replace('S', '5')
+            .replace('B', '8')
+            .replace('z', '2')
+            .replace('Z', '2');
+    }
+
+    private String normalizeOcrDate(String value) {
+        if (!value.matches("[0-9OIl./\\-年\u6708\u65e5]+")) {
+            return value;
+        }
+        String normalized = value.replace('O', '0').replace('o', '0').replace('I', '1').replace('l', '1');
+        return normalized.replace('.', '-').replace('/', '-');
+    }
+
+    private boolean looksLikeDataRow(String line) {
+        List<String> cells = splitLineToCells(line);
+        if (cells.size() >= 3) {
+            return true;
+        }
+        long digitCount = line.chars().filter(Character::isDigit).count();
+        return digitCount >= 4;
+    }
+
+    private boolean looksLikeHeaderRow(String line) {
+        List<String> cells = splitLineToCells(line);
+        if (cells.size() < 2) {
+            return false;
+        }
+        long digitCount = line.chars().filter(Character::isDigit).count();
+        return digitCount <= Math.max(2, line.length() / 8);
+    }
+
+    private int countFilledCells(List<String> row) {
+        int count = 0;
+        for (String cell : row) {
+            if (cell != null && !cell.isBlank()) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private int firstFilledIndex(List<String> row) {
+        for (int i = 0; i < row.size(); i++) {
+            if (row.get(i) != null && !row.get(i).isBlank()) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private void ensureRowSize(List<String> row, int size) {
+        while (row.size() < size) {
+            row.add("");
+        }
+    }
+
+    private String appendCellText(String original, String addition) {
+        if (original == null || original.isBlank()) {
+            return addition.trim();
+        }
+        return original + "\n" + addition.trim();
+    }
+
+    private String joinCells(List<String> row) {
+        return String.join(" ", row).trim();
+    }
+
+    private record LineSegment(int start, String text) {
+    }
+
+    private String buildDocxFileName(String originalFileName) {
+        if (originalFileName == null || originalFileName.isBlank()) {
+            return "converted.docx";
+        }
+        int dotIndex = originalFileName.lastIndexOf('.');
+        String baseName = dotIndex > 0 ? originalFileName.substring(0, dotIndex) : originalFileName;
+        return baseName + ".docx";
+    }
+
+    private String buildXlsxFileName(String originalFileName) {
+        if (originalFileName == null || originalFileName.isBlank()) {
+            return "converted.xlsx";
+        }
+        int dotIndex = originalFileName.lastIndexOf('.');
+        String baseName = dotIndex > 0 ? originalFileName.substring(0, dotIndex) : originalFileName;
+        return baseName + ".xlsx";
+    }
+}

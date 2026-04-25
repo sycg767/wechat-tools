@@ -1,0 +1,9 @@
+{
+  "desc": "微信小程序工具箱 sitemap",
+  "rules": [
+    {
+      "action": "allow",
+      "page": "*"
+    }
+  ]
+}

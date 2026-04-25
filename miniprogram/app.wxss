@@ -1,0 +1,102 @@
+/** 全局变量 **/
+page {
+  --primary-color: #007AFF;
+  --primary-light: #E5F1FF;
+  --success-color: #34C759;
+  --warning-color: #FF9500;
+  --error-color: #FF3B30;
+  --text-main: #1D1D1F;
+  --text-second: #86868B;
+  --text-placeholder: #C7C7CC;
+  --bg-color: #F5F5F7;
+  --card-bg: #FFFFFF;
+  --border-radius-lg: 24rpx;
+  --border-radius-md: 16rpx;
+  --border-radius-sm: 8rpx;
+  --shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+  
+  background: var(--bg-color);
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
+  font-size: 28rpx;
+  line-height: 1.5;
+}
+
+.container {
+  padding: 32rpx;
+  box-sizing: border-box;
+  min-height: 100vh;
+}
+
+/** 卡片样式 **/
+.card {
+  background: var(--card-bg);
+  border-radius: var(--border-radius-lg);
+  padding: 32rpx;
+  box-sizing: border-box;
+  box-shadow: var(--shadow);
+  margin-bottom: 32rpx;
+  transition: all 0.2s ease;
+}
+
+.card-active {
+  transform: scale(0.98);
+  opacity: 0.9;
+}
+
+/** 标题样式 **/
+.section-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  margin: 40rpx 0 24rpx 8rpx;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+}
+
+.section-title::before {
+  content: '';
+  width: 8rpx;
+  height: 32rpx;
+  background: var(--primary-color);
+  margin-right: 16rpx;
+  border-radius: 4rpx;
+}
+
+/** 按钮样式 **/
+.btn {
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  border-radius: var(--border-radius-md);
+  font-size: 30rpx;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  color: #ffffff;
+}
+
+.btn-secondary {
+  background: var(--primary-light);
+  color: var(--primary-color);
+}
+
+.btn-hover {
+  opacity: 0.8;
+  transform: scale(0.98);
+}
+
+.btn-disabled {
+  background: #F2F2F7;
+  color: var(--text-placeholder);
+}
+
+/** 辅助类 **/
+.text-center { text-align: center; }
+.mt-20 { margin-top: 20rpx; }
+.mb-20 { margin-bottom: 20rpx; }
+.flex-center { display: flex; align-items: center; justify-content: center; }

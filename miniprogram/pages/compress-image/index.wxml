@@ -1,0 +1,8 @@
+<view class="container">
+  <view class="section-title">图片压缩</view>
+  <view class="card">
+    <view class="todo-title">该工具骨架已创建</view>
+    <view class="todo-desc">下一步接入后端 `/api/tool/compress-image` 接口与质量调节。</view>
+    <button class="primary-btn" bindtap="handleTodo">了解当前状态</button>
+  </view>
+</view>
