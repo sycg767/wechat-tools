@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "PDF 拆分",
+  "usingComponents": {
+    "file-picker": "/components/file-picker/index",
+    "result-card": "/components/result-card/index"
+  }
+}

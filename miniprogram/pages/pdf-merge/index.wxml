@@ -1,0 +1,65 @@
+<view class="container">
+  <view class="page-header">
+    <view class="page-title">PDF 合并</view>
+    <view class="page-desc">将多个 PDF 文件按顺序合并为一个文档</view>
+  </view>
+
+  <view class="file-list-card card">
+    <view class="card-title">已选文件 ({{selectedFiles.length}})</view>
+    
+    <view class="file-list" wx:if="{{selectedFiles.length > 0}}">
+      <view
+        class="file-item {{draggingIndex === index ? 'dragging' : ''}}"
+        wx:for="{{selectedFiles}}"
+        wx:key="path"
+        data-index="{{index}}"
+        bindtouchstart="touchStart"
+        catchtouchmove="touchMove"
+        bindtouchend="touchEnd"
+        style="transform: translateY({{item.offset || 0}}px); transition: {{draggingIndex === index ? 'none' : 'transform 0.2s ease'}};"
+      >
+        <view class="drag-handle">
+          <view class="drag-line"></view>
+          <view class="drag-line"></view>
+          <view class="drag-line"></view>
+        </view>
+        <view class="file-info">
+          <view class="file-name text-ellipsis">{{item.name}}</view>
+          <view class="file-size">{{item.sizeText}}</view>
+        </view>
+        <view class="file-action" catchtap="removeFile" data-index="{{index}}">
+          <icon type="clear" size="20" color="#FF3B30" />
+        </view>
+      </view>
+    </view>
+    
+    <view class="empty-tip" wx:else>请添加至少两个 PDF 文件</view>
+
+    <button class="btn btn-secondary add-btn" bindtap="chooseFiles">
+      <text class="plus">+</text> 添加文件
+    </button>
+  </view>
+
+  <view class="card form-card {{selectedFiles.length >= 2 ? 'form-active' : ''}}">
+    <view class="form-item">
+      <view class="label">输出文件名</view>
+      <input
+        class="input"
+        placeholder="例如: 合并后的文档"
+        value="{{fileName}}"
+        bindinput="handleFileNameInput"
+      />
+      <view class="tip">可选，默认为 merged.pdf</view>
+    </view>
+  </view>
+
+  <view class="action-bar {{selectedFiles.length >= 2 ? 'bar-active' : ''}}">
+    <button
+      class="btn btn-primary {{selectedFiles.length < 2 ? 'btn-disabled' : ''}}"
+      bindtap="handleSubmit"
+      hover-class="btn-hover"
+    >
+      开始合并
+    </button>
+  </view>
+</view>

@@ -6,6 +6,10 @@ import com.wechat.tools.task.FileConversionTask;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/tool")
 public class ToolController {
@@ -160,6 +164,94 @@ public class ToolController {
             return Result.success(taskId, "任务已创建");
         } catch (Exception e) {
             return Result.error("PDF 转 Excel 失败：" + e.getMessage());
+        }
+    }
+
+    @PostMapping("/pdf-merge")
+    public Result<String> pdfMerge(@RequestParam("files") MultipartFile[] files) {
+        try {
+            if (files == null || files.length < 2) {
+                return Result.error(400, "请至少上传两个 PDF 文件进行合并");
+            }
+
+            List<String> sourceFileIds = new ArrayList<>();
+            for (MultipartFile file : files) {
+                if (file.isEmpty()) continue;
+                String fileId = fileStorageService.uploadFile(
+                    file.getOriginalFilename(),
+                    file.getInputStream(),
+                    file.getSize(),
+                    file.getContentType()
+                );
+                sourceFileIds.add(fileId);
+            }
+
+            if (sourceFileIds.size() < 2) {
+                return Result.error(400, "有效文件不足，无法合并");
+            }
+
+            String taskId = taskService.createTask("pdf-merge", "多个PDF合并");
+            fileConversionTask.processPdfMerge(taskId, sourceFileIds, "merged.pdf");
+
+            return Result.success(taskId, "任务已创建");
+        } catch (Exception e) {
+            return Result.error("PDF 合并失败：" + e.getMessage());
+        }
+    }
+
+    @PostMapping("/pdf-merge-by-ids")
+    public Result<String> pdfMergeByIds(@RequestBody Map<String, Object> payload) {
+        @SuppressWarnings("unchecked")
+        List<String> fileIds = (List<String>) payload.get("fileIds");
+        String customFileName = (String) payload.get("fileName");
+        
+        try {
+            if (fileIds == null || fileIds.size() < 2) {
+                return Result.error(400, "请至少提供两个文件ID进行合并");
+            }
+
+            String resultFileName = customFileName != null && !customFileName.isBlank()
+                ? customFileName.trim()
+                : "merged.pdf";
+            
+            if (!resultFileName.toLowerCase().endsWith(".pdf")) {
+                resultFileName += ".pdf";
+            }
+
+            String taskId = taskService.createTask("pdf-merge", "多个PDF合并");
+            fileConversionTask.processPdfMerge(taskId, fileIds, resultFileName);
+
+            return Result.success(taskId, "任务已创建");
+        } catch (Exception e) {
+            return Result.error("PDF 合并失败：" + e.getMessage());
+        }
+    }
+
+    @PostMapping("/pdf-split")
+    public Result<String> pdfSplit(@RequestParam("file") MultipartFile file,
+                                   @RequestParam(value = "range", required = false) String range,
+                                   @RequestParam(value = "originalFileName", required = false) String originalFileName) {
+        try {
+            if (file.isEmpty()) {
+                return Result.error(400, "文件不能为空");
+            }
+            String resolvedFileName = originalFileName != null && !originalFileName.isBlank()
+                ? originalFileName.trim()
+                : file.getOriginalFilename();
+            
+            String sourceFileId = fileStorageService.uploadFile(
+                resolvedFileName,
+                file.getInputStream(),
+                file.getSize(),
+                file.getContentType()
+            );
+
+            String taskId = taskService.createTask("pdf-split", resolvedFileName);
+            fileConversionTask.processPdfSplit(taskId, sourceFileId, resolvedFileName, range);
+
+            return Result.success(taskId, "任务已创建");
+        } catch (Exception e) {
+            return Result.error("PDF 拆分失败：" + e.getMessage());
         }
     }
 

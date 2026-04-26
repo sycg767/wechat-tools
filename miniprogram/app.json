@@ -6,7 +6,9 @@
     "pages/tasks/index",
     "pages/task-detail/index",
     "pages/pdf-excel/index",
-    "pages/compress-image/index"
+    "pages/compress-image/index",
+    "pages/pdf-merge/index",
+    "pages/pdf-split/index"
   ],
   "window": {
     "navigationBarTitleText": "实用工具箱",

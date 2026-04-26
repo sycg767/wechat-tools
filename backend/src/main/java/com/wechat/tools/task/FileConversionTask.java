@@ -7,6 +7,9 @@ import com.wechat.tools.service.FileStorageService;
 import com.wechat.tools.service.TaskService;
 import net.sourceforge.tess4j.Tesseract;
 import org.apache.pdfbox.Loader;
+import org.apache.pdfbox.io.RandomAccessReadBuffer;
+import org.apache.pdfbox.multipdf.PDFMergerUtility;
+import org.apache.pdfbox.multipdf.Splitter;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -193,6 +196,126 @@ public class FileConversionTask {
             fileStorageService.deleteFile(sourceFileId);
         } catch (Exception e) {
             taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "转换失败: " + e.getMessage()));
+        }
+    }
+
+    @Async("taskExecutor")
+    public void processPdfMerge(String taskId, List<String> sourceFileIds, String resultFileName) {
+        try {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 10));
+            
+            PDFMergerUtility merger = new PDFMergerUtility();
+            List<PDDocument> documents = new ArrayList<>();
+            
+            try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                merger.setDestinationStream(baos);
+                
+                for (int i = 0; i < sourceFileIds.size(); i++) {
+                    String fileId = sourceFileIds.get(i);
+                    byte[] data;
+                    try (java.io.InputStream is = fileStorageService.downloadFile(fileId)) {
+                        data = is.readAllBytes();
+                    }
+                    PDDocument doc = Loader.loadPDF(data);
+                    documents.add(doc);
+                    merger.addSource(new RandomAccessReadBuffer(data));
+                    
+                    int progress = 10 + (int) (((double) (i + 1) / sourceFileIds.size()) * 70);
+                    taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, progress));
+                }
+                
+                merger.mergeDocuments(null);
+                byte[] mergedData = baos.toByteArray();
+                
+                taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 90));
+                
+                String resultFileId = fileStorageService.uploadFile(
+                    resultFileName,
+                    new ByteArrayInputStream(mergedData),
+                    mergedData.length,
+                    "application/pdf"
+                );
+                String resultUrl = fileStorageService.getFileUrl(resultFileId, resultFileName);
+                taskService.updateTaskStatus(taskId, TaskStatusResult.success(taskId, resultUrl, resultFileName));
+            } finally {
+                for (PDDocument doc : documents) {
+                    try { doc.close(); } catch (Exception ignored) {}
+                }
+            }
+            
+            // 清理临时文件
+            for (String fileId : sourceFileIds) {
+                fileStorageService.deleteFile(fileId);
+            }
+        } catch (Exception e) {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "合并失败: " + e.getMessage()));
+        }
+    }
+
+    @Async("taskExecutor")
+    public void processPdfSplit(String taskId, String sourceFileId, String originalFileName, String range) {
+        try {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 20));
+            
+            byte[] fileData;
+            try (java.io.InputStream is = fileStorageService.downloadFile(sourceFileId)) {
+                fileData = is.readAllBytes();
+            }
+            
+            try (PDDocument document = Loader.loadPDF(fileData)) {
+                Splitter splitter = new Splitter();
+                
+                // 解析范围，例如 "1-3,5"
+                // 为了简单起见，如果 range 为空，则拆分所有页（但目前只支持提取到一个 PDF）
+                // 这里的逻辑改为：提取指定范围的页面到一个新的 PDF
+                if (range != null && !range.isBlank()) {
+                    // 简单的范围解析逻辑可以很复杂，这里先实现基础的提取
+                    // 比如 "1-3" 提取前三页
+                    String[] parts = range.split("-");
+                    if (parts.length == 2) {
+                        int start = Integer.parseInt(parts[0].trim());
+                        int end = Integer.parseInt(parts[1].trim());
+                        splitter.setStartPage(start);
+                        splitter.setEndPage(end);
+                    } else if (parts.length == 1) {
+                        int page = Integer.parseInt(parts[0].trim());
+                        splitter.setStartPage(page);
+                        splitter.setEndPage(page);
+                    }
+                }
+                
+                List<PDDocument> splitDocs = splitter.split(document);
+                
+                // 将拆分后的页面合并成一个新的 PDF（即提取范围内的页面）
+                PDFMergerUtility merger = new PDFMergerUtility();
+                try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                     PDDocument resultDoc = new PDDocument()) {
+                    
+                    for (PDDocument part : splitDocs) {
+                        for (int i = 0; i < part.getNumberOfPages(); i++) {
+                            resultDoc.addPage(part.getPage(i));
+                        }
+                        part.close();
+                    }
+                    
+                    resultDoc.save(baos);
+                    byte[] resultData = baos.toByteArray();
+                    
+                    String resultFileName = "split_" + originalFileName;
+                    String resultFileId = fileStorageService.uploadFile(
+                        resultFileName,
+                        new ByteArrayInputStream(resultData),
+                        resultData.length,
+                        "application/pdf"
+                    );
+                    String resultUrl = fileStorageService.getFileUrl(resultFileId, resultFileName);
+                    taskService.updateTaskStatus(taskId, TaskStatusResult.success(taskId, resultUrl, resultFileName));
+                }
+            }
+            
+            fileStorageService.deleteFile(sourceFileId);
+        } catch (Exception e) {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "拆分失败: " + e.getMessage()));
         }
     }
 

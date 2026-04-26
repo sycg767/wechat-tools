@@ -32,6 +32,20 @@ Page({
         disabled: false
       },
       {
+        title: 'PDF 合并',
+        desc: '将多个 PDF 文件合并为一个',
+        path: '/pages/pdf-merge/index',
+        iconClass: 'icon-pdf-merge',
+        tag: '新增'
+      },
+      {
+        title: 'PDF 拆分',
+        desc: '提取 PDF 指定页面',
+        path: '/pages/pdf-split/index',
+        iconClass: 'icon-pdf-split',
+        tag: '新增'
+      },
+      {
         title: '任务历史',
         desc: '查看处理中与已完成的任务结果',
         path: '/pages/tasks/index',

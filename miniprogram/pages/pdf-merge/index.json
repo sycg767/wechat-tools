@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "PDF 合并",
+  "usingComponents": {
+    "result-card": "/components/result-card/index"
+  }
+}

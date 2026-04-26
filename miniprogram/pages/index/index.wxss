@@ -99,6 +99,8 @@
 .icon-pdf-word { background: #FFF0F0; }
 .icon-pdf-excel { background: #F0FFF4; }
 .icon-image { background: #FFF9E6; }
+.icon-pdf-merge { background: #F0F0FF; }
+.icon-pdf-split { background: #F0F7FF; }
 .icon-tasks { background: #F5F5F7; }
 
 .tool-icon-inner {
@@ -113,6 +115,8 @@
 .icon-pdf-word .tool-icon-inner { color: #FF3B30; border-radius: 4rpx; }
 .icon-pdf-excel .tool-icon-inner { color: #34C759; }
 .icon-image .tool-icon-inner { color: #FF9500; border-radius: 50%; }
+.icon-pdf-merge .tool-icon-inner { color: #5856D6; }
+.icon-pdf-split .tool-icon-inner { color: #007AFF; }
 .icon-tasks .tool-icon-inner { color: #86868B; }
 
 .tool-info {

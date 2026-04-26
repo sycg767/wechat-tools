@@ -1,0 +1,32 @@
+<view class="container">
+  <view class="page-header">
+    <view class="page-title">PDF 拆分/提取</view>
+    <view class="page-desc">从 PDF 中提取指定范围的页面并生成新文档</view>
+  </view>
+
+  <file-picker file="{{selectedFile}}" bind:selected="handleFileSelected" />
+
+  <view class="card form-card {{selectedFile ? 'form-active' : ''}}">
+    <view class="form-item">
+      <view class="label">提取范围</view>
+      <input 
+        class="input" 
+        placeholder="例如: 1-3 或 5" 
+        value="{{range}}" 
+        bindinput="handleRangeInput"
+      />
+      <view class="tip">留空则提取所有页面</view>
+    </view>
+    
+    <button
+      class="btn btn-primary {{!selectedFile ? 'btn-disabled' : ''}}"
+      bindtap="handleSubmit"
+      hover-class="btn-hover"
+    >
+      开始拆分
+    </button>
+  </view>
+
+  <!-- 结果展示 -->
+  <result-card wx:if="{{taskId}}" taskId="{{taskId}}" bind:complete="handleTaskComplete" />
+</view>
