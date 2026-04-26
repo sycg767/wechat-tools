@@ -287,13 +287,13 @@ public class FileConversionTask {
                 List<PDDocument> splitDocs = splitter.split(document);
                 
                 // 将拆分后的页面合并成一个新的 PDF（即提取范围内的页面）
-                PDFMergerUtility merger = new PDFMergerUtility();
                 try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
                      PDDocument resultDoc = new PDDocument()) {
                     
                     for (PDDocument part : splitDocs) {
                         for (int i = 0; i < part.getNumberOfPages(); i++) {
-                            resultDoc.addPage(part.getPage(i));
+                            // 使用 importPage 确保资源（字体、图片等）被正确复制
+                            resultDoc.importPage(part.getPage(i));
                         }
                         part.close();
                     }
