@@ -3,10 +3,17 @@ package com.wechat.tools.controller;
 import com.wechat.tools.common.Result;
 import com.wechat.tools.service.TaskService;
 import com.wechat.tools.task.FileConversionTask;
+import org.apache.pdfbox.Loader;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.rendering.PDFRenderer;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 
@@ -254,5 +261,86 @@ public class ToolController {
             return Result.error("PDF 拆分失败：" + e.getMessage());
         }
     }
+
+    @PostMapping("/pdf-preview")
+    public Result<Map<String, Object>> pdfPreview(@RequestParam("file") MultipartFile file) {
+        try {
+            if (file.isEmpty()) return Result.error(400, "文件不能为空");
+            
+            try (PDDocument document = Loader.loadPDF(file.getBytes())) {
+                if (document.getNumberOfPages() == 0) return Result.error(400, "PDF 无内容");
+                
+                PDFRenderer renderer = new PDFRenderer(document);
+                BufferedImage image = renderer.renderImageWithDPI(0, 72); // 低 DPI 用于预览
+                
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ImageIO.write(image, "png", baos);
+                byte[] bytes = baos.toByteArray();
+                
+                String base64 = java.util.Base64.getEncoder().encodeToString(bytes);
+                
+                return Result.success(Map.of(
+                    "preview", "data:image/png;base64," + base64,
+                    "width", image.getWidth(),
+                    "height", image.getHeight()
+                ));
+            }
+        } catch (Exception e) {
+            return Result.error("预览生成失败：" + e.getMessage());
+        }
+    }
+
+    @PostMapping("/pdf-add-watermark")
+    public Result<String> pdfAddWatermark(@RequestParam("file") MultipartFile file,
+                                          @RequestParam(value = "watermarkImage", required = false) MultipartFile watermarkImage,
+                                          @RequestParam(value = "imageFileId", required = false) String imageFileId,
+                                          @RequestParam(value = "watermarkText", required = false) String watermarkText,
+                                          @RequestParam(value = "type", defaultValue = "text") String type,
+                                          @RequestParam(value = "layout", defaultValue = "center") String layout,
+                                          @RequestParam(value = "x", defaultValue = "0") float x,
+                                          @RequestParam(value = "y", defaultValue = "0") float y,
+                                          @RequestParam(value = "opacity", defaultValue = "0.5") float opacity,
+                                          @RequestParam(value = "rotation", defaultValue = "45") float rotation,
+                                          @RequestParam(value = "scale", defaultValue = "1.0") float scale,
+                                          @RequestParam(value = "fontSize", defaultValue = "30") int fontSize,
+                                          @RequestParam(value = "color", defaultValue = "#969696") String color,
+                                          @RequestParam(value = "originalFileName", required = false) String originalFileName) {
+        try {
+            if (file.isEmpty()) return Result.error(400, "文件不能为空");
+            
+            String resolvedFileName = originalFileName != null && !originalFileName.isBlank()
+                ? originalFileName.trim()
+                : file.getOriginalFilename();
+
+            String sourceFileId = fileStorageService.uploadFile(
+                resolvedFileName,
+                file.getInputStream(),
+                file.getSize(),
+                file.getContentType()
+            );
+
+            String uploadedImageFileId = imageFileId;
+            if ("image".equals(type) && watermarkImage != null && !watermarkImage.isEmpty()) {
+                uploadedImageFileId = fileStorageService.uploadFile(
+                    watermarkImage.getOriginalFilename(),
+                    watermarkImage.getInputStream(),
+                    watermarkImage.getSize(),
+                    watermarkImage.getContentType()
+                );
+            }
+            if ("image".equals(type) && (uploadedImageFileId == null || uploadedImageFileId.isBlank())) {
+                return Result.error(400, "图片水印缺少 watermarkImage 或 imageFileId");
+            }
+
+            String taskId = taskService.createTask("pdf-add-watermark", resolvedFileName);
+            fileConversionTask.processPdfAddWatermarkEnhanced(taskId, sourceFileId, uploadedImageFileId, resolvedFileName,
+                type, layout, x, y, watermarkText, opacity, rotation, scale, fontSize, color);
+
+            return Result.success(taskId, "任务已创建");
+        } catch (Exception e) {
+            return Result.error("PDF 加水印失败：" + e.getMessage());
+        }
+    }
+
 
 }

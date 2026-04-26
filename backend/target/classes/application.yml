@@ -35,9 +35,8 @@ baidu:
     secret-key: "DAaH0xXJ40avLUuPuz5NdvqH2spkbSKC"
     enabled: true # 默认关闭，配置好密钥后改为 true
 
-logging:
-  level:
-    root: INFO
-    com.wechat.tools: DEBUG
-  pattern:
-    console: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
+
+pdfcpu:
+  enabled: true
+  binary-path: ""
+  timeout-seconds: 60

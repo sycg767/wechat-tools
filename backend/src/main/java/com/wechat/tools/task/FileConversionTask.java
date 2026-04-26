@@ -11,7 +11,14 @@ import org.apache.pdfbox.io.RandomAccessReadBuffer;
 import org.apache.pdfbox.multipdf.PDFMergerUtility;
 import org.apache.pdfbox.multipdf.Splitter;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
+import org.apache.pdfbox.pdmodel.graphics.state.PDExtendedGraphicsState;
 import org.apache.pdfbox.rendering.PDFRenderer;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.TextPosition;
 import org.apache.poi.ss.usermodel.Cell;
@@ -34,13 +41,17 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -318,6 +329,122 @@ public class FileConversionTask {
             taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "拆分失败: " + e.getMessage()));
         }
     }
+
+    @Async("taskExecutor")
+    public void processPdfAddWatermarkEnhanced(String taskId, String sourceFileId, String imageFileId, String originalFileName,
+                                               String type, String layout, float x, float y, String watermarkText,
+                                               float opacity, float rotation, float scale, int fontSize, String color) {
+        try {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 20));
+            
+            byte[] fileData;
+            try (java.io.InputStream is = fileStorageService.downloadFile(sourceFileId)) {
+                fileData = is.readAllBytes();
+            }
+
+            byte[] imageData = null;
+            if ("image".equals(type) && imageFileId != null) {
+                try (java.io.InputStream is = fileStorageService.downloadFile(imageFileId)) {
+                    imageData = is.readAllBytes();
+                }
+            }
+            
+            try (PDDocument document = Loader.loadPDF(fileData)) {
+                org.apache.pdfbox.pdmodel.font.PDFont font = null;
+                PDImageXObject pdImage = null;
+
+                if ("text".equals(type)) {
+                    try {
+                        File fontFile = new File("C:/Windows/Fonts/simhei.ttf");
+                        font = fontFile.exists() ? PDType0Font.load(document, fontFile) : new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD);
+                    } catch (Exception e) {
+                        font = new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD);
+                    }
+                } else if ("image".equals(type) && imageData != null) {
+                    pdImage = PDImageXObject.createFromByteArray(document, imageData, "watermark");
+                }
+
+                for (PDPage page : document.getPages()) {
+                    float pageWidth = page.getMediaBox().getWidth();
+                    float pageHeight = page.getMediaBox().getHeight();
+
+                    try (PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true, true)) {
+                        PDExtendedGraphicsState gs = new PDExtendedGraphicsState();
+                        gs.setNonStrokingAlphaConstant(opacity);
+                        contentStream.setGraphicsStateParameters(gs);
+
+                        if ("tile".equals(layout)) {
+                            renderTiledWatermark(contentStream, type, font, pdImage, watermarkText, fontSize, color, rotation, scale, pageWidth, pageHeight);
+                        } else {
+                            float targetX = x;
+                            float targetY = y;
+                            if ("center".equals(layout)) {
+                                targetX = pageWidth / 2;
+                                targetY = pageHeight / 2;
+                            }
+                            targetX = Math.max(0, Math.min(targetX, pageWidth));
+                            targetY = Math.max(0, Math.min(targetY, pageHeight));
+                            renderSingleWatermark(contentStream, type, font, pdImage, watermarkText, fontSize, color, rotation, scale, targetX, targetY);
+                        }
+                    }
+                }
+                
+                try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                    document.save(baos);
+                    byte[] resultData = baos.toByteArray();
+                    String resultFileName = "watermarked_" + originalFileName;
+                    String resultFileId = fileStorageService.uploadFile(resultFileName, new ByteArrayInputStream(resultData), resultData.length, "application/pdf");
+                    String resultUrl = fileStorageService.getFileUrl(resultFileId, resultFileName);
+                    taskService.updateTaskStatus(taskId, TaskStatusResult.success(taskId, resultUrl, resultFileName));
+                }
+            }
+            
+            fileStorageService.deleteFile(sourceFileId);
+            if (imageFileId != null) fileStorageService.deleteFile(imageFileId);
+        } catch (Exception e) {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "加水印失败: " + e.getMessage()));
+        }
+    }
+
+    private void renderSingleWatermark(PDPageContentStream cs, String type, org.apache.pdfbox.pdmodel.font.PDFont font,
+                                       PDImageXObject image, String text, int fontSize, String color,
+                                       float rotation, float scale, float x, float y) throws java.io.IOException {
+        cs.saveGraphicsState();
+        if ("text".equals(type)) {
+            cs.beginText();
+            cs.setFont(font, fontSize);
+            if (color != null && color.startsWith("#")) {
+                float r = Integer.parseInt(color.substring(1, 3), 16) / 255.0f;
+                float g = Integer.parseInt(color.substring(3, 5), 16) / 255.0f;
+                float b = Integer.parseInt(color.substring(5, 7), 16) / 255.0f;
+                cs.setNonStrokingColor(r, g, b);
+            }
+            float textWidth = font.getStringWidth(text) / 1000 * fontSize;
+            cs.setTextMatrix(org.apache.pdfbox.util.Matrix.getRotateInstance(Math.toRadians(rotation), x, y));
+            cs.newLineAtOffset(-textWidth / 2 * scale, 0);
+            cs.showText(text);
+            cs.endText();
+        } else if (image != null) {
+            float w = image.getWidth() * scale;
+            float h = image.getHeight() * scale;
+            cs.transform(org.apache.pdfbox.util.Matrix.getRotateInstance(Math.toRadians(rotation), x, y));
+            cs.drawImage(image, -w / 2, -h / 2, w, h);
+        }
+        cs.restoreGraphicsState();
+    }
+
+    private void renderTiledWatermark(PDPageContentStream cs, String type, org.apache.pdfbox.pdmodel.font.PDFont font,
+                                      PDImageXObject image, String text, int fontSize, String color,
+                                      float rotation, float scale, float pageWidth, float pageHeight) throws java.io.IOException {
+        float stepX = 200, stepY = 200;
+        for (float x = 0; x < pageWidth + stepX; x += stepX) {
+            for (float y = 0; y < pageHeight + stepY; y += stepY) {
+                renderSingleWatermark(cs, type, font, image, text, fontSize, color, rotation, scale, x, y);
+            }
+        }
+    }
+
+
 
     private String extractPdfTextWithOcr(String taskId, byte[] fileData) throws Exception {
         try (PDDocument document = Loader.loadPDF(fileData)) {

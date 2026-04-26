@@ -8,7 +8,8 @@
     "pages/pdf-excel/index",
     "pages/compress-image/index",
     "pages/pdf-merge/index",
-    "pages/pdf-split/index"
+    "pages/pdf-split/index",
+    "pages/pdf-watermark/index"
   ],
   "window": {
     "navigationBarTitleText": "实用工具箱",

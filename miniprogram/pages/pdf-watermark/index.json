@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "PDF 水印",
+  "usingComponents": {
+    "file-picker": "../../components/file-picker/index"
+  }
+}

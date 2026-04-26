@@ -7,6 +7,10 @@
     <view class="detail-row">状态：{{task.status}}</view>
     <view wx:if="{{task.resultFileName}}" class="detail-row">结果文件：{{task.resultFileName}}</view>
     <view wx:if="{{task.message}}" class="detail-row">说明：{{task.message}}</view>
+    <view wx:if="{{task.selectedStrategy}}" class="detail-row">策略：{{task.selectedStrategy}}</view>
+    <view wx:if="{{task.strategyTraceText}}" class="detail-row">链路：{{task.strategyTraceText}}</view>
+    <view wx:if="{{task.fallbackReason}}" class="detail-row">回退：{{task.fallbackReason}}</view>
+    <view wx:if="{{task.qualityGateText}}" class="detail-row">门控：{{task.qualityGateText}}</view>
   </view>
 
   <progress-bar wx:if="{{task && task.status === 'PROCESSING'}}" text="处理中，请稍候..." percent="{{task.progress}}" />

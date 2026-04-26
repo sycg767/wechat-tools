@@ -1,11 +1,15 @@
 com\wechat\tools\task\FileConversionTask$OcrChar.class
 com\wechat\tools\service\impl\FileStorageServiceImpl.class
+com\wechat\tools\pdf\PdfcpuRunner.class
 com\wechat\tools\task\FileConversionTask$LayoutAwarePdfTextStripper.class
 com\wechat\tools\task\FileConversionTask.class
 com\wechat\tools\service\impl\TaskServiceImpl.class
 com\wechat\tools\task\FileConversionTask$ReconstructedLine.class
 com\wechat\tools\WechatToolsApplication.class
+com\wechat\tools\common\TaskStatusResult.class
 com\wechat\tools\task\FileConversionTask$LineSegment.class
 com\wechat\tools\task\FileCleanupTask.class
+com\wechat\tools\task\FileConversionTask$1.class
 com\wechat\tools\task\FileConversionTask$OcrLine.class
+com\wechat\tools\task\FileConversionTask$ImageHint.class
 com\wechat\tools\task\FileConversionTask$OcrServiceDecision.class

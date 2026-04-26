@@ -39,10 +39,16 @@ Page({
   },
 
   decorateTask(task) {
+    const strategyTraceText = Array.isArray(task.strategyTrace) ? task.strategyTrace.join(' -> ') : ''
+    const qualityGateText = task.qualityGate
+      ? `通过:${task.qualityGate.passed ? '是' : '否'} 变化:${task.qualityGate.changeRatio || 0}%`
+      : ''
     return {
       ...task,
       canOpen: canOpenFile(task.resultFileName || ''),
-      isImage: isImageFile(task.resultFileName || '')
+      isImage: isImageFile(task.resultFileName || ''),
+      strategyTraceText,
+      qualityGateText
     }
   },
 

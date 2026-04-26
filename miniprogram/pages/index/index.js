@@ -46,6 +46,13 @@ Page({
         tag: '新增'
       },
       {
+        title: 'PDF 水印',
+        desc: '为 PDF 添加或去除水印',
+        path: '/pages/pdf-watermark/index',
+        iconClass: 'icon-pdf-watermark',
+        tag: '新增'
+      },
+      {
         title: '任务历史',
         desc: '查看处理中与已完成的任务结果',
         path: '/pages/tasks/index',
