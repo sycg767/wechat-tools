@@ -93,7 +93,7 @@ Page({
 
     try {
       wx.showLoading({ title: '保存中' })
-      await saveImageToAlbum(task.resultUrl)
+      await saveImageToAlbum(task.resultUrl, task.resultFileName)
       wx.hideLoading()
       wx.showToast({ title: '已保存到相册', icon: 'success' })
     } catch (error) {

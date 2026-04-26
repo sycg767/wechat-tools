@@ -32,6 +32,13 @@ Page({
         disabled: false
       },
       {
+        title: '证件照换底色',
+        desc: '上传人像照片并切换红蓝白背景',
+        path: '/pages/id-photo-bg/index',
+        iconClass: 'icon-id-photo',
+        tag: '新增'
+      },
+      {
         title: 'PDF 合并',
         desc: '将多个 PDF 文件合并为一个',
         path: '/pages/pdf-merge/index',

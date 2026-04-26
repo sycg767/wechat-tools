@@ -141,6 +141,45 @@ public class ToolController {
         }
     }
 
+    @PostMapping("/change-id-photo-bg")
+    public Result<String> changeIdPhotoBackground(@RequestParam("file") MultipartFile file,
+                                                  @RequestParam("bgColor") String bgColor,
+                                                  @RequestParam(value = "originalFileName", required = false) String originalFileName) {
+        try {
+            if (file.isEmpty()) {
+                return Result.error(400, "文件不能为空");
+            }
+
+            String normalizedBgColor = bgColor == null ? "" : bgColor.trim().toLowerCase();
+            if (!List.of("red", "blue", "white").contains(normalizedBgColor)) {
+                return Result.error(400, "背景颜色仅支持 red、blue、white");
+            }
+
+            String contentType = file.getContentType();
+            if (contentType == null || !contentType.startsWith("image/")) {
+                return Result.error(400, "请上传图片文件");
+            }
+
+            String resolvedFileName = originalFileName != null && !originalFileName.isBlank()
+                ? originalFileName.trim()
+                : file.getOriginalFilename();
+
+            String sourceFileId = fileStorageService.uploadFile(
+                resolvedFileName,
+                file.getInputStream(),
+                file.getSize(),
+                contentType
+            );
+
+            String taskId = taskService.createTask("id-photo-bg", resolvedFileName);
+            fileConversionTask.processChangeIdPhotoBg(taskId, sourceFileId, resolvedFileName, normalizedBgColor);
+
+            return Result.success(taskId, "任务已创建");
+        } catch (Exception e) {
+            return Result.error("证件照换底色失败：" + e.getMessage());
+        }
+    }
+
     @PostMapping("/pdf-to-excel")
     public Result<String> pdfToExcel(@RequestParam("file") MultipartFile file,
                                      @RequestParam(value = "originalFileName", required = false) String originalFileName) {

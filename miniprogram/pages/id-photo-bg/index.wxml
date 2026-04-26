@@ -1,0 +1,43 @@
+<view class="container">
+  <view class="page-header">
+    <view class="page-title">证件照换底色</view>
+    <view class="page-desc">上传人像照片，一键切换为蓝底、白底或红底</view>
+  </view>
+
+  <file-picker
+    file="{{selectedFile}}"
+    accept="image"
+    title="选择证件照或人像照片"
+    description="支持 JPG、PNG、WebP 格式"
+    bind:selected="handleFileSelected"
+  />
+
+  <view class="card form-card {{selectedFile ? 'form-active' : ''}}">
+    <view class="config-title">选择背景颜色</view>
+    <view class="color-list">
+      <view
+        wx:for="{{colorOptions}}"
+        wx:key="value"
+        class="color-option {{bgColor === item.value ? 'color-option-active' : ''}}"
+        bindtap="handleColorChange"
+        data-value="{{item.value}}"
+      >
+        <view class="color-preview {{item.previewClass}}"></view>
+        <view class="color-label">{{item.label}}</view>
+      </view>
+    </view>
+
+    <view class="info-box">
+      <view class="info-icon">!</view>
+      <view class="info-text">第一版仅提供换底色功能，尺寸裁剪与证件照规范将后续补充。</view>
+    </view>
+
+    <button
+      class="btn btn-primary {{!selectedFile ? 'btn-disabled' : ''}}"
+      bindtap="handleSubmit"
+      hover-class="btn-hover"
+    >
+      开始换底色
+    </button>
+  </view>
+</view>

@@ -34,7 +34,10 @@ baidu:
     api-key: "ZJYL89aGvJPhOIcBYK9Js2AT"
     secret-key: "DAaH0xXJ40avLUuPuz5NdvqH2spkbSKC"
     enabled: true # 默认关闭，配置好密钥后改为 true
-
+  image-matting:
+    api-key: "X5dKDXnuWK7pzDHlaSjpueyJ"
+    secret-key: "JfCgaA67CS2mIp5Q3wJttP8ZmAC3Bl8u"
+    enabled: true
 
 pdfcpu:
   enabled: true

@@ -37,13 +37,27 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -74,6 +88,21 @@ public class FileConversionTask {
 
     @Value("${baidu.ocr.enabled:false}")
     private boolean baiduOcrEnabled;
+
+    @Value("${baidu.image-matting.api-key:}")
+    private String baiduImageMattingApiKey;
+
+    @Value("${baidu.image-matting.secret-key:}")
+    private String baiduImageMattingSecretKey;
+
+    @Value("${baidu.image-matting.enabled:false}")
+    private boolean baiduImageMattingEnabled;
+
+    private static final DateTimeFormatter FILE_NAME_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+
+    private final HttpClient httpClient = HttpClient.newBuilder()
+        .connectTimeout(Duration.ofSeconds(20))
+        .build();
 
     public FileConversionTask(TaskService taskService, FileStorageService fileStorageService) {
         this.taskService = taskService;
@@ -207,6 +236,43 @@ public class FileConversionTask {
             fileStorageService.deleteFile(sourceFileId);
         } catch (Exception e) {
             taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "转换失败: " + e.getMessage()));
+        }
+    }
+
+    @Async("taskExecutor")
+    public void processChangeIdPhotoBg(String taskId, String sourceFileId, String originalFileName, String bgColor) {
+        try {
+            if (!baiduImageMattingEnabled || baiduImageMattingApiKey.isBlank() || baiduImageMattingSecretKey.isBlank()) {
+                throw new IllegalStateException("未配置百度智能抠图密钥");
+            }
+
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 20));
+
+            byte[] fileData;
+            try (java.io.InputStream is = fileStorageService.downloadFile(sourceFileId)) {
+                fileData = is.readAllBytes();
+            }
+
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 45));
+            byte[] foregroundBytes = callBaiduImageMatting(fileData);
+
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 75));
+            byte[] resultBytes = mergeForegroundWithSolidBackground(foregroundBytes, bgColor);
+
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 85));
+            String resultFileName = buildIdPhotoBgFileName(originalFileName, bgColor);
+            String resultFileId = fileStorageService.uploadFile(
+                resultFileName,
+                new ByteArrayInputStream(resultBytes),
+                resultBytes.length,
+                "image/png"
+            );
+            String resultUrl = fileStorageService.getFileUrl(resultFileId, resultFileName);
+            taskService.updateTaskStatus(taskId, TaskStatusResult.success(taskId, resultUrl, resultFileName));
+
+            fileStorageService.deleteFile(sourceFileId);
+        } catch (Exception e) {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "证件照换底色失败: " + e.getMessage()));
         }
     }
 
@@ -552,6 +618,108 @@ public class FileConversionTask {
             case "enhancedGeneral" -> client.enhancedGeneral(imgData, options);
             default -> client.accurateGeneral(imgData, options);
         };
+    }
+
+    private byte[] callBaiduImageMatting(byte[] imageBytes) throws Exception {
+        String accessToken = fetchBaiduAccessToken();
+        String imageBase64 = Base64.getEncoder().encodeToString(imageBytes);
+        String body = "image=" + URLEncoder.encode(imageBase64, StandardCharsets.UTF_8)
+            + "&return_form=rgba"
+            + "&refine_mask=true";
+
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create("https://aip.baidubce.com/rest/2.0/image-process/v1/segment?access_token=" + URLEncoder.encode(accessToken, StandardCharsets.UTF_8)))
+            .timeout(Duration.ofSeconds(60))
+            .header("Content-Type", "application/x-www-form-urlencoded")
+            .POST(HttpRequest.BodyPublishers.ofString(body))
+            .build();
+
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+        if (response.statusCode() < 200 || response.statusCode() >= 300) {
+            throw new IllegalStateException("百度智能抠图请求失败: HTTP " + response.statusCode());
+        }
+
+        JSONObject json = new JSONObject(response.body());
+        if (json.has("error_msg")) {
+            throw new IllegalStateException(json.optString("error_msg", "百度智能抠图失败"));
+        }
+
+        String image = json.optString("image", "");
+        if (image.isBlank()) {
+            throw new IllegalStateException("百度智能抠图未返回图片结果");
+        }
+        return Base64.getDecoder().decode(image);
+    }
+
+    private String fetchBaiduAccessToken() throws Exception {
+        String body = "grant_type=client_credentials"
+            + "&client_id=" + URLEncoder.encode(baiduImageMattingApiKey, StandardCharsets.UTF_8)
+            + "&client_secret=" + URLEncoder.encode(baiduImageMattingSecretKey, StandardCharsets.UTF_8);
+
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create("https://aip.baidubce.com/oauth/2.0/token"))
+            .timeout(Duration.ofSeconds(30))
+            .header("Content-Type", "application/x-www-form-urlencoded")
+            .POST(HttpRequest.BodyPublishers.ofString(body))
+            .build();
+
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+        if (response.statusCode() < 200 || response.statusCode() >= 300) {
+            throw new IllegalStateException("获取百度 access_token 失败: HTTP " + response.statusCode());
+        }
+
+        JSONObject json = new JSONObject(response.body());
+        if (json.has("error_description")) {
+            throw new IllegalStateException(json.optString("error_description", "获取百度 access_token 失败"));
+        }
+
+        String accessToken = json.optString("access_token", "");
+        if (accessToken.isBlank()) {
+            throw new IllegalStateException("百度 access_token 为空");
+        }
+        return accessToken;
+    }
+
+    private byte[] mergeForegroundWithSolidBackground(byte[] foregroundBytes, String bgColor) throws Exception {
+        BufferedImage foreground = ImageIO.read(new ByteArrayInputStream(foregroundBytes));
+        if (foreground == null) {
+            throw new IllegalStateException("抠图结果无法解析为图片");
+        }
+
+        BufferedImage result = new BufferedImage(foreground.getWidth(), foreground.getHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics2D graphics = result.createGraphics();
+        try {
+            graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            graphics.setColor(resolveIdPhotoBgColor(bgColor));
+            graphics.fillRect(0, 0, result.getWidth(), result.getHeight());
+            graphics.setComposite(AlphaComposite.SrcOver);
+            graphics.drawImage(foreground, 0, 0, null);
+        } finally {
+            graphics.dispose();
+        }
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ImageIO.write(result, "png", outputStream);
+        return outputStream.toByteArray();
+    }
+
+    private Color resolveIdPhotoBgColor(String bgColor) {
+        return switch (bgColor) {
+            case "red" -> new Color(237, 25, 65);
+            case "blue" -> new Color(67, 142, 219);
+            default -> Color.WHITE;
+        };
+    }
+
+    private String buildIdPhotoBgFileName(String originalFileName, String bgColor) {
+        String colorLabel = switch (bgColor) {
+            case "red" -> "红底";
+            case "blue" -> "蓝底";
+            default -> "白底";
+        };
+        String timestamp = LocalDateTime.now().format(FILE_NAME_TIME_FORMATTER);
+        return "证件照_" + colorLabel + "_" + timestamp + ".png";
     }
 
     private String buildPageTextFromBaiduResult(JSONObject res) {

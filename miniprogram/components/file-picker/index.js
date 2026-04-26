@@ -33,15 +33,42 @@ Component({
   },
 
   methods: {
+    formatTimestamp() {
+      const date = new Date()
+      const pad = (value) => String(value).padStart(2, '0')
+      return `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}_${pad(date.getHours())}${pad(date.getMinutes())}${pad(date.getSeconds())}`
+    },
+
+    resolveImageExtension(tempFile, path) {
+      const pathExt = (path.split('.').pop() || '').toLowerCase()
+      if (['jpg', 'jpeg', 'png', 'webp'].includes(pathExt)) {
+        return pathExt
+      }
+
+      const mimeType = (tempFile?.type || '').toLowerCase()
+      if (mimeType.includes('png')) {
+        return 'png'
+      }
+      if (mimeType.includes('webp')) {
+        return 'webp'
+      }
+      return 'jpg'
+    },
+
     buildImageFile(res) {
       const tempFile = res.tempFiles && res.tempFiles.length ? res.tempFiles[0] : null
       const path = tempFile?.path || (res.tempFilePaths && res.tempFilePaths[0]) || ''
       if (!path) {
         return null
       }
-      const name = path.split('/').pop() || `image_${Date.now()}.jpg`
+
+      const rawName = path.split('/').pop() || ''
+      const extension = this.resolveImageExtension(tempFile, path)
+      const name = rawName && !rawName.toLowerCase().endsWith('.bin') && rawName.includes('.')
+        ? rawName
+        : `image_${this.formatTimestamp()}.${extension}`
       const size = tempFile?.size || 0
-      const type = tempFile?.type || 'image'
+      const type = tempFile?.type || `image/${extension}`
       return { path, name, size, type }
     },
 

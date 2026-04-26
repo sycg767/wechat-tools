@@ -51,12 +51,34 @@ function previewImage(url) {
   })
 }
 
-function saveImageToAlbum(url) {
+function ensureImageFileName(fileName = '') {
+  const normalized = String(fileName || '').trim().replace(/[\\/:*?"<>|]/g, '_')
+  if (isImageFile(normalized)) {
+    return normalized
+  }
+  return `image_${Date.now()}.png`
+}
+
+function saveLocalImageFile(tempFilePath, fileName) {
+  const targetPath = `${wx.env.USER_DATA_PATH}/${ensureImageFileName(fileName)}`
+  const fs = wx.getFileSystemManager()
+  return new Promise((resolve) => {
+    fs.saveFile({
+      tempFilePath,
+      filePath: targetPath,
+      success: (res) => resolve(res.savedFilePath || targetPath),
+      fail: () => resolve(tempFilePath)
+    })
+  })
+}
+
+function saveImageToAlbum(url, fileName = '') {
   return new Promise(async (resolve, reject) => {
     try {
       const tempFilePath = await downloadToTempFile(url)
+      const localFilePath = await saveLocalImageFile(tempFilePath, fileName)
       wx.saveImageToPhotosAlbum({
-        filePath: tempFilePath,
+        filePath: localFilePath,
         success: () => resolve(),
         fail: (error) => {
           const msg = error.errMsg || ''

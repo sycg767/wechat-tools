@@ -7,6 +7,7 @@
     "pages/task-detail/index",
     "pages/pdf-excel/index",
     "pages/compress-image/index",
+    "pages/id-photo-bg/index",
     "pages/pdf-merge/index",
     "pages/pdf-split/index",
     "pages/pdf-watermark/index"
