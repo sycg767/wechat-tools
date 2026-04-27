@@ -544,6 +544,159 @@ public class FileConversionTask {
         }
     }
 
+    @Async("taskExecutor")
+    public void processCsvToExcel(String taskId, String sourceFileId, String originalFileName) {
+        try {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 20));
+
+            byte[] fileData;
+            try (java.io.InputStream is = fileStorageService.downloadFile(sourceFileId)) {
+                fileData = is.readAllBytes();
+            }
+
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 50));
+
+            // 使用 Hutool 读取 CSV 并写入 Excel
+            cn.hutool.core.text.csv.CsvReader reader = cn.hutool.core.text.csv.CsvUtil.getReader();
+            cn.hutool.core.text.csv.CsvData csvData = reader.read(new java.io.InputStreamReader(new ByteArrayInputStream(fileData), StandardCharsets.UTF_8));
+            
+            try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                Sheet sheet = workbook.createSheet("Sheet1");
+                List<cn.hutool.core.text.csv.CsvRow> rows = csvData.getRows();
+                for (int i = 0; i < rows.size(); i++) {
+                    org.apache.poi.ss.usermodel.Row row = sheet.createRow(i);
+                    List<String> rawRow = rows.get(i).getRawList();
+                    for (int j = 0; j < rawRow.size(); j++) {
+                        row.createCell(j).setCellValue(rawRow.get(j));
+                    }
+                }
+                
+                // 自动调整列宽
+                if (!rows.isEmpty()) {
+                    int colCount = rows.get(0).getRawList().size();
+                    for (int i = 0; i < colCount; i++) {
+                        sheet.autoSizeColumn(i);
+                    }
+                }
+
+                workbook.write(baos);
+                byte[] excelBytes = baos.toByteArray();
+
+                taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 80));
+
+                String resultFileName = buildXlsxFileName(originalFileName);
+                String resultFileId = fileStorageService.uploadFile(
+                    resultFileName,
+                    new ByteArrayInputStream(excelBytes),
+                    excelBytes.length,
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                );
+                String resultUrl = fileStorageService.getFileUrl(resultFileId, resultFileName);
+                taskService.updateTaskStatus(taskId, TaskStatusResult.success(taskId, resultUrl, resultFileName));
+            }
+
+            fileStorageService.deleteFile(sourceFileId);
+        } catch (Exception e) {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "CSV 转 Excel 失败: " + e.getMessage()));
+        }
+    }
+
+    @Async("taskExecutor")
+    public void processExcelToCsv(String taskId, String sourceFileId, String originalFileName) {
+        try {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 10));
+
+            byte[] fileData;
+            try (java.io.InputStream is = fileStorageService.downloadFile(sourceFileId)) {
+                fileData = is.readAllBytes();
+            }
+
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 30));
+
+            // 使用 POI 加载 Workbook 以获取所有 Sheet
+            try (Workbook workbook = org.apache.poi.ss.usermodel.WorkbookFactory.create(new ByteArrayInputStream(fileData))) {
+                int sheetCount = workbook.getNumberOfSheets();
+                
+                if (sheetCount <= 1) {
+                    // 只有一个 Sheet，保持原有逻辑，输出单个 CSV
+                    cn.hutool.poi.excel.ExcelReader reader = cn.hutool.poi.excel.ExcelUtil.getReader(new ByteArrayInputStream(fileData));
+                    List<List<Object>> readAll = reader.read();
+                    
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    cn.hutool.core.text.csv.CsvWriter writer = cn.hutool.core.text.csv.CsvUtil.getWriter(new java.io.OutputStreamWriter(baos, StandardCharsets.UTF_8));
+                    writer.write(readAll);
+                    writer.flush();
+                    writer.close();
+                    
+                    byte[] csvBytes = baos.toByteArray();
+                    String resultFileName = buildCsvFileName(originalFileName);
+                    String resultFileId = fileStorageService.uploadFile(
+                        resultFileName,
+                        new ByteArrayInputStream(csvBytes),
+                        csvBytes.length,
+                        "text/csv"
+                    );
+                    String resultUrl = fileStorageService.getFileUrl(resultFileId, resultFileName);
+                    taskService.updateTaskStatus(taskId, TaskStatusResult.success(taskId, resultUrl, resultFileName));
+                } else {
+                    // 多个 Sheet，打包为 ZIP
+                    ByteArrayOutputStream zipBaos = new ByteArrayOutputStream();
+                    try (java.util.zip.ZipOutputStream zos = new java.util.zip.ZipOutputStream(zipBaos)) {
+                        for (int i = 0; i < sheetCount; i++) {
+                            String sheetName = workbook.getSheetName(i);
+                            cn.hutool.poi.excel.ExcelReader reader = cn.hutool.poi.excel.ExcelUtil.getReader(new ByteArrayInputStream(fileData), i);
+                            List<List<Object>> readAll = reader.read();
+                            
+                            ByteArrayOutputStream csvBaos = new ByteArrayOutputStream();
+                            cn.hutool.core.text.csv.CsvWriter writer = cn.hutool.core.text.csv.CsvUtil.getWriter(new java.io.OutputStreamWriter(csvBaos, StandardCharsets.UTF_8));
+                            writer.write(readAll);
+                            writer.flush();
+                            writer.close();
+                            
+                            java.util.zip.ZipEntry entry = new java.util.zip.ZipEntry(sheetName + ".csv");
+                            zos.putNextEntry(entry);
+                            zos.write(csvBaos.toByteArray());
+                            zos.closeEntry();
+                        }
+                    }
+                    
+                    byte[] zipBytes = zipBaos.toByteArray();
+                    String resultFileName = buildZipFileName(originalFileName);
+                    String resultFileId = fileStorageService.uploadFile(
+                        resultFileName,
+                        new ByteArrayInputStream(zipBytes),
+                        zipBytes.length,
+                        "application/zip"
+                    );
+                    String resultUrl = fileStorageService.getFileUrl(resultFileId, resultFileName);
+                    taskService.updateTaskStatus(taskId, TaskStatusResult.success(taskId, resultUrl, resultFileName));
+                }
+            }
+
+            fileStorageService.deleteFile(sourceFileId);
+        } catch (Exception e) {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "Excel 转 CSV 失败: " + e.getMessage()));
+        }
+    }
+
+    private String buildZipFileName(String originalFileName) {
+        if (originalFileName == null || originalFileName.isBlank()) {
+            return "converted.zip";
+        }
+        int dotIndex = originalFileName.lastIndexOf('.');
+        String baseName = dotIndex > 0 ? originalFileName.substring(0, dotIndex) : originalFileName;
+        return baseName + ".zip";
+    }
+
+    private String buildCsvFileName(String originalFileName) {
+        if (originalFileName == null || originalFileName.isBlank()) {
+            return "converted.csv";
+        }
+        int dotIndex = originalFileName.lastIndexOf('.');
+        String baseName = dotIndex > 0 ? originalFileName.substring(0, dotIndex) : originalFileName;
+        return baseName + ".csv";
+    }
+
     private void renderSingleWatermark(PDPageContentStream cs, String type, org.apache.pdfbox.pdmodel.font.PDFont font,
                                        PDImageXObject image, String text, int fontSize, String color,
                                        float rotation, float scale, float x, float y) throws java.io.IOException {

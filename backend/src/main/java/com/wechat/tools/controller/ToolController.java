@@ -412,5 +412,65 @@ public class ToolController {
         }
     }
 
+    @PostMapping("/csv-to-excel")
+    public Result<String> csvToExcel(@RequestParam("file") MultipartFile file,
+                                     @RequestParam(value = "originalFileName", required = false) String originalFileName) {
+        try {
+            if (file.isEmpty()) {
+                return Result.error(400, "文件不能为空");
+            }
+            String resolvedFileName = originalFileName != null && !originalFileName.isBlank()
+                ? originalFileName.trim()
+                : file.getOriginalFilename();
+            if (resolvedFileName == null || !resolvedFileName.toLowerCase().endsWith(".csv")) {
+                return Result.error(400, "请上传 CSV 文件");
+            }
+
+            String sourceFileId = fileStorageService.uploadFile(
+                resolvedFileName,
+                file.getInputStream(),
+                file.getSize(),
+                file.getContentType()
+            );
+
+            String taskId = taskService.createTask("csv-excel", resolvedFileName);
+            fileConversionTask.processCsvToExcel(taskId, sourceFileId, resolvedFileName);
+
+            return Result.success(taskId, "任务已创建");
+        } catch (Exception e) {
+            return Result.error("CSV 转 Excel 失败：" + e.getMessage());
+        }
+    }
+
+    @PostMapping("/excel-to-csv")
+    public Result<String> excelToCsv(@RequestParam("file") MultipartFile file,
+                                     @RequestParam(value = "originalFileName", required = false) String originalFileName) {
+        try {
+            if (file.isEmpty()) {
+                return Result.error(400, "文件不能为空");
+            }
+            String resolvedFileName = originalFileName != null && !originalFileName.isBlank()
+                ? originalFileName.trim()
+                : file.getOriginalFilename();
+            String lowerCaseFileName = resolvedFileName == null ? "" : resolvedFileName.toLowerCase();
+            if (!lowerCaseFileName.endsWith(".xls") && !lowerCaseFileName.endsWith(".xlsx")) {
+                return Result.error(400, "请上传 Excel 文件");
+            }
+
+            String sourceFileId = fileStorageService.uploadFile(
+                resolvedFileName,
+                file.getInputStream(),
+                file.getSize(),
+                file.getContentType()
+            );
+
+            String taskId = taskService.createTask("excel-csv", resolvedFileName);
+            fileConversionTask.processExcelToCsv(taskId, sourceFileId, resolvedFileName);
+
+            return Result.success(taskId, "任务已创建");
+        } catch (Exception e) {
+            return Result.error("Excel 转 CSV 失败：" + e.getMessage());
+        }
+    }
 
 }

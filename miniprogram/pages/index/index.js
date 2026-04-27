@@ -67,6 +67,13 @@ Page({
         tag: '新增'
       },
       {
+        title: 'CSV / Excel 互转',
+        desc: 'CSV 与 Excel 格式互相转换',
+        path: '/pages/csv-excel/index',
+        iconClass: 'icon-csv-excel',
+        tag: '新增'
+      },
+      {
         title: '任务历史',
         desc: '查看处理中与已完成的任务结果',
         path: '/pages/tasks/index',

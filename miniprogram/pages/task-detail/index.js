@@ -114,5 +114,45 @@ Page({
       }
       wx.showToast({ title: message, icon: 'none' })
     }
+  },
+
+  async handleShareFile() {
+    const { task } = this.data
+    if (!task || !task.resultUrl) return
+
+    try {
+      wx.showLoading({ title: '准备中' })
+      
+      // 1. 下载文件获取临时路径
+      const downloadRes = await new Promise((resolve, reject) => {
+        wx.downloadFile({
+          url: task.resultUrl,
+          success: (res) => {
+            if (res.statusCode === 200) resolve(res)
+            else reject(new Error('下载失败'))
+          },
+          fail: reject
+        })
+      })
+
+      wx.hideLoading()
+
+      // 2. 调用微信转发文件接口
+      await new Promise((resolve, reject) => {
+        wx.shareFileMessage({
+          filePath: downloadRes.tempFilePath,
+          fileName: task.resultFileName || '文件',
+          success: resolve,
+          fail: (err) => {
+            // 如果用户取消分享，不视为错误
+            if (err.errMsg.includes('cancel')) resolve()
+            else reject(err)
+          }
+        })
+      })
+    } catch (error) {
+      wx.hideLoading()
+      wx.showToast({ title: error.message || '分享失败', icon: 'none' })
+    }
   }
 })

@@ -27,6 +27,7 @@
       {{task.isImage ? '预览图片' : '打开文件'}}
     </button>
     <button wx:if="{{task.isImage}}" class="primary-btn" bindtap="handleSaveImage">保存到相册</button>
+    <button wx:if="{{!task.isImage}}" class="primary-btn" bindtap="handleShareFile">发送给好友</button>
   </view>
 
   <view wx:if="{{task && task.status === 'FAIL'}}" class="card fail-card">

@@ -1,4 +1,4 @@
-const SUPPORTED_DOCUMENT_TYPES = ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf']
+const SUPPORTED_DOCUMENT_TYPES = ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf', 'zip']
 const SUPPORTED_IMAGE_TYPES = ['jpg', 'jpeg', 'png', 'webp']
 
 function getFileType(fileName = '') {

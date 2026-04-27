@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "file-picker": "../../components/file-picker/index"
+  },
+  "navigationBarTitleText": "CSV / Excel 互转"
+}

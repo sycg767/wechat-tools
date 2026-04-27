@@ -11,7 +11,8 @@
     "pages/pdf-merge/index",
     "pages/pdf-split/index",
     "pages/pdf-watermark/index",
-    "pages/word-pdf/index"
+    "pages/word-pdf/index",
+    "pages/csv-excel/index"
   ],
   "window": {
     "navigationBarTitleText": "实用工具箱",

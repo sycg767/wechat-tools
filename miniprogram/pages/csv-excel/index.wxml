@@ -1,0 +1,28 @@
+<view class="container">
+  <view class="section-title">CSV / Excel 互转</view>
+  
+  <view class="card">
+    <view class="mode-selector">
+      <view class="mode-item {{mode === 'csv-excel' ? 'active' : ''}}" bindtap="switchMode" data-mode="csv-excel">CSV 转 Excel</view>
+      <view class="mode-item {{mode === 'excel-csv' ? 'active' : ''}}" bindtap="switchMode" data-mode="excel-csv">Excel 转 CSV</view>
+    </view>
+
+    <file-picker 
+      accept="{{mode === 'csv-excel' ? 'csv' : 'excel'}}" 
+      title="{{mode === 'csv-excel' ? '选择 CSV 文件' : '选择 Excel 文件'}}" 
+      description="{{mode === 'csv-excel' ? '将 CSV 转换为 .xlsx 格式' : '将 Excel 转换为 .csv 格式'}}"
+      bind:selected="handleFileSelected"
+    />
+    
+    <view class="action-area" wx:if="{{selectedFile}}">
+      <button class="primary-btn" bindtap="handleSubmit">开始转换</button>
+    </view>
+  </view>
+
+  <view class="tips-card">
+    <view class="tips-title">使用提示</view>
+    <view class="tips-item">1. CSV 转 Excel 默认使用 UTF-8 编码读取</view>
+    <view class="tips-item">2. Excel 转 CSV 将导出第一个工作表的内容</view>
+    <view class="tips-item">3. 转换完成后可在“任务列表”中查看历史</view>
+  </view>
+</view>
