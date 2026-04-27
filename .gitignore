@@ -1,1 +1,37 @@
+# Local AI / workflow tools
 .ace-tool/
+.claude/
+.serena/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Java / Maven build
+backend/target/
+*.class
+
+# Runtime files
+logs/
+storage/
+*.log
+
+# Temp files
+*.tmp
+*.temp
+*.swp
+
+# WeChat Mini Program local config
+miniprogram/project.private.config.json
+miniprogram/miniprogram_npm/
+miniprogram/node_modules/
+
+# Environment / secrets
+.env
+.env.*
+*.local
