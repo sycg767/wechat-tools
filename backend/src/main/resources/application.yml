@@ -3,6 +3,10 @@ server:
   servlet:
     context-path: /api
 
+app:
+  qr:
+    public-base-url: ""
+
 spring:
   application:
     name: wechat-tools-backend

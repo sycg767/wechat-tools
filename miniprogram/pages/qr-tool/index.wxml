@@ -1,0 +1,63 @@
+<view class="container">
+  <view class="header">
+    <view class="title">二维码工具</view>
+    <view class="subtitle">支持生成二维码与识别二维码图片</view>
+  </view>
+
+  <view class="tabs">
+    <view class="tab {{activeTab === 'generate' ? 'active' : ''}}" bindtap="switchTab" data-tab="generate">生成二维码</view>
+    <view class="tab {{activeTab === 'decode' ? 'active' : ''}}" bindtap="switchTab" data-tab="decode">识别二维码</view>
+  </view>
+
+  <!-- 生成二维码 -->
+  <view class="content-section" wx:if="{{activeTab === 'generate'}}">
+    <view class="input-group">
+      <text class="label">输入内容</text>
+      <textarea class="textarea" placeholder="请输入文字或链接" bindinput="onInputContent" value="{{content}}"></textarea>
+      <text class="hint">生成时会先创建短链，再把短链编码进二维码。</text>
+    </view>
+
+    <button class="primary-btn" bindtap="generateQR" disabled="{{!content || processing}}">立即生成</button>
+  </view>
+
+  <!-- 识别二维码 -->
+  <view class="content-section" wx:if="{{activeTab === 'decode'}}">
+    <view class="upload-area" bindtap="chooseImage" wx:if="{{!tempFilePath}}">
+      <view class="upload-icon"></view>
+      <text class="upload-text">点击上传二维码图片</text>
+    </view>
+
+    <view class="preview-area" wx:else>
+      <image src="{{tempFilePath}}" mode="aspectFit" class="preview-img"></image>
+      <view class="re-upload" bindtap="chooseImage">重新上传</view>
+    </view>
+
+    <view class="btn-group">
+      <button class="primary-btn" bindtap="decodeQR" disabled="{{!tempFilePath || processing}}">开始识别</button>
+      <button class="scan-btn" bindtap="scanCode" disabled="{{processing}}">直接扫码</button>
+    </view>
+  </view>
+
+  <!-- 进度展示 -->
+  <view class="progress-section" wx:if="{{processing}}">
+    <progress-bar progress="{{progress}}" status="{{statusText}}"></progress-bar>
+  </view>
+
+  <!-- 结果展示 -->
+  <view class="result-section" wx:if="{{resultUrl || decodedText}}">
+    <view class="result-title">处理结果</view>
+
+    <block wx:if="{{activeTab === 'generate' && resultUrl}}">
+      <image src="{{resultUrl}}" mode="aspectFit" class="result-qr" show-menu-by-longpress></image>
+      <view class="tip">长按图片保存或发送给朋友</view>
+    </block>
+
+    <block wx:if="{{activeTab === 'decode' && decodedText}}">
+      <view class="decoded-box">
+        <text class="decoded-label">识别内容：</text>
+        <text class="decoded-content" selectable>{{decodedText}}</text>
+      </view>
+      <button class="secondary-btn" bindtap="copyResult">复制内容</button>
+    </block>
+  </view>
+</view>

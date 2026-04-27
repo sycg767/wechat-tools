@@ -1,0 +1,67 @@
+<view class="container">
+  <view class="header">
+    <view class="title">随机生成器</view>
+    <view class="subtitle">生成随机数字、强密码或随机抽取</view>
+  </view>
+
+  <view class="tabs">
+    <view class="tab {{activeTab === 'number' ? 'active' : ''}}" bindtap="switchTab" data-tab="number">随机数</view>
+    <view class="tab {{activeTab === 'password' ? 'active' : ''}}" bindtap="switchTab" data-tab="password">强密码</view>
+  </view>
+
+  <!-- 随机数生成 -->
+  <view class="content-section" wx:if="{{activeTab === 'number'}}">
+    <view class="input-group">
+      <view class="input-item">
+        <text class="label">最小值</text>
+        <input class="input" type="number" value="{{min}}" bindinput="onInputMin" />
+      </view>
+      <view class="input-item">
+        <text class="label">最大值</text>
+        <input class="input" type="number" value="{{max}}" bindinput="onInputMax" />
+      </view>
+    </view>
+    <view class="input-item">
+      <text class="label">生成个数</text>
+      <slider min="1" max="100" value="{{count}}" show-value bindchange="onCountChange" activeColor="#07c160" />
+    </view>
+    <button class="primary-btn" bindtap="generateNumbers">立即生成</button>
+  </view>
+
+  <!-- 强密码生成 -->
+  <view class="content-section" wx:if="{{activeTab === 'password'}}">
+    <view class="input-item">
+      <text class="label">密码长度：{{pwdLength}}</text>
+      <slider min="6" max="32" value="{{pwdLength}}" show-value bindchange="onPwdLengthChange" activeColor="#07c160" />
+    </view>
+    <view class="checkbox-group">
+      <label class="checkbox-item" bindtap="toggleOption" data-key="useUppercase">
+        <checkbox value="upper" checked="{{useUppercase}}" color="#07c160" /> 大写字母 (A-Z)
+      </label>
+      <label class="checkbox-item" bindtap="toggleOption" data-key="useLowercase">
+        <checkbox value="lower" checked="{{useLowercase}}" color="#07c160" /> 小写字母 (a-z)
+      </label>
+      <label class="checkbox-item" bindtap="toggleOption" data-key="useNumbers">
+        <checkbox value="num" checked="{{useNumbers}}" color="#07c160" /> 数字 (0-9)
+      </label>
+      <label class="checkbox-item" bindtap="toggleOption" data-key="useSymbols">
+        <checkbox value="sym" checked="{{useSymbols}}" color="#07c160" /> 特殊符号 (!@#$)
+      </label>
+    </view>
+    <button class="primary-btn" bindtap="generatePassword">生成密码</button>
+  </view>
+
+  <!-- 结果展示 -->
+  <view class="result-section" wx:if="{{results.length > 0}}">
+    <view class="result-header">
+      <text class="result-title">生成结果</text>
+      <text class="copy-all" bindtap="copyAll">全部复制</text>
+    </view>
+    <view class="result-list">
+      <view class="result-item" wx:for="{{results}}" wx:key="*this" bindtap="copyItem" data-text="{{item}}">
+        <text class="result-text">{{item}}</text>
+        <text class="copy-btn">复制</text>
+      </view>
+    </view>
+  </view>
+</view>

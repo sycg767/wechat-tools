@@ -32,7 +32,7 @@ module.exports = {
   get(url, data) {
     return request({ url, data, method: 'GET' })
   },
-  post(url, data) {
-    return request({ url, data, method: 'POST' })
+  post(url, data, header) {
+    return request({ url, data, method: 'POST', header })
   }
 }

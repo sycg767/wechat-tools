@@ -74,6 +74,34 @@ Page({
         tag: '新增'
       },
       {
+        title: '二维码工具',
+        desc: '生成二维码或识别二维码图片内容',
+        path: '/pages/qr-tool/index',
+        iconClass: 'icon-qr-code',
+        tag: '新增'
+      },
+      {
+        title: '手写签名',
+        desc: '手写签名并导出透明背景图片',
+        path: '/pages/signature/index',
+        iconClass: 'icon-signature',
+        tag: '新增'
+      },
+      {
+        title: '单位转换',
+        desc: '长度、重量、面积等常用单位互转',
+        path: '/pages/unit-convert/index',
+        iconClass: 'icon-unit',
+        tag: '新增'
+      },
+      {
+        title: '随机生成器',
+        desc: '生成随机数或强密码',
+        path: '/pages/random-gen/index',
+        iconClass: 'icon-random',
+        tag: '新增'
+      },
+      {
         title: '任务历史',
         desc: '查看处理中与已完成的任务结果',
         path: '/pages/tasks/index',

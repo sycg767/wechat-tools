@@ -86,13 +86,20 @@ public class FileStorageServiceImpl implements FileStorageService {
             ip = java.net.InetAddress.getLocalHost().getHostAddress();
         } catch (Exception ignored) {}
         
-        String url = "http://" + ip + ":" + serverPort + contextPath + "/file/download/" + fileId;
+        StringBuilder url = new StringBuilder("http://")
+            .append(ip)
+            .append(":")
+            .append(serverPort)
+            .append(contextPath)
+            .append("/file/download/")
+            .append(fileId)
+            .append("?inline=true");
         if (displayName != null && !displayName.isBlank()) {
             try {
-                url += "?name=" + java.net.URLEncoder.encode(displayName, "UTF-8");
+                url.append("&name=").append(java.net.URLEncoder.encode(displayName, "UTF-8"));
             } catch (java.io.UnsupportedEncodingException ignored) {}
         }
-        return url;
+        return url.toString();
     }
 
     private String extractExtension(String fileName) {

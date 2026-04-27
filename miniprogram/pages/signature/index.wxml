@@ -1,0 +1,39 @@
+<view class="container">
+  <view class="header">
+    <view class="title">手写签名</view>
+    <view class="subtitle">在下方空白区域签名，可导出透明背景图片</view>
+  </view>
+
+  <view class="canvas-area">
+    <canvas 
+      type="2d" 
+      id="signatureCanvas" 
+      class="signature-canvas"
+      bindtouchstart="touchStart"
+      bindtouchmove="touchMove"
+      bindtouchend="touchEnd"
+    ></canvas>
+  </view>
+
+  <view class="controls">
+    <view class="color-picker">
+      <view 
+        wx:for="{{colors}}" 
+        wx:key="*this" 
+        class="color-item {{currentColor === item ? 'active' : ''}}" 
+        style="background-color: {{item}}"
+        bindtap="selectColor"
+        data-color="{{item}}"
+      ></view>
+    </view>
+    
+    <view class="btn-group">
+      <button class="clear-btn" bindtap="clearCanvas">清除</button>
+      <button class="save-btn" bindtap="saveSignature">保存签名</button>
+    </view>
+  </view>
+
+  <view class="tips">
+    提示：保存后的图片为透明背景 PNG 格式，方便贴在各类文档中。
+  </view>
+</view>

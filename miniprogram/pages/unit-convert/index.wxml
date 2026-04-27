@@ -1,0 +1,50 @@
+<view class="container">
+  <view class="header">
+    <view class="title">单位转换</view>
+    <view class="subtitle">长度、重量、面积等常用单位互转</view>
+  </view>
+
+  <view class="type-selector">
+    <scroll-view scroll-x class="type-scroll">
+      <view 
+        wx:for="{{types}}" 
+        wx:key="id" 
+        class="type-item {{activeType === item.id ? 'active' : ''}}"
+        bindtap="switchType"
+        data-id="{{item.id}}"
+      >{{item.name}}</view>
+    </scroll-view>
+  </view>
+
+  <view class="convert-card">
+    <view class="input-row">
+      <input 
+        class="unit-input" 
+        type="digit" 
+        value="{{inputValue}}" 
+        bindinput="onInput" 
+        placeholder="输入数值"
+      />
+      <picker bindchange="onFromUnitChange" value="{{fromUnitIndex}}" range="{{currentUnits}}" range-key="name">
+        <view class="unit-picker">{{currentUnits[fromUnitIndex].name}} ▾</view>
+      </picker>
+    </view>
+
+    <view class="swap-icon">⇅</view>
+
+    <view class="input-row">
+      <view class="unit-result">{{outputValue}}</view>
+      <picker bindchange="onToUnitChange" value="{{toUnitIndex}}" range="{{currentUnits}}" range-key="name">
+        <view class="unit-picker">{{currentUnits[toUnitIndex].name}} ▾</view>
+      </picker>
+    </view>
+  </view>
+
+  <view class="quick-list">
+    <view class="list-title">常用转换结果</view>
+    <view class="list-item" wx:for="{{quickResults}}" wx:key="name">
+      <text class="item-name">{{item.name}}</text>
+      <text class="item-value">{{item.value}} {{item.unit}}</text>
+    </view>
+  </view>
+</view>

@@ -35,6 +35,18 @@ import org.docx4j.wml.R;
 import org.docx4j.wml.Text;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.DecodeHintType;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.common.HybridBinarizer;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -676,6 +688,84 @@ public class FileConversionTask {
             fileStorageService.deleteFile(sourceFileId);
         } catch (Exception e) {
             taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "Excel 转 CSV 失败: " + e.getMessage()));
+        }
+    }
+
+    @Async("taskExecutor")
+    public void processQrGenerate(String taskId, String content, int size) {
+        try {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 30));
+
+            Map<EncodeHintType, Object> hints = new HashMap<>();
+            hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+            hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+            hints.put(EncodeHintType.MARGIN, 1);
+
+            BitMatrix bitMatrix = new MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, size, size, hints);
+            
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            MatrixToImageWriter.writeToStream(bitMatrix, "png", baos);
+            byte[] qrBytes = baos.toByteArray();
+
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 80));
+
+            String resultFileName = "qrcode_" + System.currentTimeMillis() + ".png";
+            String resultFileId = fileStorageService.uploadFile(
+                resultFileName,
+                new ByteArrayInputStream(qrBytes),
+                qrBytes.length,
+                "image/png"
+            );
+            String resultUrl = fileStorageService.getFileUrl(resultFileId, resultFileName);
+            taskService.updateTaskStatus(taskId, TaskStatusResult.success(taskId, resultUrl, resultFileName));
+        } catch (Exception e) {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "二维码生成失败: " + e.getMessage()));
+        }
+    }
+
+    @Async("taskExecutor")
+    public void processQrDecode(String taskId, String sourceFileId) {
+        try {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 30));
+
+            byte[] fileData;
+            try (java.io.InputStream is = fileStorageService.downloadFile(sourceFileId)) {
+                fileData = is.readAllBytes();
+            }
+
+            BufferedImage image = ImageIO.read(new ByteArrayInputStream(fileData));
+            if (image == null) {
+                throw new IllegalArgumentException("无法解析图片文件");
+            }
+
+            LuminanceSource source = new BufferedImageLuminanceSource(image);
+            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+
+            Map<DecodeHintType, Object> hints = new HashMap<>();
+            hints.put(DecodeHintType.CHARACTER_SET, "UTF-8");
+
+            com.google.zxing.Result result = new MultiFormatReader().decode(bitmap, hints);
+            String decodedText = result.getText();
+
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 80));
+
+            // 生成一个包含识别结果的文本文件供下载
+            byte[] resultBytes = decodedText.getBytes(StandardCharsets.UTF_8);
+            String resultFileName = "qr_result.txt";
+            String resultFileId = fileStorageService.uploadFile(
+                resultFileName,
+                new ByteArrayInputStream(resultBytes),
+                resultBytes.length,
+                "text/plain"
+            );
+            String resultUrl = fileStorageService.getFileUrl(resultFileId, resultFileName);
+            
+            // 在 extraData 中带上识别出的内容，方便前端直接展示
+            taskService.updateTaskStatus(taskId, TaskStatusResult.success(taskId, resultUrl, resultFileName, decodedText));
+
+            fileStorageService.deleteFile(sourceFileId);
+        } catch (Exception e) {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "二维码识别失败: " + e.getMessage()));
         }
     }
 

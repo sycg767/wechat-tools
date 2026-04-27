@@ -12,7 +12,11 @@
     "pages/pdf-split/index",
     "pages/pdf-watermark/index",
     "pages/word-pdf/index",
-    "pages/csv-excel/index"
+    "pages/csv-excel/index",
+    "pages/qr-tool/index",
+    "pages/signature/index",
+    "pages/unit-convert/index",
+    "pages/random-gen/index"
   ],
   "window": {
     "navigationBarTitleText": "实用工具箱",

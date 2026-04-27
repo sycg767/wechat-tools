@@ -26,19 +26,25 @@ public class TaskStatusResult {
     private Map<String, Object> qualityGate;
     private String fallbackReason;
     private List<String> warnings;
+    private String extraData; // 用于存放额外的识别结果等数据
 
     public static TaskStatusResult processing(String taskId, Integer progress) {
         return new TaskStatusResult(taskId, null, null, null, null, "PROCESSING", progress, "处理中...", null, null,
-            null, null, null, null, null);
+            null, null, null, null, null, null);
     }
 
     public static TaskStatusResult success(String taskId, String resultUrl, String resultFileName) {
         return new TaskStatusResult(taskId, null, null, null, null, "SUCCESS", 100, "处理完成", resultUrl, resultFileName,
-            null, null, null, null, null);
+            null, null, null, null, null, null);
+    }
+
+    public static TaskStatusResult success(String taskId, String resultUrl, String resultFileName, String extraData) {
+        return new TaskStatusResult(taskId, null, null, null, null, "SUCCESS", 100, "处理完成", resultUrl, resultFileName,
+            null, null, null, null, null, extraData);
     }
 
     public static TaskStatusResult fail(String taskId, String message) {
         return new TaskStatusResult(taskId, null, null, null, null, "FAIL", 0, message, null, null,
-            null, null, null, null, null);
+            null, null, null, null, null, null);
     }
 }

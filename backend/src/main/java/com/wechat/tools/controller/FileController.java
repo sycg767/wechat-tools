@@ -7,6 +7,8 @@ import com.wechat.tools.service.FileStorageService;
 import com.wechat.tools.service.TaskService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -44,13 +46,35 @@ public class FileController {
     }
 
     @GetMapping("/download/{fileId}")
-    public void download(@PathVariable String fileId, @RequestParam(required = false) String name, HttpServletResponse response) {
+    public void download(@PathVariable String fileId,
+                         @RequestParam(required = false) String name,
+                         @RequestParam(value = "inline", defaultValue = "false") boolean inline,
+                         HttpServletResponse response) {
         try {
-            response.setContentType("application/octet-stream");
-            // 使用 RFC 5987 标准对文件名进行编码，确保中文和特殊字符在不同浏览器/客户端中正常显示
+            String lowerFileId = fileId == null ? "" : fileId.toLowerCase();
+            String contentType = "application/octet-stream";
+            if (lowerFileId.endsWith(".png")) {
+                contentType = MediaType.IMAGE_PNG_VALUE;
+            } else if (lowerFileId.endsWith(".jpg") || lowerFileId.endsWith(".jpeg")) {
+                contentType = MediaType.IMAGE_JPEG_VALUE;
+            } else if (lowerFileId.endsWith(".gif")) {
+                contentType = MediaType.IMAGE_GIF_VALUE;
+            } else if (lowerFileId.endsWith(".webp")) {
+                contentType = "image/webp";
+            } else if (lowerFileId.endsWith(".txt")) {
+                contentType = MediaType.TEXT_PLAIN_VALUE + ";charset=UTF-8";
+            } else if (lowerFileId.endsWith(".pdf")) {
+                contentType = "application/pdf";
+            } else if (lowerFileId.endsWith(".zip")) {
+                contentType = "application/zip";
+            }
+
+            response.setContentType(contentType);
             String encodedName = name != null ? java.net.URLEncoder.encode(name, "UTF-8").replace("+", "%20") : fileId;
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + encodedName + "\"; filename*=UTF-8''" + encodedName);
-            
+            String disposition = inline ? "inline" : "attachment";
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION,
+                disposition + "; filename=\"" + encodedName + "\"; filename*=UTF-8''" + encodedName);
+
             try (java.io.InputStream inputStream = fileStorageService.downloadFile(fileId);
                  java.io.OutputStream out = response.getOutputStream()) {
                 IOUtils.copy(inputStream, out);
