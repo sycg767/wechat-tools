@@ -1,10 +1,13 @@
 package com.wechat.tools.task;
 
 import com.baidu.aip.ocr.AipOcr;
-import net.coobird.thumbnailator.Thumbnails;
 import com.wechat.tools.common.TaskStatusResult;
+import com.wechat.tools.config.TencentCiProperties;
 import com.wechat.tools.service.FileStorageService;
 import com.wechat.tools.service.TaskService;
+import com.wechat.tools.service.TencentCosObjectService;
+import com.wechat.tools.service.TencentDocProcessService;
+import net.coobird.thumbnailator.Thumbnails;
 import net.sourceforge.tess4j.Tesseract;
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.io.RandomAccessReadBuffer;
@@ -76,6 +79,9 @@ public class FileConversionTask {
 
     private final TaskService taskService;
     private final FileStorageService fileStorageService;
+    private final TencentCosObjectService tencentCosObjectService;
+    private final TencentDocProcessService tencentDocProcessService;
+    private final TencentCiProperties tencentCiProperties;
 
     @Value("${baidu.ocr.app-id:}")
     private String baiduAppId;
@@ -104,9 +110,16 @@ public class FileConversionTask {
         .connectTimeout(Duration.ofSeconds(20))
         .build();
 
-    public FileConversionTask(TaskService taskService, FileStorageService fileStorageService) {
+    public FileConversionTask(TaskService taskService,
+                              FileStorageService fileStorageService,
+                              TencentCosObjectService tencentCosObjectService,
+                              TencentDocProcessService tencentDocProcessService,
+                              TencentCiProperties tencentCiProperties) {
         this.taskService = taskService;
         this.fileStorageService = fileStorageService;
+        this.tencentCosObjectService = tencentCosObjectService;
+        this.tencentDocProcessService = tencentDocProcessService;
+        this.tencentCiProperties = tencentCiProperties;
     }
 
     @Async("taskExecutor")
@@ -165,6 +178,65 @@ public class FileConversionTask {
             fileStorageService.deleteFile(sourceFileId);
         } catch (Exception e) {
             taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "转换失败: " + e.getMessage()));
+        }
+    }
+
+    @Async("taskExecutor")
+    public void processWordToPdf(String taskId, String sourceFileId, String originalFileName) {
+        String sourceObjectKey = null;
+        String outputObjectKey = null;
+        try {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 10));
+
+            byte[] fileData;
+            try (java.io.InputStream is = fileStorageService.downloadFile(sourceFileId)) {
+                fileData = is.readAllBytes();
+            }
+
+            String sourceExtension = extractExtension(originalFileName, "docx");
+            String resultFileName = buildPdfFileName(originalFileName);
+            outputObjectKey = buildRemoteOutputObjectKey(resultFileName);
+
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 25));
+            sourceObjectKey = tencentCosObjectService.uploadWordSource(originalFileName, fileData, resolveWordContentType(sourceExtension));
+
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 40));
+            String jobId = tencentDocProcessService.submitWordToPdf(sourceObjectKey, sourceExtension, outputObjectKey);
+
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 60));
+            TencentDocProcessService.DocProcessResult docProcessResult = tencentDocProcessService.waitForCompletion(jobId, outputObjectKey);
+            if (!"SUCCESS".equals(docProcessResult.state())) {
+                String message = docProcessResult.message() == null || docProcessResult.message().isBlank()
+                    ? "腾讯云转码失败"
+                    : docProcessResult.message();
+                throw new IllegalStateException(message);
+            }
+
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 90));
+            byte[] pdfBytes = tencentCosObjectService.downloadObject(docProcessResult.outputObjectKey());
+
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 95));
+            String resultFileId = fileStorageService.uploadFile(
+                resultFileName,
+                new ByteArrayInputStream(pdfBytes),
+                pdfBytes.length,
+                "application/pdf"
+            );
+            String resultUrl = fileStorageService.getFileUrl(resultFileId, resultFileName);
+            taskService.updateTaskStatus(taskId, TaskStatusResult.success(taskId, resultUrl, resultFileName));
+
+            fileStorageService.deleteFile(sourceFileId);
+            if (!tencentCiProperties.isKeepRemoteFiles()) {
+                tencentCosObjectService.deleteObject(sourceObjectKey);
+                tencentCosObjectService.deleteObject(docProcessResult.outputObjectKey());
+            }
+        } catch (Exception e) {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "Word 转 PDF 失败: " + e.getMessage()));
+        } finally {
+            if (!tencentCiProperties.isKeepRemoteFiles()) {
+                safeDeleteRemoteObject(sourceObjectKey);
+                safeDeleteRemoteObject(outputObjectKey);
+            }
         }
     }
 
@@ -1819,6 +1891,15 @@ public class FileConversionTask {
         return baseName + ".docx";
     }
 
+    private String buildPdfFileName(String originalFileName) {
+        if (originalFileName == null || originalFileName.isBlank()) {
+            return "converted.pdf";
+        }
+        int dotIndex = originalFileName.lastIndexOf('.');
+        String baseName = dotIndex > 0 ? originalFileName.substring(0, dotIndex) : originalFileName;
+        return baseName + ".pdf";
+    }
+
     private String buildXlsxFileName(String originalFileName) {
         if (originalFileName == null || originalFileName.isBlank()) {
             return "converted.xlsx";
@@ -1826,5 +1907,40 @@ public class FileConversionTask {
         int dotIndex = originalFileName.lastIndexOf('.');
         String baseName = dotIndex > 0 ? originalFileName.substring(0, dotIndex) : originalFileName;
         return baseName + ".xlsx";
+    }
+
+    private String buildRemoteOutputObjectKey(String resultFileName) {
+        String fileName = resultFileName == null || resultFileName.isBlank()
+            ? "converted.pdf"
+            : resultFileName;
+        String randomName = java.util.UUID.randomUUID().toString().replace("-", "") + "-" + fileName;
+        String prefix = tencentCiProperties.getOutputPrefix();
+        if (prefix == null || prefix.isBlank()) {
+            return randomName;
+        }
+        return prefix.endsWith("/") ? prefix + randomName : prefix + "/" + randomName;
+    }
+
+    private String resolveWordContentType(String extension) {
+        return "doc".equalsIgnoreCase(extension)
+            ? "application/msword"
+            : "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+    }
+
+    private String extractExtension(String fileName, String defaultValue) {
+        if (fileName == null || !fileName.contains(".")) {
+            return defaultValue;
+        }
+        return fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
+    }
+
+    private void safeDeleteRemoteObject(String objectKey) {
+        if (objectKey == null || objectKey.isBlank()) {
+            return;
+        }
+        try {
+            tencentCosObjectService.deleteObject(objectKey);
+        } catch (Exception ignored) {
+        }
     }
 }

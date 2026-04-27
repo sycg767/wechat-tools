@@ -14,6 +14,7 @@
   </view>
 
   <progress-bar wx:if="{{task && task.status === 'PROCESSING'}}" text="处理中，请稍候..." percent="{{task.progress}}" />
+  <view wx:if="{{task && task.status === 'PROCESSING' && task.toolType === 'word-pdf'}}" class="detail-row">说明：文件正在云端转换，请稍候。</view>
 
   <view wx:if="{{task && task.status === 'SUCCESS'}}" class="card result-action-card">
     <view class="result-action-title">处理完成</view>

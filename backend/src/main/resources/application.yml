@@ -43,3 +43,17 @@ pdfcpu:
   enabled: true
   binary-path: ""
   timeout-seconds: 60
+
+tencent:
+  cos:
+    secret-id: AKIDytc7NN8j6E7kPxJ3ZtzqTsCKH0UjvvgC
+    secret-key: Jzvq0EQc6jTINVr0uZzA5yc1B6mCzsrl
+    region: "ap-guangzhou"
+    bucket: "my-word-pdf-1319429734"
+  ci:
+    queue-id: "p971a5f4111324d53a52234c384c5ab91"
+    input-prefix: ci/input/
+    output-prefix: ci/output/
+    poll-interval-millis: 2000
+    timeout-seconds: 180
+    keep-remote-files: false

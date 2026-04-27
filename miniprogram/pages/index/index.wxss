@@ -102,6 +102,7 @@
 .icon-id-photo { background: #EEF4FF; }
 .icon-pdf-merge { background: #F0F0FF; }
 .icon-pdf-split { background: #F0F7FF; }
+.icon-word-pdf { background: #FFF3E8; }
 .icon-tasks { background: #F5F5F7; }
 
 .tool-icon-inner {
@@ -119,6 +120,7 @@
 .icon-id-photo .tool-icon-inner { color: #4C6FFF; border-radius: 18rpx; }
 .icon-pdf-merge .tool-icon-inner { color: #5856D6; }
 .icon-pdf-split .tool-icon-inner { color: #007AFF; }
+.icon-word-pdf .tool-icon-inner { color: #FF7A00; border-radius: 6rpx; }
 .icon-tasks .tool-icon-inner { color: #86868B; }
 
 .tool-info {

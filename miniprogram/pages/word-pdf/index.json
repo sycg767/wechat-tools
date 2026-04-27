@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "Word 转 PDF",
+  "usingComponents": {
+    "file-picker": "/components/file-picker/index"
+  }
+}

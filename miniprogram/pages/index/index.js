@@ -60,6 +60,13 @@ Page({
         tag: '新增'
       },
       {
+        title: 'Word 转 PDF',
+        desc: '上传 Word 并生成 PDF 文件',
+        path: '/pages/word-pdf/index',
+        iconClass: 'icon-word-pdf',
+        tag: '新增'
+      },
+      {
         title: '任务历史',
         desc: '查看处理中与已完成的任务结果',
         path: '/pages/tasks/index',

@@ -110,6 +110,37 @@ public class ToolController {
         }
     }
 
+    @PostMapping("/word-to-pdf")
+    public Result<String> wordToPdf(@RequestParam("file") MultipartFile file,
+                                    @RequestParam(value = "originalFileName", required = false) String originalFileName) {
+        try {
+            if (file.isEmpty()) {
+                return Result.error(400, "文件不能为空");
+            }
+            String resolvedFileName = originalFileName != null && !originalFileName.isBlank()
+                ? originalFileName.trim()
+                : file.getOriginalFilename();
+            String lowerCaseFileName = resolvedFileName == null ? "" : resolvedFileName.toLowerCase();
+            if (!lowerCaseFileName.endsWith(".doc") && !lowerCaseFileName.endsWith(".docx")) {
+                return Result.error(400, "请上传 Word 文件");
+            }
+
+            String sourceFileId = fileStorageService.uploadFile(
+                resolvedFileName,
+                file.getInputStream(),
+                file.getSize(),
+                file.getContentType()
+            );
+
+            String taskId = taskService.createTask("word-pdf", resolvedFileName);
+            fileConversionTask.processWordToPdf(taskId, sourceFileId, resolvedFileName);
+
+            return Result.success(taskId, "任务已创建");
+        } catch (Exception e) {
+            return Result.error("Word 转 PDF 失败：" + e.getMessage());
+        }
+    }
+
     @PostMapping("/compress-image")
     public Result<String> compressImage(@RequestParam("file") MultipartFile file,
                                         @RequestParam(value = "quality", defaultValue = "0.8") double quality,

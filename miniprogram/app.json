@@ -10,7 +10,8 @@
     "pages/id-photo-bg/index",
     "pages/pdf-merge/index",
     "pages/pdf-split/index",
-    "pages/pdf-watermark/index"
+    "pages/pdf-watermark/index",
+    "pages/word-pdf/index"
   ],
   "window": {
     "navigationBarTitleText": "实用工具箱",
