@@ -81,6 +81,7 @@
   font-weight: 600;
 }
 
+
 .info-box {
   background: #F2F2F7;
   border-radius: var(--border-radius-md);

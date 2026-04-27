@@ -260,7 +260,7 @@ public class FileConversionTask {
             byte[] resultBytes = mergeForegroundWithSolidBackground(foregroundBytes, bgColor);
 
             taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 85));
-            String resultFileName = buildIdPhotoBgFileName(originalFileName, bgColor);
+            String resultFileName = buildIdPhotoBgFileName(bgColor);
             String resultFileId = fileStorageService.uploadFile(
                 resultFileName,
                 new ByteArrayInputStream(resultBytes),
@@ -689,8 +689,6 @@ public class FileConversionTask {
         BufferedImage result = new BufferedImage(foreground.getWidth(), foreground.getHeight(), BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics = result.createGraphics();
         try {
-            graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
             graphics.setColor(resolveIdPhotoBgColor(bgColor));
             graphics.fillRect(0, 0, result.getWidth(), result.getHeight());
             graphics.setComposite(AlphaComposite.SrcOver);
@@ -712,7 +710,7 @@ public class FileConversionTask {
         };
     }
 
-    private String buildIdPhotoBgFileName(String originalFileName, String bgColor) {
+    private String buildIdPhotoBgFileName(String bgColor) {
         String colorLabel = switch (bgColor) {
             case "red" -> "红底";
             case "blue" -> "蓝底";

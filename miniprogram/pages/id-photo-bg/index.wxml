@@ -29,7 +29,7 @@
 
     <view class="info-box">
       <view class="info-icon">!</view>
-      <view class="info-text">第一版仅提供换底色功能，尺寸裁剪与证件照规范将后续补充。</view>
+      <view class="info-text">系统会自动抠图并切换背景颜色，适合快速生成红底、蓝底或白底证件照图片。</view>
     </view>
 
     <button
