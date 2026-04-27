@@ -1,15 +1,15 @@
 <view class="container">
   <view class="header">
     <view class="title">随机生成器</view>
-    <view class="subtitle">生成随机数字、强密码或随机抽取</view>
+    <view class="subtitle">数字、密码、日期、昵称、验证码、分组</view>
   </view>
 
-  <view class="tabs">
-    <view class="tab {{activeTab === 'number' ? 'active' : ''}}" bindtap="switchTab" data-tab="number">随机数</view>
-    <view class="tab {{activeTab === 'password' ? 'active' : ''}}" bindtap="switchTab" data-tab="password">强密码</view>
-  </view>
+  <scroll-view class="tabs" scroll-x="true" enable-flex="true" show-scrollbar="false">
+    <view class="tab {{activeTab === item.key ? 'active' : ''}}" wx:for="{{tabs}}" wx:key="key" bindtap="switchTab" data-tab="{{item.key}}">
+      {{item.label}}
+    </view>
+  </scroll-view>
 
-  <!-- 随机数生成 -->
   <view class="content-section" wx:if="{{activeTab === 'number'}}">
     <view class="input-group">
       <view class="input-item">
@@ -21,46 +21,173 @@
         <input class="input" type="number" value="{{max}}" bindinput="onInputMax" />
       </view>
     </view>
+
     <view class="input-item">
       <text class="label">生成个数</text>
       <slider min="1" max="100" value="{{count}}" show-value bindchange="onCountChange" activeColor="#07c160" />
     </view>
+
+    <label class="option-toggle" bindtap="toggleOption" data-key="allowDuplicate">
+      <checkbox checked="{{allowDuplicate}}" color="#07c160" /> 允许重复
+    </label>
+
     <button class="primary-btn" bindtap="generateNumbers">立即生成</button>
   </view>
 
-  <!-- 强密码生成 -->
   <view class="content-section" wx:if="{{activeTab === 'password'}}">
     <view class="input-item">
       <text class="label">密码长度：{{pwdLength}}</text>
       <slider min="6" max="32" value="{{pwdLength}}" show-value bindchange="onPwdLengthChange" activeColor="#07c160" />
     </view>
+
     <view class="checkbox-group">
       <label class="checkbox-item" bindtap="toggleOption" data-key="useUppercase">
-        <checkbox value="upper" checked="{{useUppercase}}" color="#07c160" /> 大写字母 (A-Z)
+        <checkbox checked="{{useUppercase}}" color="#07c160" /> 大写字母 (A-Z)
       </label>
       <label class="checkbox-item" bindtap="toggleOption" data-key="useLowercase">
-        <checkbox value="lower" checked="{{useLowercase}}" color="#07c160" /> 小写字母 (a-z)
+        <checkbox checked="{{useLowercase}}" color="#07c160" /> 小写字母 (a-z)
       </label>
       <label class="checkbox-item" bindtap="toggleOption" data-key="useNumbers">
-        <checkbox value="num" checked="{{useNumbers}}" color="#07c160" /> 数字 (0-9)
+        <checkbox checked="{{useNumbers}}" color="#07c160" /> 数字 (0-9)
       </label>
       <label class="checkbox-item" bindtap="toggleOption" data-key="useSymbols">
-        <checkbox value="sym" checked="{{useSymbols}}" color="#07c160" /> 特殊符号 (!@#$)
+        <checkbox checked="{{useSymbols}}" color="#07c160" /> 特殊符号 (!@#$)
+      </label>
+      <label class="checkbox-item" bindtap="toggleOption" data-key="excludeAmbiguous">
+        <checkbox checked="{{excludeAmbiguous}}" color="#07c160" /> 排除易混字符 (0/O/1/l/I)
       </label>
     </view>
+
+    <view class="strength-row" wx:if="{{passwordStrength}}">
+      <text class="label">密码强度</text>
+      <text class="strength-badge strength-{{passwordStrength}}">
+        {{passwordStrength === 'weak' ? '弱' : (passwordStrength === 'medium' ? '中' : '强')}}
+      </text>
+    </view>
+
     <button class="primary-btn" bindtap="generatePassword">生成密码</button>
   </view>
 
-  <!-- 结果展示 -->
+  <view class="content-section" wx:if="{{activeTab === 'date'}}">
+    <view class="input-group">
+      <view class="input-item">
+        <text class="label">开始日期</text>
+        <picker mode="date" value="{{dateStart}}" bindchange="onDateStartChange">
+          <view class="picker-value">{{dateStart}}</view>
+        </picker>
+      </view>
+      <view class="input-item">
+        <text class="label">结束日期</text>
+        <picker mode="date" value="{{dateEnd}}" bindchange="onDateEndChange">
+          <view class="picker-value">{{dateEnd}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="input-item">
+      <text class="label">生成个数：{{dateCount}}</text>
+      <slider min="1" max="100" value="{{dateCount}}" show-value bindchange="onDateCountChange" activeColor="#07c160" />
+    </view>
+
+    <label class="option-toggle" bindtap="toggleOption" data-key="dateIncludeTime">
+      <checkbox checked="{{dateIncludeTime}}" color="#07c160" /> 包含时分秒
+    </label>
+
+    <button class="primary-btn" bindtap="generateRandomDateTimes">生成随机日期</button>
+  </view>
+
+  <view class="content-section" wx:if="{{activeTab === 'nickname'}}">
+    <view class="input-item">
+      <text class="label">生成个数：{{nicknameCount}}</text>
+      <slider min="1" max="100" value="{{nicknameCount}}" show-value bindchange="onNicknameCountChange" activeColor="#07c160" />
+    </view>
+    <button class="primary-btn" bindtap="generateNicknames">生成昵称</button>
+  </view>
+
+  <view class="content-section" wx:if="{{activeTab === 'verify'}}">
+    <view class="input-item">
+      <text class="label">验证码长度：{{verifyLength}}</text>
+      <slider min="4" max="12" value="{{verifyLength}}" show-value bindchange="onVerifyLengthChange" activeColor="#07c160" />
+    </view>
+
+    <view class="input-item">
+      <text class="label">生成个数：{{verifyCount}}</text>
+      <slider min="1" max="100" value="{{verifyCount}}" show-value bindchange="onVerifyCountChange" activeColor="#07c160" />
+    </view>
+
+    <view class="checkbox-group">
+      <label class="checkbox-item" bindtap="toggleOption" data-key="verifyUseNumbers">
+        <checkbox checked="{{verifyUseNumbers}}" color="#07c160" /> 数字
+      </label>
+      <label class="checkbox-item" bindtap="toggleOption" data-key="verifyUseUppercase">
+        <checkbox checked="{{verifyUseUppercase}}" color="#07c160" /> 大写字母
+      </label>
+      <label class="checkbox-item" bindtap="toggleOption" data-key="verifyUseLowercase">
+        <checkbox checked="{{verifyUseLowercase}}" color="#07c160" /> 小写字母
+      </label>
+    </view>
+
+    <button class="primary-btn" bindtap="generateVerifyCodes">生成验证码</button>
+  </view>
+
+  <view class="content-section" wx:if="{{activeTab === 'group'}}">
+    <view class="input-item">
+      <text class="label">成员列表（逗号/换行分隔）</text>
+      <textarea class="textarea" placeholder="例如：张三,李四,王五" value="{{groupMembersInput}}" bindinput="onGroupMembersInput" />
+    </view>
+
+    <view class="input-item">
+      <text class="label">锁定成员（固定到第1组）</text>
+      <textarea class="textarea" placeholder="例如：张三,李四" value="{{groupLockInput}}" bindinput="onGroupLockInput" />
+    </view>
+
+    <view class="mode-switch">
+      <view class="mode-item {{groupMode === 'count' ? 'active' : ''}}" bindtap="switchGroupMode" data-mode="count">按组数</view>
+      <view class="mode-item {{groupMode === 'size' ? 'active' : ''}}" bindtap="switchGroupMode" data-mode="size">按每组人数</view>
+    </view>
+
+    <view class="input-item" wx:if="{{groupMode === 'count'}}">
+      <text class="label">组数：{{groupCount}}</text>
+      <slider min="1" max="30" value="{{groupCount}}" show-value bindchange="onGroupCountChange" activeColor="#07c160" />
+    </view>
+
+    <view class="input-item" wx:if="{{groupMode === 'size'}}">
+      <text class="label">每组人数：{{groupSize}}</text>
+      <slider min="1" max="30" value="{{groupSize}}" show-value bindchange="onGroupSizeChange" activeColor="#07c160" />
+    </view>
+
+    <button class="primary-btn" bindtap="generateGroups">生成分组</button>
+  </view>
+
   <view class="result-section" wx:if="{{results.length > 0}}">
     <view class="result-header">
       <text class="result-title">生成结果</text>
       <text class="copy-all" bindtap="copyAll">全部复制</text>
     </view>
     <view class="result-list">
-      <view class="result-item" wx:for="{{results}}" wx:key="*this" bindtap="copyItem" data-text="{{item}}">
+      <view class="result-item" wx:for="{{results}}" wx:key="idx" wx:for-index="idx" bindtap="copyItem" data-text="{{item}}">
         <text class="result-text">{{item}}</text>
         <text class="copy-btn">复制</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="history-section" wx:if="{{historyItems.length > 0}}">
+    <view class="result-header">
+      <text class="result-title">最近记录</text>
+    </view>
+    <view class="history-list">
+      <view class="history-item" wx:for="{{historyItems}}" wx:key="id" wx:for-index="index">
+        <view class="history-top">
+          <text class="history-type">{{item.typeLabel}}</text>
+          <text class="history-time">{{item.createdAt}}</text>
+        </view>
+        <text class="history-params">{{item.paramsText}}</text>
+        <text class="history-result">{{item.resultText}}</text>
+        <view class="history-actions">
+          <text class="history-action" bindtap="reuseHistory" data-index="{{index}}">复用并生成</text>
+          <text class="history-action" bindtap="copyHistoryItem" data-text="{{item.copyText}}">复制</text>
+        </view>
       </view>
     </view>
   </view>

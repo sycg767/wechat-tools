@@ -22,18 +22,24 @@
 
 .tabs {
   display: flex;
+  white-space: nowrap;
   background: #fff;
   border-radius: 12rpx;
   margin-bottom: 30rpx;
-  overflow: hidden;
+  padding: 8rpx;
+  box-sizing: border-box;
 }
 
 .tab {
-  flex: 1;
-  text-align: center;
-  padding: 24rpx 0;
-  font-size: 28rpx;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16rpx 26rpx;
+  font-size: 26rpx;
   color: #666;
+  border-radius: 10rpx;
+  margin-right: 8rpx;
+  flex-shrink: 0;
 }
 
 .tab.active {
@@ -67,19 +73,34 @@
   display: block;
 }
 
-.input {
+.input,
+.picker-value {
   background: #f5f5f5;
   height: 80rpx;
   border-radius: 8rpx;
   padding: 0 20rpx;
   font-size: 30rpx;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 160rpx;
+  background: #f5f5f5;
+  border-radius: 8rpx;
+  padding: 18rpx 20rpx;
+  font-size: 28rpx;
+  line-height: 1.6;
+  box-sizing: border-box;
 }
 
 .checkbox-group {
   display: flex;
   flex-direction: column;
   gap: 20rpx;
-  margin-bottom: 40rpx;
+  margin-bottom: 30rpx;
 }
 
 .checkbox-item {
@@ -87,6 +108,66 @@
   color: #666;
   display: flex;
   align-items: center;
+}
+
+.option-toggle {
+  display: flex;
+  align-items: center;
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 30rpx;
+}
+
+.mode-switch {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 30rpx;
+}
+
+.mode-item {
+  flex: 1;
+  text-align: center;
+  height: 72rpx;
+  line-height: 72rpx;
+  border-radius: 10rpx;
+  background: #f5f7fb;
+  color: #666;
+  font-size: 26rpx;
+}
+
+.mode-item.active {
+  background: #e7f8ee;
+  color: #07c160;
+  font-weight: 600;
+}
+
+.strength-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30rpx;
+  padding: 20rpx;
+  background: #f8faf8;
+  border-radius: 10rpx;
+}
+
+.strength-badge {
+  font-size: 24rpx;
+  border-radius: 24rpx;
+  padding: 8rpx 20rpx;
+  color: #fff;
+}
+
+.strength-weak {
+  background: #ff6b6b;
+}
+
+.strength-medium {
+  background: #ff9800;
+}
+
+.strength-strong {
+  background: #07c160;
 }
 
 .primary-btn {
@@ -106,7 +187,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30rpx;
+  margin-bottom: 24rpx;
 }
 
 .result-title {
@@ -135,7 +216,7 @@
 }
 
 .result-text {
-  font-size: 32rpx;
+  font-size: 30rpx;
   color: #333;
   font-family: monospace;
   word-break: break-all;
@@ -147,4 +228,66 @@
   font-size: 24rpx;
   color: #576b95;
   flex-shrink: 0;
+}
+
+.history-section {
+  background: #fff;
+  padding: 30rpx;
+  border-radius: 12rpx;
+  margin-top: 30rpx;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.history-item {
+  background: #f8fafc;
+  border-radius: 12rpx;
+  padding: 20rpx;
+}
+
+.history-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12rpx;
+}
+
+.history-type {
+  font-size: 24rpx;
+  color: #07c160;
+  font-weight: 600;
+}
+
+.history-time {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.history-params {
+  display: block;
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+}
+
+.history-result {
+  display: block;
+  font-size: 26rpx;
+  color: #333;
+  word-break: break-all;
+  margin-bottom: 16rpx;
+}
+
+.history-actions {
+  display: flex;
+  gap: 20rpx;
+}
+
+.history-action {
+  font-size: 24rpx;
+  color: #3f7cff;
 }

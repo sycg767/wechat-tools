@@ -96,7 +96,7 @@ Page({
       },
       {
         title: '随机生成器',
-        desc: '生成随机数或强密码',
+        desc: '随机数去重、强密码与历史复用',
         path: '/pages/random-gen/index',
         iconClass: 'icon-random',
         tag: '新增'
