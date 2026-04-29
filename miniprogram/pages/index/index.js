@@ -10,7 +10,9 @@ const TOOL_DEFS = [
     iconClass: 'icon-rename',
     tag: '常用',
     category: '效率工具',
-    order: 10
+    order: 10,
+    size: 'small',
+    svgPath: 'M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z'
   },
   {
     id: 'pdf-word',
@@ -20,7 +22,9 @@ const TOOL_DEFS = [
     iconClass: 'icon-pdf-word',
     tag: '推荐',
     category: '文档处理',
-    order: 10
+    order: 10,
+    size: 'wide',
+    svgPath: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8'
   },
   {
     id: 'pdf-excel',
@@ -31,7 +35,9 @@ const TOOL_DEFS = [
     tag: '开发中',
     disabled: false,
     category: '文档处理',
-    order: 20
+    order: 20,
+    size: 'small',
+    svgPath: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M8 13h8 M8 17h8 M10 9H8'
   },
   {
     id: 'word-pdf',
@@ -41,7 +47,8 @@ const TOOL_DEFS = [
     iconClass: 'icon-word-pdf',
     tag: '新增',
     category: '文档处理',
-    order: 30
+    order: 30,
+    svgPath: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8'
   },
   {
     id: 'csv-excel',
@@ -51,7 +58,8 @@ const TOOL_DEFS = [
     iconClass: 'icon-csv-excel',
     tag: '新增',
     category: '文档处理',
-    order: 40
+    order: 40,
+    svgPath: 'M8 3v18M16 3v18M3 8h18M3 16h18'
   },
   {
     id: 'pdf-merge',
@@ -61,7 +69,8 @@ const TOOL_DEFS = [
     iconClass: 'icon-pdf-merge',
     tag: '新增',
     category: '文档处理',
-    order: 50
+    order: 50,
+    svgPath: 'M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z M14 2v4a1 1 0 0 0 1 1h4 M9 15h6 M12 12v6'
   },
   {
     id: 'pdf-split',
@@ -71,7 +80,8 @@ const TOOL_DEFS = [
     iconClass: 'icon-pdf-split',
     tag: '新增',
     category: '文档处理',
-    order: 60
+    order: 60,
+    svgPath: 'M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z M14 2v4a1 1 0 0 0 1 1h4 M8 13h8'
   },
   {
     id: 'pdf-watermark',
@@ -81,7 +91,8 @@ const TOOL_DEFS = [
     iconClass: 'icon-pdf-watermark',
     tag: '新增',
     category: '文档处理',
-    order: 70
+    order: 70,
+    svgPath: 'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'
   },
   {
     id: 'pdf-manage',
@@ -91,7 +102,8 @@ const TOOL_DEFS = [
     iconClass: 'icon-pdf-manage',
     tag: '实用',
     category: '文档处理',
-    order: 80
+    order: 80,
+    svgPath: 'M3 3h7v7H3z M14 3h7v7h-7z M3 14h7v7H3z M14 14h7v7h-7z'
   },
   {
     id: 'compress-image',
@@ -102,7 +114,8 @@ const TOOL_DEFS = [
     tag: '开发中',
     disabled: false,
     category: '图片处理',
-    order: 10
+    order: 10,
+    svgPath: 'M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h18a2 2 0 0 1 2 2z M8.5 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z M21 15l-5-5L5 21'
   },
   {
     id: 'id-photo-bg',
@@ -112,7 +125,8 @@ const TOOL_DEFS = [
     iconClass: 'icon-id-photo',
     tag: '新增',
     category: '图片处理',
-    order: 20
+    order: 20,
+    size: 'large'
   },
   {
     id: 'qr-tool',
@@ -122,7 +136,8 @@ const TOOL_DEFS = [
     iconClass: 'icon-qr-code',
     tag: '新增',
     category: '效率工具',
-    order: 20
+    order: 20,
+    svgPath: 'M3 3h7v7H3z M14 3h7v7h-7z M3 14h7v7H3z M14 14h3 M21 14h.01 M14 17h.01 M17 17h3 M14 21h3 M21 17v4'
   },
   {
     id: 'signature',
@@ -132,7 +147,8 @@ const TOOL_DEFS = [
     iconClass: 'icon-signature',
     tag: '新增',
     category: '效率工具',
-    order: 30
+    order: 30,
+    svgPath: 'M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z M3 20h18'
   },
   {
     id: 'unit-convert',
@@ -142,7 +158,8 @@ const TOOL_DEFS = [
     iconClass: 'icon-unit',
     tag: '新增',
     category: '效率工具',
-    order: 40
+    order: 40,
+    svgPath: 'M8 3v18M16 3v18M3 8h18M3 16h18'
   },
   {
     id: 'random-gen',
@@ -152,7 +169,8 @@ const TOOL_DEFS = [
     iconClass: 'icon-random',
     tag: '新增',
     category: '效率工具',
-    order: 50
+    order: 50,
+    svgPath: 'M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5'
   },
   {
     id: 'eat-what',
@@ -162,30 +180,24 @@ const TOOL_DEFS = [
     iconClass: 'icon-eat',
     tag: '好玩',
     category: '轻娱乐',
-    order: 10
+    order: 10,
+    svgPath: 'M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z M6 1v3M10 1v3M14 1v3'
   },
   {
     id: 'king-score',
     title: '王者记分',
     desc: '记录迟到、输赢与下播荣辱',
     path: '/pages/king-score/index',
-    iconClass: 'icon-random',
-    tag: '新',
-    category: '效率工具',
-    order: 60
-  },
-  {
-    id: 'tasks',
-    title: '任务历史',
-    desc: '查看处理中与已完成的任务结果',
-    path: '/pages/tasks/index',
-    iconClass: 'icon-tasks',
-    category: '效率工具',
-    order: 90
+    iconClass: 'icon-eat',
+    tag: '核心',
+    category: '游戏工具',
+    order: 1,
+    size: 'large',
+    svgPath: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z'
   }
 ]
 
-const CATEGORY_ORDER = ['文档处理', '图片处理', '效率工具', '轻娱乐']
+const CATEGORY_ORDER = ['游戏工具', '文档处理', '图片处理', '效率工具', '轻娱乐']
 
 function byOrderThenTitle(a, b) {
   const orderDiff = (a.order || 999) - (b.order || 999)
@@ -198,15 +210,33 @@ Page({
     tools: TOOL_DEFS,
     toolSections: [],
     favorites: [],
-    recents: []
+    recents: [],
+    viewMode: 'categories', // 'categories' or 'sub'
+    currentCategory: null,
+    categoryDefs: [
+      { id: '游戏工具', title: '游戏工具', desc: '王者记分与娱乐辅助', iconClass: 'icon-eat', size: 'wide', theme: 'theme-yellow', svgPath: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z' },
+      { id: '文档处理', title: '文档处理', desc: 'PDF、Word、Excel 转换', iconClass: 'icon-pdf-word', size: 'wide', theme: 'theme-rose', svgPath: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8' },
+      { id: '图片处理', title: '图片处理', desc: '压缩、证件照、背景切换', iconClass: 'icon-id-photo', size: 'small', theme: 'theme-blue', svgPath: 'M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h18a2 2 0 0 1 2 2z M8.5 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z M21 15l-5-5L5 21' },
+      { id: '效率工具', title: '效率工具', desc: '重命名、二维码、签名', iconClass: 'icon-rename', size: 'small', theme: 'theme-emerald', svgPath: 'M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z' }
+    ]
   },
 
   onLoad() {
     this.initToolSections()
+    this.initCategories()
   },
 
   onShow() {
     this.initToolSections()
+  },
+
+  initCategories() {
+    const categorySections = this.data.categoryDefs.map(cat => {
+      const svgPath = cat.svgPath || 'M12 2v20M2 12h20'
+      const maskImage = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="${svgPath}"></path></svg>')`
+      return { ...cat, maskImage }
+    })
+    this.setData({ categorySections })
   },
 
   getToolPrefs() {
@@ -257,9 +287,13 @@ Page({
   buildSections(tools, favorites, recents) {
     const toolMap = {}
     tools.forEach((tool) => {
+      const svgPath = tool.svgPath || 'M12 2v20M2 12h20'
+      const maskImage = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="${svgPath}"></path></svg>')`
+      
       toolMap[tool.id] = {
         ...tool,
-        isFavorite: favorites.includes(tool.id)
+        isFavorite: favorites.includes(tool.id),
+        maskImage
       }
     })
 
@@ -333,6 +367,24 @@ Page({
       favorites: prefs.favorites,
       recents: prefs.recents,
       toolSections: this.buildSections(this.data.tools, prefs.favorites, prefs.recents)
+    })
+  },
+
+  handleCategoryTap(event) {
+    const { categoryId } = event.currentTarget.dataset
+    const section = this.data.toolSections.find(s => s.key === `cat-${categoryId}`)
+    if (section) {
+      this.setData({
+        viewMode: 'sub',
+        currentCategory: section
+      })
+    }
+  },
+
+  goBackToCategories() {
+    this.setData({
+      viewMode: 'categories',
+      currentCategory: null
     })
   },
 

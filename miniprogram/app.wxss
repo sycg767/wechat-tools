@@ -1,42 +1,53 @@
 /** 全局变量 **/
 page {
-  --primary-color: #007AFF;
-  --primary-light: #E5F1FF;
+  /* Apple-Style Premium Palette */
+  --primary-color: #000000;
+  --primary-light: #F2F2F7;
   --success-color: #34C759;
   --warning-color: #FF9500;
   --error-color: #FF3B30;
-  --text-main: #1D1D1F;
-  --text-second: #86868B;
+  
+  --text-main: #1C1C1E;
+  --text-second: #8E8E93;
   --text-placeholder: #C7C7CC;
-  --bg-color: #F5F5F7;
+  
+  --bg-color: #F2F2F7;
   --card-bg: #FFFFFF;
-  --border-radius-lg: 24rpx;
-  --border-radius-md: 16rpx;
-  --border-radius-sm: 8rpx;
-  --shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+  
+  --border-radius-apple: 44rpx;
+  --border-radius-pill: 100rpx;
+  
+  /* Sophisticated Multi-layered Shadows */
+  --shadow-premium:
+    0 2rpx 8rpx rgba(0, 0, 0, 0.02),
+    0 10rpx 20rpx rgba(0, 0, 0, 0.04),
+    0 20rpx 40rpx rgba(0, 0, 0, 0.04);
+    
+  --border-premium: 1px solid rgba(0, 0, 0, 0.03);
   
   background: var(--bg-color);
   color: var(--text-main);
   font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
   font-size: 28rpx;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .container {
-  padding: 32rpx;
+  padding: 48rpx;
   box-sizing: border-box;
   min-height: 100vh;
 }
 
-/** 卡片样式 **/
+/** Bento 卡片样式 **/
 .card {
   background: var(--card-bg);
-  border-radius: var(--border-radius-lg);
+  border-radius: var(--border-radius-bento);
   padding: 32rpx;
   box-sizing: border-box;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-bento);
+  border: var(--border-bento);
   margin-bottom: 32rpx;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card-active {
@@ -65,34 +76,42 @@ page {
 
 /** 按钮样式 **/
 .btn {
-  height: 88rpx;
-  line-height: 88rpx;
+  height: 110rpx;
+  line-height: 110rpx;
   text-align: center;
-  border-radius: var(--border-radius-md);
-  font-size: 30rpx;
-  font-weight: 600;
-  transition: all 0.2s ease;
+  border-radius: 32rpx;
+  font-size: 32rpx;
+  font-weight: 700;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
   border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 1rpx;
 }
 
 .btn-primary {
   background: var(--primary-color);
   color: #ffffff;
+  box-shadow: 0 12rpx 32rpx -8rpx rgba(0, 0, 0, 0.2);
 }
 
 .btn-secondary {
-  background: var(--primary-light);
-  color: var(--primary-color);
+  background: #FFFFFF;
+  color: var(--text-main);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-premium);
 }
 
 .btn-hover {
-  opacity: 0.8;
-  transform: scale(0.98);
+  transform: scale(0.97);
+  opacity: 0.9;
 }
 
 .btn-disabled {
-  background: #F2F2F7;
-  color: var(--text-placeholder);
+  background: #E5E5EA;
+  color: #AEAEB2;
+  box-shadow: none;
 }
 
 /** 辅助类 **/

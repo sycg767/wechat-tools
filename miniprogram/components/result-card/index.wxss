@@ -1,7 +1,11 @@
 .result-card {
-  margin-top: 40rpx;
-  border: 2rpx solid var(--primary-light);
-  animation: slideUp 0.4s ease-out;
+  margin-top: 60rpx;
+  border-radius: 44rpx;
+  background: #FFFFFF;
+  box-shadow: var(--shadow-premium);
+  border: var(--border-premium);
+  padding: 48rpx;
+  animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 @keyframes slideUp {
@@ -43,10 +47,11 @@
 }
 
 .result-body {
-  background: #F2F2F7;
-  border-radius: var(--border-radius-md);
-  padding: 24rpx;
-  margin-bottom: 40rpx;
+  background: #F8F9FB;
+  border-radius: 32rpx;
+  padding: 32rpx;
+  margin-bottom: 48rpx;
+  border: 1px solid rgba(0, 0, 0, 0.02);
 }
 
 .file-info-row {

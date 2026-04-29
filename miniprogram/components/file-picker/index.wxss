@@ -5,28 +5,32 @@
 
 .picker-area {
   width: 100%;
-  min-height: 320rpx;
-  background: #ffffff;
-  border: 4rpx dashed #D1D1D6;
-  border-radius: 32rpx;
+  min-height: 400rpx;
+  background: #F9FAFB;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 48rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40rpx;
+  padding: 80rpx;
   box-sizing: border-box;
-  transition: all 0.2s ease;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow: var(--shadow-premium);
+  position: relative;
+  overflow: hidden;
 }
 
 .picker-area-hover {
-  background: #F2F2F7;
-  border-color: #007AFF;
+  background: #FFFFFF;
+  border-color: rgba(0, 0, 0, 0.1);
+  transform: scale(0.98) translateY(4rpx);
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.02);
 }
 
 .has-file {
-  border-style: solid;
-  border-color: #007AFF;
-  background: #F5F9FF;
+  background: #FFFFFF;
+  border: 1px solid var(--text-main);
 }
 
 .picker-icon-box {
@@ -68,15 +72,15 @@
 }
 
 .picker-main-text {
-  font-size: 32rpx;
-  font-weight: 600;
-  color: #1D1D1F;
-  margin-bottom: 8rpx;
+  font-size: 34rpx;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 12rpx;
 }
 
 .picker-sub-text {
-  font-size: 24rpx;
-  color: #86868B;
+  font-size: 26rpx;
+  color: var(--text-second);
 }
 
 .file-display {
