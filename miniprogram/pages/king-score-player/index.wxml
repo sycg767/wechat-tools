@@ -25,7 +25,7 @@
     <view class="chart-head">
       <view>
         <view class="chart-title">评分趋势</view>
-        <view class="chart-desc">蓝线看评分，底部色柱看当天总分与胜负</view>
+        <view class="chart-desc">蓝线看日均评分，底部色柱看当日光荣/耻辱下播</view>
       </view>
     </view>
     <canvas
@@ -35,7 +35,39 @@
       style="width: 100%; height: 360rpx;"
       width="{{trendCanvasWidth}}"
       height="{{trendCanvasHeight}}"
+      bindtap="onTrendCanvasTap"
     ></canvas>
+    <view wx:if="{{selectedTrendPoint}}" class="trend-detail-card">
+      <view class="trend-detail-head">
+        <view>
+          <view class="trend-detail-date">{{selectedTrendPoint.date}}</view>
+          <view class="trend-detail-sub">点击蓝点查看 · 时间精确到时分</view>
+        </view>
+        <text class="mini-tag {{selectedTrendPoint.sessionStatus === '光荣下播' ? 'win' : selectedTrendPoint.sessionStatus === '耻辱下播' ? 'lose' : 'neutral'}}">{{selectedTrendPoint.sessionStatus}}</text>
+      </view>
+      <view class="trend-detail-summary">
+        <view class="summary-item">
+          <view class="summary-value">{{selectedTrendPoint.avgRating}}</view>
+          <view class="summary-label">日均评分</view>
+        </view>
+        <view class="summary-item">
+          <view class="summary-value">{{selectedTrendPoint.avgScore}}</view>
+          <view class="summary-label">日均总分</view>
+        </view>
+      </view>
+      <view class="trend-detail-list">
+        <view wx:for="{{selectedTrendPoint.items}}" wx:key="index" class="trend-detail-item">
+          <view class="trend-detail-item-top">
+            <text class="trend-detail-time">{{item.matchTime}}</text>
+            <view class="record-badges">
+              <text wx:if="{{item.isMvp}}" class="mini-tag mvp">MVP</text>
+              <text class="mini-tag {{item.sessionStatus === '光荣下播' ? 'win' : item.sessionStatus === '耻辱下播' ? 'lose' : 'neutral'}}">{{item.sessionStatus}}</text>
+            </view>
+          </view>
+          <view class="trend-detail-item-sub">{{item.hero}} · {{item.ratingText}} 分 · 总分 {{item.scoreText}} · {{item.matchResult}}</view>
+        </view>
+      </view>
+    </view>
     <view class="chart-foot">{{chartState.trendInsight}}</view>
   </view>
 

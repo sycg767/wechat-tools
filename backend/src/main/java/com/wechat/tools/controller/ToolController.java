@@ -707,7 +707,11 @@ public class ToolController {
 
     @PostMapping("/king-score-ocr")
     public Result<String> kingScoreOcr(@RequestParam("file") MultipartFile file,
-                                       @RequestParam(value = "originalFileName", required = false) String originalFileName) {
+                                       @RequestParam(value = "originalFileName", required = false) String originalFileName,
+                                       @RequestParam(value = "ocrMode", required = false) String ocrMode,
+                                       @RequestParam(value = "aiBaseUrl", required = false) String aiBaseUrl,
+                                       @RequestParam(value = "aiModel", required = false) String aiModel,
+                                       @RequestParam(value = "aiApiKey", required = false) String aiApiKey) {
         try {
             if (file.isEmpty()) {
                 return Result.error(400, "文件不能为空");
@@ -715,6 +719,17 @@ public class ToolController {
             String contentType = file.getContentType();
             if (contentType == null || !contentType.startsWith("image/")) {
                 return Result.error(400, "请上传图片文件");
+            }
+            String resolvedMode = ocrMode == null || ocrMode.isBlank() ? "default" : ocrMode.trim().toLowerCase();
+            if (!List.of("default", "ai").contains(resolvedMode)) {
+                return Result.error(400, "不支持的识别方式");
+            }
+            String resolvedAiBaseUrl = aiBaseUrl == null ? "" : aiBaseUrl.trim();
+            String resolvedAiModel = aiModel == null ? "" : aiModel.trim();
+            String resolvedAiApiKey = aiApiKey == null ? "" : aiApiKey.trim();
+            if ("ai".equals(resolvedMode)
+                && (resolvedAiBaseUrl.isBlank() || resolvedAiModel.isBlank() || resolvedAiApiKey.isBlank())) {
+                return Result.error(400, "AI 识别方式下，请填写请求地址、模型和密钥");
             }
             String resolvedFileName = originalFileName != null && !originalFileName.isBlank()
                 ? originalFileName.trim()
@@ -728,7 +743,7 @@ public class ToolController {
             );
 
             String taskId = taskService.createTask("king-score-ocr", resolvedFileName);
-            fileConversionTask.processKingScoreOcr(taskId, sourceFileId, resolvedFileName);
+            fileConversionTask.processKingScoreOcr(taskId, sourceFileId, resolvedFileName, resolvedMode, resolvedAiBaseUrl, resolvedAiModel, resolvedAiApiKey);
 
             return Result.success(taskId, "任务已创建");
         } catch (Exception e) {

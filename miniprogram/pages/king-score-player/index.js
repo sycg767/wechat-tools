@@ -79,9 +79,71 @@ function buildKdaRatingKey(item) {
   ].join('|')
 }
 
+function hasExactMatchFields(item) {
+  return !!(item && item.date && item.hero && item.kdaText && item.rating != null)
+}
+
+function hasHeroKdaMatchFields(item) {
+  return !!(item && item.date && item.hero && item.kdaText)
+}
+
+function hasKdaRatingMatchFields(item) {
+  return !!(item && item.date && item.kdaText && item.rating != null)
+}
+
+function extractSortableTime(value) {
+  const match = `${value || ''}`.match(/\b([01]?\d|2[0-3]):([0-5]\d)\b/)
+  if (!match) return ''
+  return `${match[1].padStart(2, '0')}:${match[2]}`
+}
+
+function compareOptionalValue(a, b) {
+  if (!a || !b) return 0
+  return `${a}`.localeCompare(`${b}`)
+}
+
+function buildPlayerRecordRow(record, index) {
+  return {
+    date: record.date || '',
+    sortKey: `${record.date || ''}-${record.createdAt || ''}-${String(index).padStart(3, '0')}`,
+    score: Number(record.score || 0) || 0,
+    rating: toBoundedNumber(record.rating, RATING_MAX),
+    matchTime: record.matchTime || '',
+    hero: record.hero || '',
+    kdaText: record.kdaText || '',
+    kdaValue: parseKdaValue(record.kdaText),
+    isMvp: !!record.isMvp,
+    sessionStatus: record.sessionStatus || '',
+    matchResult: record.matchResult || '',
+    totalDeducted: 0,
+    recordKey: record.recordKey || '',
+    playerRecordId: record.id || '',
+    createdAt: record.createdAt || '',
+    sessionId: '',
+    sessionCreatedAt: '',
+    sessionOrder: Number.MAX_SAFE_INTEGER,
+    recordOrder: index,
+    sourceType: 'playerRecord'
+  }
+}
+
 function sortRowsByDate(rows) {
-  return rows.slice().sort((a, b) => {
-    if (a.date !== b.date) return `${a.date || ''}`.localeCompare(`${b.date || ''}`)
+  return (rows || []).slice().sort((a, b) => {
+    const dateCompare = `${a.date || ''}`.localeCompare(`${b.date || ''}`)
+    if (dateCompare !== 0) return dateCompare
+
+    const timeCompare = compareOptionalValue(extractSortableTime(a.matchTime), extractSortableTime(b.matchTime))
+    if (timeCompare !== 0) return timeCompare
+
+    const createdCompare = compareOptionalValue(a.sessionCreatedAt || a.createdAt, b.sessionCreatedAt || b.createdAt)
+    if (createdCompare !== 0) return createdCompare
+
+    const sessionOrderCompare = Number(a.sessionOrder || 0) - Number(b.sessionOrder || 0)
+    if (sessionOrderCompare !== 0) return sessionOrderCompare
+
+    const recordOrderCompare = Number(a.recordOrder || 0) - Number(b.recordOrder || 0)
+    if (recordOrderCompare !== 0) return recordOrderCompare
+
     return `${a.sortKey || ''}`.localeCompare(`${b.sortKey || ''}`)
   })
 }
@@ -89,13 +151,15 @@ function sortRowsByDate(rows) {
 function buildSessionRows(memberId) {
   const sessions = store.getSessions() || []
   const rows = []
+  const totalSessions = sessions.length
 
   sessions.forEach((session, sessionIndex) => {
     ;(session.records || []).forEach((record, recordIndex) => {
       if (record.memberId !== memberId) return
+      const sessionOrder = totalSessions - sessionIndex
       rows.push({
         date: session.date || '',
-        sortKey: `${session.date || ''}-${String(sessionIndex).padStart(3, '0')}-${String(recordIndex).padStart(3, '0')}`,
+        sortKey: `${session.date || ''}-${session.createdAt || ''}-${String(sessionOrder).padStart(3, '0')}-${String(recordIndex).padStart(3, '0')}`,
         score: Number(record.score != null ? record.score : record.todayScore || 0) || 0,
         rating: toBoundedNumber(record.rating, RATING_MAX),
         matchTime: record.matchTime || '',
@@ -105,7 +169,14 @@ function buildSessionRows(memberId) {
         isMvp: !!record.isMvp,
         sessionStatus: record.sessionStatus || session.sessionStatus || record.status || '',
         matchResult: record.matchResult || session.matchResult || '',
-        totalDeducted: Number(record.totalDeducted || 0) || 0
+        totalDeducted: Number(record.totalDeducted || 0) || 0,
+        recordKey: record.recordKey || '',
+        createdAt: record.createdAt || '',
+        sessionId: session.id || '',
+        sessionCreatedAt: session.createdAt || '',
+        sessionOrder,
+        recordOrder: recordIndex,
+        sourceType: 'session'
       })
     })
   })
@@ -117,33 +188,74 @@ function buildPlayerRecordMaps(records) {
   const exactMap = new Map()
   const heroKdaMap = new Map()
   const kdaRatingMap = new Map()
+  const orderedRecords = sortRowsByDate((records || []).map((record, index) => ({
+    ...buildPlayerRecordRow(record, index),
+    __queueId: record.id || record.recordKey || `${record.date || ''}-${record.createdAt || ''}-${index}`
+  })))
 
-  ;(records || []).forEach((record) => {
-    const normalized = {
-      ...record,
-      rating: toBoundedNumber(record.rating, RATING_MAX)
+  orderedRecords.forEach((record) => {
+    if (hasExactMatchFields(record)) {
+      const exactKey = buildLookupKey(record)
+      if (!exactMap.has(exactKey)) exactMap.set(exactKey, [])
+      exactMap.get(exactKey).push(record)
     }
-    const exactKey = buildLookupKey(normalized)
-    const heroKdaKey = buildHeroKdaKey(normalized)
-    const kdaRatingKey = buildKdaRatingKey(normalized)
-
-    if (exactKey && !exactMap.has(exactKey)) exactMap.set(exactKey, normalized)
-    if (heroKdaKey && !heroKdaMap.has(heroKdaKey)) heroKdaMap.set(heroKdaKey, normalized)
-    if (kdaRatingKey && !kdaRatingMap.has(kdaRatingKey)) kdaRatingMap.set(kdaRatingKey, normalized)
+    if (hasHeroKdaMatchFields(record)) {
+      const heroKdaKey = buildHeroKdaKey(record)
+      if (!heroKdaMap.has(heroKdaKey)) heroKdaMap.set(heroKdaKey, [])
+      heroKdaMap.get(heroKdaKey).push(record)
+    }
+    if (hasKdaRatingMatchFields(record)) {
+      const kdaRatingKey = buildKdaRatingKey(record)
+      if (!kdaRatingMap.has(kdaRatingKey)) kdaRatingMap.set(kdaRatingKey, [])
+      kdaRatingMap.get(kdaRatingKey).push(record)
+    }
   })
 
-  return { exactMap, heroKdaMap, kdaRatingMap }
+  return { exactMap, heroKdaMap, kdaRatingMap, orderedRecords }
+}
+
+function consumeQueueRecord(queue, consumedIds) {
+  if (!queue || !queue.length) return null
+  while (queue.length && consumedIds.has(queue[0].__queueId)) {
+    queue.shift()
+  }
+  if (!queue.length) return null
+  const matched = queue.shift()
+  consumedIds.add(matched.__queueId)
+  return matched
+}
+
+function consumeMatchedPlayerRecord(row, maps, consumedIds) {
+  if (row.recordKey) {
+    const direct = maps.orderedRecords.find((item) => item.recordKey === row.recordKey && !consumedIds.has(item.__queueId))
+    if (direct) {
+      consumedIds.add(direct.__queueId)
+      return direct
+    }
+  }
+
+  if (hasExactMatchFields(row)) {
+    const matched = consumeQueueRecord(maps.exactMap.get(buildLookupKey(row)), consumedIds)
+    if (matched) return matched
+  }
+  if (hasHeroKdaMatchFields(row)) {
+    const matched = consumeQueueRecord(maps.heroKdaMap.get(buildHeroKdaKey(row)), consumedIds)
+    if (matched) return matched
+  }
+  if (hasKdaRatingMatchFields(row)) {
+    const matched = consumeQueueRecord(maps.kdaRatingMap.get(buildKdaRatingKey(row)), consumedIds)
+    if (matched) return matched
+  }
+
+  return null
 }
 
 function enrichRowsWithPlayerRecords(rows, playerRecords) {
   const maps = buildPlayerRecordMaps(playerRecords)
+  const consumedIds = new Set()
 
-  return sortRowsByDate((rows || []).map((row) => {
-    const matched = maps.exactMap.get(buildLookupKey(row))
-      || maps.heroKdaMap.get(buildHeroKdaKey(row))
-      || maps.kdaRatingMap.get(buildKdaRatingKey(row))
-      || null
-
+  const enrichedRows = sortRowsByDate((rows || []).map((row) => {
+    const matched = consumeMatchedPlayerRecord(row, maps, consumedIds)
     const hero = row.hero || (matched ? matched.hero : '')
     const kdaText = row.kdaText || (matched ? matched.kdaText : '')
     const rating = row.rating != null ? row.rating : toBoundedNumber(matched && matched.rating, RATING_MAX)
@@ -155,19 +267,65 @@ function enrichRowsWithPlayerRecords(rows, playerRecords) {
       kdaText,
       rating,
       matchTime,
+      createdAt: row.createdAt || (matched ? matched.createdAt : ''),
+      recordKey: row.recordKey || (matched ? matched.recordKey : ''),
+      playerRecordId: row.playerRecordId || (matched ? matched.playerRecordId : ''),
       kdaValue: row.kdaValue != null ? row.kdaValue : parseKdaValue(kdaText),
       isMvp: row.isMvp || !!(matched && matched.isMvp),
-      matchResult: row.matchResult || (matched ? matched.matchResult : '')
+      matchResult: row.matchResult || (matched ? matched.matchResult : ''),
+      sessionStatus: row.sessionStatus || (matched ? matched.sessionStatus : '')
     }
   }))
+
+  const remainingRecords = maps.orderedRecords.filter((record) => !consumedIds.has(record.__queueId))
+  return {
+    rows: enrichedRows,
+    remainingRows: remainingRecords
+  }
 }
 
 function buildDateLabels(rows) {
-  const dateCounter = {}
-  return (rows || []).map((row) => {
-    const shortDate = row.date ? row.date.slice(5) : '未知'
-    dateCounter[shortDate] = (dateCounter[shortDate] || 0) + 1
-    return dateCounter[shortDate] > 1 ? `${shortDate}#${dateCounter[shortDate]}` : shortDate
+  return (rows || []).map((row) => (row.date ? row.date.slice(5) : '未知'))
+}
+
+function buildDailyTrendRows(rows) {
+  const groups = new Map()
+
+  ;(rows || []).forEach((row) => {
+    const date = row.date || '未知'
+    if (!groups.has(date)) groups.set(date, [])
+    groups.get(date).push(row)
+  })
+
+  return Array.from(groups.entries()).map(([date, groupRows]) => {
+    const ratingValues = groupRows.filter((row) => row.rating != null).map((row) => row.rating)
+    const scoreValues = groupRows.map((row) => Number(row.score || 0))
+    const hasShame = groupRows.some((row) => row.sessionStatus === '耻辱下播')
+    const hasGlory = groupRows.some((row) => row.sessionStatus === '光荣下播')
+
+    let sessionStatus = ''
+    if (hasShame) {
+      sessionStatus = '耻辱下播'
+    } else if (hasGlory) {
+      sessionStatus = '光荣下播'
+    }
+
+    return {
+      date,
+      rating: ratingValues.length ? Number(average(ratingValues).toFixed(1)) : null,
+      score: scoreValues.length ? Number(average(scoreValues).toFixed(1)) : 0,
+      sessionStatus,
+      isMvp: groupRows.some((row) => !!row.isMvp),
+      items: groupRows.map((row) => ({
+        matchTime: row.matchTime || '',
+        rating: row.rating,
+        score: Number(row.score || 0),
+        hero: row.hero || '',
+        matchResult: row.matchResult || '',
+        sessionStatus: row.sessionStatus || '',
+        isMvp: !!row.isMvp
+      }))
+    }
   })
 }
 
@@ -232,7 +390,8 @@ function buildRadarMetrics(rows) {
 
 function buildChartAnalytics(rows) {
   const historyRows = sortRowsByDate(rows)
-  const labels = buildDateLabels(historyRows)
+  const dailyTrendRows = buildDailyTrendRows(historyRows)
+  const labels = buildDateLabels(dailyTrendRows)
   const heroStats = buildHeroStats(historyRows)
   const radarMetrics = buildRadarMetrics(historyRows)
   const ratingValues = historyRows.filter((row) => row.rating != null).map((row) => row.rating)
@@ -243,15 +402,17 @@ function buildChartAnalytics(rows) {
 
   return {
     historyRows,
+    dailyTrendRows,
     labels,
     heroStats,
     radarMetrics,
     trend: {
       labels,
-      ratings: historyRows.map((row) => row.rating),
-      scores: historyRows.map((row) => Number(row.score || 0)),
-      results: historyRows.map((row) => row.matchResult || ''),
-      mvps: historyRows.map((row) => !!row.isMvp)
+      ratings: dailyTrendRows.map((row) => row.rating),
+      scores: dailyTrendRows.map((row) => Number(row.score || 0)),
+      results: dailyTrendRows.map((row) => row.sessionStatus || ''),
+      mvps: dailyTrendRows.map((row) => !!row.isMvp),
+      details: dailyTrendRows
     },
     summaryWinRate: winRate,
     chartState: {
@@ -263,13 +424,16 @@ function buildChartAnalytics(rows) {
   }
 }
 
-function buildSummary(memberId, winRateText) {
-  const summary = store.getPlayerRecordSummary(memberId) || EMPTY_SUMMARY
+function buildSummary(rows) {
+  const historyRows = rows || []
+  const ratingValues = historyRows.filter((row) => row.rating != null).map((row) => row.rating)
+  const winCount = historyRows.filter((row) => row.matchResult === '胜利').length
+
   return {
-    total: summary.total || 0,
-    avgRating: summary.avgRating || '0.0',
-    mvpCount: summary.mvpCount || 0,
-    winRate: winRateText || '0%'
+    total: historyRows.length,
+    avgRating: ratingValues.length ? average(ratingValues).toFixed(1) : '0.0',
+    mvpCount: historyRows.filter((row) => row.isMvp).length,
+    winRate: historyRows.length ? `${Math.round(ratio(winCount, historyRows.length))}%` : '0%'
   }
 }
 
@@ -290,6 +454,7 @@ function createContext(page, canvasId) {
 
 function drawTrendChart(page, width, height, trend) {
   const ctx = createContext(page, 'trendCanvas')
+  page.trendHitAreas = []
   if (!trend || !trend.labels.length) {
     drawEmptyCanvas(ctx, width, height, '暂无趋势数据')
     return
@@ -328,14 +493,14 @@ function drawTrendChart(page, width, height, trend) {
     const barHeight = plotHeight * clamp(score / SCORE_MAX, 0, 1)
     const y = top + plotHeight - barHeight
     const result = trend.results[index]
-    
-    // 绘制背景色块表示胜负
-    const fill = result === '胜利' ? 'rgba(82, 196, 26, 0.1)' : result === '失败' ? 'rgba(255, 77, 79, 0.1)' : 'rgba(22, 119, 255, 0.05)'
+
+    // 绘制背景色块表示光荣/耻辱下播
+    const fill = result === '光荣下播' ? 'rgba(82, 196, 26, 0.1)' : result === '耻辱下播' ? 'rgba(255, 77, 79, 0.1)' : 'rgba(22, 119, 255, 0.05)'
     ctx.setFillStyle(fill)
     ctx.fillRect(x - stepX / 2, top, stepX, plotHeight)
 
     // 绘制总分柱状图
-    ctx.setFillStyle(result === '胜利' ? '#52c41a' : result === '失败' ? '#ff4d4f' : '#1677ff')
+    ctx.setFillStyle(result === '光荣下播' ? '#52c41a' : result === '耻辱下播' ? '#ff4d4f' : '#1677ff')
     ctx.setGlobalAlpha(0.3)
     ctx.fillRect(x - barWidth / 2, y, barWidth, barHeight)
     ctx.setGlobalAlpha(1.0)
@@ -348,9 +513,17 @@ function drawTrendChart(page, width, height, trend) {
       y: top + plotHeight - plotHeight * clamp(rating / RATING_MAX, 0, 1),
       rating,
       isMvp: !!trend.mvps[index],
-      result: trend.results[index]
+      result: trend.results[index],
+      detail: trend.details && trend.details[index] ? trend.details[index] : null
     }
   }).filter(Boolean)
+
+  page.trendHitAreas = points.map((point) => ({
+    x: point.x,
+    y: point.y,
+    radius: 18,
+    detail: point.detail
+  }))
 
   if (points.length) {
     ctx.beginPath()
@@ -373,7 +546,7 @@ function drawTrendChart(page, width, height, trend) {
   points.forEach((point) => {
     ctx.beginPath()
     ctx.setFillStyle('#ffffff')
-    ctx.setStrokeStyle(point.result === '胜利' ? '#0a8f4d' : point.result === '失败' ? '#b42318' : '#1677ff')
+    ctx.setStrokeStyle(point.result === '光荣下播' ? '#0a8f4d' : point.result === '耻辱下播' ? '#b42318' : '#1677ff')
     ctx.setLineWidth(point.isMvp ? 3 : 2)
     ctx.arc(point.x, point.y, point.isMvp ? 4 : 3, 0, Math.PI * 2)
     ctx.fill()
@@ -402,6 +575,7 @@ Page({
     filterDate: '',
     chartState: { ...EMPTY_CHART_STATE },
     heroStats: [],
+    selectedTrendPoint: null,
     trendCanvasWidth: 300,
     trendCanvasHeight: 180,
     radarCanvasWidth: 300,
@@ -437,30 +611,24 @@ Page({
     }
 
     const sessionRows = buildSessionRows(memberId)
-    const fallbackRows = allPlayerRecords.map((item, index) => ({
-      date: item.date || '',
-      sortKey: `${item.date || ''}-${String(index).padStart(3, '0')}`,
-      score: Number(item.score || 0) || 0,
-      rating: toBoundedNumber(item.rating, RATING_MAX),
-      matchTime: item.matchTime || '',
-      hero: item.hero || '',
-      kdaText: item.kdaText || '',
-      kdaValue: parseKdaValue(item.kdaText),
-      isMvp: !!item.isMvp,
-      sessionStatus: item.sessionStatus || '',
-      matchResult: item.matchResult || '',
-      totalDeducted: 0
-    }))
-    const baseRows = sessionRows.length ? sessionRows : fallbackRows
-    const analytics = buildChartAnalytics(enrichRowsWithPlayerRecords(baseRows, allPlayerRecords))
+    const playerRecordRows = allPlayerRecords.map((item, index) => buildPlayerRecordRow(item, index))
+    const enriched = enrichRowsWithPlayerRecords(sessionRows, allPlayerRecords)
+    const mergedRows = sessionRows.length
+      ? sortRowsByDate(enriched.rows.concat(enriched.remainingRows))
+      : sortRowsByDate(playerRecordRows)
+    const analytics = buildChartAnalytics(mergedRows)
 
     this.chartAnalytics = analytics
 
     this.setData({
       records,
-      summary: buildSummary(memberId, analytics.summaryWinRate),
-      chartState: analytics.chartState,
-      heroStats: analytics.heroStats || []
+      summary: buildSummary(analytics.historyRows),
+      chartState: {
+        ...analytics.chartState,
+        trendInsight: analytics.chartState.trendInsight
+      },
+      heroStats: analytics.heroStats || [],
+      selectedTrendPoint: null
     }, () => {
       if (analytics.chartState.hasHistory) {
         wx.nextTick(() => this.measureCanvasesAndDraw())
@@ -481,6 +649,45 @@ Page({
         const analytics = this.chartAnalytics || { trend: { labels: [] } }
         drawTrendChart(this, this.data.trendCanvasWidth, this.data.trendCanvasHeight, analytics.trend)
       })
+    })
+  },
+
+  onTrendCanvasTap(e) {
+    const touch = e && e.detail ? e.detail : null
+    if (!touch || typeof touch.x !== 'number' || typeof touch.y !== 'number') return
+    const hitAreas = this.trendHitAreas || []
+    if (!hitAreas.length) return
+
+    let nearest = null
+    let nearestDistance = Infinity
+    hitAreas.forEach((area) => {
+      const dx = touch.x - area.x
+      const dy = touch.y - area.y
+      const distance = Math.sqrt(dx * dx + dy * dy)
+      if (distance <= area.radius && distance < nearestDistance) {
+        nearest = area.detail
+        nearestDistance = distance
+      }
+    })
+
+    if (!nearest) return
+
+    this.setData({
+      selectedTrendPoint: {
+        date: nearest.date || '',
+        avgRating: nearest.rating != null ? nearest.rating.toFixed(1) : '-',
+        avgScore: Number(nearest.score || 0).toFixed(1),
+        sessionStatus: nearest.sessionStatus || '状态待识别',
+        items: (nearest.items || []).map((item) => ({
+          matchTime: item.matchTime || '时间待识别',
+          ratingText: item.rating != null ? item.rating.toFixed(1) : '-',
+          scoreText: `${Number(item.score || 0)}`,
+          hero: item.hero || '待识别',
+          sessionStatus: item.sessionStatus || '状态待识别',
+          matchResult: item.matchResult || '结果待识别',
+          isMvp: !!item.isMvp
+        }))
+      }
     })
   }
 })

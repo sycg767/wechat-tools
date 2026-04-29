@@ -6,14 +6,33 @@
       <view class="header-subtitle">点击卡片扣分 · 每日自动重置</view>
     </view>
     <view class="header-actions">
-      <view class="header-action secondary" bindtap="openOverviewPage">
-        <text class="icon-ocr">榜</text>
+      <view class="action-group">
+        <view class="header-action secondary" hover-class="action-hover" bindtap="openOverviewPage">
+          <view class="action-icon-wrap">
+            <text class="icon-font">榜</text>
+          </view>
+          <text class="action-label">排行榜</text>
+        </view>
+        <view class="header-action secondary" hover-class="action-hover" bindtap="showOcrSettings">
+          <view class="action-icon-wrap">
+            <text class="icon-font">设</text>
+          </view>
+          <text class="action-label">设置</text>
+        </view>
       </view>
-      <view class="header-action secondary" bindtap="chooseOcrImage">
-        <text class="icon-ocr">📷</text>
-      </view>
-      <view class="header-action" bindtap="showAddMember">
-        <text class="icon-plus">+</text>
+      <view class="action-group main">
+        <view class="header-action primary ocr-btn" hover-class="action-hover-main" bindtap="chooseOcrImage">
+          <view class="action-icon-wrap">
+            <text class="icon-emoji">📷</text>
+          </view>
+          <text class="action-label">识别截图</text>
+        </view>
+        <view class="header-action primary add-btn" hover-class="action-hover-main" bindtap="showAddMember">
+          <view class="action-icon-wrap">
+            <text class="icon-plus">+</text>
+          </view>
+          <text class="action-label">添加</text>
+        </view>
       </view>
     </view>
   </view>
@@ -172,6 +191,31 @@
       <view class="modal-footer">
         <button class="modal-btn cancel" bindtap="hideAddMember">取消</button>
         <button class="modal-btn confirm" bindtap="addMember">确定</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 识别设置弹窗 -->
+  <view class="modal {{showSettingsModal ? 'show' : ''}}">
+    <view class="modal-mask" bindtap="hideOcrSettings"></view>
+    <view class="modal-container">
+      <view class="modal-header">识别设置</view>
+      <view class="modal-body">
+        <view class="mode-selector settings-mode-selector">
+          <view class="mode-item {{settingsForm.ocrMode === 'default' ? 'active' : ''}}" data-mode="default" bindtap="switchOcrMode">当前 OCR</view>
+          <view class="mode-item {{settingsForm.ocrMode === 'ai' ? 'active' : ''}}" data-mode="ai" bindtap="switchOcrMode">AI 识别</view>
+        </view>
+        <view class="settings-tip">默认模式继续使用当前后端 OCR；AI 模式按 OpenAI 兼容接口调用。</view>
+        <block wx:if="{{settingsForm.ocrMode === 'ai'}}">
+          <input class="modal-input" placeholder="AI 请求地址，例如 https://example.com/v1/chat/completions" value="{{settingsForm.aiBaseUrl}}" bindinput="onAiBaseUrlInput" />
+          <input class="modal-input" placeholder="模型名称，例如 gpt-4.1-mini" value="{{settingsForm.aiModel}}" bindinput="onAiModelInput" />
+          <input class="modal-input" password="{{true}}" placeholder="API Key" value="{{settingsForm.aiApiKey}}" bindinput="onAiApiKeyInput" />
+          <view class="settings-subtip">密钥只保存在当前设备本地，并在本次识别请求时透传给后端。</view>
+        </block>
+      </view>
+      <view class="modal-footer">
+        <button class="modal-btn cancel" bindtap="hideOcrSettings">取消</button>
+        <button class="modal-btn confirm" bindtap="saveOcrSettings">保存</button>
       </view>
     </view>
   </view>

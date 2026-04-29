@@ -7,7 +7,11 @@ const DEFAULT_SETTINGS = {
   dailyBaseScore: 100,
   deductStep: 10,
   gloryLine: 60,
-  maxHistory: 30
+  maxHistory: 30,
+  ocrMode: 'default',
+  aiBaseUrl: '',
+  aiModel: '',
+  aiApiKey: ''
 }
 
 function todayText() {

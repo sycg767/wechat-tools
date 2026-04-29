@@ -100,8 +100,8 @@ function parseMatchMeta(ocrText) {
     const dateIndex = text.indexOf(dateStr)
     // 在日期之后寻找时间 HH:mm
     const afterText = text.slice(dateIndex + dateStr.length)
-    const timeAfter = afterText.match(/^(\d{1,2}:\d{2})/)
-    
+    const timeAfter = afterText.match(/^\s*(\d{1,2}:\d{2})/)
+
     if (timeAfter) {
       matchTime = `${dateStr} ${timeAfter[1]}`
     } else {
@@ -400,11 +400,11 @@ function buildPlayerSlots(parsedLines, split) {
       const nameSegment = sideSegments.find((segment) => {
         const cleaned = cleanOcrArtifacts(segment.text)
         if (!cleaned || cleaned.length < 2) return false
-        
+
         // 如果包含 KDA，但同时也包含明显的昵称特征（如汉字、@、特殊符号），则仍视为可能的昵称段
         const hasKda = !!extractKdaCandidate(segment.text)
         const hasNameFeature = /[\u4e00-\u9fa5@_⑤①\u2460-\u2469\u2605\u2606\u00d7]/.test(cleaned)
-        
+
         if (hasKda && !hasNameFeature) return false
         if (extractRatingCandidate(segment.text)) return false
         if (isHeroCandidateText(segment.text)) {
@@ -413,7 +413,7 @@ function buildPlayerSlots(parsedLines, split) {
           const isPlayerX = side === 'left' ? segment.x > 700 : segment.x > split + 400
           if (!isPlayerX) return false
         }
-        
+
         // 移除常见的勋章和分路前缀后再判断
         const stripped = cleaned.replace(/^(MVP|金牌|银牌|铜牌|顶级|发育路|游走|对抗路|中路|打野|失败|胜利|更多|查看回放|最佳搭档|数据|[×☆\u2460-\u2469])+/i, '').trim()
         if (!stripped || stripped.length < 1) {
@@ -440,6 +440,59 @@ function buildPlayerSlots(parsedLines, split) {
     })
   })
 
+  return slots
+}
+
+function isOcrMetaToken(token) {
+  const cleaned = `${token || ''}`.replace(/\s+/g, '').trim()
+  if (!cleaned) return false
+  if (/^(MVP|失败|胜利|更多|查看回放|最佳搭档|数据|复盘)$/.test(cleaned)) return true
+  return /^(金牌|银牌|铜牌|顶级)?(发育路|游走|对抗路|中路|打野)$/.test(cleaned)
+}
+
+function extractPlainTextPlayerSlot(line, lineIndex, slotIndex) {
+  const sourceLine = (line || '').trim()
+  const kdaText = extractKdaCandidate(sourceLine)
+  if (!kdaText) return null
+
+  const kdaIndex = sourceLine.indexOf(kdaText)
+  const prefixText = kdaIndex >= 0 ? sourceLine.slice(0, kdaIndex).trim() : sourceLine
+  const tokens = prefixText.split(/\s+/).map((item) => item.trim()).filter(Boolean)
+  if (!tokens.length) return null
+
+  const filteredTokens = tokens.filter((token) => !/^MVP$/i.test(token))
+  const heroIndex = filteredTokens.findIndex((token) => isHeroCandidateText(token))
+  if (heroIndex < 0) return null
+
+  const hero = filteredTokens[heroIndex]
+  const nameTokens = filteredTokens.slice(heroIndex + 1).filter((token) => !isOcrMetaToken(token))
+  const matchedNameText = nameTokens.join(' ').trim()
+  if (!matchedNameText) return null
+
+  return {
+    side: slotIndex < 5 ? 'left' : 'right',
+    lineIndex,
+    nameSegment: {
+      x: slotIndex,
+      text: matchedNameText
+    },
+    line: sourceLine,
+    mergedText: sourceLine,
+    hero,
+    kdaText,
+    rating: extractRatingCandidate(sourceLine),
+    isMvp: /MVP/i.test(sourceLine)
+  }
+}
+
+function buildPlainTextPlayerSlots(parsedLines) {
+  const slots = []
+  ;(parsedLines || []).forEach((line, index) => {
+    const slot = extractPlainTextPlayerSlot(line.text, index, slots.length)
+    if (slot) {
+      slots.push(slot)
+    }
+  })
   return slots
 }
 
@@ -489,6 +542,7 @@ function buildPatchedRecords(records, ocrText) {
   const parsedLines = buildParsedOcrLines(ocrText)
   const split = getOcrColumnSplit(parsedLines)
   const slots = buildPlayerSlots(parsedLines, split)
+  const resolvedSlots = slots.length ? slots : buildPlainTextPlayerSlots(parsedLines)
   const members = store.getMembers().filter((item) => item.active !== false)
   const memberMap = {}
   members.forEach((item) => {
@@ -507,7 +561,7 @@ function buildPatchedRecords(records, ocrText) {
 
     aliasList.forEach((alias) => {
       const threshold = getAliasThreshold(alias)
-      slots.forEach((slot) => {
+      resolvedSlots.forEach((slot) => {
         const slotKey = `${slot.lineIndex}:${slot.side}:${slot.nameSegment.x}:${slot.nameSegment.text}`
         if (usedSlotKeys.has(slotKey)) return
 
@@ -568,6 +622,13 @@ Page({
     records: [],
     settings: store.getSettings(),
     showAddModal: false,
+    showSettingsModal: false,
+    settingsForm: {
+      ocrMode: 'default',
+      aiBaseUrl: '',
+      aiModel: '',
+      aiApiKey: ''
+    },
     editingMemberId: '',
     resultRows: [],
     summaryText: '',
@@ -602,6 +663,12 @@ Page({
       members,
       records,
       settings,
+      settingsForm: {
+        ocrMode: settings.ocrMode || 'default',
+        aiBaseUrl: settings.aiBaseUrl || '',
+        aiModel: settings.aiModel || '',
+        aiApiKey: settings.aiApiKey || ''
+      },
       historySessions,
       selectedSession: historySessions.find((item) => item.id === this.data.selectedSessionId) || null
     }, () => {
@@ -756,6 +823,80 @@ Page({
     wx.navigateTo({ url: '/pages/king-score-overview/index' })
   },
 
+  showOcrSettings() {
+    const settings = this.data.settings || store.getSettings()
+    this.setData({
+      showSettingsModal: true,
+      settingsForm: {
+        ocrMode: settings.ocrMode || 'default',
+        aiBaseUrl: settings.aiBaseUrl || '',
+        aiModel: settings.aiModel || '',
+        aiApiKey: settings.aiApiKey || ''
+      }
+    })
+  },
+
+  hideOcrSettings() {
+    this.setData({ showSettingsModal: false })
+  },
+
+  switchOcrMode(e) {
+    const mode = e.currentTarget.dataset.mode || 'default'
+    this.setData({
+      'settingsForm.ocrMode': mode === 'ai' ? 'ai' : 'default'
+    })
+  },
+
+  onAiBaseUrlInput(e) {
+    this.setData({ 'settingsForm.aiBaseUrl': e.detail.value || '' })
+  },
+
+  onAiModelInput(e) {
+    this.setData({ 'settingsForm.aiModel': e.detail.value || '' })
+  },
+
+  onAiApiKeyInput(e) {
+    this.setData({ 'settingsForm.aiApiKey': e.detail.value || '' })
+  },
+
+  saveOcrSettings() {
+    const form = this.data.settingsForm || {}
+    const payload = {
+      ocrMode: form.ocrMode === 'ai' ? 'ai' : 'default',
+      aiBaseUrl: (form.aiBaseUrl || '').trim(),
+      aiModel: (form.aiModel || '').trim(),
+      aiApiKey: (form.aiApiKey || '').trim()
+    }
+
+    if (payload.ocrMode === 'ai') {
+      if (!payload.aiBaseUrl) {
+        wx.showToast({ title: '请先填写 AI 请求地址', icon: 'none' })
+        return
+      }
+      if (!payload.aiModel) {
+        wx.showToast({ title: '请先填写 AI 模型', icon: 'none' })
+        return
+      }
+      if (!payload.aiApiKey) {
+        wx.showToast({ title: '请先填写 AI 密钥', icon: 'none' })
+        return
+      }
+    }
+
+    const settings = store.saveSettings(payload)
+    this.setData({
+      settings,
+      settingsForm: {
+        ocrMode: settings.ocrMode || 'default',
+        aiBaseUrl: settings.aiBaseUrl || '',
+        aiModel: settings.aiModel || '',
+        aiApiKey: settings.aiApiKey || ''
+      },
+      showSettingsModal: false
+    })
+    wx.showToast({ title: '设置已保存', icon: 'success' })
+  },
+
   chooseOcrImage() {
     if (!this.data.members.length) {
       wx.showToast({ title: '请先添加成员', icon: 'none' })
@@ -775,6 +916,27 @@ Page({
   },
 
   async uploadOcrImage(filePath) {
+    const settings = this.data.settings || store.getSettings()
+    const ocrMode = settings.ocrMode === 'ai' ? 'ai' : 'default'
+    const aiBaseUrl = (settings.aiBaseUrl || '').trim()
+    const aiModel = (settings.aiModel || '').trim()
+    const aiApiKey = (settings.aiApiKey || '').trim()
+
+    if (ocrMode === 'ai') {
+      if (!aiBaseUrl) {
+        wx.showToast({ title: '请先填写 AI 请求地址', icon: 'none' })
+        return
+      }
+      if (!aiModel) {
+        wx.showToast({ title: '请先填写 AI 模型', icon: 'none' })
+        return
+      }
+      if (!aiApiKey) {
+        wx.showToast({ title: '请先填写 AI 密钥', icon: 'none' })
+        return
+      }
+    }
+
     this.setData({
       ocrProcessing: true,
       ocrProgress: 10,
@@ -789,7 +951,12 @@ Page({
     })
 
     try {
-      const res = await upload('/tool/king-score-ocr', filePath)
+      const res = await upload('/tool/king-score-ocr', filePath, {
+        ocrMode,
+        aiBaseUrl,
+        aiModel,
+        aiApiKey
+      })
       if (res.code !== 200 || !res.data) {
         throw new Error(res.message || '任务创建失败')
       }

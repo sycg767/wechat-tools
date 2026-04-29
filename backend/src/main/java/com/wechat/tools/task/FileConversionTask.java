@@ -869,7 +869,8 @@ public class FileConversionTask {
     }
 
     @Async("taskExecutor")
-    public void processKingScoreOcr(String taskId, String sourceFileId, String originalFileName) {
+    public void processKingScoreOcr(String taskId, String sourceFileId, String originalFileName,
+                                    String ocrMode, String aiBaseUrl, String aiModel, String aiApiKey) {
         try {
             taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 20));
 
@@ -879,7 +880,9 @@ public class FileConversionTask {
             }
 
             taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 45));
-            String recognizedText = performImageOcr(taskId, fileData);
+            String recognizedText = "ai".equalsIgnoreCase(ocrMode)
+                ? performKingScoreAiOcr(taskId, fileData, aiBaseUrl, aiModel, aiApiKey)
+                : performImageOcr(taskId, fileData);
             if (recognizedText == null || recognizedText.isBlank()) {
                 throw new IllegalStateException("未识别到可用文字");
             }
@@ -1059,6 +1062,124 @@ public class FileConversionTask {
             }
         }
         return bestText;
+    }
+
+    private String performKingScoreAiOcr(String taskId, byte[] fileData, String aiBaseUrl, String aiModel, String aiApiKey) throws Exception {
+        String normalizedUrl = normalizeAiBaseUrl(aiBaseUrl);
+        taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 65));
+
+        JSONObject systemMessage = new JSONObject()
+            .put("role", "system")
+            .put("content", "你是截图转写助手。你的任务是忠实提取王者荣耀战绩截图中的可见文本，只输出识别结果本身，不要解释、不要总结、不要使用 Markdown、不要输出代码块。尽量保留胜利或失败、日期时间、玩家名、英雄名、KDA、评分、MVP 等内容，并按截图阅读顺序组织文本。看不清的内容可以省略，不要编造。") ;
+
+        JSONArray userContent = new JSONArray()
+            .put(new JSONObject()
+                .put("type", "text")
+                .put("text", "请直接输出这张截图里的战绩文本，尽量按阅读顺序逐行转写。"))
+            .put(new JSONObject()
+                .put("type", "image_url")
+                .put("image_url", new JSONObject().put("url", buildImageDataUrl(fileData))));
+
+        JSONObject userMessage = new JSONObject()
+            .put("role", "user")
+            .put("content", userContent);
+
+        JSONObject payload = new JSONObject()
+            .put("model", aiModel)
+            .put("messages", new JSONArray().put(systemMessage).put(userMessage))
+            .put("temperature", 0.1);
+
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create(normalizedUrl))
+            .timeout(Duration.ofSeconds(90))
+            .header("Authorization", "Bearer " + aiApiKey)
+            .header("Content-Type", "application/json")
+            .POST(HttpRequest.BodyPublishers.ofString(payload.toString()))
+            .build();
+
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+        if (response.statusCode() < 200 || response.statusCode() >= 300) {
+            throw new IllegalStateException("AI 请求失败: HTTP " + response.statusCode());
+        }
+
+        return extractAiMessageText(response.body());
+    }
+
+    private String normalizeAiBaseUrl(String aiBaseUrl) {
+        String url = aiBaseUrl == null ? "" : aiBaseUrl.trim();
+        if (url.isBlank()) {
+            throw new IllegalArgumentException("AI 请求地址不能为空");
+        }
+        URI uri;
+        try {
+            uri = URI.create(url);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("AI 请求地址格式无效");
+        }
+        String scheme = uri.getScheme() == null ? "" : uri.getScheme().toLowerCase(Locale.ROOT);
+        if (!"http".equals(scheme) && !"https".equals(scheme)) {
+            throw new IllegalArgumentException("AI 请求地址仅支持 http 或 https");
+        }
+        String host = uri.getHost() == null ? "" : uri.getHost().trim().toLowerCase(Locale.ROOT);
+        if (host.isBlank()) {
+            throw new IllegalArgumentException("AI 请求地址缺少主机名");
+        }
+        if ("localhost".equals(host) || "127.0.0.1".equals(host) || "0.0.0.0".equals(host) || "::1".equals(host)) {
+            throw new IllegalArgumentException("AI 请求地址不允许使用本机回环地址");
+        }
+        return url;
+    }
+
+    private String buildImageDataUrl(byte[] fileData) {
+        return "data:image/png;base64," + Base64.getEncoder().encodeToString(fileData);
+    }
+
+    private String extractAiMessageText(String body) {
+        JSONObject json = new JSONObject(body);
+        if (json.has("error")) {
+            Object error = json.get("error");
+            if (error instanceof JSONObject errorObj) {
+                throw new IllegalStateException(errorObj.optString("message", "AI 识别失败"));
+            }
+            throw new IllegalStateException("AI 识别失败");
+        }
+
+        JSONArray choices = json.optJSONArray("choices");
+        if (choices == null || choices.length() == 0) {
+            throw new IllegalStateException("AI 未返回识别结果");
+        }
+
+        JSONObject first = choices.optJSONObject(0);
+        JSONObject message = first == null ? null : first.optJSONObject("message");
+        if (message == null) {
+            throw new IllegalStateException("AI 返回结果缺少 message");
+        }
+
+        Object content = message.opt("content");
+        if (content instanceof String text) {
+            String trimmed = text.trim();
+            if (trimmed.isBlank()) {
+                throw new IllegalStateException("AI 返回文本为空");
+            }
+            return trimmed;
+        }
+
+        if (content instanceof JSONArray array) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject item = array.optJSONObject(i);
+                if (item == null) continue;
+                String text = item.optString("text", "").trim();
+                if (text.isBlank()) continue;
+                if (sb.length() > 0) sb.append('\n');
+                sb.append(text);
+            }
+            if (sb.length() > 0) {
+                return sb.toString();
+            }
+        }
+
+        throw new IllegalStateException("AI 返回内容为空");
     }
 
     private List<BufferedImage> buildKingScoreOcrCandidates(BufferedImage source) {

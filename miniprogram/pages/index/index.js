@@ -221,9 +221,24 @@ Page({
     ]
   },
 
-  onLoad() {
+  onLoad(options) {
     this.initToolSections()
     this.initCategories()
+    
+    // 处理跳转参数，如果是进入子分类页面
+    if (options && options.viewMode === 'sub' && options.categoryId) {
+      const prefs = this.sanitizePrefs(this.getToolPrefs())
+      const sections = this.buildSections(this.data.tools, prefs.favorites, prefs.recents)
+      const section = sections.find(s => s.key === `cat-${options.categoryId}`)
+      
+      if (section) {
+        this.setData({
+          viewMode: 'sub',
+          currentCategory: section
+        })
+        wx.setNavigationBarTitle({ title: section.title })
+      }
+    }
   },
 
   onShow() {
@@ -374,9 +389,10 @@ Page({
     const { categoryId } = event.currentTarget.dataset
     const section = this.data.toolSections.find(s => s.key === `cat-${categoryId}`)
     if (section) {
-      this.setData({
-        viewMode: 'sub',
-        currentCategory: section
+      // 方案：使用真正的页面跳转来解决左滑返回问题
+      // 将分类 ID 作为参数传递给当前页面，利用微信原生页面栈
+      wx.navigateTo({
+        url: `/pages/index/index?categoryId=${categoryId}&viewMode=sub`
       })
     }
   },
@@ -386,6 +402,17 @@ Page({
       viewMode: 'categories',
       currentCategory: null
     })
+    wx.setNavigationBarTitle({ title: '工具箱' })
+  },
+
+  onUnload() {
+    // 如果在子分类页面直接退出，确保下次进入状态正确
+    this.goBackToCategories()
+  },
+
+  // 监听小程序原生返回事件
+  onHide() {
+    // 保持当前状态
   },
 
   handleToolTap(event) {
