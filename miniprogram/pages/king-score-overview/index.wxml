@@ -1,0 +1,36 @@
+<view class="page">
+  <view class="header-card">
+    <view class="title">全员战绩总览</view>
+    <view class="summary-row summary-row-3">
+      <view class="summary-item">
+        <view class="summary-value">{{summary.activeMembers}}</view>
+        <view class="summary-label">成员数</view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-value">{{summary.totalSessions}}</view>
+        <view class="summary-label">总场次</view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-value">{{summary.avgRating}}</view>
+        <view class="summary-label">均评</view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{rankingRows.length}}" class="chart-card">
+    <view class="chart-title">综合排行</view>
+    <view class="chart-desc">综合分 = 均评 × 3 + MVP × 2</view>
+    <scroll-view class="chart-scroll" scroll-y="{{true}}" enhanced="{{true}}" show-scrollbar="{{true}}">
+      <canvas
+        id="rankingCanvas"
+        canvas-id="rankingCanvas"
+        class="chart-canvas"
+        style="width: 100%; height: {{rankingCanvasStyleHeight}}px;"
+        width="{{rankingCanvasWidth}}"
+        height="{{rankingCanvasHeight}}"
+      ></canvas>
+    </scroll-view>
+  </view>
+
+  <view wx:if="{{!rankingRows.length}}" class="empty">暂无可统计的全员数据</view>
+</view>

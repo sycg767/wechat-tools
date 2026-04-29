@@ -1,0 +1,31 @@
+<view class="container">
+  <view class="header">
+    <text class="title">今天吃什么？</text>
+    <text class="subtitle">纠结没意义，交给运气吧</text>
+  </view>
+
+  <view class="wheel-container">
+    <canvas type="2d" id="wheelCanvas" class="wheel-canvas" bindtap="startSpin"></canvas>
+  </view>
+
+  <view class="result-section" wx:if="{{result}}">
+    <text class="result-text">结果是：<text class="highlight">{{result}}</text></text>
+  </view>
+
+  <view class="options-section">
+    <view class="section-title">自定义选项</view>
+    <view class="option-list">
+      <view class="option-item" wx:for="{{options}}" wx:key="index">
+        <text>{{item}}</text>
+        <view class="delete-btn" bindtap="removeOption" data-index="{{index}}">×</view>
+      </view>
+    </view>
+    
+    <view class="add-option">
+      <input class="input" placeholder="输入新选项" value="{{inputValue}}" bindinput="onInput" />
+      <button class="add-btn" bindtap="addOption">添加</button>
+    </view>
+    
+    <button class="reset-btn" bindtap="resetOptions">恢复默认</button>
+  </view>
+</view>

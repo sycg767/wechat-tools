@@ -16,7 +16,12 @@
     "pages/qr-tool/index",
     "pages/signature/index",
     "pages/unit-convert/index",
-    "pages/random-gen/index"
+    "pages/random-gen/index",
+    "pages/eat-what/index",
+    "pages/pdf-manage/index",
+    "pages/king-score/index",
+    "pages/king-score-player/index",
+    "pages/king-score-overview/index"
   ],
   "window": {
     "navigationBarTitleText": "实用工具箱",

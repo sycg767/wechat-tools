@@ -1,0 +1,67 @@
+<view class="container">
+  <view class="header">
+    <text class="title">PDF 页面管理</text>
+    <text class="subtitle">预览后重排、旋转、删除</text>
+  </view>
+
+  <view class="card">
+    <file-picker
+      file="{{fileSelected ? { name: originalFileName } : null}}"
+      accept="pdf"
+      bind:selected="onFileSelect"
+      disabled="{{processing || previewLoading}}"
+    />
+  </view>
+
+  <view class="card" wx:if="{{fileSelected}}">
+    <view class="section-title">页面预览</view>
+
+    <view class="summary-row">
+      <text class="summary-text">总页数：{{totalPages}}，预览：{{previewCount}}页</text>
+      <text class="summary-warn" wx:if="{{truncated}}">仅显示前 {{previewCount}} 页</text>
+    </view>
+
+    <view class="loading-tip" wx:if="{{previewLoading}}">正在生成预览...</view>
+
+    <view class="preview-list" wx:if="{{!previewLoading && previewPages.length > 0}}">
+      <block wx:for="{{previewPages}}" wx:key="pageNo">
+        <view class="page-card {{item.deleted ? 'page-card-deleted' : ''}}">
+          <view class="thumb-wrap">
+            <image class="thumb" src="{{item.thumbnailBase64}}" mode="aspectFit" />
+          </view>
+
+          <view class="page-meta">
+            <text class="page-title">第 {{item.pageNo}} 页</text>
+            <text class="page-rotation">旋转：{{item.rotation}}°</text>
+          </view>
+
+          <view class="action-row">
+            <button class="mini-btn" size="mini" bindtap="moveUp" data-index="{{index}}" disabled="{{index===0 || item.deleted}}">上移</button>
+            <button class="mini-btn" size="mini" bindtap="moveDown" data-index="{{index}}" disabled="{{index===previewPages.length-1 || item.deleted}}">下移</button>
+            <button class="mini-btn" size="mini" bindtap="rotatePage" data-index="{{index}}" disabled="{{item.deleted}}">旋转90°</button>
+            <button class="mini-btn {{item.deleted ? 'mini-btn-restore' : 'mini-btn-delete'}}" size="mini" bindtap="toggleDelete" data-index="{{index}}">{{item.deleted ? '恢复' : '删除'}}</button>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <button
+      class="btn btn-primary mt-20"
+      bindtap="startProcess"
+      loading="{{processing}}"
+      disabled="{{processing || previewLoading || previewPages.length===0}}"
+    >
+      提交并导出
+    </button>
+  </view>
+
+  <view class="card" wx:if="{{processing}}">
+    <progress-bar progress="{{progress}}" status="{{statusText}}" />
+  </view>
+
+  <result-card
+    wx:if="{{resultUrl}}"
+    url="{{resultUrl}}"
+    fileName="{{resultFileName}}"
+  />
+</view>

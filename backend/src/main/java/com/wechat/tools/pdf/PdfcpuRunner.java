@@ -34,6 +34,14 @@ public class PdfcpuRunner {
         runOrThrow(List.of(resolveBinaryPath(), "stamp", "remove", inputFile.toString(), outputFile.toString()), true);
     }
 
+    public void collect(Path inputFile, Path outputFile, String pageRange) throws IOException, InterruptedException {
+        runOrThrow(List.of(resolveBinaryPath(), "collect", "-p", pageRange, inputFile.toString(), outputFile.toString()), false);
+    }
+
+    public void rotate(Path inputFile, Path outputFile, int rotation) throws IOException, InterruptedException {
+        runOrThrow(List.of(resolveBinaryPath(), "rotate", inputFile.toString(), String.valueOf(rotation), outputFile.toString()), false);
+    }
+
     private String resolveBinaryPath() throws IOException {
         if (!enabled) {
             throw new IOException("pdfcpu 已禁用");

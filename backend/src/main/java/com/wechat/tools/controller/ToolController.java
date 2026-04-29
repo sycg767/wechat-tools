@@ -351,6 +351,83 @@ public class ToolController {
         }
     }
 
+    @PostMapping("/pdf-page-manage")
+    public Result<String> pdfPageManage(@RequestParam("file") MultipartFile file,
+                                        @RequestParam(value = "pagesJson", required = false) String pagesJson,
+                                        @RequestParam(value = "pageRange", required = false) String pageRange,
+                                        @RequestParam(value = "rotation", required = false) Integer rotation,
+                                        @RequestParam(value = "originalFileName", required = false) String originalFileName) {
+        try {
+            if (file.isEmpty()) {
+                return Result.error(400, "文件不能为空");
+            }
+            String resolvedFileName = originalFileName != null && !originalFileName.isBlank()
+                ? originalFileName.trim()
+                : file.getOriginalFilename();
+
+            String sourceFileId = fileStorageService.uploadFile(
+                resolvedFileName,
+                file.getInputStream(),
+                file.getSize(),
+                file.getContentType()
+            );
+
+            String taskId = taskService.createTask("pdf-page-manage", resolvedFileName);
+            fileConversionTask.processPdfPageManage(taskId, sourceFileId, resolvedFileName, pagesJson, pageRange, rotation);
+
+            return Result.success(taskId, "任务已创建");
+        } catch (Exception e) {
+            return Result.error("PDF 页面管理失败：" + e.getMessage());
+        }
+    }
+
+    @PostMapping("/pdf-page-manage-preview")
+    public Result<Map<String, Object>> pdfPageManagePreview(@RequestParam("file") MultipartFile file) {
+        try {
+            if (file.isEmpty()) {
+                return Result.error(400, "文件不能为空");
+            }
+
+            final int maxPages = 80;
+            final int dpi = 40;
+
+            try (PDDocument document = Loader.loadPDF(file.getBytes())) {
+                int totalPages = document.getNumberOfPages();
+                if (totalPages <= 0) {
+                    return Result.error(400, "PDF 无内容");
+                }
+
+                int previewCount = Math.min(totalPages, maxPages);
+                PDFRenderer renderer = new PDFRenderer(document);
+                List<Map<String, Object>> pages = new ArrayList<>();
+
+                for (int i = 0; i < previewCount; i++) {
+                    BufferedImage image = renderer.renderImageWithDPI(i, dpi);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    ImageIO.write(image, "png", baos);
+                    String base64 = Base64.getEncoder().encodeToString(baos.toByteArray());
+
+                    pages.add(Map.of(
+                        "pageNo", i + 1,
+                        "thumbnailBase64", "data:image/png;base64," + base64,
+                        "width", image.getWidth(),
+                        "height", image.getHeight(),
+                        "rotation", document.getPage(i).getRotation()
+                    ));
+                }
+
+                return Result.success(Map.of(
+                    "pages", pages,
+                    "totalPages", totalPages,
+                    "previewCount", previewCount,
+                    "truncated", totalPages > maxPages
+                ));
+            }
+        } catch (Exception e) {
+            return Result.error("预览生成失败：" + e.getMessage());
+        }
+    }
+
     @PostMapping("/pdf-preview")
     public Result<Map<String, Object>> pdfPreview(@RequestParam("file") MultipartFile file) {
         try {
@@ -625,6 +702,37 @@ public class ToolController {
             return Result.success(taskId, "任务已创建");
         } catch (Exception e) {
             return Result.error("二维码识别失败：" + e.getMessage());
+        }
+    }
+
+    @PostMapping("/king-score-ocr")
+    public Result<String> kingScoreOcr(@RequestParam("file") MultipartFile file,
+                                       @RequestParam(value = "originalFileName", required = false) String originalFileName) {
+        try {
+            if (file.isEmpty()) {
+                return Result.error(400, "文件不能为空");
+            }
+            String contentType = file.getContentType();
+            if (contentType == null || !contentType.startsWith("image/")) {
+                return Result.error(400, "请上传图片文件");
+            }
+            String resolvedFileName = originalFileName != null && !originalFileName.isBlank()
+                ? originalFileName.trim()
+                : file.getOriginalFilename();
+
+            String sourceFileId = fileStorageService.uploadFile(
+                resolvedFileName,
+                file.getInputStream(),
+                file.getSize(),
+                contentType
+            );
+
+            String taskId = taskService.createTask("king-score-ocr", resolvedFileName);
+            fileConversionTask.processKingScoreOcr(taskId, sourceFileId, resolvedFileName);
+
+            return Result.success(taskId, "任务已创建");
+        } catch (Exception e) {
+            return Result.error("截图识别失败：" + e.getMessage());
         }
     }
 

@@ -1,0 +1,84 @@
+<view class="page">
+  <view class="header-card">
+    <view class="title">{{memberName || '成员'}} 的个人战绩</view>
+    <view class="summary-row summary-row-4">
+      <view class="summary-item">
+        <view class="summary-value">{{summary.total}}</view>
+        <view class="summary-label">总场次</view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-value">{{summary.avgRating}}</view>
+        <view class="summary-label">平均评分</view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-value">{{summary.mvpCount}}</view>
+        <view class="summary-label">MVP</view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-value">{{summary.winRate}}</view>
+        <view class="summary-label">胜率</view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{chartState.hasHistory}}" class="chart-card">
+    <view class="chart-head">
+      <view>
+        <view class="chart-title">评分趋势</view>
+        <view class="chart-desc">蓝线看评分，底部色柱看当天总分与胜负</view>
+      </view>
+    </view>
+    <canvas
+      id="trendCanvas"
+      canvas-id="trendCanvas"
+      class="chart-canvas trend-canvas"
+      style="width: 100%; height: 360rpx;"
+      width="{{trendCanvasWidth}}"
+      height="{{trendCanvasHeight}}"
+    ></canvas>
+    <view class="chart-foot">{{chartState.trendInsight}}</view>
+  </view>
+
+  <view wx:if="{{heroStats.length}}" class="hero-card">
+    <view class="card-title">常用英雄</view>
+    <view class="hero-list">
+      <view wx:for="{{heroStats}}" wx:key="hero" class="hero-item">
+        <view class="hero-name">{{item.hero}}</view>
+        <view class="hero-data">
+          <text>{{item.played}}场</text>
+          <text class="win-rate">{{item.winRate}}%胜率</text>
+          <text wx:if="{{item.avgRating}}">{{item.avgRating}}分</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{!records.length}}" class="empty">暂无个人战绩记录</view>
+
+  <view wx:for="{{records}}" wx:key="id" class="record-card {{item.matchResult === '胜利' ? 'card-win' : item.matchResult === '失败' ? 'card-lose' : ''}} {{item.isMvp ? 'card-mvp' : ''}}">
+    <view class="record-top">
+      <view class="record-date-wrap">
+        <text class="record-date">{{item.date}} <text wx:if="{{item.matchTime}}" style="margin-left: 8rpx; font-size: 24rpx; color: #9aa4b2;">{{item.matchTime}}</text></text>
+        <text wx:if="{{item.isMvp}}" class="mvp-crown">👑</text>
+      </view>
+      <view class="record-badges">
+        <text wx:if="{{item.isMvp}}" class="mini-tag mvp">MVP</text>
+        <text class="mini-tag {{item.matchResult === '胜利' ? 'win' : item.matchResult === '失败' ? 'lose' : 'neutral'}}">{{item.matchResult || '结果待识别'}}</text>
+      </view>
+    </view>
+    <view class="record-meta">
+      <view class="meta-item hero">
+        <text class="meta-label">英雄</text>
+        <text class="meta-value">{{item.hero || '待识别'}}</text>
+      </view>
+      <view class="meta-item kda">
+        <text class="meta-label">KDA</text>
+        <text class="meta-value">{{item.kdaText || '待识别'}}</text>
+      </view>
+      <view class="meta-item rating {{item.rating >= 12 ? 'high-score' : item.rating < 6 ? 'low-score' : ''}}">
+        <text class="meta-label">评分</text>
+        <text class="meta-value">{{item.rating || '-'}}分</text>
+      </view>
+    </view>
+  </view>
+</view>

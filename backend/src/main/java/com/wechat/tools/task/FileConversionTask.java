@@ -94,6 +94,7 @@ public class FileConversionTask {
     private final TencentCosObjectService tencentCosObjectService;
     private final TencentDocProcessService tencentDocProcessService;
     private final TencentCiProperties tencentCiProperties;
+    private final com.wechat.tools.pdf.PdfcpuRunner pdfcpuRunner;
 
     @Value("${baidu.ocr.app-id:}")
     private String baiduAppId;
@@ -126,12 +127,14 @@ public class FileConversionTask {
                               FileStorageService fileStorageService,
                               TencentCosObjectService tencentCosObjectService,
                               TencentDocProcessService tencentDocProcessService,
-                              TencentCiProperties tencentCiProperties) {
+                              TencentCiProperties tencentCiProperties,
+                              com.wechat.tools.pdf.PdfcpuRunner pdfcpuRunner) {
         this.taskService = taskService;
         this.fileStorageService = fileStorageService;
         this.tencentCosObjectService = tencentCosObjectService;
         this.tencentDocProcessService = tencentDocProcessService;
         this.tencentCiProperties = tencentCiProperties;
+        this.pdfcpuRunner = pdfcpuRunner;
     }
 
     @Async("taskExecutor")
@@ -481,6 +484,102 @@ public class FileConversionTask {
     }
 
     @Async("taskExecutor")
+    public void processPdfPageManage(String taskId, String sourceFileId, String originalFileName, String pagesJson, String pageRange, Integer rotation) {
+        Path tempInput = null;
+        Path tempOutput = null;
+        try {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 20));
+
+            tempInput = Files.createTempFile("pdf_manage_in_", ".pdf");
+            try (java.io.InputStream is = fileStorageService.downloadFile(sourceFileId)) {
+                Files.copy(is, tempInput, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            }
+
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 45));
+            tempOutput = Files.createTempFile("pdf_manage_out_", ".pdf");
+
+            if (pagesJson != null && !pagesJson.isBlank()) {
+                applyPageManageByPreview(tempInput, tempOutput, pagesJson);
+            } else {
+                if (pageRange != null && !pageRange.isBlank()) {
+                    pdfcpuRunner.collect(tempInput, tempOutput, pageRange);
+                    if (rotation != null && rotation != 0) {
+                        Path rotatedOutput = Files.createTempFile("pdf_manage_rot_", ".pdf");
+                        pdfcpuRunner.rotate(tempOutput, rotatedOutput, rotation);
+                        Files.deleteIfExists(tempOutput);
+                        tempOutput = rotatedOutput;
+                    }
+                } else if (rotation != null && rotation != 0) {
+                    pdfcpuRunner.rotate(tempInput, tempOutput, rotation);
+                } else {
+                    Files.copy(tempInput, tempOutput, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                }
+            }
+
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 80));
+
+            String resultFileName = "managed_" + originalFileName;
+            String resultFileId = fileStorageService.uploadFile(
+                resultFileName,
+                Files.newInputStream(tempOutput),
+                Files.size(tempOutput),
+                "application/pdf"
+            );
+            String resultUrl = fileStorageService.getFileUrl(resultFileId, resultFileName);
+            taskService.updateTaskStatus(taskId, TaskStatusResult.success(taskId, resultUrl, resultFileName));
+
+            fileStorageService.deleteFile(sourceFileId);
+        } catch (Exception e) {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "PDF 页面管理失败: " + e.getMessage()));
+        } finally {
+            try {
+                if (tempInput != null) Files.deleteIfExists(tempInput);
+                if (tempOutput != null) Files.deleteIfExists(tempOutput);
+            } catch (Exception ignored) {}
+        }
+    }
+
+    private void applyPageManageByPreview(Path tempInput, Path tempOutput, String pagesJson) throws Exception {
+        JSONArray arr = new JSONArray(pagesJson);
+        if (arr.length() == 0) {
+            throw new IllegalArgumentException("页面列表不能为空");
+        }
+
+        try (PDDocument source = Loader.loadPDF(tempInput.toFile());
+             PDDocument output = new PDDocument()) {
+            int total = source.getNumberOfPages();
+
+            for (int i = 0; i < arr.length(); i++) {
+                JSONObject obj = arr.getJSONObject(i);
+                if (obj.optBoolean("deleted", false)) continue;
+
+                int pageNo = obj.optInt("pageNo", -1);
+                if (pageNo < 1 || pageNo > total) {
+                    throw new IllegalArgumentException("页码越界: " + pageNo);
+                }
+
+                int rotate = obj.optInt("rotation", 0);
+                PDPage imported = output.importPage(source.getPage(pageNo - 1));
+                imported.setRotation(normalizeQuarterRotation(rotate));
+            }
+
+            if (output.getNumberOfPages() <= 0) {
+                throw new IllegalArgumentException("至少保留一页");
+            }
+
+            output.save(tempOutput.toFile());
+        }
+    }
+
+    private int normalizeQuarterRotation(int degree) {
+        int normalized = ((degree % 360) + 360) % 360;
+        if (normalized % 90 != 0) {
+            throw new IllegalArgumentException("旋转角度仅支持 0/90/180/270");
+        }
+        return normalized;
+    }
+
+    @Async("taskExecutor")
     public void processPdfAddWatermarkEnhanced(String taskId, String sourceFileId, String imageFileId, String originalFileName,
                                                String type, String layout, float x, float y, String watermarkText,
                                                float opacity, float rotation, float scale, int fontSize, String color) {
@@ -759,13 +858,47 @@ public class FileConversionTask {
                 "text/plain"
             );
             String resultUrl = fileStorageService.getFileUrl(resultFileId, resultFileName);
-            
+
             // 在 extraData 中带上识别出的内容，方便前端直接展示
             taskService.updateTaskStatus(taskId, TaskStatusResult.success(taskId, resultUrl, resultFileName, decodedText));
 
             fileStorageService.deleteFile(sourceFileId);
         } catch (Exception e) {
             taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "二维码识别失败: " + e.getMessage()));
+        }
+    }
+
+    @Async("taskExecutor")
+    public void processKingScoreOcr(String taskId, String sourceFileId, String originalFileName) {
+        try {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 20));
+
+            byte[] fileData;
+            try (java.io.InputStream is = fileStorageService.downloadFile(sourceFileId)) {
+                fileData = is.readAllBytes();
+            }
+
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 45));
+            String recognizedText = performImageOcr(taskId, fileData);
+            if (recognizedText == null || recognizedText.isBlank()) {
+                throw new IllegalStateException("未识别到可用文字");
+            }
+
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 85));
+            byte[] resultBytes = recognizedText.getBytes(StandardCharsets.UTF_8);
+            String resultFileName = buildOcrResultFileName(originalFileName);
+            String resultFileId = fileStorageService.uploadFile(
+                resultFileName,
+                new ByteArrayInputStream(resultBytes),
+                resultBytes.length,
+                "text/plain"
+            );
+            String resultUrl = fileStorageService.getFileUrl(resultFileId, resultFileName);
+            taskService.updateTaskStatus(taskId, TaskStatusResult.success(taskId, resultUrl, resultFileName, recognizedText));
+
+            fileStorageService.deleteFile(sourceFileId);
+        } catch (Exception e) {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "截图识别失败: " + e.getMessage()));
         }
     }
 
@@ -859,7 +992,7 @@ public class FileConversionTask {
         if (baiduOcrEnabled && !baiduApiKey.isEmpty()) {
             return performBaiduOcr(taskId, document);
         }
-        
+
         Tesseract tesseract = new Tesseract();
         tesseract.setLanguage("chi_sim+eng");
 
@@ -873,15 +1006,167 @@ public class FileConversionTask {
 
             BufferedImage image = pdfRenderer.renderImageWithDPI(i, 300, org.apache.pdfbox.rendering.ImageType.GRAY);
             String pageText = tesseract.doOCR(image);
-            
+
             if (pageText != null) {
                 pageText = pageText.replaceAll("(?m)^\\s*$", "").trim();
             }
-            
+
             sb.append("--- 第 ").append(i + 1).append(" 页 ---\n");
             sb.append(pageText).append("\n\n");
         }
         return sb.toString();
+    }
+
+    private String performImageOcr(String taskId, byte[] fileData) throws Exception {
+        BufferedImage image = ImageIO.read(new ByteArrayInputStream(fileData));
+        if (image == null) {
+            throw new IllegalArgumentException("无法解析图片文件");
+        }
+
+        List<BufferedImage> candidates = buildKingScoreOcrCandidates(image);
+        String bestText = "";
+        int bestScore = -1;
+
+        if (baiduOcrEnabled && !baiduApiKey.isBlank() && !baiduSecretKey.isBlank()) {
+            AipOcr client = new AipOcr(baiduAppId, baiduApiKey, baiduSecretKey);
+            for (BufferedImage candidate : candidates) {
+                OcrServiceDecision decision = decideBaiduOcrService(candidate, 1);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ImageIO.write(candidate, "jpg", baos);
+                JSONObject res = invokeBaiduOcr(client, baos.toByteArray(), decision);
+                String text = buildPageTextFromBaiduResult(res);
+                int score = scoreOcrText(text);
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestText = text == null ? "" : text.trim();
+                }
+            }
+            if (!bestText.isBlank()) {
+                return bestText;
+            }
+        }
+
+        taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 65));
+        Tesseract tesseract = new Tesseract();
+        tesseract.setLanguage("chi_sim+eng");
+        for (BufferedImage candidate : candidates) {
+            String text = tesseract.doOCR(candidate);
+            text = text == null ? "" : text.replaceAll("(?m)^\\s*$", "").trim();
+            int score = scoreOcrText(text);
+            if (score > bestScore) {
+                bestScore = score;
+                bestText = text;
+            }
+        }
+        return bestText;
+    }
+
+    private List<BufferedImage> buildKingScoreOcrCandidates(BufferedImage source) {
+        List<BufferedImage> candidates = new ArrayList<>();
+        BufferedImage full = ensureRgb(source);
+        candidates.add(full);
+
+        BufferedImage battleArea = cropKingScoreBattleArea(full);
+        addCandidate(candidates, enhanceForOcr(battleArea, 1.6, 1.18f, 8));
+        addCandidate(candidates, enhanceForOcr(battleArea, 2.0, 1.28f, 14));
+        addCandidate(candidates, enhanceForOcr(full, 1.4, 1.12f, 6));
+        return candidates;
+    }
+
+    private void addCandidate(List<BufferedImage> candidates, BufferedImage image) {
+        if (image != null) {
+            candidates.add(image);
+        }
+    }
+
+    private BufferedImage ensureRgb(BufferedImage source) {
+        if (source.getType() == BufferedImage.TYPE_INT_RGB) {
+            return source;
+        }
+        BufferedImage converted = new BufferedImage(source.getWidth(), source.getHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics2D graphics = converted.createGraphics();
+        try {
+            graphics.setColor(Color.WHITE);
+            graphics.fillRect(0, 0, converted.getWidth(), converted.getHeight());
+            graphics.drawImage(source, 0, 0, null);
+        } finally {
+            graphics.dispose();
+        }
+        return converted;
+    }
+
+    private BufferedImage cropKingScoreBattleArea(BufferedImage source) {
+        int width = source.getWidth();
+        int height = source.getHeight();
+        int left = Math.max(0, (int) (width * 0.08));
+        int top = Math.max(0, (int) (height * 0.14));
+        int cropWidth = Math.min(width - left, (int) (width * 0.84));
+        int cropHeight = Math.min(height - top, (int) (height * 0.70));
+        if (cropWidth <= 0 || cropHeight <= 0) {
+            return source;
+        }
+        return source.getSubimage(left, top, cropWidth, cropHeight);
+    }
+
+    private BufferedImage enhanceForOcr(BufferedImage source, double scale, float contrast, int brightnessOffset) {
+        int width = Math.max(1, (int) Math.round(source.getWidth() * scale));
+        int height = Math.max(1, (int) Math.round(source.getHeight() * scale));
+        BufferedImage scaled = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        Graphics2D graphics = scaled.createGraphics();
+        try {
+            graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+            graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+            graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            graphics.drawImage(source, 0, 0, width, height, null);
+        } finally {
+            graphics.dispose();
+        }
+
+        BufferedImage enhanced = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int rgb = scaled.getRGB(x, y);
+                int r = (rgb >> 16) & 0xff;
+                int g = (rgb >> 8) & 0xff;
+                int b = rgb & 0xff;
+                int gray = (int) (0.299 * r + 0.587 * g + 0.114 * b);
+                int adjusted = Math.max(0, Math.min(255, Math.round((gray - 128) * contrast + 128 + brightnessOffset)));
+                int value = (adjusted << 16) | (adjusted << 8) | adjusted;
+                enhanced.setRGB(x, y, value);
+            }
+        }
+        return enhanced;
+    }
+
+    private int scoreOcrText(String text) {
+        if (text == null || text.isBlank()) {
+            return 0;
+        }
+        int score = text.replaceAll("\\s+", "").length();
+        score += countMatches(text, Pattern.compile("\\d+\\s*/\\s*\\d+\\s*/\\s*\\d+")) * 20;
+        score += countMatches(text, Pattern.compile("MVP", Pattern.CASE_INSENSITIVE)) * 10;
+        score += countMatches(text, Pattern.compile("胜利|失败")) * 8;
+        score += countMatches(text, Pattern.compile("\\d{1,2}:\\d{2}")) * 6;
+        score -= countMatches(text, Pattern.compile("[«»<>]+")) * 2;
+        return score;
+    }
+
+    private int countMatches(String text, Pattern pattern) {
+        Matcher matcher = pattern.matcher(text);
+        int count = 0;
+        while (matcher.find()) {
+            count++;
+        }
+        return count;
+    }
+
+    private String buildOcrResultFileName(String originalFileName) {
+        String baseName = "king_score_ocr";
+        if (originalFileName != null && !originalFileName.isBlank()) {
+            int dotIndex = originalFileName.lastIndexOf('.');
+            baseName = dotIndex > 0 ? originalFileName.substring(0, dotIndex) : originalFileName;
+        }
+        return baseName + "_ocr.txt";
     }
 
     private String performBaiduOcr(String taskId, PDDocument document) throws Exception {

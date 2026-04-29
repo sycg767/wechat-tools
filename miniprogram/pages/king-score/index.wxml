@@ -1,0 +1,179 @@
+<view class="page">
+  <!-- 顶部状态栏 -->
+  <view class="header">
+    <view class="header-content">
+      <view class="header-title">王者评分</view>
+      <view class="header-subtitle">点击卡片扣分 · 每日自动重置</view>
+    </view>
+    <view class="header-actions">
+      <view class="header-action secondary" bindtap="openOverviewPage">
+        <text class="icon-ocr">榜</text>
+      </view>
+      <view class="header-action secondary" bindtap="chooseOcrImage">
+        <text class="icon-ocr">📷</text>
+      </view>
+      <view class="header-action" bindtap="showAddMember">
+        <text class="icon-plus">+</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- OCR 状态提示 -->
+  <view wx:if="{{ocrProcessing || ocrRawText}}" class="ocr-status-bar {{ocrProcessing ? 'processing' : ''}}">
+    <view class="ocr-info">
+      <text class="ocr-text-main">{{ocrProcessing ? ocrStatusText : '最近一次识别已完成'}}</text>
+      <text class="ocr-text-sub" wx:if="{{ocrProcessing}}">进度 {{ocrProgress}}%</text>
+      <text class="ocr-text-sub" wx:else>{{matchResult ? '本局结果：' + matchResult : ''}}{{matchTime ? (matchResult ? ' · ' : '') + matchTime : ''}}</text>
+    </view>
+    <view class="ocr-close" bindtap="clearOcr" wx:if="{{!ocrProcessing}}">×</view>
+  </view>
+
+  <view class="card ocr-result-card" wx:if="{{ocrRawText}}">
+    <view class="ocr-card-head">
+      <view class="card-title">OCR 识别内容</view>
+      <button class="copy-btn" size="mini" bindtap="copyOcrText">复制内容</button>
+    </view>
+    <view class="summary">命中成员 {{ocrMatchedCount}} 人{{matchResult ? ' · ' + matchResult : ''}}{{matchTime ? ' · ' + matchTime : ''}}</view>
+    <view class="ocr-raw-box">
+      <text class="ocr-raw-text" selectable="{{true}}" user-select="{{true}}">{{ocrRawText}}</text>
+    </view>
+  </view>
+
+  <!-- 玩家卡片网格 -->
+  <view class="player-grid">
+    <view wx:if="{{!records.length}}" class="empty-state">
+      <image class="empty-icon" src="/assets/empty.png" mode="aspectFit" wx:if="{{hasEmptyIcon}}"></image>
+      <text>暂无成员，点击右上角添加</text>
+    </view>
+    <view
+      wx:for="{{records}}"
+      wx:key="memberId"
+      class="player-card {{item.todayScore < 60 ? 'warning' : ''}} {{item.animating ? 'pulse' : ''}}"
+      data-member-id="{{item.memberId}}"
+    >
+      <view class="card-click-area" hover-class="card-hover" bindtap="onCardTap" data-member-id="{{item.memberId}}"></view>
+      <view class="card-header">
+        <view class="player-name-wrap">
+          <view class="player-name-row">
+            <text class="player-name">{{item.name}}</text>
+            <view class="player-actions">
+              <text class="player-link" data-member-id="{{item.memberId}}" catchtap="editMember">编辑</text>
+              <text class="player-link" data-member-id="{{item.memberId}}" catchtap="openPlayerRecord">战绩</text>
+            </view>
+          </view>
+          <text class="player-alias" wx:if="{{item.matchedName}}">游戏名：{{item.matchedName}}</text>
+          <text class="player-alias" wx:elif="{{item.gameNamesText}}">游戏名：{{item.gameNamesText}}</text>
+        </view>
+        <view class="deduction-badge {{item.showBadge ? 'show' : ''}}">-{{settings.deductStep}}</view>
+      </view>
+
+      <view class="score-display">
+        <text class="score-value">{{item.todayScore}}</text>
+        <text class="score-unit">分</text>
+      </view>
+
+      <view class="card-footer">
+        <view class="stat-item">
+          <text class="stat-label">今日扣除</text>
+          <text class="stat-value">{{item.todayDeducted}}</text>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-item">
+          <text class="stat-label">累计扣除</text>
+          <text class="stat-value">{{item.totalDeducted}}</text>
+        </view>
+      </view>
+
+      <view class="ocr-hit" wx:if="{{item.matchedByOcr}}">
+        <view class="ocr-hit-title">命中 {{item.matchedName}} · 匹配度 {{item.matchScore}}</view>
+        <view class="ocr-hit-line">{{item.matchedLine}}</view>
+      </view>
+      <view class="ocr-miss" wx:elif="{{ocrRawText}}">未命中该成员的预设昵称</view>
+    </view>
+  </view>
+
+  <view class="card quick-actions" wx:if="{{records.length}}">
+    <view class="card-title">今晚结果 ({{displayDate}})</view>
+    <view class="row actions">
+      <button class="btn result-btn good flex" data-status="光荣下播" bindtap="saveSessionWithStatus">光荣下播</button>
+      <button class="btn result-btn bad flex" data-status="耻辱下播" bindtap="saveSessionWithStatus">耻辱下播</button>
+    </view>
+    <view class="summary quick-tip">点一个结果就直接保存今晚记录。</view>
+  </view>
+
+
+  <!-- 战绩日历 -->
+  <view class="card calendar-card">
+    <view class="calendar-header">
+      <view class="calendar-title">战绩日历</view>
+      <view class="calendar-nav">
+        <view class="nav-btn" bindtap="prevMonth">◀</view>
+        <view class="current-month">{{calendarMonthText}}</view>
+        <view class="nav-btn" bindtap="nextMonth">▶</view>
+      </view>
+    </view>
+    
+    <view class="calendar-weekdays">
+      <text wx:for="{{['日','一','二','三','四','五','六']}}" wx:key="*this">{{item}}</text>
+    </view>
+    
+    <view class="calendar-grid">
+      <view
+        wx:for="{{calendarDays}}"
+        wx:key="index"
+        class="calendar-day {{item.isToday ? 'today' : ''}} {{item.status}} {{selectedSessionId === item.sessionId && item.sessionId ? 'selected' : ''}}"
+        data-full-date="{{item.fullDate}}"
+        data-session-id="{{item.sessionId}}"
+        bindtap="onDayTap"
+      >
+        <text class="day-num">{{item.day}}</text>
+        <view class="day-dot" wx:if="{{item.status}}"></view>
+      </view>
+    </view>
+
+    <!-- 选中日期详情 -->
+    <view wx:if="{{selectedSession}}" class="history-detail">
+      <view class="detail-header">
+        <view class="detail-date">{{selectedSession.date}} 战绩</view>
+        <view class="tag {{selectedSession.sessionStatus === '光荣下播' ? 'good' : 'bad'}}">{{selectedSession.sessionStatus}}</view>
+      </view>
+      <view class="detail-summary">{{selectedSession.summaryText}}</view>
+      <view class="detail-list">
+        <view
+          wx:for="{{selectedSession.records}}"
+          wx:key="memberId"
+          class="detail-item"
+          data-member-id="{{item.memberId}}"
+          data-date="{{selectedSession.date}}"
+          bindtap="openPlayerRecord"
+        >
+          <view class="detail-item-main">
+            <text class="detail-name">{{item.name}}</text>
+            <text class="detail-score">{{item.score || item.todayScore || 0}}分</text>
+          </view>
+          <view class="detail-item-sub">
+            平均评分：{{item.avgRating || '-'}}
+          </view>
+        </view>
+      </view>
+    </view>
+    <view wx:elif="{{calendarDays.length > 0}}" class="calendar-tip">点击有标记的日期查看详情</view>
+  </view>
+
+  <!-- 添加成员弹窗 -->
+  <view class="modal {{showAddModal ? 'show' : ''}}">
+    <view class="modal-mask" bindtap="hideAddMember"></view>
+    <view class="modal-container">
+      <view class="modal-header">{{editingMemberId ? '编辑成员' : '添加新成员'}}</view>
+      <view class="modal-body">
+        <input class="modal-input" placeholder="输入真实姓名" value="{{memberInput}}" bindinput="onMemberInput" />
+        <input class="modal-input" placeholder="游戏昵称 (可选，逗号分隔)" value="{{aliasInput}}" bindinput="onAliasInput" />
+      </view>
+      <view class="modal-footer">
+        <button class="modal-btn cancel" bindtap="hideAddMember">取消</button>
+        <button class="modal-btn confirm" bindtap="addMember">确定</button>
+      </view>
+    </view>
+  </view>
+
+</view>

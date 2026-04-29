@@ -1,5 +1,4 @@
 <view class="container">
-  <!-- 顶部欢迎区域 -->
   <view class="hero-section">
     <view class="hero-content">
       <view class="hero-title">实用工具箱</view>
@@ -8,40 +7,58 @@
     <view class="hero-bg-circle"></view>
   </view>
 
-  <!-- 工具分类标题 -->
-  <view class="section-header">
-    <view class="section-title">热门工具</view>
+  <view class="section-header section-header-main">
+    <view class="section-title">工具中心</view>
     <view class="section-more" bindtap="goToTasks">任务历史</view>
   </view>
 
-  <!-- 工具网格布局 -->
-  <view class="tool-grid">
-    <block wx:for="{{tools}}" wx:key="title">
-      <view
-        class="tool-item-wrapper"
-        bindtap="handleToolTap"
-        data-path="{{item.path}}"
-        data-disabled="{{item.disabled}}"
-        hover-class="tool-item-hover"
-        hover-stay-time="100"
-      >
-        <view class="tool-item {{item.disabled ? 'tool-disabled' : ''}}">
-          <view class="tool-icon-box {{item.iconClass}}">
-            <view class="tool-icon-inner"></view>
-          </view>
-          <view class="tool-info">
-            <view class="tool-name">{{item.title}}</view>
-            <view class="tool-tag" wx:if="{{item.tag}}">{{item.tag}}</view>
-          </view>
-          <view class="tool-arrow">
-            <view class="arrow-icon"></view>
-          </view>
-        </view>
+  <block wx:for="{{toolSections}}" wx:key="key">
+    <view class="tool-section">
+      <view class="section-header section-header-sub">
+        <view class="section-title section-title-sub">{{item.title}}</view>
       </view>
-    </block>
-  </view>
 
-  <!-- 底部提示 -->
+      <view class="tool-grid">
+        <block wx:for="{{item.items}}" wx:key="id">
+          <view
+            class="tool-item-wrapper"
+            bindtap="handleToolTap"
+            data-tool-id="{{item.id}}"
+            data-path="{{item.path}}"
+            data-disabled="{{item.disabled}}"
+            hover-class="tool-item-hover"
+            hover-stay-time="100"
+          >
+            <view class="tool-item {{item.disabled ? 'tool-disabled' : ''}}">
+              <view class="tool-icon-box {{item.iconClass || 'icon-default'}}">
+                <view class="tool-icon-inner"></view>
+              </view>
+              <view class="tool-info">
+                <view class="tool-name">{{item.title}}</view>
+                <view class="tool-meta-row">
+                  <view class="tool-tag" wx:if="{{item.tag}}">{{item.tag}}</view>
+                  <view class="tool-recent" wx:if="{{item.sectionType === 'recent'}}">刚使用</view>
+                </view>
+              </view>
+
+              <view
+                class="favorite-btn {{item.isFavorite ? 'active' : ''}}"
+                catchtap="handleFavoriteTap"
+                data-tool-id="{{item.id}}"
+              >
+                ★
+              </view>
+
+              <view class="tool-arrow">
+                <view class="arrow-icon"></view>
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+    </view>
+  </block>
+
   <view class="footer-tips">
     更多工具持续更新中...
   </view>
