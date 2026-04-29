@@ -1,33 +1,10 @@
-.container {
-  padding: 30rpx;
-  background-color: #f8f8f8;
-  min-height: 100vh;
-}
-
-.header {
-  margin-bottom: 40rpx;
-}
-
-.title {
-  font-size: 44rpx;
-  font-weight: bold;
-  color: #333;
-}
-
-.subtitle {
-  font-size: 26rpx;
-  color: #888;
-  margin-top: 10rpx;
-}
+@import "../../app.wxss";
 
 .tabs {
   display: flex;
   white-space: nowrap;
-  background: #fff;
-  border-radius: 12rpx;
+  background: transparent;
   margin-bottom: 30rpx;
-  padding: 8rpx;
-  box-sizing: border-box;
 }
 
 .tab {
@@ -35,23 +12,21 @@
   align-items: center;
   justify-content: center;
   padding: 16rpx 26rpx;
+  margin-right: 14rpx;
+  border-radius: var(--border-radius-pill);
+  background: #FFFFFF;
+  color: var(--text-second);
   font-size: 26rpx;
-  color: #666;
-  border-radius: 10rpx;
-  margin-right: 8rpx;
+  box-shadow: var(--shadow-soft);
   flex-shrink: 0;
 }
 
 .tab.active {
-  background: #07c160;
-  color: #fff;
-  font-weight: bold;
+  background: var(--text-main);
+  color: #FFFFFF;
 }
 
 .content-section {
-  background: #fff;
-  padding: 30rpx;
-  border-radius: 12rpx;
   margin-bottom: 30rpx;
 }
 
@@ -63,124 +38,109 @@
 
 .input-item {
   flex: 1;
-  margin-bottom: 30rpx;
+  margin-bottom: 28rpx;
 }
 
 .label {
-  font-size: 28rpx;
-  color: #333;
-  margin-bottom: 16rpx;
   display: block;
+  margin-bottom: 16rpx;
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--text-main);
 }
 
 .input,
 .picker-value {
-  background: #f5f5f5;
-  height: 80rpx;
-  border-radius: 8rpx;
+  width: 100%;
+  min-height: 88rpx;
   padding: 0 20rpx;
+  box-sizing: border-box;
+  border-radius: var(--border-radius-lg);
+  background: var(--card-subtle);
   font-size: 30rpx;
   display: flex;
   align-items: center;
-  box-sizing: border-box;
+  color: var(--text-main);
 }
 
 .textarea {
   width: 100%;
-  min-height: 160rpx;
-  background: #f5f5f5;
-  border-radius: 8rpx;
+  min-height: 180rpx;
   padding: 18rpx 20rpx;
+  box-sizing: border-box;
+  border-radius: var(--border-radius-lg);
+  background: var(--card-subtle);
   font-size: 28rpx;
   line-height: 1.6;
-  box-sizing: border-box;
+  color: var(--text-main);
 }
 
 .checkbox-group {
   display: flex;
   flex-direction: column;
-  gap: 20rpx;
-  margin-bottom: 30rpx;
+  gap: 18rpx;
+  margin-bottom: 28rpx;
 }
 
-.checkbox-item {
-  font-size: 28rpx;
-  color: #666;
-  display: flex;
-  align-items: center;
-}
-
+.checkbox-item,
 .option-toggle {
   display: flex;
   align-items: center;
   font-size: 28rpx;
-  color: #666;
-  margin-bottom: 30rpx;
+  color: var(--text-second);
+}
+
+.option-toggle {
+  margin-bottom: 28rpx;
 }
 
 .mode-switch {
   display: flex;
   gap: 16rpx;
-  margin-bottom: 30rpx;
+  margin-bottom: 28rpx;
 }
 
 .mode-item {
   flex: 1;
   text-align: center;
-  height: 72rpx;
-  line-height: 72rpx;
-  border-radius: 10rpx;
-  background: #f5f7fb;
-  color: #666;
+  height: 78rpx;
+  line-height: 78rpx;
+  border-radius: var(--border-radius-lg);
+  background: var(--card-subtle);
+  color: var(--text-second);
   font-size: 26rpx;
 }
 
 .mode-item.active {
-  background: #e7f8ee;
-  color: #07c160;
-  font-weight: 600;
+  background: #FFFFFF;
+  color: var(--text-main);
+  box-shadow: var(--shadow-soft);
 }
 
 .strength-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 30rpx;
-  padding: 20rpx;
-  background: #f8faf8;
-  border-radius: 10rpx;
+  margin-bottom: 28rpx;
+  padding: 20rpx 22rpx;
+  background: var(--card-subtle);
+  border-radius: var(--border-radius-lg);
 }
 
 .strength-badge {
   font-size: 24rpx;
-  border-radius: 24rpx;
+  border-radius: var(--border-radius-pill);
   padding: 8rpx 20rpx;
-  color: #fff;
+  color: #FFFFFF;
 }
 
-.strength-weak {
-  background: #ff6b6b;
-}
+.strength-weak { background: var(--error-color); }
+.strength-medium { background: var(--warning-color); }
+.strength-strong { background: var(--success-color); }
 
-.strength-medium {
-  background: #ff9800;
-}
-
-.strength-strong {
-  background: #07c160;
-}
-
-.primary-btn {
-  background: #07c160;
-  color: #fff;
-  border-radius: 44rpx;
-}
-
-.result-section {
-  background: #fff;
-  padding: 30rpx;
-  border-radius: 12rpx;
-  margin-top: 30rpx;
+.result-section,
+.history-section {
+  margin-top: 0;
 }
 
 .result-header {
@@ -192,61 +152,49 @@
 
 .result-title {
   font-size: 32rpx;
-  font-weight: bold;
+  font-weight: 700;
+  color: var(--text-main);
 }
 
 .copy-all {
-  font-size: 26rpx;
-  color: #07c160;
-}
-
-.result-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20rpx;
-}
-
-.result-item {
-  background: #f9f9f9;
-  padding: 24rpx;
-  border-radius: 8rpx;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.result-text {
-  font-size: 30rpx;
-  color: #333;
-  font-family: monospace;
-  word-break: break-all;
-  flex: 1;
-  margin-right: 20rpx;
-}
-
-.copy-btn {
   font-size: 24rpx;
-  color: #576b95;
-  flex-shrink: 0;
+  color: var(--text-main);
 }
 
-.history-section {
-  background: #fff;
-  padding: 30rpx;
-  border-radius: 12rpx;
-  margin-top: 30rpx;
-}
-
+.result-list,
 .history-list {
   display: flex;
   flex-direction: column;
+  gap: 18rpx;
+}
+
+.result-item,
+.history-item {
+  padding: 22rpx;
+  border-radius: var(--border-radius-lg);
+  background: var(--card-subtle);
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   gap: 20rpx;
 }
 
-.history-item {
-  background: #f8fafc;
-  border-radius: 12rpx;
-  padding: 20rpx;
+.result-text {
+  flex: 1;
+  margin-right: 20rpx;
+  font-size: 30rpx;
+  color: var(--text-main);
+  font-family: monospace;
+  word-break: break-all;
+}
+
+.copy-btn {
+  flex-shrink: 0;
+  font-size: 24rpx;
+  color: var(--text-second);
 }
 
 .history-top {
@@ -258,28 +206,22 @@
 
 .history-type {
   font-size: 24rpx;
-  color: #07c160;
-  font-weight: 600;
+  font-weight: 700;
+  color: var(--text-main);
 }
 
-.history-time {
-  font-size: 22rpx;
-  color: #999;
-}
-
+.history-time,
 .history-params {
-  display: block;
-  font-size: 24rpx;
-  color: #666;
-  margin-bottom: 8rpx;
+  font-size: 22rpx;
+  color: var(--text-second);
 }
 
 .history-result {
   display: block;
+  margin: 10rpx 0 16rpx;
   font-size: 26rpx;
-  color: #333;
+  color: var(--text-main);
   word-break: break-all;
-  margin-bottom: 16rpx;
 }
 
 .history-actions {
@@ -289,5 +231,5 @@
 
 .history-action {
   font-size: 24rpx;
-  color: #3f7cff;
+  color: var(--text-main);
 }

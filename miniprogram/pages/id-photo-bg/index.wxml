@@ -27,8 +27,11 @@
       </view>
     </view>
 
-    <view class="info-box">
-      <view class="info-icon">!</view>
+    <view class="notice notice-info info-box">
+      <view class="notice-head">
+        <view class="notice-icon">i</view>
+        <view class="notice-title">处理说明</view>
+      </view>
       <view class="info-text">系统会自动抠图并切换背景颜色，适合快速生成红底、蓝底或白底证件照图片。</view>
     </view>
 

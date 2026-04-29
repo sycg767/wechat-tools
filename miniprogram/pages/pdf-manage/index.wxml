@@ -1,10 +1,10 @@
 <view class="container">
-  <view class="header">
-    <text class="title">PDF 页面管理</text>
-    <text class="subtitle">预览后重排、旋转、删除</text>
+  <view class="page-header">
+    <view class="page-title">PDF 页面管理</view>
+    <view class="page-desc">预览页面后进行重排、旋转或删除，再导出新的文档。</view>
   </view>
 
-  <view class="card">
+  <view class="card upload-card">
     <file-picker
       file="{{fileSelected ? { name: originalFileName } : null}}"
       accept="pdf"
@@ -16,9 +16,9 @@
   <view class="card" wx:if="{{fileSelected}}">
     <view class="section-title">页面预览</view>
 
-    <view class="summary-row">
-      <text class="summary-text">总页数：{{totalPages}}，预览：{{previewCount}}页</text>
-      <text class="summary-warn" wx:if="{{truncated}}">仅显示前 {{previewCount}} 页</text>
+    <view class="notice notice-subtle summary-box">
+      <view class="notice-row">总页数：<text class="notice-strong">{{totalPages}}</text>，当前预览：<text class="notice-strong">{{previewCount}}</text> 页</view>
+      <view class="notice-row" wx:if="{{truncated}}">仅显示前 {{previewCount}} 页预览，导出时仍会按完整文档处理。</view>
     </view>
 
     <view class="loading-tip" wx:if="{{previewLoading}}">正在生成预览...</view>
@@ -31,7 +31,7 @@
           </view>
 
           <view class="page-meta">
-            <text class="page-title">第 {{item.pageNo}} 页</text>
+            <text class="page-title-text">第 {{item.pageNo}} 页</text>
             <text class="page-rotation">旋转：{{item.rotation}}°</text>
           </view>
 
@@ -50,6 +50,7 @@
       bindtap="startProcess"
       loading="{{processing}}"
       disabled="{{processing || previewLoading || previewPages.length===0}}"
+      hover-class="btn-hover"
     >
       提交并导出
     </button>

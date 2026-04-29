@@ -1,74 +1,41 @@
 @import "../../app.wxss";
 
-.container {
-  padding: 30rpx;
-  background-color: #f7f8fa;
-  min-height: 100vh;
+.upload-card {
+  margin-bottom: 32rpx;
 }
 
-.header {
-  margin-bottom: 40rpx;
-  text-align: center;
-}
-
-.title {
-  font-size: 44rpx;
-  font-weight: bold;
-  color: #333;
-  display: block;
-}
-
-.subtitle {
-  font-size: 26rpx;
-  color: #999;
-  margin-top: 10rpx;
-  display: block;
-}
-
-.summary-row {
-  margin-bottom: 20rpx;
-}
-
-.summary-text {
-  font-size: 24rpx;
-  color: #666;
-}
-
-.summary-warn {
-  display: block;
-  margin-top: 6rpx;
-  font-size: 22rpx;
-  color: #ff9500;
+.summary-box {
+  margin-bottom: 28rpx;
 }
 
 .loading-tip {
-  font-size: 24rpx;
-  color: #666;
   padding: 20rpx 0;
+  font-size: 24rpx;
+  color: var(--text-second);
 }
 
 .preview-list {
   display: flex;
   flex-direction: column;
-  gap: 18rpx;
+  gap: 20rpx;
 }
 
 .page-card {
-  background: #f7f9fc;
-  border-radius: 14rpx;
-  padding: 18rpx;
-  border: 2rpx solid #e8edf5;
+  padding: 22rpx;
+  border-radius: var(--border-radius-lg);
+  background: var(--card-subtle);
+  border: 1px solid rgba(17, 24, 39, 0.04);
 }
 
 .page-card-deleted {
-  opacity: 0.6;
+  opacity: 0.62;
 }
 
 .thumb-wrap {
-  height: 300rpx;
-  border-radius: 10rpx;
-  background: #fff;
-  border: 1rpx solid #edf0f5;
+  height: 320rpx;
+  border-radius: 22rpx;
+  background: #FFFFFF;
+  border: 1px solid rgba(17, 24, 39, 0.04);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -84,36 +51,43 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 14rpx 0;
+  gap: 16rpx;
+  margin: 18rpx 0;
 }
 
-.page-title {
+.page-title-text {
   font-size: 28rpx;
-  color: #333;
-  font-weight: 600;
+  font-weight: 700;
+  color: var(--text-main);
 }
 
 .page-rotation {
   font-size: 24rpx;
-  color: #666;
+  color: var(--text-second);
 }
 
 .action-row {
   display: flex;
-  gap: 10rpx;
   flex-wrap: wrap;
+  gap: 12rpx;
 }
 
 .mini-btn {
-  min-width: 120rpx;
+  min-width: 132rpx;
+  padding: 0 18rpx;
+  border-radius: var(--border-radius-pill);
+  background: #FFFFFF;
+  color: var(--text-main);
+  border: 1px solid rgba(17, 24, 39, 0.06);
+  font-size: 22rpx;
 }
 
 .mini-btn-delete {
-  background: #ffeaea;
-  color: #d93025;
+  background: var(--error-soft);
+  color: var(--error-color);
 }
 
 .mini-btn-restore {
-  background: #eaf8ef;
-  color: #1e8e3e;
+  background: var(--success-soft);
+  color: var(--success-color);
 }

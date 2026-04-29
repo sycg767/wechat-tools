@@ -15,6 +15,7 @@
     "pages/csv-excel/index",
     "pages/qr-tool/index",
     "pages/signature/index",
+    "pages/signature-editor/index",
     "pages/unit-convert/index",
     "pages/random-gen/index",
     "pages/eat-what/index",

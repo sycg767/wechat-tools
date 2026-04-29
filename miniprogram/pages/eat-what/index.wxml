@@ -1,18 +1,20 @@
-<view class="container">
-  <view class="header">
-    <text class="title">今天吃什么？</text>
-    <text class="subtitle">纠结没意义，交给运气吧</text>
+<view class="container eat-page">
+  <view class="page-header">
+    <view class="page-title">今天吃什么？</view>
+    <view class="page-desc">纠结没意义，交给运气吧。</view>
   </view>
 
-  <view class="wheel-container">
-    <canvas type="2d" id="wheelCanvas" class="wheel-canvas" bindtap="startSpin"></canvas>
+  <view class="wheel-card card">
+    <view class="wheel-container">
+      <canvas type="2d" id="wheelCanvas" class="wheel-canvas" bindtap="startSpin"></canvas>
+    </view>
   </view>
 
-  <view class="result-section" wx:if="{{result}}">
-    <text class="result-text">结果是：<text class="highlight">{{result}}</text></text>
+  <view class="card result-section" wx:if="{{result}}">
+    <view class="result-text">结果是：<text class="highlight">{{result}}</text></view>
   </view>
 
-  <view class="options-section">
+  <view class="card options-section">
     <view class="section-title">自定义选项</view>
     <view class="option-list">
       <view class="option-item" wx:for="{{options}}" wx:key="index">
@@ -20,12 +22,12 @@
         <view class="delete-btn" bindtap="removeOption" data-index="{{index}}">×</view>
       </view>
     </view>
-    
+
     <view class="add-option">
       <input class="input" placeholder="输入新选项" value="{{inputValue}}" bindinput="onInput" />
-      <button class="add-btn" bindtap="addOption">添加</button>
+      <button class="btn btn-primary add-btn" bindtap="addOption" hover-class="btn-hover">添加</button>
     </view>
-    
-    <button class="reset-btn" bindtap="resetOptions">恢复默认</button>
+
+    <button class="btn btn-secondary" bindtap="resetOptions" hover-class="btn-hover">恢复默认</button>
   </view>
 </view>

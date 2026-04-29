@@ -1,33 +1,33 @@
 <view class="container">
-  <view class="section-title">任务详情</view>
+  <view class="page-header">
+    <view class="page-title">任务详情</view>
+    <view class="page-desc">查看当前任务的处理状态、结果文件与策略信息。</view>
+  </view>
 
   <view wx:if="{{task}}" class="card detail-card">
-    <view class="detail-row">工具：{{task.toolType || '未知工具'}}</view>
-    <view class="detail-row">原文件：{{task.sourceFileName || '未命名文件'}}</view>
-    <view class="detail-row">状态：{{task.status}}</view>
-    <view wx:if="{{task.resultFileName}}" class="detail-row">结果文件：{{task.resultFileName}}</view>
-    <view wx:if="{{task.message}}" class="detail-row">说明：{{task.message}}</view>
-    <view wx:if="{{task.selectedStrategy}}" class="detail-row">策略：{{task.selectedStrategy}}</view>
-    <view wx:if="{{task.strategyTraceText}}" class="detail-row">链路：{{task.strategyTraceText}}</view>
-    <view wx:if="{{task.fallbackReason}}" class="detail-row">回退：{{task.fallbackReason}}</view>
-    <view wx:if="{{task.qualityGateText}}" class="detail-row">门控：{{task.qualityGateText}}</view>
+    <view class="detail-row"><text class="detail-label">工具</text><text class="detail-value">{{task.toolType || '未知工具'}}</text></view>
+    <view class="detail-row"><text class="detail-label">原文件</text><text class="detail-value">{{task.sourceFileName || '未命名文件'}}</text></view>
+    <view class="detail-row"><text class="detail-label">状态</text><text class="detail-value">{{task.status}}</text></view>
+    <view wx:if="{{task.resultFileName}}" class="detail-row"><text class="detail-label">结果文件</text><text class="detail-value">{{task.resultFileName}}</text></view>
+    <view wx:if="{{task.message}}" class="detail-row"><text class="detail-label">说明</text><text class="detail-value">{{task.message}}</text></view>
+    <view wx:if="{{task.selectedStrategy}}" class="detail-row"><text class="detail-label">策略</text><text class="detail-value">{{task.selectedStrategy}}</text></view>
+    <view wx:if="{{task.strategyTraceText}}" class="detail-row"><text class="detail-label">链路</text><text class="detail-value">{{task.strategyTraceText}}</text></view>
+    <view wx:if="{{task.fallbackReason}}" class="detail-row"><text class="detail-label">回退</text><text class="detail-value">{{task.fallbackReason}}</text></view>
+    <view wx:if="{{task.qualityGateText}}" class="detail-row"><text class="detail-label">门控</text><text class="detail-value">{{task.qualityGateText}}</text></view>
   </view>
 
   <progress-bar wx:if="{{task && task.status === 'PROCESSING'}}" text="处理中，请稍候..." percent="{{task.progress}}" />
-  <view wx:if="{{task && task.status === 'PROCESSING' && task.toolType === 'word-pdf'}}" class="detail-row">说明：文件正在云端转换，请稍候。</view>
+  <view wx:if="{{task && task.status === 'PROCESSING' && task.toolType === 'word-pdf'}}" class="processing-tip">文件正在云端转换，请稍候。</view>
 
   <view wx:if="{{task && task.status === 'SUCCESS'}}" class="card result-action-card">
     <view class="result-action-title">处理完成</view>
-
-    <view wx:if="{{task.isImage}}" class="result-action-desc">你可以先预览压缩图，再点击“保存到相册”落地到手机。</view>
+    <view wx:if="{{task.isImage}}" class="result-action-desc">你可以先预览结果图片，再点击“保存到相册”落地到手机。</view>
     <view wx:elif="{{task.canOpen}}" class="result-action-desc">点击打开文件，然后在文档界面中自行转发。</view>
     <view wx:else class="result-action-desc">当前结果文件类型暂不支持在小程序内直接打开。</view>
 
-    <button wx:if="{{task.canOpen}}" class="primary-btn" bindtap="handleOpenFile">
-      {{task.isImage ? '预览图片' : '打开文件'}}
-    </button>
-    <button wx:if="{{task.isImage}}" class="primary-btn" bindtap="handleSaveImage">保存到相册</button>
-    <button wx:if="{{!task.isImage}}" class="primary-btn" bindtap="handleShareFile">发送给好友</button>
+    <button wx:if="{{task.canOpen}}" class="btn btn-primary action-btn" bindtap="handleOpenFile" hover-class="btn-hover">{{task.isImage ? '预览图片' : '打开文件'}}</button>
+    <button wx:if="{{task.isImage}}" class="btn btn-secondary action-btn" bindtap="handleSaveImage" hover-class="btn-hover">保存到相册</button>
+    <button wx:if="{{!task.isImage}}" class="btn btn-secondary action-btn" bindtap="handleShareFile" hover-class="btn-hover">发送给好友</button>
   </view>
 
   <view wx:if="{{task && task.status === 'FAIL'}}" class="card fail-card">

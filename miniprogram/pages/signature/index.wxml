@@ -1,39 +1,35 @@
-<view class="container">
-  <view class="header">
-    <view class="title">手写签名</view>
-    <view class="subtitle">在下方空白区域签名，可导出透明背景图片</view>
+<view class="container signature-page">
+  <view class="page-header">
+    <view class="page-title">手写签名</view>
+    <view class="page-desc">点击进入全屏签名，完成后返回这里预览，再决定是否保存到相册。</view>
   </view>
 
-  <view class="canvas-area">
-    <canvas 
-      type="2d" 
-      id="signatureCanvas" 
-      class="signature-canvas"
-      bindtouchstart="touchStart"
-      bindtouchmove="touchMove"
-      bindtouchend="touchEnd"
-    ></canvas>
-  </view>
+  <view class="card preview-card">
+    <view class="section-title no-bar">签名预览</view>
 
-  <view class="controls">
-    <view class="color-picker">
-      <view 
-        wx:for="{{colors}}" 
-        wx:key="*this" 
-        class="color-item {{currentColor === item ? 'active' : ''}}" 
-        style="background-color: {{item}}"
-        bindtap="selectColor"
-        data-color="{{item}}"
-      ></view>
+    <view wx:if="{{signatureTempFilePath}}" class="signature-preview-wrap">
+      <image class="signature-preview" src="{{signatureTempFilePath}}" mode="aspectFit"></image>
+      <view class="preview-tip">已生成透明背景 PNG，可继续重签或保存到相册。</view>
     </view>
-    
-    <view class="btn-group">
-      <button class="clear-btn" bindtap="clearCanvas">清除</button>
-      <button class="save-btn" bindtap="saveSignature">保存签名</button>
+
+    <view wx:else class="signature-empty">
+      <view class="empty-mark">签</view>
+      <view class="empty-title">还没有签名</view>
+      <view class="empty-desc">进入全屏书写区后，可更流畅地完成签名，再返回当前页面确认结果。</view>
     </view>
   </view>
 
-  <view class="tips">
-    提示：保存后的图片为透明背景 PNG 格式，方便贴在各类文档中。
+  <view class="card action-card">
+    <button class="btn btn-primary" bindtap="openSignatureEditor" hover-class="btn-hover">{{signatureTempFilePath ? '重新签名' : '开始签名'}}</button>
+    <view class="btn-stack" wx:if="{{signatureTempFilePath}}">
+      <button class="btn btn-secondary" bindtap="saveSignatureToAlbum" disabled="{{isSaving}}" hover-class="btn-hover">保存到相册</button>
+      <button class="btn btn-secondary ghost-btn" bindtap="clearSignatureResult" hover-class="btn-hover">清空结果</button>
+    </view>
+  </view>
+
+  <view class="notice notice-subtle tips-block">
+    <view class="notice-title">使用提示</view>
+    <view class="notice-row">签名过程会在全屏页完成，确认后只回传图片结果，不会自动保存到系统相册。</view>
+    <view class="notice-row">如果需要重新写，只要再次点击“重新签名”即可覆盖当前结果。</view>
   </view>
 </view>

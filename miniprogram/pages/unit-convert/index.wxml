@@ -1,7 +1,7 @@
 <view class="container">
-  <view class="header">
-    <view class="title">单位转换</view>
-    <view class="subtitle">先选统合大类，再选具体单位类型进行转换</view>
+  <view class="page-header">
+    <view class="page-title">单位转换</view>
+    <view class="page-desc">先选大类，再选具体单位类型，快速得到常用换算结果。</view>
   </view>
 
   <view class="group-selector">
@@ -42,19 +42,13 @@
     </scroll-view>
   </view>
 
-  <view class="empty-state" wx:else>
-    当前大类下暂无匹配类型，请更换关键词或切换统合大类。
+  <view class="notice notice-subtle" wx:else>
+    <view class="notice-row">当前大类下暂无匹配类型，请更换关键词或切换统合大类。</view>
   </view>
 
-  <view class="convert-card" wx:if="{{activeType && currentUnits.length}}">
+  <view class="card convert-card" wx:if="{{activeType && currentUnits.length}}">
     <view class="input-row">
-      <input
-        class="unit-input"
-        type="digit"
-        value="{{inputValue}}"
-        bindinput="onInput"
-        placeholder="输入数值"
-      />
+      <input class="unit-input" type="digit" value="{{inputValue}}" bindinput="onInput" placeholder="输入数值" />
       <picker bindchange="onFromUnitChange" value="{{fromUnitIndex}}" range="{{currentUnits}}" range-key="name">
         <view class="unit-picker">{{currentUnits[fromUnitIndex].name}} ▾</view>
       </picker>
@@ -70,7 +64,7 @@
     </view>
   </view>
 
-  <view class="quick-list" wx:if="{{activeType && currentUnits.length}}">
+  <view class="card quick-list" wx:if="{{activeType && currentUnits.length}}">
     <view class="list-title">常用转换结果</view>
     <view class="list-item" wx:for="{{quickResults}}" wx:key="name">
       <text class="item-name">{{item.name}}</text>

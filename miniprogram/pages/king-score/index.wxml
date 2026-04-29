@@ -64,8 +64,8 @@
           <text class="player-alias" wx:if="{{item.matchedName}}">游戏名：{{item.matchedName}}</text>
           <text class="player-alias" wx:elif="{{item.gameNamesText}}">游戏名：{{item.gameNamesText}}</text>
         </view>
-        <view class="deduction-badge {{item.showBadge ? 'show' : ''}}">-{{settings.deductStep}}</view>
       </view>
+      <view class="deduction-badge {{item.showBadge ? 'show' : ''}}">-{{settings.deductStep}}</view>
 
       <view class="score-display">
         <text class="score-value">{{item.todayScore}}</text>

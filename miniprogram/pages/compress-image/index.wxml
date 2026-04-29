@@ -1,44 +1,61 @@
 <view class="container">
-  <view class="section-title">图片压缩</view>
-
-  <view class="card">
-    <file-picker
-      file="{{selectedFile}}"
-      accept="image"
-      title="选择图片"
-      description="支持 JPG、PNG、WebP 格式"
-      bind:selected="handleFileSelected"
-    />
-
-    <view class="config-area" wx:if="{{selectedFile}}">
-      <view class="config-item">
-        <view class="config-label">压缩质量: {{quality}}%</view>
-        <slider
-          min="10"
-          max="100"
-          value="{{quality}}"
-          show-value
-          activeColor="#07c160"
-          bindchanging="handleQualityChanging"
-          bindchange="handleQualityChange"
-        />
-      </view>
-
-      <view class="estimate-box" wx:if="{{estimatedSizeText}}">
-        <view class="estimate-title">压缩结果预估（仅供参考）</view>
-        <view class="estimate-row">原图大小：{{originalSizeText}}</view>
-        <view class="estimate-row">预计大小：{{estimatedSizeText}}</view>
-        <view class="estimate-row">预计减少：{{estimatedReduceText}}</view>
-      </view>
-
-      <button class="primary-btn" bindtap="handleSubmit">开始压缩</button>
-    </view>
+  <view class="page-header">
+    <view class="page-title">图片压缩</view>
+    <view class="page-desc">上传图片并调节压缩质量，在体积和清晰度之间快速找到平衡。</view>
   </view>
 
-  <view class="tips-card">
-    <view class="tips-title">使用提示</view>
-    <view class="tips-item">1. 质量越低，文件越小，但图片会越模糊</view>
-    <view class="tips-item">2. 建议质量设置在 60%-80% 之间以平衡大小和清晰度</view>
-    <view class="tips-item">3. 预估值会受图片内容和格式影响，实际结果可能略有差异</view>
+  <file-picker
+    file="{{selectedFile}}"
+    accept="image"
+    title="选择图片"
+    description="支持 JPG、PNG、WebP 格式"
+    bind:selected="handleFileSelected"
+  />
+
+  <view class="card form-card {{selectedFile ? 'form-active' : ''}}">
+    <view class="form-item">
+      <view class="form-head">
+        <view class="label">压缩质量</view>
+        <view class="quality-pill">{{quality}}%</view>
+      </view>
+      <slider
+        class="quality-slider"
+        min="10"
+        max="100"
+        value="{{quality}}"
+        show-value
+        activeColor="#111111"
+        backgroundColor="#E5E7EB"
+        block-color="#111111"
+        bindchanging="handleQualityChanging"
+        bindchange="handleQualityChange"
+      />
+      <view class="field-help">建议设置在 60% - 80% 之间，兼顾清晰度与文件大小。</view>
+    </view>
+
+    <view class="notice notice-info estimate-box" wx:if="{{estimatedSizeText}}">
+      <view class="notice-head">
+        <view class="notice-icon">i</view>
+        <view class="notice-title">压缩结果预估</view>
+      </view>
+      <view class="notice-row">原图大小：<text class="notice-strong">{{originalSizeText}}</text></view>
+      <view class="notice-row">预计大小：<text class="notice-strong">{{estimatedSizeText}}</text></view>
+      <view class="notice-row">预计减少：<text class="notice-strong">{{estimatedReduceText}}</text></view>
+    </view>
+
+    <button
+      class="btn btn-primary {{!selectedFile ? 'btn-disabled' : ''}}"
+      bindtap="handleSubmit"
+      hover-class="btn-hover"
+    >
+      开始压缩
+    </button>
+  </view>
+
+  <view class="notice notice-subtle tips-block">
+    <view class="notice-title">使用提示</view>
+    <view class="notice-row">1. 质量越低，文件越小，但图片会越模糊。</view>
+    <view class="notice-row">2. 不同图片内容与格式不同，最终压缩率会有差异。</view>
+    <view class="notice-row">3. 压缩完成后可在“任务列表”中查看处理结果。</view>
   </view>
 </view>

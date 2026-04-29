@@ -1,15 +1,18 @@
 <view class="container">
   <view class="page-header">
     <view class="page-title">Word 转 PDF</view>
-    <view class="page-desc">上传 Word 文档并生成可分享的 PDF 文件</view>
+    <view class="page-desc">上传 Word 文档并生成可分享、便于分发的 PDF 文件</view>
   </view>
 
   <file-picker file="{{selectedFile}}" bind:selected="handleFileSelected" />
 
   <view class="card form-card {{selectedFile ? 'form-active' : ''}}">
-    <view class="info-box">
-      <view class="info-icon">!</view>
-      <view class="info-text">文件会提交到云端转换引擎处理，复杂排版请以生成结果为准。</view>
+    <view class="notice notice-info info-box">
+      <view class="notice-head">
+        <view class="notice-icon">i</view>
+        <view class="notice-title">转换说明</view>
+      </view>
+      <view class="info-text">文件会提交到云端转换引擎处理，复杂排版与字体回退请以生成结果为准。</view>
     </view>
 
     <button

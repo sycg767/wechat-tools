@@ -1,26 +1,23 @@
 <view class="container">
   <view class="page-header">
     <view class="page-title">PDF 水印</view>
-    <view class="page-desc">为 PDF 文档添加文字或图片水印</view>
+    <view class="page-desc">为 PDF 文档添加文字或图片水印，并实时预览位置与样式。</view>
   </view>
 
-  <view class="card">
-    <view class="file-section">
-      <file-picker
-        accept="pdf"
-        bind:selected="onFileSelect"
-        bind:clear="onFileClear"
-        file="{{selectedFile}}"
-      />
-    </view>
+  <view class="card upload-card">
+    <file-picker
+      accept="pdf"
+      bind:selected="onFileSelect"
+      bind:clear="onFileClear"
+      file="{{selectedFile}}"
+    />
   </view>
 
   <view class="card form-card {{selectedFile ? 'form-active' : ''}}" wx:if="{{activeTab === 'add'}}">
     <view class="preview-container" wx:if="{{previewUrl}}">
-      <view class="preview-title">预览与位置调整 (点击预览图设置坐标)</view>
+      <view class="preview-title">预览与位置调整（点击预览图设置坐标）</view>
       <view class="preview-box" bindtap="handlePreviewTap">
         <image class="preview-image" src="{{previewUrl}}" mode="aspectFit"></image>
-        <!-- 单点水印预览 (居中或手动) -->
         <view
           class="watermark-marker"
           wx:if="{{layout !== 'tile'}}"
@@ -30,7 +27,6 @@
           <image wx:else src="{{imagePath}}" mode="aspectFit" class="marker-img" style="width: {{100 * scale}}rpx; height: {{100 * scale}}rpx;"></image>
         </view>
 
-        <!-- 平铺水印预览 -->
         <view class="tile-preview-container" wx:if="{{layout === 'tile'}}">
           <view
             class="tile-item"
@@ -43,26 +39,20 @@
           </view>
         </view>
       </view>
-      <view class="preview-tip">当前坐标: X={{x}}, Y={{y}} (PDF 坐标系)</view>
+      <view class="preview-tip">当前坐标：X={{x}}，Y={{y}}（PDF 坐标系）</view>
     </view>
 
     <view class="form-item">
       <view class="label">水印类型</view>
       <radio-group class="radio-group" bindchange="handleInput" data-field="type">
-        <label class="radio-label"><radio value="text" checked="{{type === 'text'}}" color="#07c160"/> 文字</label>
-        <label class="radio-label"><radio value="image" checked="{{type === 'image'}}" color="#07c160"/> 图片</label>
+        <label class="radio-label"><radio value="text" checked="{{type === 'text'}}" color="#111111"/> 文字</label>
+        <label class="radio-label"><radio value="image" checked="{{type === 'image'}}" color="#111111"/> 图片</label>
       </radio-group>
     </view>
 
     <view class="form-item" wx:if="{{type === 'text'}}">
       <view class="label">水印文字</view>
-      <input
-        class="input"
-        placeholder="请输入水印文字"
-        value="{{watermarkText}}"
-        bindinput="handleInput"
-        data-field="watermarkText"
-      />
+      <input class="input" placeholder="请输入水印文字" value="{{watermarkText}}" bindinput="handleInput" data-field="watermarkText" />
     </view>
 
     <view class="form-item" wx:else>
@@ -76,34 +66,34 @@
     <view class="form-item">
       <view class="label">布局模式</view>
       <radio-group class="radio-group" bindchange="handleInput" data-field="layout">
-        <label class="radio-label"><radio value="center" checked="{{layout === 'center'}}" color="#07c160"/> 居中</label>
-        <label class="radio-label"><radio value="manual" checked="{{layout === 'manual'}}" color="#07c160"/> 手动</label>
-        <label class="radio-label"><radio value="tile" checked="{{layout === 'tile'}}" color="#07c160"/> 平铺</label>
+        <label class="radio-label"><radio value="center" checked="{{layout === 'center'}}" color="#111111"/> 居中</label>
+        <label class="radio-label"><radio value="manual" checked="{{layout === 'manual'}}" color="#111111"/> 手动</label>
+        <label class="radio-label"><radio value="tile" checked="{{layout === 'tile'}}" color="#111111"/> 平铺</label>
       </radio-group>
     </view>
     <view class="form-item">
       <view class="label">透明度 ({{opacity}})</view>
-      <slider min="0.1" max="1.0" step="0.1" value="{{opacity}}" bindchange="handleSliderChange" data-field="opacity" activeColor="#07c160" />
+      <slider min="0.1" max="1.0" step="0.1" value="{{opacity}}" bindchange="handleSliderChange" data-field="opacity" activeColor="#111111" backgroundColor="#E5E7EB" block-color="#111111" />
     </view>
     <view class="form-item">
       <view class="label">旋转角度 ({{rotation}}°)</view>
-      <slider min="0" max="360" step="1" value="{{rotation}}" bindchange="handleSliderChange" data-field="rotation" activeColor="#07c160" />
+      <slider min="0" max="360" step="1" value="{{rotation}}" bindchange="handleSliderChange" data-field="rotation" activeColor="#111111" backgroundColor="#E5E7EB" block-color="#111111" />
     </view>
     <view class="form-item">
       <view class="label">缩放比例 ({{scale}})</view>
-      <slider min="0.1" max="3.0" step="0.1" value="{{scale}}" bindchange="handleSliderChange" data-field="scale" activeColor="#07c160" />
+      <slider min="0.1" max="3.0" step="0.1" value="{{scale}}" bindchange="handleSliderChange" data-field="scale" activeColor="#111111" backgroundColor="#E5E7EB" block-color="#111111" />
     </view>
     <view class="form-item" wx:if="{{type === 'text'}}">
       <view class="label">字体大小 ({{fontSize}}px)</view>
-      <slider min="10" max="100" step="2" value="{{fontSize}}" bindchange="handleSliderChange" data-field="fontSize" activeColor="#07c160" />
+      <slider min="10" max="100" step="2" value="{{fontSize}}" bindchange="handleSliderChange" data-field="fontSize" activeColor="#111111" backgroundColor="#E5E7EB" block-color="#111111" />
     </view>
     <view class="form-item" wx:if="{{type === 'text'}}">
       <view class="label">颜色</view>
       <view class="color-picker">
-        <view 
-          wx:for="{{colors}}" 
-          wx:key="*this" 
-          class="color-item {{color === item ? 'active' : ''}}" 
+        <view
+          wx:for="{{colors}}"
+          wx:key="*this"
+          class="color-item {{color === item ? 'active' : ''}}"
           style="background-color: {{item}}"
           bindtap="selectColor"
           data-color="{{item}}"

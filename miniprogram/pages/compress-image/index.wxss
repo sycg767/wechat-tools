@@ -1,22 +1,52 @@
 @import "../../app.wxss";
 
-.estimate-box {
-  margin: 20rpx 0 28rpx;
-  padding: 20rpx 24rpx;
-  border-radius: 16rpx;
-  background: #f3f9f4;
-  border: 1rpx solid #d4ead7;
+.form-card {
+  opacity: 0.55;
+  pointer-events: none;
+  transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.estimate-title {
-  font-size: 26rpx;
-  font-weight: 600;
-  color: #2c5c33;
-  margin-bottom: 10rpx;
+.form-active {
+  opacity: 1;
+  pointer-events: auto;
 }
 
-.estimate-row {
+.form-item {
+  margin-bottom: 36rpx;
+}
+
+.form-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+  margin-bottom: 22rpx;
+}
+
+.quality-pill {
+  padding: 10rpx 20rpx;
+  border-radius: var(--border-radius-pill);
+  background: rgba(17, 24, 39, 0.06);
+  color: var(--text-main);
+  font-size: 22rpx;
+  font-weight: 700;
+}
+
+.quality-slider {
+  margin: 0 4rpx;
+}
+
+.field-help {
+  margin-top: 18rpx;
   font-size: 24rpx;
-  color: #3f4a44;
   line-height: 1.7;
+  color: var(--text-second);
+}
+
+.estimate-box {
+  margin-bottom: 36rpx;
+}
+
+.tips-block {
+  margin-top: 8rpx;
 }

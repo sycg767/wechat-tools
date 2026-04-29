@@ -1,44 +1,48 @@
+@import "../../app.wxss";
+
 .page {
   min-height: 100vh;
-  background: #f5f7fa;
-  padding: 24rpx;
+  background: var(--bg-color);
+  padding: 32rpx;
   box-sizing: border-box;
 }
 
 .header-card,
 .chart-card {
-  background: #fff;
-  border-radius: 24rpx;
-  padding: 24rpx;
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
-}
-
-.header-card,
-.chart-card {
-  margin-bottom: 24rpx;
+  margin-bottom: 28rpx;
+  padding: 32rpx;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FBFBFD 100%);
+  border-radius: var(--border-radius-apple);
+  border: var(--border-premium);
+  box-shadow: var(--shadow-premium);
 }
 
 .title,
 .chart-title {
-  font-size: 34rpx;
-  font-weight: 700;
-  color: #1f1f1f;
+  color: var(--text-main);
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.title {
+  font-size: 42rpx;
 }
 
 .chart-title {
-  font-size: 30rpx;
+  font-size: 32rpx;
 }
 
 .chart-desc {
-  margin-top: 8rpx;
-  font-size: 22rpx;
-  color: #8c8c8c;
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  line-height: 1.6;
+  color: var(--text-second);
 }
 
 .summary-row {
   display: grid;
-  gap: 16rpx;
-  margin-top: 20rpx;
+  gap: 18rpx;
+  margin-top: 24rpx;
 }
 
 .summary-row-3 {
@@ -46,39 +50,40 @@
 }
 
 .summary-item {
-  background: #f7f8fa;
-  border-radius: 16rpx;
-  padding: 16rpx 12rpx;
+  padding: 20rpx 16rpx;
   text-align: center;
+  border-radius: var(--border-radius-lg);
+  background: var(--card-subtle);
+  border: 1px solid rgba(17, 24, 39, 0.03);
 }
 
 .summary-value {
-  font-size: 32rpx;
-  font-weight: 700;
-  color: #1677ff;
+  font-size: 34rpx;
+  font-weight: 800;
+  color: var(--text-main);
 }
 
 .summary-label {
   margin-top: 8rpx;
   font-size: 22rpx;
-  color: #8c8c8c;
+  color: var(--text-second);
 }
 
 .chart-scroll {
   height: 920rpx;
-  margin-top: 20rpx;
+  margin-top: 24rpx;
 }
 
 .chart-canvas {
   width: 100%;
   display: block;
-  border-radius: 16rpx;
-  background: #fff;
+  border-radius: var(--border-radius-lg);
+  background: #FFFFFF;
 }
 
 .empty {
-  color: #999;
+  padding: 140rpx 24rpx;
   text-align: center;
-  padding: 120rpx 0;
+  color: var(--text-second);
   font-size: 28rpx;
 }

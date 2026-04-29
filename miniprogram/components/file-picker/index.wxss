@@ -1,40 +1,46 @@
-.picker-container {
+ .picker-container {
   width: 100%;
   margin-bottom: 40rpx;
 }
 
 .picker-area {
   width: 100%;
-  min-height: 400rpx;
-  background: #F9FAFB;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  border-radius: 48rpx;
+  min-height: 380rpx;
+  padding: 72rpx 56rpx;
+  box-sizing: border-box;
+  border-radius: var(--border-radius-apple);
+  border: var(--border-premium);
+  background: linear-gradient(180deg, #FFFFFF 0%, #F8F9FB 100%);
+  box-shadow: var(--shadow-premium);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 80rpx;
-  box-sizing: border-box;
-  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-  box-shadow: var(--shadow-premium);
+  transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
   position: relative;
   overflow: hidden;
 }
 
 .picker-area-hover {
-  background: #FFFFFF;
-  border-color: rgba(0, 0, 0, 0.1);
-  transform: scale(0.98) translateY(4rpx);
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.02);
+  transform: scale(0.985) translateY(4rpx);
+  border-color: rgba(17, 24, 39, 0.08);
+  filter: brightness(0.995);
 }
 
 .has-file {
   background: #FFFFFF;
-  border: 1px solid var(--text-main);
+  border: 1px solid rgba(17, 24, 39, 0.08);
 }
 
 .picker-icon-box {
-  margin-bottom: 24rpx;
+  width: 104rpx;
+  height: 104rpx;
+  margin-bottom: 28rpx;
+  border-radius: 30rpx;
+  background: rgba(17, 24, 39, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .picker-icon {
@@ -43,36 +49,54 @@
   position: relative;
 }
 
-.icon-upload::before, .icon-upload::after {
+.icon-upload::before,
+.icon-upload::after {
   content: '';
   position: absolute;
-  background: #86868B;
+  background: #6B7280;
 }
 
 .icon-upload::before {
   width: 4rpx;
   height: 40rpx;
   left: 38rpx;
-  top: 10rpx;
+  top: 12rpx;
 }
 
 .icon-upload::after {
   width: 24rpx;
   height: 24rpx;
-  border-top: 4rpx solid #86868B;
-  border-left: 4rpx solid #86868B;
+  border-top: 4rpx solid #6B7280;
+  border-left: 4rpx solid #6B7280;
   transform: rotate(45deg);
   left: 28rpx;
-  top: 10rpx;
+  top: 12rpx;
+  background: transparent;
 }
 
 .icon-file-active {
-  background: #007AFF;
-  border-radius: 8rpx;
+  width: 60rpx;
+  height: 72rpx;
+  background: var(--primary-color);
+  border-radius: 18rpx;
+  position: relative;
+}
+
+.icon-file-active::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 22rpx;
+  height: 22rpx;
+  background: rgba(255, 255, 255, 0.3);
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+  border-top-right-radius: 18rpx;
 }
 
 .picker-main-text {
   font-size: 34rpx;
+  line-height: 1.35;
   font-weight: 700;
   color: var(--text-main);
   margin-bottom: 12rpx;
@@ -80,19 +104,22 @@
 
 .picker-sub-text {
   font-size: 26rpx;
+  line-height: 1.65;
   color: var(--text-second);
+  text-align: center;
 }
 
 .file-display {
-  text-align: center;
   width: 100%;
+  text-align: center;
 }
 
 .file-name {
   font-size: 30rpx;
-  font-weight: 600;
-  color: #007AFF;
-  margin-bottom: 12rpx;
+  line-height: 1.5;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 16rpx;
   word-break: break-all;
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -104,42 +131,48 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20rpx;
+  flex-wrap: wrap;
+  gap: 18rpx;
 }
 
 .file-size {
   font-size: 24rpx;
-  color: #86868B;
+  color: var(--text-second);
 }
 
 .file-change {
-  font-size: 24rpx;
-  color: #007AFF;
-  text-decoration: underline;
+  padding: 8rpx 18rpx;
+  border-radius: var(--border-radius-pill);
+  background: rgba(17, 24, 39, 0.05);
+  color: var(--text-main);
+  font-size: 22rpx;
+  font-weight: 600;
 }
 
 .picker-tips {
-  margin-top: 20rpx;
+  margin-top: 18rpx;
   display: flex;
   justify-content: center;
 }
 
 .tip-item {
-  font-size: 22rpx;
-  color: #C7C7CC;
   display: flex;
   align-items: center;
+  gap: 10rpx;
+  font-size: 22rpx;
+  color: var(--text-second);
 }
 
 .tip-item::before {
   content: 'i';
   width: 24rpx;
   height: 24rpx;
-  border: 1rpx solid #C7C7CC;
   border-radius: 50%;
+  border: 1px solid rgba(17, 24, 39, 0.16);
+  color: var(--text-second);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 8rpx;
-  font-size: 18rpx;
+  font-size: 16rpx;
+  font-weight: 700;
 }

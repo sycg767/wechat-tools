@@ -1,23 +1,39 @@
 <view class="container">
-  <view class="section-title">PDF 转 Excel</view>
-  
-  <view class="card">
-    <file-picker 
-      accept="pdf" 
-      title="选择 PDF 文件" 
-      description="支持表格识别与提取"
-      bind:selected="handleFileSelected"
-    />
-    
-    <view class="action-area" wx:if="{{selectedFile}}">
-      <button class="primary-btn" bindtap="handleSubmit">开始转换</button>
-    </view>
+  <view class="page-header">
+    <view class="page-title">PDF 转 Excel</view>
+    <view class="page-desc">提取 PDF 中的表格内容，转换为更方便编辑和整理的 Excel 文件。</view>
   </view>
 
-  <view class="tips-card">
-    <view class="tips-title">使用提示</view>
-    <view class="tips-item">1. 请确保 PDF 中的表格清晰可见</view>
-    <view class="tips-item">2. 复杂的嵌套表格转换效果可能受限</view>
-    <view class="tips-item">3. 转换完成后可在“任务列表”中查看历史</view>
+  <file-picker
+    file="{{selectedFile}}"
+    accept="pdf"
+    title="选择 PDF 文件"
+    description="支持表格识别与提取"
+    bind:selected="handleFileSelected"
+  />
+
+  <view class="card form-card {{selectedFile ? 'form-active' : ''}}">
+    <view class="notice notice-info tips-inline">
+      <view class="notice-head">
+        <view class="notice-icon">i</view>
+        <view class="notice-title">转换说明</view>
+      </view>
+      <view class="notice-text">系统会优先识别 PDF 内的规则表格，并尽量保留原有行列结构。</view>
+    </view>
+
+    <button
+      class="btn btn-primary {{!selectedFile ? 'btn-disabled' : ''}}"
+      bindtap="handleSubmit"
+      hover-class="btn-hover"
+    >
+      开始转换
+    </button>
+  </view>
+
+  <view class="notice notice-subtle tips-block">
+    <view class="notice-title">使用提示</view>
+    <view class="notice-row">1. 请尽量选择表格清晰、边界完整的 PDF 文件。</view>
+    <view class="notice-row">2. 复杂嵌套表格或图片型扫描件，转换效果可能会下降。</view>
+    <view class="notice-row">3. 转换完成后可在“任务列表”中查看历史记录。</view>
   </view>
 </view>

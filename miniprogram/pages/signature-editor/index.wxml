@@ -1,0 +1,43 @@
+<view class="editor-page">
+  <view class="editor-shell">
+    <view class="editor-topbar">
+      <view class="topbar-side" bindtap="cancelSignature">取消</view>
+      <view class="topbar-title-wrap">
+        <view class="topbar-title">手写签名</view>
+        <view class="topbar-desc">在下方全屏区域书写，完成后点击确认使用。</view>
+      </view>
+      <view class="topbar-side topbar-side-placeholder"></view>
+    </view>
+
+    <view class="color-picker">
+      <view
+        wx:for="{{colors}}"
+        wx:key="*this"
+        class="color-item {{currentColor === item ? 'active' : ''}}"
+        style="background-color: {{item}}"
+        bindtap="selectColor"
+        data-color="{{item}}"
+      ></view>
+    </view>
+
+    <view class="canvas-panel">
+      <canvas
+        type="2d"
+        id="signatureCanvas"
+        class="signature-canvas"
+        catchtouchstart="touchStart"
+        catchtouchmove="touchMove"
+        catchtouchend="touchEnd"
+        catchtouchcancel="touchEnd"
+      ></canvas>
+      <view wx:if="{{!hasDraw}}" class="canvas-placeholder">请在这里签名</view>
+    </view>
+  </view>
+
+  <view class="action-bar bar-active">
+    <view class="action-buttons">
+      <button class="btn btn-secondary secondary-btn" bindtap="clearCanvas" hover-class="btn-hover">清空</button>
+      <button class="btn btn-primary" bindtap="confirmSignature" hover-class="btn-hover">确认使用</button>
+    </view>
+  </view>
+</view>
