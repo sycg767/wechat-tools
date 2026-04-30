@@ -1,0 +1,32 @@
+<view class="container party-page">
+  <view class="page-header">
+    <view class="page-title">谁是大冤种</view>
+    <view class="page-desc">2~8人同时按住屏幕，倒计时结束后随机抽中一位。</view>
+  </view>
+
+  <view class="card status-card">
+    <view class="status-row">当前人数：<text class="strong">{{fingerCount}}</text>/8</view>
+    <view class="status-row" wx:if="{{countdown > 0}}">开奖倒计时：<text class="strong">{{countdown}}</text>s</view>
+    <view class="status-row" wx:if="{{winnerText}}">
+      <view class="result-main">
+        中签者：<text class="winner">{{winnerText}}</text>
+      </view>
+      <view class="result-quote" wx:if="{{funnyQuote}}">“{{funnyQuote}}”</view>
+      <view class="result-detail" wx:if="{{penalty}}">
+        <text class="label">惩罚建议：</text>
+        <text class="penalty">{{penalty}}</text>
+      </view>
+      <view class="result-time" wx:if="{{drawTime}}">抽签时间：{{drawTime}}</view>
+    </view>
+  </view>
+
+  <view class="card touch-zone" bindtouchstart="onTouchStart" bindtouchmove="onTouchMove" bindtouchend="onTouchEnd" bindtouchcancel="onTouchEnd">
+    <view class="touch-hint" wx:if="{{!isFinished}}">把手指按在这里，别松手</view>
+    <view class="touch-hint winner-hint" wx:else>抽签结束，松开手指以重置</view>
+    <block wx:for="{{touchPoints}}" wx:key="id">
+      <view class="finger-point {{winnerId === item.id ? 'winner-point' : ''}}" style="left: {{item.x}}px; top: {{item.y}}px;">
+        <text>{{item.index}}</text>
+      </view>
+    </block>
+  </view>
+</view>

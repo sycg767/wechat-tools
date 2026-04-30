@@ -1,0 +1,138 @@
+@import "../../app.wxss";
+
+.input {
+  width: 100%;
+  height: 92rpx;
+  padding: 0 22rpx;
+  box-sizing: border-box;
+  border-radius: var(--border-radius-lg);
+  background: var(--card-subtle);
+  border: 1px solid rgba(17, 24, 39, 0.06);
+  font-size: 28rpx;
+}
+
+.book-card {
+  min-height: 480rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28rpx;
+  background: linear-gradient(150deg, #fffdf8 0%, #f8f1e3 100%);
+}
+
+.book-stage {
+  position: relative;
+  width: 460rpx;
+  height: 240rpx;
+  perspective: 1200rpx;
+}
+
+.book-face {
+  width: 100%;
+  height: 100%;
+  border-radius: 24rpx;
+  background: linear-gradient(160deg, #4b2e2b 0%, #2a1a18 100%);
+  color: #f4e3c1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 14rpx 28rpx rgba(42, 26, 24, 0.28);
+  transform-origin: left center;
+}
+
+.page-flip {
+  position: absolute;
+  right: 26rpx;
+  top: 18rpx;
+  width: 214rpx;
+  height: 204rpx;
+  transform-style: preserve-3d;
+  transform-origin: left center;
+  animation: pageFlipSolid 0.68s cubic-bezier(0.25, 0.8, 0.25, 1) 0.04s both;
+}
+
+.page-side {
+  position: absolute;
+  inset: 0;
+  border-radius: 14rpx;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border: 1px solid rgba(76, 52, 44, 0.12);
+}
+
+.page-front {
+  background: linear-gradient(102deg, #fffdf6 0%, #f2e8d6 100%);
+  box-shadow: -8rpx 6rpx 16rpx rgba(42, 26, 24, 0.14);
+}
+
+.page-back {
+  background: linear-gradient(98deg, #f3e8cf 0%, #efe2c4 100%);
+  transform: rotateY(180deg);
+}
+
+@keyframes pageFlipSolid {
+  0% { transform: rotateY(0deg); opacity: 0; }
+  8% { opacity: 1; }
+  60% { transform: rotateY(-132deg); opacity: 1; }
+  100% { transform: rotateY(-180deg); opacity: 0; }
+}
+
+.book-title {
+  font-size: 34rpx;
+  font-weight: 800;
+  letter-spacing: 2rpx;
+}
+
+.book-sub {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  opacity: 0.85;
+}
+
+.answer-panel {
+  width: 100%;
+  border-radius: 24rpx;
+  padding: 26rpx;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(17, 24, 39, 0.06);
+}
+
+.answer-hidden {
+  opacity: 0;
+}
+
+.answer-show {
+  animation: answerFadeIn 0.36s ease;
+}
+
+@keyframes answerFadeIn {
+  0% { opacity: 0; transform: translateY(10rpx); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.answer-text {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #2a1a18;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.answer-meta {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  color: var(--text-second);
+  text-align: center;
+}
+
+.poster-canvas {
+  width: 600rpx;
+  height: 900rpx;
+  position: fixed;
+  left: -9999rpx;
+  top: -9999rpx;
+  pointer-events: none;
+}

@@ -1,0 +1,35 @@
+<view class="container book-page">
+  <view class="page-header">
+    <view class="page-title">答案之书</view>
+    <view class="page-desc">默想问题，翻开一页，让答案自己出现。</view>
+  </view>
+
+  <view class="card question-card">
+    <view class="label">你的问题（可选）</view>
+    <input class="input" placeholder="例如：这周末要不要加班？" value="{{question}}" bindinput="onInputQuestion" />
+  </view>
+
+  <view class="card book-card" bindtap="drawAnswer" hover-class="card-active">
+    <view class="book-stage">
+      <view class="book-face">
+        <view class="book-title">BOOK OF ANSWERS</view>
+        <view class="book-sub">轻触翻页</view>
+      </view>
+      <view class="page-flip" wx:if="{{isRevealing}}">
+        <view class="page-side page-front"></view>
+        <view class="page-side page-back"></view>
+      </view>
+    </view>
+    <view class="answer-panel {{isRevealing ? 'answer-hidden' : 'answer-show'}}" wx:if="{{currentAnswer}}">
+      <view class="answer-text">{{currentAnswer}}</view>
+      <view class="answer-meta">{{todayText}}</view>
+    </view>
+  </view>
+
+  <view class="card actions-card">
+    <button class="btn btn-primary" bindtap="drawAnswer" disabled="{{isRevealing}}" hover-class="btn-hover">{{isRevealing ? '翻页中...' : '再翻一次'}}</button>
+    <button class="btn btn-secondary mt-20" bindtap="savePoster" hover-class="btn-hover" disabled="{{!currentAnswer}}">保存分享图</button>
+  </view>
+
+  <canvas type="2d" id="posterCanvas" class="poster-canvas"></canvas>
+</view>

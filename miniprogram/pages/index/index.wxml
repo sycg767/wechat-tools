@@ -12,6 +12,24 @@
     </view>
   </view>
 
+  <!-- Search Bar -->
+  <view class="search-bar-container view-fade-in" wx:if="{{viewMode === 'categories' || viewMode === 'search'}}">
+    <view class="search-inner {{viewMode === 'search' ? 'active' : ''}}">
+      <view class="search-icon"></view>
+      <input
+        class="search-input"
+        placeholder="搜索工具..."
+        placeholder-class="search-placeholder"
+        bindinput="onSearchInput"
+        bindfocus="onSearchFocus"
+        confirm-type="search"
+        value="{{searchQuery}}"
+      />
+      <view class="clear-icon" wx:if="{{searchQuery}}" bindtap="onClearSearch"></view>
+    </view>
+    <text class="cancel-btn" wx:if="{{viewMode === 'search'}}" bindtap="onCancelSearch">取消</text>
+  </view>
+
   <!-- Category View Mode -->
   <view wx:if="{{viewMode === 'categories'}}" class="view-fade-in">
     <view class="bento-grid">
@@ -23,6 +41,7 @@
           hover-class="bento-item-hover"
         >
           <view class="card-inner">
+            <view class="card-glow"></view>
             <view class="icon-wrapper {{item.iconClass}}">
               <view class="bento-icon" style="-webkit-mask-image: {{item.maskImage}}; mask-image: {{item.maskImage}};"></view>
             </view>
@@ -36,15 +55,10 @@
     </view>
   </view>
 
-  <!-- Sub-Tool View Mode -->
-  <view wx:if="{{viewMode === 'sub'}}" class="view-fade-in">
-    <view class="sub-header" bindtap="goBackToCategories">
-      <view class="back-icon"></view>
-      <text class="sub-title">{{currentCategory.title}}</text>
-    </view>
-
+  <!-- Search Results Mode -->
+  <view wx:if="{{viewMode === 'search'}}" class="view-fade-in search-results">
     <view class="bento-grid">
-      <block wx:for="{{currentCategory.items}}" wx:key="id">
+      <block wx:for="{{searchResults}}" wx:key="id">
         <view
           class="bento-item small {{item.disabled ? 'disabled' : ''}}"
           bindtap="handleToolTap"
@@ -54,6 +68,45 @@
           hover-class="bento-item-hover"
         >
           <view class="card-inner">
+            <view class="card-glow"></view>
+            <view class="icon-wrapper {{item.iconClass}}">
+              <view class="bento-icon" style="-webkit-mask-image: {{item.maskImage}}; mask-image: {{item.maskImage}};"></view>
+            </view>
+            <view class="content-wrapper">
+              <view class="title">{{item.title}}</view>
+              <view class="desc">{{item.category}}</view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+    <view class="no-results" wx:if="{{searchResults.length === 0 && searchQuery}}">
+      <view class="no-results-icon"></view>
+      <text>未找到相关工具</text>
+    </view>
+  </view>
+
+  <!-- Sub-Tool View Mode -->
+  <view wx:if="{{viewMode === 'sub'}}" class="view-fade-in">
+    <view class="sub-header">
+      <view class="back-button-hit" bindtap="goBackToCategories">
+        <view class="back-icon"></view>
+      </view>
+      <text class="sub-title">{{currentCategory.title}}</text>
+    </view>
+
+    <view class="bento-grid">
+      <block wx:for="{{currentCategory.items}}" wx:key="id">
+        <view
+          class="bento-item {{item.size || 'small'}} {{item.disabled ? 'disabled' : ''}}"
+          bindtap="handleToolTap"
+          data-tool-id="{{item.id}}"
+          data-path="{{item.path}}"
+          data-disabled="{{item.disabled}}"
+          hover-class="bento-item-hover"
+        >
+          <view class="card-inner">
+            <view class="card-glow"></view>
             <view class="icon-wrapper {{item.iconClass}}">
               <view class="bento-icon" style="-webkit-mask-image: {{item.maskImage}}; mask-image: {{item.maskImage}};"></view>
             </view>

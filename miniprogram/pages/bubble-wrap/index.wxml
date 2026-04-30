@@ -1,0 +1,37 @@
+<view class="container bubble-page">
+  <view class="page-header">
+    <view class="page-title">气泡膜解压器</view>
+    <view class="page-desc">无限捏捏乐，捏爆一屏就刷新下一张。</view>
+  </view>
+
+  <view class="card stats-card">
+    <view class="stat-item"><text class="stat-label">总捏爆</text><text class="stat-value">{{totalPopCount}}</text></view>
+    <view class="stat-item"><text class="stat-label">连击</text><text class="stat-value">{{combo}}</text></view>
+    <view class="stat-item"><text class="stat-label">金币彩蛋</text><text class="stat-value">{{goldHits}}</text></view>
+  </view>
+
+  <view class="card progress-card">
+    <view class="progress-head">
+      <text class="progress-title">本轮进度</text>
+      <text class="progress-meta">{{poppedCount}} / {{bubbles.length}} · {{progress}}%</text>
+    </view>
+    <view class="progress-track">
+      <view class="progress-fill" style="width: {{progress}}%;"></view>
+    </view>
+    <view class="burst-banner {{burstVisible ? 'show' : ''}}">{{burstText || '啵！'}}</view>
+  </view>
+
+  <view class="card board {{boardFlash ? 'board-flash' : ''}}" bindtouchstart="onBoardTouchStart">
+    <view class="bubble-grid">
+      <block wx:for="{{bubbles}}" wx:key="id">
+        <view class="bubble {{item.popped ? 'popped' : ''}} {{item.type === 'gold' ? 'gold' : ''}}" data-id="{{item.id}}" bindtap="onBubbleTap">
+          <text wx:if="{{item.popped}}" class="bubble-pop-mark">啪</text>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <view class="card">
+    <button class="btn btn-primary bubble-action-btn" bindtap="refreshBoard" hover-class="btn-hover">撕掉旧膜，来新的一张</button>
+  </view>
+</view>

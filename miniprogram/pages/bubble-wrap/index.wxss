@@ -1,0 +1,149 @@
+@import "../../app.wxss";
+
+.bubble-page {
+  gap: 24rpx;
+}
+
+.stats-card {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.stat-label {
+  font-size: 22rpx;
+  color: var(--text-second);
+}
+
+.stat-value {
+  font-size: 36rpx;
+  font-weight: 800;
+}
+
+.progress-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.progress-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+}
+
+.progress-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.progress-meta {
+  font-size: 24rpx;
+  color: var(--text-second);
+}
+
+.progress-track {
+  height: 16rpx;
+  border-radius: 999rpx;
+  background: #e5eefc;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #60a5fa 0%, #2563eb 100%);
+  transition: width 0.18s ease;
+}
+
+.burst-banner {
+  align-self: flex-start;
+  padding: 10rpx 20rpx;
+  border-radius: 999rpx;
+  font-size: 24rpx;
+  font-weight: 700;
+  color: #1d4ed8;
+  background: rgba(96, 165, 250, 0.14);
+  opacity: 0;
+  transform: translateY(6rpx) scale(0.96);
+  transition: all 0.16s ease;
+}
+
+.burst-banner.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.board {
+  padding: 20rpx;
+  transition: box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.board.board-flash {
+  box-shadow: 0 16rpx 36rpx rgba(251, 191, 36, 0.22);
+  transform: scale(1.01);
+}
+
+.bubble-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 14rpx;
+}
+
+.bubble {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ffffff 0%, #dbeafe 60%, #bfdbfe 100%);
+  border: 1px solid rgba(59, 130, 246, 0.28);
+  box-shadow: inset 0 10rpx 14rpx rgba(255, 255, 255, 0.85), 0 8rpx 18rpx rgba(59, 130, 246, 0.12);
+  transition: all 0.16s ease;
+}
+
+.bubble:active {
+  transform: scale(0.94);
+}
+
+.bubble.gold {
+  background: radial-gradient(circle at 30% 30%, #fff7cc 0%, #fde68a 55%, #fbbf24 100%);
+  border-color: rgba(217, 119, 6, 0.5);
+  box-shadow: inset 0 10rpx 14rpx rgba(255, 251, 235, 0.95), 0 8rpx 20rpx rgba(245, 158, 11, 0.24);
+}
+
+.bubble.popped {
+  transform: scale(0.76);
+  opacity: 0.42;
+  background: radial-gradient(circle at 50% 50%, #dbeafe 0%, #cbd5e1 68%, #94a3b8 100%);
+  box-shadow: inset 0 12rpx 18rpx rgba(71, 85, 105, 0.12);
+}
+
+.bubble.gold.popped {
+  background: radial-gradient(circle at 50% 50%, #fef3c7 0%, #fcd34d 45%, #b45309 100%);
+}
+
+.bubble-pop-mark {
+  font-size: 24rpx;
+  font-weight: 700;
+  color: rgba(30, 41, 59, 0.7);
+}
+
+.bubble-action-btn {
+  min-height: 96rpx;
+  height: auto;
+  padding: 0 24rpx;
+  font-size: 26rpx;
+  line-height: 1.3;
+  white-space: nowrap;
+}

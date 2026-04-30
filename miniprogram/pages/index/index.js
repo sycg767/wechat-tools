@@ -23,7 +23,7 @@ const TOOL_DEFS = [
     tag: '推荐',
     category: '文档处理',
     order: 10,
-    size: 'wide',
+    size: 'small',
     svgPath: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8'
   },
   {
@@ -35,7 +35,7 @@ const TOOL_DEFS = [
     tag: '开发中',
     disabled: false,
     category: '文档处理',
-    order: 20,
+    order: 30,
     size: 'small',
     svgPath: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M8 13h8 M8 17h8 M10 9H8'
   },
@@ -47,7 +47,7 @@ const TOOL_DEFS = [
     iconClass: 'icon-word-pdf',
     tag: '新增',
     category: '文档处理',
-    order: 30,
+    order: 20,
     svgPath: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8'
   },
   {
@@ -91,7 +91,7 @@ const TOOL_DEFS = [
     iconClass: 'icon-pdf-watermark',
     tag: '新增',
     category: '文档处理',
-    order: 70,
+    order: 80,
     svgPath: 'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'
   },
   {
@@ -102,7 +102,7 @@ const TOOL_DEFS = [
     iconClass: 'icon-pdf-manage',
     tag: '实用',
     category: '文档处理',
-    order: 80,
+    order: 70,
     svgPath: 'M3 3h7v7H3z M14 3h7v7h-7z M3 14h7v7H3z M14 14h7v7h-7z'
   },
   {
@@ -126,7 +126,7 @@ const TOOL_DEFS = [
     tag: '新增',
     category: '图片处理',
     order: 20,
-    size: 'large'
+    size: 'small'
   },
   {
     id: 'qr-tool',
@@ -184,6 +184,72 @@ const TOOL_DEFS = [
     svgPath: 'M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z M6 1v3M10 1v3M14 1v3'
   },
   {
+    id: 'book-answer',
+    title: '答案之书',
+    desc: '人生翻翻看，给你一句方向',
+    path: '/pages/book-answer/index',
+    iconClass: 'icon-random',
+    tag: '热门',
+    category: '轻娱乐',
+    order: 2,
+    svgPath: 'M4 4h12a4 4 0 0 1 4 4v12H8a4 4 0 0 1-4-4V4zm4 4h8M8 12h8M8 16h5'
+  },
+  {
+    id: 'fish-wheel',
+    title: '摸鱼转盘',
+    desc: '打工人决策器，老板来了秒切',
+    path: '/pages/fish-wheel/index',
+    iconClass: 'icon-eat',
+    tag: '新增',
+    category: '轻娱乐',
+    order: 3,
+    svgPath: 'M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18zm0 0v9m0 0 5 3M12 12 7 9'
+  },
+  {
+    id: 'bubble-wrap',
+    title: '气泡膜解压器',
+    desc: '无限捏捏乐，彩蛋气泡等你戳',
+    path: '/pages/bubble-wrap/index',
+    iconClass: 'icon-image',
+    tag: '解压',
+    category: '轻娱乐',
+    order: 4,
+    svgPath: 'M6 6a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm6 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm6 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM6 14a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm6 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm6 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4'
+  },
+  {
+    id: 'wooden-fish',
+    title: '电子木鱼',
+    desc: '赛博功德，解压神器',
+    path: '/pages/wooden-fish/index',
+    iconClass: 'icon-wooden-fish',
+    tag: '热门',
+    category: '轻娱乐',
+    order: 5,
+    svgPath: 'M3 15c0-4.2 3.4-7.5 7.6-7.5h5.2c2.5 0 4.7 1.2 6.2 3.2-.8.5-1.4 1.4-1.4 2.3s.6 1.8 1.4 2.3c-1.5 2-3.7 3.2-6.2 3.2h-5.2C6.4 22.5 3 19.2 3 15zm6.4 0a1.6 1.6 0 1 0 0-3.2 1.6 1.6 0 0 0 0 3.2z M21 12v6 M19.5 13.5h3'
+  },
+  {
+    id: 'party-draw',
+    title: '谁是大冤种',
+    desc: '聚会多人抽签，2-8人同屏开抽',
+    path: '/pages/party-draw/index',
+    iconClass: 'icon-rename',
+    tag: '聚会',
+    category: '轻娱乐',
+    order: 6,
+    svgPath: 'M7 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm10 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM4 18c1.3-2.7 3.5-4 6-4h4c2.5 0 4.7 1.3 6 4'
+  },
+  {
+    id: 'cyber-fortune',
+    title: '赛博求签',
+    desc: '摇一摇今日签，宜摸鱼忌开会',
+    path: '/pages/cyber-fortune/index',
+    iconClass: 'icon-pdf-watermark',
+    tag: '每日',
+    category: '轻娱乐',
+    order: 7,
+    svgPath: 'M12 3 5 7v6c0 4.2 3 7.7 7 8 4-.3 7-3.8 7-8V7l-7-4zm0 5v6m-2-4h4'
+  },
+  {
     id: 'king-score',
     title: '王者计分',
     desc: '记录迟到、输赢与下播荣辱',
@@ -211,8 +277,10 @@ Page({
     toolSections: [],
     favorites: [],
     recents: [],
-    viewMode: 'categories', // 'categories' or 'sub'
+    viewMode: 'categories', // 'categories', 'sub', or 'search'
     currentCategory: null,
+    searchQuery: '',
+    searchResults: [],
     categoryDefs: [
       { id: '游戏工具', title: '游戏工具', desc: '王者计分与娱乐辅助', iconClass: 'icon-eat', size: 'wide', theme: 'theme-yellow', svgPath: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z' },
       { id: '文档处理', title: '文档处理', desc: 'PDF、Word、Excel 转换', iconClass: 'icon-pdf-word', size: 'wide', theme: 'theme-rose', svgPath: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8' },
@@ -401,9 +469,53 @@ Page({
   goBackToCategories() {
     this.setData({
       viewMode: 'categories',
-      currentCategory: null
+      currentCategory: null,
+      searchQuery: '',
+      searchResults: []
     })
     wx.setNavigationBarTitle({ title: '工具箱' })
+  },
+
+  onSearchFocus() {
+    if (this.data.viewMode !== 'search') {
+      this.setData({
+        viewMode: 'search',
+        searchResults: []
+      })
+    }
+  },
+
+  onSearchInput(e) {
+    const query = e.detail.value.trim().toLowerCase()
+    this.setData({ searchQuery: query })
+
+    if (!query) {
+      this.setData({ searchResults: [] })
+      return
+    }
+
+    const results = this.data.tools.filter(tool =>
+      tool.title.toLowerCase().includes(query) ||
+      tool.desc.toLowerCase().includes(query) ||
+      tool.category.toLowerCase().includes(query)
+    ).map(tool => {
+      const svgPath = tool.svgPath || 'M12 2v20M2 12h20'
+      const maskImage = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="${svgPath}"></path></svg>')`
+      return { ...tool, maskImage }
+    })
+
+    this.setData({ searchResults: results })
+  },
+
+  onClearSearch() {
+    this.setData({
+      searchQuery: '',
+      searchResults: []
+    })
+  },
+
+  onCancelSearch() {
+    this.goBackToCategories()
   },
 
   onUnload() {

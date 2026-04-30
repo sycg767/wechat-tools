@@ -56,7 +56,7 @@ storage:
 file:
   cleanup:
     enabled: true
-    max-age-hours: 24
+    max-age-hours: 720
 
 baidu:
   # 百度文字识别服务 (用于战绩截图识别、PDF提取文字等)

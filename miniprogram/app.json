@@ -22,7 +22,13 @@
     "pages/pdf-manage/index",
     "pages/king-score/index",
     "pages/king-score-player/index",
-    "pages/king-score-overview/index"
+    "pages/king-score-overview/index",
+    "pages/wooden-fish/index",
+    "pages/book-answer/index",
+    "pages/fish-wheel/index",
+    "pages/bubble-wrap/index",
+    "pages/party-draw/index",
+    "pages/cyber-fortune/index"
   ],
   "window": {
     "navigationBarTitleText": "实用工具箱",

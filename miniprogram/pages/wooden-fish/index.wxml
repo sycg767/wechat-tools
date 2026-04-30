@@ -1,0 +1,60 @@
+<view class="container">
+  <!-- 右上角设置入口：移除底部常驻栏，优化沉浸感 -->
+  <view class="settings-trigger" bindtap="toggleSettings">
+    <view class="settings-icon"></view>
+  </view>
+
+  <!-- 顶部状态栏：支持自定义计数名称 -->
+  <view class="header">
+    <text class="total-count-label">{{countLabel}}</text>
+    <text class="total-count-value">{{totalCount}}</text>
+  </view>
+
+  <!-- 核心交互区 -->
+  <view
+    class="fish-container"
+    bindtouchstart="onTouchStart"
+    bindtouchend="onTouchEnd"
+    bindtouchcancel="onTouchEnd"
+  >
+    <!-- 飘字容器 -->
+    <view class="floating-texts">
+      <block wx:for="{{floatingTexts}}" wx:key="id">
+        <text
+          class="floating-text"
+          style="left: {{item.x}}px; top: {{item.y}}px;"
+        >{{item.text}}</text>
+      </block>
+    </view>
+
+    <!-- 木鱼主体：使用 CSS + SVG DataURI 确保 100% 加载成功 -->
+    <view class="wooden-fish-wrapper {{isHitting ? 'hitting' : ''}}">
+      <view class="wooden-fish-body"></view>
+    </view>
+
+    <!-- 木槌元素 -->
+    <view class="mallet-wrapper {{isHitting ? 'mallet-hitting' : ''}}">
+      <view class="mallet-head"></view>
+      <view class="mallet-handle"></view>
+    </view>
+  </view>
+
+  <!-- 完善后的设置弹窗 -->
+  <view class="modal" wx:if="{{showSettings}}">
+    <view class="modal-content">
+      <view class="modal-title">个性化设置</view>
+      
+      <view class="input-group">
+        <text class="input-label">计数名称</text>
+        <input class="modal-input" value="{{countLabel}}" data-key="countLabel" bindinput="onInputUpdate" maxlength="6" placeholder="如：累计功德" />
+      </view>
+
+      <view class="input-group">
+        <text class="input-label">飘字文案</text>
+        <input class="modal-input" value="{{customText}}" data-key="customText" bindinput="onInputUpdate" maxlength="10" placeholder="如：功德 +1" />
+      </view>
+
+      <button class="modal-btn" bindtap="toggleSettings">完成</button>
+    </view>
+  </view>
+</view>

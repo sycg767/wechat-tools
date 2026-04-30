@@ -1,0 +1,269 @@
+.container {
+  height: 100vh;
+  /* 切换为明亮禅意风格：温暖的米白色/宣纸色背景 */
+  background-color: #fdfaf5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  color: #3e2723;
+  overflow: hidden;
+}
+
+.settings-trigger {
+  position: absolute;
+  top: 60rpx;
+  right: 40rpx;
+  width: 80rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.settings-icon {
+  width: 40rpx;
+  height: 40rpx;
+  border: 4rpx solid #a1887f;
+  border-radius: 50%;
+  position: relative;
+}
+
+.settings-icon::after {
+  content: "";
+  position: absolute;
+  width: 10rpx;
+  height: 10rpx;
+  background: #a1887f;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.header {
+  margin-top: 160rpx;
+  text-align: center;
+}
+
+.total-count-label {
+  font-size: 32rpx;
+  color: #a1887f;
+  letter-spacing: 2rpx;
+}
+
+.total-count-value {
+  font-size: 100rpx;
+  font-weight: 500;
+  margin-top: 20rpx;
+  display: block;
+  color: #5d4037;
+}
+
+.fish-container {
+  position: relative;
+  width: 100%;
+  height: 600rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wooden-fish-wrapper {
+  width: 440rpx;
+  height: 440rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.05s ease-out;
+}
+
+/* 木鱼主体：传统木质色调 + 3D 质感 */
+.wooden-fish-body {
+  width: 340rpx;
+  height: 280rpx;
+  /* 传统木色渐变 */
+  background: linear-gradient(145deg, #5d4037, #3e2723);
+  border-radius: 170rpx 170rpx 130rpx 130rpx;
+  position: relative;
+  /* 阴影营造物理厚度感 */
+  box-shadow:
+    inset -10rpx -10rpx 20rpx rgba(0,0,0,0.6),
+    inset 10rpx 10rpx 20rpx rgba(255,255,255,0.1),
+    0 20rpx 40rpx rgba(0,0,0,0.4);
+}
+
+/* 顶部自然高光 */
+.wooden-fish-body::before {
+  content: "";
+  position: absolute;
+  top: 20rpx;
+  left: 60rpx;
+  width: 220rpx;
+  height: 80rpx;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.1) 0%, transparent 80%);
+  border-radius: 50%;
+}
+
+/* 底部传统装饰线条 */
+.wooden-fish-body::after {
+  content: "";
+  position: absolute;
+  width: 240rpx;
+  height: 16rpx;
+  background: rgba(0, 0, 0, 0.3);
+  bottom: 70rpx;
+  left: 50rpx;
+  border-radius: 8rpx;
+}
+
+/* 交互反馈：点击缩放 */
+.hitting {
+  transform: scale(0.92);
+}
+
+/* 木槌样式 */
+.mallet-wrapper {
+  position: absolute;
+  right: 150rpx;
+  top: 180rpx;
+  width: 120rpx;
+  height: 200rpx;
+  pointer-events: none;
+  /* 设置旋转中心为手柄底部 */
+  transform-origin: bottom center;
+  transform: rotate(30deg);
+  z-index: 10;
+  transition: transform 0.1s ease-out;
+}
+
+.mallet-head {
+  width: 60rpx;
+  height: 80rpx;
+  background: linear-gradient(145deg, #8d6e63, #5d4037);
+  border-radius: 30rpx;
+  position: absolute;
+  top: 0;
+  left: 30rpx;
+  box-shadow: 2rpx 4rpx 10rpx rgba(0,0,0,0.3);
+}
+
+.mallet-handle {
+  width: 12rpx;
+  height: 140rpx;
+  background: #a1887f;
+  position: absolute;
+  bottom: 0;
+  left: 54rpx;
+  border-radius: 6rpx;
+}
+
+/* 木槌击打动画 */
+.mallet-hitting {
+  animation: malletSwing 0.1s ease-out;
+}
+
+@keyframes malletSwing {
+  0% {
+    transform: rotate(30deg);
+  }
+  50% {
+    transform: rotate(-10deg);
+  }
+  100% {
+    transform: rotate(30deg);
+  }
+}
+
+.floating-texts {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.floating-text {
+  position: absolute;
+  font-size: 40rpx;
+  color: #5d4037;
+  font-weight: 500;
+  animation: floatUp 0.8s ease-out forwards;
+  white-space: nowrap;
+}
+
+/* 飘字动画：向上移动并淡出 */
+@keyframes floatUp {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-180rpx);
+    opacity: 0;
+  }
+}
+
+/* 弹窗样式：明亮禅意 */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal-content {
+  background: #ffffff;
+  width: 80%;
+  padding: 50rpx 40rpx;
+  border-radius: 30rpx;
+  text-align: center;
+  box-shadow: 0 20rpx 60rpx rgba(0, 0, 0, 0.1);
+}
+
+.modal-title {
+  font-size: 36rpx;
+  margin-bottom: 40rpx;
+  color: #3e2723;
+  font-weight: bold;
+}
+
+.input-group {
+  margin-bottom: 30rpx;
+  text-align: left;
+}
+
+.input-label {
+  font-size: 24rpx;
+  color: #a1887f;
+  margin-bottom: 10rpx;
+  display: block;
+  padding-left: 10rpx;
+}
+
+.modal-input {
+  background: #f5f5f5;
+  height: 90rpx;
+  border-radius: 15rpx;
+  padding: 0 30rpx;
+  text-align: left;
+  color: #3e2723;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.modal-btn {
+  background: #5d4037;
+  color: #ffffff;
+  border-radius: 45rpx;
+  font-weight: 500;
+}

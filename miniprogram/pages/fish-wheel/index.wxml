@@ -1,0 +1,50 @@
+<view class="container fish-page">
+  <view class="page-header">
+    <view class="page-title">摸鱼转盘</view>
+    <view class="page-desc">遇事不决，转盘决定；老板来了，秒切伪装。</view>
+  </view>
+
+  <view class="card mode-switch">
+    <button class="btn {{mode === 'normal' ? 'btn-primary' : 'btn-secondary'}}" bindtap="setNormalMode" hover-class="btn-hover">转盘模式</button>
+    <button class="btn mt-20 {{mode === 'boss' ? 'btn-primary' : 'btn-secondary'}}" bindtap="setBossMode" hover-class="btn-hover">老板来了</button>
+  </view>
+
+  <view wx:if="{{mode === 'normal'}}">
+    <view class="card wheel-card">
+      <canvas type="2d" id="wheelCanvas" class="wheel-canvas" bindtap="startSpin"></canvas>
+    </view>
+
+    <view class="card" wx:if="{{result}}">
+      <view class="result-text">今日决策：<text class="highlight">{{result}}</text></view>
+    </view>
+
+    <view class="card">
+      <view class="section-title">自定义选项</view>
+      <view class="option-list">
+        <view class="option-item" wx:for="{{options}}" wx:key="index">
+          <text>{{item}}</text>
+          <view class="delete-btn" bindtap="removeOption" data-index="{{index}}">×</view>
+        </view>
+      </view>
+      <view class="add-option">
+        <input class="input" placeholder="添加选项" value="{{inputValue}}" bindinput="onInput" />
+        <button class="btn btn-primary add-btn" bindtap="addOption" hover-class="btn-hover">添加</button>
+      </view>
+      <button class="btn btn-secondary mt-20" bindtap="resetOptions" hover-class="btn-hover">恢复默认</button>
+    </view>
+  </view>
+
+  <view wx:if="{{mode === 'boss'}}" class="card boss-card">
+    <view class="boss-title">工作日报模板</view>
+    <view class="boss-row">今日完成：
+      <text class="boss-text">需求梳理、接口联调、问题复盘。</text>
+    </view>
+    <view class="boss-row">明日计划：
+      <text class="boss-text">优化性能、补充测试、推进上线。</text>
+    </view>
+    <view class="boss-row">风险点：
+      <text class="boss-text">依赖接口返回波动，已准备降级方案。</text>
+    </view>
+    <view class="boss-tip">（点击上方“转盘模式”恢复摸鱼界面）</view>
+  </view>
+</view>

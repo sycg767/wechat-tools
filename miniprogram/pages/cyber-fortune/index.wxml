@@ -1,0 +1,75 @@
+<view class="container cyber-fortune-page">
+  <!-- 背景粒子效果 -->
+  <view class="bg-particles">
+    <view wx:for="{{20}}" wx:key="index" class="particle" style="left: {{item * 5}}%; animation-delay: {{item * 0.5}}s;"></view>
+  </view>
+
+  <!-- 顶部标题 -->
+  <view class="cyber-header">
+    <view class="glitch-title" data-text="赛博求签">赛博求签</view>
+  </view>
+
+  <!-- 主交互区域 -->
+  <view class="main-scene" bindtap="onDrawFortune">
+    <!-- 签筒容器 -->
+    <view class="cylinder-container {{isShaking ? 'shaking' : ''}} {{showStick ? 'stick-out' : ''}}">
+      <view class="cylinder">
+        <view class="cylinder-body">
+          <view class="neon-ring top"></view>
+          <view class="neon-ring bottom"></view>
+          <view class="cylinder-text">签</view>
+        </view>
+      </view>
+      
+      <!-- 签位 -->
+      <view class="fortune-stick {{showStick ? 'emerge' : ''}} {{stickFloating ? 'floating' : ''}}">
+        <view class="stick-content">
+          <view class="stick-glow"></view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 提示文字 -->
+    <view class="interaction-hint {{showStick ? 'hidden' : ''}}">
+      <text class="hint-text">{{shakeTip}}</text>
+      <view class="scan-line"></view>
+    </view>
+  </view>
+
+  <!-- 卷轴展示区域 -->
+  <view class="scroll-overlay {{showScroll ? 'visible' : ''}}" wx:if="{{currentFortune.text}}">
+    <view class="digital-scroll {{scrollUnfolding ? 'unfolding' : ''}}">
+      <view class="scroll-header">
+        <view class="scroll-title-glitch">{{currentFortune.title}}</view>
+        <view class="scroll-id">ID: {{currentFortune.id}}</view>
+      </view>
+      
+      <view class="scroll-body">
+        <view class="fortune-content-wrapper">
+          <view class="fortune-main-text monospace">{{currentFortune.text}}</view>
+          <view class="fortune-details">
+            <view class="detail-item good">
+              <text class="label">宜</text>
+              <text class="val">{{currentFortune.good}}</text>
+            </view>
+            <view class="detail-item bad">
+              <text class="label">忌</text>
+              <text class="val">{{currentFortune.bad}}</text>
+            </view>
+          </view>
+        </view>
+        <view class="light-streak"></view>
+      </view>
+
+      <view class="scroll-footer" bindtap="closeScroll">
+        <text>点击关闭系统</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 装饰性UI元素 -->
+  <view class="cyber-decor top-left"></view>
+  <view class="cyber-decor top-right"></view>
+  <view class="cyber-decor bottom-left"></view>
+  <view class="cyber-decor bottom-right"></view>
+</view>
