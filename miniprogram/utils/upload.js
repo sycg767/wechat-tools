@@ -1,8 +1,20 @@
 const app = getApp()
 
-function upload(url, filePath, formData = {}) {
+function upload(url, filePath, formData = {}, options = {}) {
   return new Promise((resolve, reject) => {
-    wx.uploadFile({
+    let responsePendingNotified = false
+
+    const notifyResponsePending = () => {
+      if (responsePendingNotified) {
+        return
+      }
+      responsePendingNotified = true
+      if (typeof options.onResponsePending === 'function') {
+        options.onResponsePending()
+      }
+    }
+
+    const uploadTask = wx.uploadFile({
       url: `${app.globalData.baseUrl}${url}`,
       filePath,
       name: 'file',
@@ -17,6 +29,17 @@ function upload(url, filePath, formData = {}) {
       },
       fail: (error) => reject(new Error(error.errMsg || '上传失败'))
     })
+
+    if (uploadTask && typeof uploadTask.onProgressUpdate === 'function') {
+      uploadTask.onProgressUpdate((progress) => {
+        if (typeof options.onProgress === 'function') {
+          options.onProgress(progress)
+        }
+        if (progress && progress.progress >= 100) {
+          notifyResponsePending()
+        }
+      })
+    }
   })
 }
 

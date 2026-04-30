@@ -40,12 +40,19 @@ Page({
     }
 
     try {
-      wx.showLoading({ title: '提交中' })
+      wx.showLoading({ title: '上传中 0%' })
       const apiUrl = isCsvToExcel ? '/tool/csv-to-excel' : '/tool/excel-to-csv'
       const result = await upload(apiUrl, selectedFile.path, {
         originalFileName: selectedFile.name
+      }, {
+        onProgress: ({ progress }) => {
+          wx.showLoading({ title: `上传中 ${progress}%` })
+        },
+        onResponsePending: () => {
+          wx.showLoading({ title: '等待响应' })
+        }
       })
-      wx.hideLoading()
+      wx.showLoading({ title: '提交任务中' })
 
       taskStore.upsertTask({
         taskId: result.data,

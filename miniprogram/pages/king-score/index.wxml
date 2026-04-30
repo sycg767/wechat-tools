@@ -41,7 +41,8 @@
   <view wx:if="{{ocrProcessing || ocrRawText}}" class="ocr-status-bar {{ocrProcessing ? 'processing' : ''}}">
     <view class="ocr-info">
       <text class="ocr-text-main">{{ocrProcessing ? ocrStatusText : '最近一次识别已完成'}}</text>
-      <text class="ocr-text-sub" wx:if="{{ocrProcessing}}">进度 {{ocrProgress}}%</text>
+      <text class="ocr-text-sub" wx:if="{{ocrProcessing && ocrStage === 'uploading'}}">进度 {{ocrProgress}}%</text>
+      <text class="ocr-text-sub" wx:elif="{{ocrProcessing && ocrStage === 'processing'}}">请稍候，正在识别截图内容</text>
       <text class="ocr-text-sub" wx:else>{{matchResult ? '本局结果：' + matchResult : ''}}{{matchTime ? (matchResult ? ' · ' : '') + matchTime : ''}}</text>
     </view>
     <view class="ocr-close" bindtap="clearOcr" wx:if="{{!ocrProcessing}}">×</view>

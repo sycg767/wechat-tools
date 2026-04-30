@@ -114,15 +114,26 @@ Page({
 
     this.setData({
       processing: true,
-      progress: 10,
-      statusText: '正在上传图片...',
+      progress: 0,
+      statusText: '正在上传图片 0%',
       resultUrl: '',
       decodedText: ''
     });
 
     try {
-      const uploadRes = await upload.uploadFile('/tool/qr-decode', this.data.tempFilePath, 'file');
-      const res = JSON.parse(uploadRes.data);
+      const res = await upload('/tool/qr-decode', this.data.tempFilePath, {}, {
+        onProgress: ({ progress }) => {
+          this.setData({
+            progress,
+            statusText: `正在上传图片 ${progress}%`
+          });
+        },
+        onResponsePending: () => {
+          this.setData({
+            statusText: '图片处理中'
+          });
+        }
+      });
 
       if (res.code === 200) {
         this.pollTaskStatus(res.data);

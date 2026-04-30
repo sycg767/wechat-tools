@@ -7,6 +7,7 @@ function request(options) {
       method: options.method || 'GET',
       data: options.data,
       header: options.header || {},
+      timeout: options.timeout,
       success: (res) => {
         if (res.statusCode >= 200 && res.statusCode < 300 && res.data.code === 200) {
           resolve(res.data)
@@ -17,9 +18,9 @@ function request(options) {
       fail: (error) => {
         let msg = error.errMsg || '请求失败'
         if (msg.includes('timeout')) {
-          msg = '连接超时，请检查后端服务是否启动或 IP 配置是否正确'
+          msg = '连接超时，请检查后端服务或域名配置是否正确'
         } else if (msg.includes('fail')) {
-          msg = '网络连接失败，请确保手机与电脑在同一局域网'
+          msg = '网络连接失败，请确认当前网络和服务域名可正常访问'
         }
         reject(new Error(msg))
       }
@@ -29,10 +30,10 @@ function request(options) {
 
 module.exports = {
   request,
-  get(url, data) {
-    return request({ url, data, method: 'GET' })
+  get(url, data, options = {}) {
+    return request({ url, data, method: 'GET', ...options })
   },
-  post(url, data, header) {
-    return request({ url, data, method: 'POST', header })
+  post(url, data, header, options = {}) {
+    return request({ url, data, method: 'POST', header, ...options })
   }
 }

@@ -1,8 +1,24 @@
 # Docker 部署
 
-## 1. 准备环境变量
+## 1. 准备目录
 
-在项目根目录复制模板：
+服务器上只需要上传 `backend` 目录即可。
+
+如果你要使用 PDF 页面管理功能，需要先把 Linux 版 `pdfcpu` 放到：
+
+```bash
+backend/tools/pdfcpu/pdfcpu
+```
+
+并确保它有可执行权限：
+
+```bash
+chmod +x backend/tools/pdfcpu/pdfcpu
+```
+
+注意：当前仓库里原有的是 Windows 版 `pdfcpu.exe`，不能直接用于 Linux 服务器。
+
+进入 `backend` 目录后执行：
 
 ```bash
 cp .env.example .env
@@ -12,7 +28,7 @@ cp .env.example .env
 
 ## 2. 启动服务
 
-在项目根目录执行：
+在 `backend` 目录执行：
 
 ```bash
 docker compose up -d --build
@@ -59,8 +75,8 @@ Compose 已持久化以下数据：
 
 ## 5. 说明
 
-- 微信小程序 `miniprogram` 不需要部署到服务器。
-- 服务器只部署后端和数据库。
+- 微信小程序 `miniprogram` 不需要上传到服务器。
+- 服务器只部署 `backend` 目录。
 - OCR 本地能力依赖镜像内的 `tesseract`。
-- PDF 页面管理能力依赖镜像内的 `pdfcpu`。
+- PDF 页面管理能力依赖你放在 `backend/tools/pdfcpu/pdfcpu` 的 Linux 版 `pdfcpu`。
 - 生产环境建议把域名反代到后端 `8080` 端口，并为小程序配置合法请求域名。

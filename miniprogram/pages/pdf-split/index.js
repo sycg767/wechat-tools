@@ -28,12 +28,19 @@ Page({
     }
 
     try {
-      wx.showLoading({ title: '提交中' })
+      wx.showLoading({ title: '上传中 0%' })
       const result = await upload('/tool/pdf-split', selectedFile.path, {
         originalFileName: selectedFile.name,
         range: range
+      }, {
+        onProgress: ({ progress }) => {
+          wx.showLoading({ title: `上传中 ${progress}%` })
+        },
+        onResponsePending: () => {
+          wx.showLoading({ title: '等待响应' })
+        }
       })
-      wx.hideLoading()
+      wx.showLoading({ title: '提交任务中' })
 
       this.setData({ taskId: result.data })
 

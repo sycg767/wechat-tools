@@ -107,15 +107,14 @@ Page({
     }
 
     try {
-      wx.showLoading({ title: '上传文件中' })
-      
+      wx.showLoading({ title: '上传中 (1/' + selectedFiles.length + ') 0%' })
+
       const fileIds = []
       for (let i = 0; i < selectedFiles.length; i++) {
-        wx.showLoading({ title: `上传中 (${i + 1}/${selectedFiles.length})` })
-        const res = await this.uploadOneFile(selectedFiles[i])
+        const res = await this.uploadOneFile(selectedFiles[i], i, selectedFiles.length)
         fileIds.push(res.data.fileId)
       }
-      
+
       wx.showLoading({ title: '提交合并任务' })
       const sourceFileName = this.data.fileName || (selectedFiles.length > 0 ? `${selectedFiles[0].name}等${selectedFiles.length}个文件` : '合并文档')
       const result = await request.post('/tool/pdf-merge-by-ids', {
@@ -144,9 +143,9 @@ Page({
     }
   },
   
-  uploadOneFile(file) {
+  uploadOneFile(file, index, total) {
     return new Promise((resolve, reject) => {
-      wx.uploadFile({
+      const uploadTask = wx.uploadFile({
         url: getApp().globalData.baseUrl + '/file/upload',
         filePath: file.path,
         name: 'file',
@@ -164,6 +163,15 @@ Page({
         },
         fail: reject
       })
+
+      if (uploadTask && typeof uploadTask.onProgressUpdate === 'function') {
+        uploadTask.onProgressUpdate(({ progress }) => {
+          wx.showLoading({ title: `上传中 (${index + 1}/${total}) ${progress}%` })
+          if (progress >= 100) {
+            wx.showLoading({ title: `第${index + 1}个处理中` })
+          }
+        })
+      }
     })
   }
 })

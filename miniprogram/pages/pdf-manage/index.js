@@ -50,11 +50,18 @@ Page({
     if (!this.data.tempFilePath) return;
 
     this.setData({ previewLoading: true });
-    wx.showLoading({ title: '生成预览中' });
+    wx.showLoading({ title: '上传预览文件 0%' });
 
     try {
       const res = await upload('/tool/pdf-page-manage-preview', this.data.tempFilePath, {
         originalFileName: this.data.originalFileName
+      }, {
+        onProgress: ({ progress }) => {
+          wx.showLoading({ title: `上传预览文件 ${progress}%` });
+        },
+        onResponsePending: () => {
+          wx.showLoading({ title: '预览处理中' });
+        }
       });
 
       const pages = (res.data?.pages || []).map((item) => ({
@@ -142,8 +149,8 @@ Page({
 
     this.setData({
       processing: true,
-      progress: 10,
-      statusText: '正在提交任务...',
+      progress: 0,
+      statusText: '正在上传文件 0%',
       resultUrl: ''
     });
 
@@ -151,6 +158,18 @@ Page({
       const res = await upload('/tool/pdf-page-manage', this.data.tempFilePath, {
         originalFileName: this.data.originalFileName,
         pagesJson
+      }, {
+        onProgress: ({ progress }) => {
+          this.setData({
+            progress,
+            statusText: `正在上传文件 ${progress}%`
+          });
+        },
+        onResponsePending: () => {
+          this.setData({
+            statusText: '处理中'
+          });
+        }
       });
 
       const taskId = res.data;

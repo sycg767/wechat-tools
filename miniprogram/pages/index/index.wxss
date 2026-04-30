@@ -243,18 +243,6 @@
   -webkit-line-clamp: 1;
 }
 
-/* 右侧小箭头修饰 */
-.bento-item.wide::after {
-  content: "↗";
-  position: absolute;
-  right: 32rpx;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 32rpx;
-  color: #D1D5DB;
-  font-weight: 300;
-}
-
 .bento-item.large {
   grid-column: span 2;
   grid-row: span 2;

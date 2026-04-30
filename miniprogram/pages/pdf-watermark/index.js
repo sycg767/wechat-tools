@@ -39,8 +39,15 @@ Page({
     if (!selectedFile) return
 
     try {
-      wx.showLoading({ title: '生成预览...' })
-      const res = await upload('/tool/pdf-preview', selectedFile.path)
+      wx.showLoading({ title: '上传预览文件 0%' })
+      const res = await upload('/tool/pdf-preview', selectedFile.path, {}, {
+        onProgress: ({ progress }) => {
+          wx.showLoading({ title: `上传预览文件 ${progress}%` })
+        },
+        onResponsePending: () => {
+          wx.showLoading({ title: '预览处理中' })
+        }
+      })
       this.setData({
         previewUrl: res.data.preview,
         pdfWidth: res.data.width,
@@ -160,8 +167,8 @@ Page({
     }
 
     try {
-      wx.showLoading({ title: '处理中...' })
-      
+      wx.showLoading({ title: '上传中 0%' })
+
       let endpoint = '/tool/pdf-add-watermark'
       let result;
 
@@ -182,10 +189,17 @@ Page({
       if (type === 'image') {
         result = await this.uploadWithImage(endpoint, selectedFile.path, imagePath, formData)
       } else {
-        result = await upload(endpoint, selectedFile.path, formData)
+        result = await upload(endpoint, selectedFile.path, formData, {
+          onProgress: ({ progress }) => {
+            wx.showLoading({ title: `上传中 ${progress}%` })
+          },
+          onResponsePending: () => {
+            wx.showLoading({ title: '处理中' })
+          }
+        })
       }
-      
-      wx.hideLoading()
+
+      wx.showLoading({ title: '提交任务中' })
 
       taskStore.upsertTask({
         taskId: result.data,
@@ -209,7 +223,7 @@ Page({
 
   uploadWithImage(endpoint, filePath, imagePath, formData) {
     return new Promise((resolve, reject) => {
-      wx.uploadFile({
+      const imageUploadTask = wx.uploadFile({
         url: getApp().globalData.baseUrl + '/file/upload',
         filePath: imagePath,
         name: 'file',
@@ -217,9 +231,17 @@ Page({
           const data = JSON.parse(res.data)
           if (data.code === 200) {
             try {
+              wx.showLoading({ title: '上传主文件 0%' })
               const taskRes = await upload(endpoint, filePath, {
                 ...formData,
                 imageFileId: data.data.fileId
+              }, {
+                onProgress: ({ progress }) => {
+                  wx.showLoading({ title: `上传主文件 ${progress}%` })
+                },
+                onResponsePending: () => {
+                  wx.showLoading({ title: '主文件处理中' })
+                }
               })
               resolve(taskRes)
             } catch (e) {
@@ -231,6 +253,12 @@ Page({
         },
         fail: reject
       })
+
+      if (imageUploadTask && typeof imageUploadTask.onProgressUpdate === 'function') {
+        imageUploadTask.onProgressUpdate(({ progress }) => {
+          wx.showLoading({ title: `上传水印图 ${progress}%` })
+        })
+      }
     })
   }
 })

@@ -640,6 +640,7 @@ Page({
     currentMonth: new Date().getMonth(),
     currentYear: new Date().getFullYear(),
     ocrProcessing: false,
+    ocrStage: '',
     ocrProgress: 0,
     ocrStatusText: '',
     ocrRawText: '',
@@ -940,8 +941,9 @@ Page({
     const modeText = ocrMode === 'ai' ? 'AI 识别' : '百度 OCR';
     this.setData({
       ocrProcessing: true,
-      ocrProgress: 10,
-      ocrStatusText: `正在上传截图 (${modeText})...`,
+      ocrStage: 'uploading',
+      ocrProgress: 0,
+      ocrStatusText: `正在上传截图 (${modeText}) 0%`,
       ocrRawText: '',
       ocrMatchedCount: 0,
       records: (this.data.records || []).map(clearOcrFields),
@@ -957,30 +959,50 @@ Page({
         aiBaseUrl,
         aiModel,
         aiApiKey
+      }, {
+        onProgress: ({ progress }) => {
+          this.setData({
+            ocrStage: 'uploading',
+            ocrProgress: progress,
+            ocrStatusText: `正在上传截图 (${modeText}) ${progress}%`
+          })
+        },
+        onResponsePending: () => {
+          this.setData({
+            ocrStage: 'processing',
+            ocrStatusText: `识别中 (${modeText})`
+          })
+        }
       })
       if (res.code !== 200 || !res.data) {
         throw new Error(res.message || '任务创建失败')
       }
       this.pollOcrTaskStatus(res.data)
     } catch (err) {
-      this.setData({ ocrProcessing: false })
+      this.setData({ ocrProcessing: false, ocrStage: 'done' })
       wx.showToast({ title: err.message || '识别失败', icon: 'none' })
     }
   },
 
   async pollOcrTaskStatus(taskId) {
-    const timer = setInterval(async () => {
+    const settings = this.data.settings || store.getSettings()
+    const modeText = settings.ocrMode === 'ai' ? 'AI 识别' : '百度 OCR'
+
+    const poll = async () => {
       try {
-        const res = await request.get(`/file/status/${taskId}`)
-        if (res.code !== 200) return
+        const res = await request.get(`/file/status/${taskId}`, null, { timeout: 20000 })
+        if (res.code !== 200) {
+          setTimeout(poll, 1500)
+          return
+        }
         const status = res.data || {}
         if (status.status === 'SUCCESS') {
-          clearInterval(timer)
           const ocrRawText = status.extraData || ''
           const built = await buildPatchedRecords(this.data.records, ocrRawText)
           persistMatchedPlayerRecords(built.patched, built.meta)
           this.setData({
             ocrProcessing: false,
+            ocrStage: 'done',
             ocrProgress: 100,
             ocrStatusText: `${modeText}完成`,
             ocrRawText,
@@ -993,21 +1015,23 @@ Page({
           return
         }
         if (status.status === 'FAIL') {
-          clearInterval(timer)
-          this.setData({ ocrProcessing: false })
+          this.setData({ ocrProcessing: false, ocrStage: 'done' })
           wx.showModal({ title: '识别失败', content: status.message || '截图识别失败', showCancel: false })
           return
         }
         this.setData({
+          ocrStage: 'processing',
           ocrProgress: status.progress || 50,
-          ocrStatusText: status.status === 'PROCESSING' ? `正在进行${modeText}...` : '任务排队中...'
+          ocrStatusText: status.status === 'PROCESSING' ? `识别中 (${modeText})` : '任务排队中...'
         })
+        setTimeout(poll, 1500)
       } catch (err) {
-        clearInterval(timer)
-        this.setData({ ocrProcessing: false })
-        wx.showToast({ title: '网络异常', icon: 'none' })
+        this.setData({ ocrProcessing: false, ocrStage: 'done' })
+        wx.showToast({ title: err.message || '网络异常', icon: 'none' })
       }
-    }, 1500)
+    }
+
+    poll()
   },
 
   copyOcrText() {
@@ -1022,6 +1046,7 @@ Page({
 
   clearOcr() {
     this.setData({
+      ocrStage: '',
       ocrRawText: '',
       ocrMatchedCount: 0,
       matchResult: '',
