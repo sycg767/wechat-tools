@@ -584,10 +584,10 @@ Page({
     heroCanvasHeight: 220
   },
 
-  onLoad(options) {
+  async onLoad(options) {
     const memberId = options.memberId || ''
     const filterDate = options.date || ''
-    const members = store.getMembers()
+    const members = await store.getMembers()
     const member = members.find((item) => item.id === memberId) || null
     this.setData({
       memberId,

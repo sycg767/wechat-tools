@@ -1,3 +1,4 @@
+const taskStore = require('../../utils/task-store');
 const HISTORY_KEY = 'random_gen_history_v1';
 const MAX_HISTORY = 20;
 
@@ -549,6 +550,18 @@ Page({
     const next = [historyItem, ...(this.data.historyItems || [])].slice(0, MAX_HISTORY);
     this.setData({ historyItems: next });
     wx.setStorageSync(HISTORY_KEY, next);
+
+    // 同步到任务历史
+    taskStore.upsertTask({
+      taskId: 'rand_' + now,
+      toolType: 'random-gen',
+      sourceFileName: historyItem.typeLabel,
+      resultFileName: historyItem.resultText,
+      status: 'SUCCESS',
+      updatedAt: now,
+      createdAt: now,
+      message: historyItem.paramsText
+    });
   },
 
   reuseHistory(e) {

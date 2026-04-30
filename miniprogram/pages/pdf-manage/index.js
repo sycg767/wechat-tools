@@ -159,6 +159,7 @@ Page({
         toolType: 'pdf-page-manage',
         sourceFileName: this.data.originalFileName,
         createdAt: Date.now(),
+        updatedAt: Date.now(),
         status: 'PROCESSING',
         resultUrl: '',
         resultFileName: ''

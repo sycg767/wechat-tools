@@ -185,7 +185,7 @@ const TOOL_DEFS = [
   },
   {
     id: 'king-score',
-    title: '王者记分',
+    title: '王者计分',
     desc: '记录迟到、输赢与下播荣辱',
     path: '/pages/king-score/index',
     iconClass: 'icon-eat',
@@ -214,10 +214,11 @@ Page({
     viewMode: 'categories', // 'categories' or 'sub'
     currentCategory: null,
     categoryDefs: [
-      { id: '游戏工具', title: '游戏工具', desc: '王者记分与娱乐辅助', iconClass: 'icon-eat', size: 'wide', theme: 'theme-yellow', svgPath: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z' },
+      { id: '游戏工具', title: '游戏工具', desc: '王者计分与娱乐辅助', iconClass: 'icon-eat', size: 'wide', theme: 'theme-yellow', svgPath: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z' },
       { id: '文档处理', title: '文档处理', desc: 'PDF、Word、Excel 转换', iconClass: 'icon-pdf-word', size: 'wide', theme: 'theme-rose', svgPath: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8' },
       { id: '图片处理', title: '图片处理', desc: '压缩、证件照、背景切换', iconClass: 'icon-id-photo', size: 'small', theme: 'theme-blue', svgPath: 'M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h18a2 2 0 0 1 2 2z M8.5 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z M21 15l-5-5L5 21' },
-      { id: '效率工具', title: '效率工具', desc: '重命名、二维码、签名', iconClass: 'icon-rename', size: 'small', theme: 'theme-emerald', svgPath: 'M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z' }
+      { id: '效率工具', title: '效率工具', desc: '重命名、二维码、签名', iconClass: 'icon-rename', size: 'small', theme: 'theme-emerald', svgPath: 'M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z' },
+      { id: '轻娱乐', title: '轻娱乐', desc: '吃什么', iconClass: 'icon-eat', size: 'small', theme: 'theme-purple', svgPath: 'M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z M6 1v3M10 1v3M14 1v3' }
     ]
   },
 

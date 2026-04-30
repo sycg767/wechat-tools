@@ -8,25 +8,35 @@
 
 .detail-row {
   display: flex;
-  flex-direction: column;
-  gap: 8rpx;
-  margin-bottom: 20rpx;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 24rpx 0;
+  border-bottom: 1px solid rgba(17, 24, 39, 0.04);
   word-break: break-all;
 }
 
 .detail-row:last-child {
-  margin-bottom: 0;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.detail-row:first-child {
+  padding-top: 0;
 }
 
 .detail-label {
-  font-size: 22rpx;
+  font-size: 26rpx;
   color: var(--text-second);
+  flex-shrink: 0;
+  margin-right: 32rpx;
 }
 
 .detail-value {
-  font-size: 28rpx;
-  line-height: 1.65;
+  font-size: 26rpx;
+  line-height: 1.5;
   color: var(--text-main);
+  text-align: right;
+  font-weight: 500;
 }
 
 .processing-tip {

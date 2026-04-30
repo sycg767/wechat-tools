@@ -1,6 +1,7 @@
 const request = require('../../utils/request')
 const { openFile, canOpenFile, isImageFile, saveImageToAlbum } = require('../../utils/open-file')
 const taskStore = require('../../utils/task-store')
+const { formatRelativeTime } = require('../../utils/time')
 
 Page({
   data: {
@@ -43,12 +44,41 @@ Page({
     const qualityGateText = task.qualityGate
       ? `通过:${task.qualityGate.passed ? '是' : '否'} 变化:${task.qualityGate.changeRatio || 0}%`
       : ''
+    
+    const statusMap = {
+      'PROCESSING': '处理中',
+      'SUCCESS': '已完成',
+      'FAIL': '处理失败'
+    }
+
+    const toolMap = {
+      'pdf-merge': 'PDF 合并',
+      'pdf-split': 'PDF 拆分',
+      'pdf-word': 'PDF 转 Word',
+      'word-pdf': 'Word 转 PDF',
+      'pdf-excel': 'PDF 转 Excel',
+      'pdf-watermark': 'PDF 水印',
+      'compress-image': '图片压缩',
+      'id-photo-bg': '证件照换底',
+      'csv-excel': 'CSV/Excel 转换',
+      'rename': '批量重命名',
+      'eat-what': '吃什么',
+      'random-gen': '随机生成',
+      'qr-generate': '二维码生成',
+      'qr-decode': '二维码识别',
+      'king-score-ocr': '战绩识别',
+      'pdf-page-manage': 'PDF 页面管理'
+    }
+
     return {
       ...task,
+      statusText: statusMap[task.status] || task.status,
+      toolTypeText: toolMap[task.toolType] || task.toolType || '未知工具',
       canOpen: canOpenFile(task.resultFileName || ''),
       isImage: isImageFile(task.resultFileName || ''),
       strategyTraceText,
-      qualityGateText
+      qualityGateText,
+      updatedAtText: formatRelativeTime(task.updatedAt)
     }
   },
 
@@ -56,8 +86,9 @@ Page({
     this.clearPolling()
     try {
       const res = await request.get(`/file/status/${this.taskId}`)
+      // 确保后端返回的 sourceFileName 能够覆盖本地可能不准确的缓存
       const task = this.decorateTask(res.data)
-      taskStore.upsertTask(task)
+      taskStore.upsertTask(res.data)
       this.setData({ task, loading: false })
 
       if (task.status === 'PROCESSING') {

@@ -2,7 +2,7 @@
   <!-- 顶部状态栏 -->
   <view class="header">
     <view class="header-content">
-      <view class="header-title">王者评分</view>
+      <view class="header-title">王者计分</view>
       <view class="header-subtitle">点击卡片扣分 · 每日自动重置</view>
     </view>
     <view class="header-actions">
@@ -202,10 +202,10 @@
       <view class="modal-header">识别设置</view>
       <view class="modal-body">
         <view class="mode-selector settings-mode-selector">
-          <view class="mode-item {{settingsForm.ocrMode === 'default' ? 'active' : ''}}" data-mode="default" bindtap="switchOcrMode">当前 OCR</view>
+          <view class="mode-item {{settingsForm.ocrMode === 'default' ? 'active' : ''}}" data-mode="default" bindtap="switchOcrMode">百度 OCR</view>
           <view class="mode-item {{settingsForm.ocrMode === 'ai' ? 'active' : ''}}" data-mode="ai" bindtap="switchOcrMode">AI 识别</view>
         </view>
-        <view class="settings-tip">默认模式继续使用当前后端 OCR；AI 模式按 OpenAI 兼容接口调用。</view>
+        <view class="settings-tip">百度模式使用后端百度云 OCR；AI 模式按 OpenAI 兼容接口调用。</view>
         <block wx:if="{{settingsForm.ocrMode === 'ai'}}">
           <input class="modal-input" placeholder="AI 请求地址，例如 https://example.com/v1/chat/completions" value="{{settingsForm.aiBaseUrl}}" bindinput="onAiBaseUrlInput" />
           <input class="modal-input" placeholder="模型名称，例如 gpt-4.1-mini" value="{{settingsForm.aiModel}}" bindinput="onAiModelInput" />

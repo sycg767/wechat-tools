@@ -41,6 +41,7 @@ Page({
         toolType: 'rename',
         sourceFileName: selectedFile.name,
         createdAt: Date.now(),
+        updatedAt: Date.now(),
         status: 'PROCESSING',
         resultUrl: '',
         resultFileName: ''

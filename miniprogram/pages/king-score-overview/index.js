@@ -30,8 +30,8 @@ function toScore(value) {
   return num
 }
 
-function buildMemberStats() {
-  const members = store.getMembers().filter((item) => item.active !== false)
+async function buildMemberStats() {
+  const members = (await store.getMembers()).filter((item) => item.active !== false)
   const sessions = store.getSessions() || []
 
   const statsMap = {}
@@ -117,10 +117,10 @@ function buildMemberStats() {
     .sort((a, b) => b.composite - a.composite || b.avgScore - a.avgScore)
 }
 
-function buildSummary(stats) {
+async function buildSummary(stats) {
   const ratingSum = stats.reduce((sum, item) => sum + item.ratingSum, 0)
   const ratingCount = stats.reduce((sum, item) => sum + item.ratingCount, 0)
-  const activeMembers = store.getMembers().filter((item) => item.active !== false).length
+  const activeMembers = (await store.getMembers()).filter((item) => item.active !== false).length
 
   return {
     activeMembers,
@@ -218,15 +218,15 @@ Page({
     this.refreshData()
   },
 
-  refreshData() {
-    const rankingRows = buildMemberStats()
+  async refreshData() {
+    const rankingRows = await buildMemberStats()
     const rankingCanvasHeight = getCanvasHeight(rankingRows.length)
     this.rankingRows = rankingRows
     this.setData({
       rankingRows,
       rankingCanvasHeight,
       rankingCanvasStyleHeight: rankingCanvasHeight,
-      summary: buildSummary(rankingRows)
+      summary: await buildSummary(rankingRows)
     }, () => {
       if (rankingRows.length) {
         wx.nextTick(() => this.measureAndDraw())

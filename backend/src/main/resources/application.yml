@@ -10,6 +10,32 @@ app:
 spring:
   application:
     name: wechat-tools-backend
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:wechat_tools}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:root}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      pool-name: HikariCP-WeChatTools
+      max-lifetime: 1800000
+      connection-timeout: 30000
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:db/schema.sql
+      separator: ;;
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          batch_size: 20
   servlet:
     multipart:
       enabled: true
@@ -33,15 +59,17 @@ file:
     max-age-hours: 24
 
 baidu:
+  # 百度文字识别服务 (用于战绩截图识别、PDF提取文字等)
   ocr:
     app-id: "123037453"
     api-key: "ZJYL89aGvJPhOIcBYK9Js2AT"
     secret-key: "DAaH0xXJ40avLUuPuz5NdvqH2spkbSKC"
-    enabled: true # 默认关闭，配置好密钥后改为 true
+    enabled: true # 是否启用 OCR 功能
+  # 百度智能抠图服务 (用于证件照换底色功能)
   image-matting:
     api-key: "X5dKDXnuWK7pzDHlaSjpueyJ"
     secret-key: "JfCgaA67CS2mIp5Q3wJttP8ZmAC3Bl8u"
-    enabled: true
+    enabled: true # 是否启用抠图功能
 
 pdfcpu:
   enabled: true
@@ -49,11 +77,13 @@ pdfcpu:
   timeout-seconds: 60
 
 tencent:
+  # 腾讯云对象存储 (用于文件上传、下载和临时存放)
   cos:
     secret-id: AKIDytc7NN8j6E7kPxJ3ZtzqTsCKH0UjvvgC
     secret-key: Jzvq0EQc6jTINVr0uZzA5yc1B6mCzsrl
     region: "ap-guangzhou"
     bucket: "my-word-pdf-1319429734"
+  # 腾讯云数据万象 (用于文档处理，如 Word 转 PDF)
   ci:
     queue-id: "p971a5f4111324d53a52234c384c5ab91"
     input-prefix: ci/input/

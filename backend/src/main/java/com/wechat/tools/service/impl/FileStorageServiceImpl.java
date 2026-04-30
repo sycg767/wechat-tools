@@ -14,6 +14,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
 @Service
+// @Primary // 已切换到 TencentCosFileStorageServiceImpl，此处取消 Primary
 public class FileStorageServiceImpl implements FileStorageService {
 
     @Value("${storage.local.base-path:storage}")

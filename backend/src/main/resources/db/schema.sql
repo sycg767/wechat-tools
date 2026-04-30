@@ -1,0 +1,98 @@
+-- PostgreSQL 数据库初始化脚本
+
+-- 1. 用户表 (存储微信用户信息)
+CREATE TABLE IF NOT EXISTS users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    openid VARCHAR(128) UNIQUE NOT NULL,
+    nickname VARCHAR(64),
+    avatar_url TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    version INTEGER DEFAULT 0
+);;
+CREATE INDEX IF NOT EXISTS idx_users_openid ON users(openid);;
+
+-- 2. 任务表 (存储文件处理任务)
+CREATE TABLE IF NOT EXISTS tasks (
+    id VARCHAR(64) PRIMARY KEY, -- 对应代码中的 taskId
+    user_id UUID REFERENCES users(id),
+    tool_type VARCHAR(32) NOT NULL,
+    source_file_name VARCHAR(255),
+    status VARCHAR(20) NOT NULL, -- PROCESSING, SUCCESS, FAIL
+    progress INTEGER DEFAULT 0,
+    message TEXT,
+    result_data JSONB, -- 存储处理结果，如文件路径、下载链接等
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    version INTEGER DEFAULT 0
+);;
+CREATE INDEX IF NOT EXISTS idx_tasks_user_id ON tasks(user_id);;
+CREATE INDEX IF NOT EXISTS idx_tasks_status ON tasks(status);;
+
+-- 3. 王者计分：成员表
+CREATE TABLE IF NOT EXISTS king_score_members (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID REFERENCES users(id), -- 所属用户（创建者）
+    real_name VARCHAR(64) NOT NULL,
+    game_names TEXT[], -- 游戏曾用名，使用 PG 的数组特性
+    total_deducted INTEGER DEFAULT 0,
+    daily_deducted INTEGER DEFAULT 0,
+    daily_score_date DATE DEFAULT CURRENT_DATE,
+    active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    version INTEGER DEFAULT 0
+);;
+CREATE INDEX IF NOT EXISTS idx_ks_members_user_id ON king_score_members(user_id);;
+
+-- 4. 王者计分：对局会话表
+CREATE TABLE IF NOT EXISTS king_score_sessions (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID REFERENCES users(id),
+    title VARCHAR(128),
+    status VARCHAR(20) DEFAULT 'ACTIVE', -- ACTIVE, ARCHIVED
+    settings JSONB, -- 存储该场对局的特殊设置（如基础分、扣分步长）
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    version INTEGER DEFAULT 0
+);;
+
+-- 5. 王者计分：对局记录表
+CREATE TABLE IF NOT EXISTS king_score_records (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    session_id UUID REFERENCES king_score_sessions(id) ON DELETE CASCADE,
+    member_id UUID REFERENCES king_score_members(id),
+    record_detail JSONB NOT NULL, -- 使用 JSONB 存储灵活的计分详情 (hero, kda, rating, score, match_result, is_mvp)
+    match_time TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    version INTEGER DEFAULT 0
+);;
+CREATE INDEX IF NOT EXISTS idx_ks_records_session_id ON king_score_records(session_id);;
+CREATE INDEX IF NOT EXISTS idx_ks_records_member_id ON king_score_records(member_id);;
+CREATE INDEX IF NOT EXISTS idx_ks_records_detail_gin ON king_score_records USING GIN (record_detail);;
+
+-- 自动更新 updated_at 的触发器函数
+CREATE OR REPLACE FUNCTION update_modified_column()
+RETURNS TRIGGER AS $BODY$
+BEGIN
+    NEW.updated_at = now();
+    RETURN NEW;
+END;
+$BODY$ language 'plpgsql';;
+
+-- 为所有表添加触发器
+DROP TRIGGER IF EXISTS update_users_modtime ON users;;
+CREATE TRIGGER update_users_modtime BEFORE UPDATE ON users FOR EACH ROW EXECUTE PROCEDURE update_modified_column();;
+
+DROP TRIGGER IF EXISTS update_tasks_modtime ON tasks;;
+CREATE TRIGGER update_tasks_modtime BEFORE UPDATE ON tasks FOR EACH ROW EXECUTE PROCEDURE update_modified_column();;
+
+DROP TRIGGER IF EXISTS update_ks_members_modtime ON king_score_members;;
+CREATE TRIGGER update_ks_members_modtime BEFORE UPDATE ON king_score_members FOR EACH ROW EXECUTE PROCEDURE update_modified_column();;
+
+DROP TRIGGER IF EXISTS update_ks_sessions_modtime ON king_score_sessions;;
+CREATE TRIGGER update_ks_sessions_modtime BEFORE UPDATE ON king_score_sessions FOR EACH ROW EXECUTE PROCEDURE update_modified_column();;
+
+DROP TRIGGER IF EXISTS update_ks_records_modtime ON king_score_records;;
+CREATE TRIGGER update_ks_records_modtime BEFORE UPDATE ON king_score_records FOR EACH ROW EXECUTE PROCEDURE update_modified_column();;

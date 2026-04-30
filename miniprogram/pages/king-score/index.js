@@ -538,12 +538,12 @@ function persistMatchedPlayerRecords(records, meta) {
   })
 }
 
-function buildPatchedRecords(records, ocrText) {
+async function buildPatchedRecords(records, ocrText) {
   const parsedLines = buildParsedOcrLines(ocrText)
   const split = getOcrColumnSplit(parsedLines)
   const slots = buildPlayerSlots(parsedLines, split)
   const resolvedSlots = slots.length ? slots : buildPlainTextPlayerSlots(parsedLines)
-  const members = store.getMembers().filter((item) => item.active !== false)
+  const members = (await store.getMembers()).filter((item) => item.active !== false)
   const memberMap = {}
   members.forEach((item) => {
     memberMap[item.id] = item
@@ -624,7 +624,7 @@ Page({
     showAddModal: false,
     showSettingsModal: false,
     settingsForm: {
-      ocrMode: 'default',
+      ocrMode: 'ai',
       aiBaseUrl: '',
       aiModel: '',
       aiApiKey: ''
@@ -653,9 +653,9 @@ Page({
     this.refreshAll()
   },
 
-  refreshAll(callback) {
+  async refreshAll(callback) {
     const settings = store.getSettings()
-    const members = store.getMembers().filter((item) => item.active !== false)
+    const members = (await store.getMembers()).filter((item) => item.active !== false)
     const records = buildRecords(members, settings, this.data.records)
     const historySessions = store.getSessions()
     this.setData({
@@ -778,12 +778,12 @@ Page({
     this.setData({ aliasInput: e.detail.value || '' })
   },
 
-  addMember() {
+  async addMember() {
     let result
     if (this.data.editingMemberId) {
-      result = store.updateMember(this.data.editingMemberId, this.data.memberInput, this.data.aliasInput)
+      result = await store.updateMember(this.data.editingMemberId, this.data.memberInput, this.data.aliasInput)
     } else {
-      result = store.addMember(this.data.memberInput, this.data.aliasInput)
+      result = await store.addMember(this.data.memberInput, this.data.aliasInput)
     }
 
     if (!result.ok) {
@@ -937,10 +937,11 @@ Page({
       }
     }
 
+    const modeText = ocrMode === 'ai' ? 'AI 识别' : '百度 OCR';
     this.setData({
       ocrProcessing: true,
       ocrProgress: 10,
-      ocrStatusText: '正在上传截图...',
+      ocrStatusText: `正在上传截图 (${modeText})...`,
       ocrRawText: '',
       ocrMatchedCount: 0,
       records: (this.data.records || []).map(clearOcrFields),
@@ -976,12 +977,12 @@ Page({
         if (status.status === 'SUCCESS') {
           clearInterval(timer)
           const ocrRawText = status.extraData || ''
-          const built = buildPatchedRecords(this.data.records, ocrRawText)
+          const built = await buildPatchedRecords(this.data.records, ocrRawText)
           persistMatchedPlayerRecords(built.patched, built.meta)
           this.setData({
             ocrProcessing: false,
             ocrProgress: 100,
-            ocrStatusText: '识别完成',
+            ocrStatusText: `${modeText}完成`,
             ocrRawText,
             ocrMatchedCount: built.matchedCount,
             records: built.patched,
@@ -999,7 +1000,7 @@ Page({
         }
         this.setData({
           ocrProgress: status.progress || 50,
-          ocrStatusText: status.status === 'PROCESSING' ? '正在识别截图...' : '任务排队中...'
+          ocrStatusText: status.status === 'PROCESSING' ? `正在进行${modeText}...` : '任务排队中...'
         })
       } catch (err) {
         clearInterval(timer)
@@ -1031,11 +1032,11 @@ Page({
     })
   },
 
-  onCardTap(e) {
+  async onCardTap(e) {
     const memberId = e.currentTarget.dataset.memberId
     if (!memberId) return
 
-    const result = store.adjustMemberDeduction(memberId, this.data.settings.deductStep, this.data.settings.dailyBaseScore)
+    const result = await store.adjustMemberDeduction(memberId, this.data.settings.deductStep, this.data.settings.dailyBaseScore)
     if (!result.ok) {
       wx.showToast({ title: result.message, icon: 'none' })
       return

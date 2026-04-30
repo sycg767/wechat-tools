@@ -1,5 +1,6 @@
 const request = require('../../utils/request')
 const taskStore = require('../../utils/task-store')
+const { formatRelativeTime } = require('../../utils/time')
 
 Page({
   data: {
@@ -11,20 +12,27 @@ Page({
   },
 
   loadTasks() {
-    const tasks = taskStore.getTasks()
+    const tasks = taskStore.getTasks().map(this.decorateTask)
     this.setData({ tasks })
     tasks.filter((item) => item.status === 'PROCESSING').forEach((item) => {
       this.refreshTask(item.taskId)
     })
   },
 
+  decorateTask(task) {
+    return {
+      ...task,
+      updatedAtText: formatRelativeTime(task.updatedAt)
+    }
+  },
+
   async refreshTask(taskId) {
     try {
       const res = await request.get(`/file/status/${taskId}`)
       taskStore.upsertTask(res.data)
-      this.setData({ tasks: taskStore.getTasks() })
+      this.setData({ tasks: taskStore.getTasks().map(this.decorateTask) })
     } catch (error) {
-      this.setData({ tasks: taskStore.getTasks() })
+      this.setData({ tasks: taskStore.getTasks().map(this.decorateTask) })
     }
   },
 

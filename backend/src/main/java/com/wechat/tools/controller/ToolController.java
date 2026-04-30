@@ -286,7 +286,8 @@ public class ToolController {
                 return Result.error(400, "有效文件不足，无法合并");
             }
 
-            String taskId = taskService.createTask("pdf-merge", "多个PDF合并");
+            String sourceFileName = sourceFileIds.size() + "个PDF合并";
+            String taskId = taskService.createTask("pdf-merge", sourceFileName);
             fileConversionTask.processPdfMerge(taskId, sourceFileIds, "merged.pdf");
 
             return Result.success(taskId, "任务已创建");
@@ -300,6 +301,7 @@ public class ToolController {
         @SuppressWarnings("unchecked")
         List<String> fileIds = (List<String>) payload.get("fileIds");
         String customFileName = (String) payload.get("fileName");
+        String sourceFileName = (String) payload.get("sourceFileName");
         
         try {
             if (fileIds == null || fileIds.size() < 2) {
@@ -314,7 +316,11 @@ public class ToolController {
                 resultFileName += ".pdf";
             }
 
-            String taskId = taskService.createTask("pdf-merge", "多个PDF合并");
+            String finalSourceFileName = sourceFileName != null && !sourceFileName.isBlank()
+                ? sourceFileName.trim()
+                : "多个PDF合并";
+
+            String taskId = taskService.createTask("pdf-merge", finalSourceFileName);
             fileConversionTask.processPdfMerge(taskId, fileIds, resultFileName);
 
             return Result.success(taskId, "任务已创建");

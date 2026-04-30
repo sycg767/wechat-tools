@@ -5,9 +5,10 @@
   </view>
 
   <view wx:if="{{task}}" class="card detail-card">
-    <view class="detail-row"><text class="detail-label">工具</text><text class="detail-value">{{task.toolType || '未知工具'}}</text></view>
+    <view class="detail-row"><text class="detail-label">工具</text><text class="detail-value">{{task.toolTypeText}}</text></view>
     <view class="detail-row"><text class="detail-label">原文件</text><text class="detail-value">{{task.sourceFileName || '未命名文件'}}</text></view>
-    <view class="detail-row"><text class="detail-label">状态</text><text class="detail-value">{{task.status}}</text></view>
+    <view class="detail-row"><text class="detail-label">状态</text><text class="detail-value">{{task.statusText}}</text></view>
+    <view class="detail-row"><text class="detail-label">更新时间</text><text class="detail-value">{{task.updatedAtText || '刚刚'}}</text></view>
     <view wx:if="{{task.resultFileName}}" class="detail-row"><text class="detail-label">结果文件</text><text class="detail-value">{{task.resultFileName}}</text></view>
     <view wx:if="{{task.message}}" class="detail-row"><text class="detail-label">说明</text><text class="detail-value">{{task.message}}</text></view>
     <view wx:if="{{task.selectedStrategy}}" class="detail-row"><text class="detail-label">策略</text><text class="detail-value">{{task.selectedStrategy}}</text></view>

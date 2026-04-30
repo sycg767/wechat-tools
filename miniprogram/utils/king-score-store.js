@@ -1,3 +1,5 @@
+const request = require('./request')
+
 const MEMBERS_KEY = 'king_score_members_v1'
 const SESSIONS_KEY = 'king_score_sessions_v1'
 const SETTINGS_KEY = 'king_score_settings_v1'
@@ -8,7 +10,7 @@ const DEFAULT_SETTINGS = {
   deductStep: 10,
   gloryLine: 60,
   maxHistory: 30,
-  ocrMode: 'default',
+  ocrMode: 'ai',
   aiBaseUrl: '',
   aiModel: '',
   aiApiKey: ''
@@ -74,17 +76,22 @@ function normalizeMemberForToday(item) {
   return member
 }
 
-function getMembers() {
-  const rawMembers = wx.getStorageSync(MEMBERS_KEY) || []
-  // 仅进行格式化处理，不在此处写回 Storage，避免初始化时的意外覆盖
-  return rawMembers.map(normalizeMemberForToday).filter(Boolean)
+async function getMembers() {
+  try {
+    const res = await request.get('/king-score/members')
+    return (res.data || []).map(normalizeMemberForToday).filter(Boolean)
+  } catch (e) {
+    console.error('获取成员失败，降级使用本地缓存', e)
+    const rawMembers = wx.getStorageSync(MEMBERS_KEY) || []
+    return rawMembers.map(normalizeMemberForToday).filter(Boolean)
+  }
 }
 
 function saveMembers(members) {
   wx.setStorageSync(MEMBERS_KEY, members.map(normalizeMember).filter(Boolean))
 }
 
-function addMember(realName, gameNamesText = '') {
+async function addMember(realName, gameNamesText = '') {
   const trimmed = (realName || '').trim()
   if (!trimmed) return { ok: false, message: '真实名称不能为空' }
 
@@ -94,33 +101,29 @@ function addMember(realName, gameNamesText = '') {
     .filter(Boolean)
   const gameNames = Array.from(new Set([trimmed, ...aliasList]))
 
-  const members = getMembers()
-  if (members.some((item) => item.realName === trimmed)) {
-    return { ok: false, message: '真实名称已存在' }
+  try {
+    const res = await request.post('/king-score/members', {
+      realName: trimmed,
+      gameNames
+    })
+    const member = res.data
+    // 同步更新本地缓存
+    const members = wx.getStorageSync(MEMBERS_KEY) || []
+    members.unshift(member)
+    saveMembers(members)
+    return { ok: true, member }
+  } catch (e) {
+    return { ok: false, message: e.message || '添加失败' }
   }
-
-  const member = {
-    id: makeId('m'),
-    realName: trimmed,
-    gameNames,
-    totalDeducted: 0,
-    dailyDeducted: 0,
-    dailyScoreDate: todayText(),
-    active: true,
-    createdAt: nowIso()
-  }
-  members.unshift(member)
-  saveMembers(members)
-  return { ok: true, member }
 }
 
-function removeMember(memberId) {
-  const members = getMembers().filter((item) => item.id !== memberId)
+async function removeMember(memberId) {
+  const members = (await getMembers()).filter((item) => item.id !== memberId)
   saveMembers(members)
   return members
 }
 
-function updateMember(memberId, realName, gameNamesText = '') {
+async function updateMember(memberId, realName, gameNamesText = '') {
   const trimmed = (realName || '').trim()
   if (!trimmed) return { ok: false, message: '真实名称不能为空' }
 
@@ -130,7 +133,7 @@ function updateMember(memberId, realName, gameNamesText = '') {
     .filter(Boolean)
   const gameNames = Array.from(new Set([trimmed, ...aliasList]))
 
-  const members = getMembers()
+  const members = await getMembers()
   const index = members.findIndex((item) => item.id === memberId)
   if (index < 0) return { ok: false, message: '成员不存在' }
 
@@ -147,8 +150,8 @@ function updateMember(memberId, realName, gameNamesText = '') {
   return { ok: true, member: members[index] }
 }
 
-function adjustMemberDeduction(memberId, scoreStep, dailyBaseScore) {
-  const members = getMembers()
+async function adjustMemberDeduction(memberId, scoreStep, dailyBaseScore) {
+  const members = await getMembers()
   const index = members.findIndex((item) => item.id === memberId)
   if (index < 0) {
     return { ok: false, message: '成员不存在' }
@@ -288,7 +291,7 @@ function getPlayerRecordSummary(memberId) {
   }
 }
 
-function archiveSession(sessionData) {
+async function archiveSession(sessionData) {
   const sessions = getSessions()
   const payload = {
     ...sessionData,
@@ -298,7 +301,7 @@ function archiveSession(sessionData) {
   sessions.unshift(payload)
   saveSessions(sessions)
 
-  const members = getMembers()
+  const members = await getMembers()
   const updatedMembers = members.map((m) => ({
     ...m,
     dailyDeducted: 0,

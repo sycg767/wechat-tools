@@ -1,3 +1,4 @@
+const taskStore = require('../../utils/task-store');
 const DEFAULT_OPTIONS = ['黄焖鸡', '麻辣烫', '麦当劳', '肯德基', '沙县小吃', '兰州拉面', '螺蛳粉', '便利店'];
 const COLORS = ['#FFADAD', '#FFD6A5', '#FDFFB6', '#CAFFBF', '#9BF6FF', '#A0C4FF', '#BDB2FF', '#FFC6FF'];
 
@@ -179,8 +180,20 @@ Page({
     const positiveAngle = normalizedAngle < 0 ? normalizedAngle + Math.PI * 2 : normalizedAngle;
     const index = Math.floor(positiveAngle / arc);
     
+    const result = options[index];
     this.setData({
-      result: options[index]
+      result
+    });
+
+    taskStore.upsertTask({
+      taskId: 'eat_' + Date.now(),
+      toolType: 'eat-what',
+      sourceFileName: '转盘抽取',
+      resultFileName: result,
+      status: 'SUCCESS',
+      updatedAt: Date.now(),
+      createdAt: Date.now(),
+      message: '抽取结果：' + result
     });
   },
 

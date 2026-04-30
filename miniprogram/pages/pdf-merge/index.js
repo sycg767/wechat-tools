@@ -117,9 +117,11 @@ Page({
       }
       
       wx.showLoading({ title: '提交合并任务' })
+      const sourceFileName = this.data.fileName || (selectedFiles.length > 0 ? `${selectedFiles[0].name}等${selectedFiles.length}个文件` : '合并文档')
       const result = await request.post('/tool/pdf-merge-by-ids', {
         fileIds,
-        fileName: this.data.fileName
+        fileName: this.data.fileName,
+        sourceFileName
       })
       
       wx.hideLoading()
@@ -127,8 +129,9 @@ Page({
       taskStore.upsertTask({
         taskId: result.data,
         toolType: 'pdf-merge',
-        sourceFileName: this.data.fileName || '合并文档',
+        sourceFileName,
         createdAt: Date.now(),
+        updatedAt: Date.now(),
         status: 'PROCESSING',
         resultUrl: '',
         resultFileName: ''
