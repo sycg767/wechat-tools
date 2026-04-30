@@ -117,6 +117,9 @@ public class FileConversionTask {
     @Value("${baidu.image-matting.enabled:false}")
     private boolean baiduImageMattingEnabled;
 
+    @Value("${tesseract.data-path:}")
+    private String tesseractDataPath;
+
     private static final DateTimeFormatter FILE_NAME_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
 
     private final HttpClient httpClient = HttpClient.newBuilder()
@@ -996,8 +999,7 @@ public class FileConversionTask {
             return performBaiduOcr(taskId, document);
         }
 
-        Tesseract tesseract = new Tesseract();
-        tesseract.setLanguage("chi_sim+eng");
+        Tesseract tesseract = createTesseract();
 
         StringBuilder sb = new StringBuilder();
         PDFRenderer pdfRenderer = new PDFRenderer(document);
@@ -1050,8 +1052,7 @@ public class FileConversionTask {
         }
 
         taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 65));
-        Tesseract tesseract = new Tesseract();
-        tesseract.setLanguage("chi_sim+eng");
+        Tesseract tesseract = createTesseract();
         for (BufferedImage candidate : candidates) {
             String text = tesseract.doOCR(candidate);
             text = text == null ? "" : text.replaceAll("(?m)^\\s*$", "").trim();
@@ -1062,6 +1063,15 @@ public class FileConversionTask {
             }
         }
         return bestText;
+    }
+
+    private Tesseract createTesseract() {
+        Tesseract tesseract = new Tesseract();
+        tesseract.setLanguage("chi_sim+eng");
+        if (tesseractDataPath != null && !tesseractDataPath.isBlank()) {
+            tesseract.setDatapath(tesseractDataPath.trim());
+        }
+        return tesseract;
     }
 
     private String performKingScoreAiOcr(String taskId, byte[] fileData, String aiBaseUrl, String aiModel, String aiApiKey) throws Exception {

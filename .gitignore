@@ -34,4 +34,5 @@ miniprogram/node_modules/
 # Environment / secrets
 .env
 .env.*
+!.env.example
 *.local

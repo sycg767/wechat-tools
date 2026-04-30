@@ -1,0 +1,10 @@
+target/
+logs/
+storage/
+.git/
+.idea/
+.vscode/
+*.iml
+*.log
+*.tmp
+*.temp
