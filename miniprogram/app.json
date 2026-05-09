@@ -58,7 +58,8 @@
       "pages": [
         "king-score/index",
         "king-score-player/index",
-        "king-score-overview/index"
+        "king-score-overview/index",
+        "delta-password/index"
       ]
     }
   ],

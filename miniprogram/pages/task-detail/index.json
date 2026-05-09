@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "任务详情",
+  "usingComponents": {
+    "progress-bar": "/components/progress-bar/index"
+  }
+}

@@ -275,21 +275,23 @@ public class FileConversionTask {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             Thumbnails.of(new ByteArrayInputStream(fileData))
                 .scale(1.0)
-                .outputQuality(quality)
+                .outputFormat("jpg")
+                .outputQuality(Math.max(0.1, Math.min(1.0, quality)))
                 .toOutputStream(baos);
-            
+
             byte[] compressedData = baos.toByteArray();
+            String resultFileName = buildCompressedImageFileName(originalFileName);
 
             taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 80));
-            
+
             String resultFileId = fileStorageService.uploadFile(
-                originalFileName,
+                resultFileName,
                 new ByteArrayInputStream(compressedData),
                 compressedData.length,
                 "image/jpeg"
             );
-            String resultUrl = fileStorageService.getFileUrl(resultFileId, originalFileName);
-            taskService.updateTaskStatus(taskId, TaskStatusResult.success(taskId, resultUrl, originalFileName));
+            String resultUrl = fileStorageService.getFileUrl(resultFileId, resultFileName);
+            taskService.updateTaskStatus(taskId, TaskStatusResult.success(taskId, resultUrl, resultFileName));
 
             // 清理临时上传的源文件
             fileStorageService.deleteFile(sourceFileId);
@@ -908,6 +910,15 @@ public class FileConversionTask {
         } catch (Exception e) {
             taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "截图识别失败: " + e.getMessage()));
         }
+    }
+
+    private String buildCompressedImageFileName(String originalFileName) {
+        if (originalFileName == null || originalFileName.isBlank()) {
+            return "compressed.jpg";
+        }
+        int dotIndex = originalFileName.lastIndexOf('.');
+        String baseName = dotIndex > 0 ? originalFileName.substring(0, dotIndex) : originalFileName;
+        return baseName + "_compressed.jpg";
     }
 
     private String buildZipFileName(String originalFileName) {

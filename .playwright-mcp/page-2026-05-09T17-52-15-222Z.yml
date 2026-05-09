@@ -1,0 +1,449 @@
+- generic [active]:
+  - generic:
+    - generic [ref=e1]:
+      - heading "三角洲行动一图流" [level=1] [ref=e2]
+      - list [ref=e3]:
+        - listitem [ref=e4]:
+          - generic [ref=e5]: 
+      - list [ref=e6]:
+        - listitem [ref=e7]:
+          - generic [ref=e8]: 
+        - listitem [ref=e9]:
+          - generic [ref=e10]: 
+        - listitem [ref=e11]:
+          - generic [ref=e12]: 
+    - list [ref=e15]:
+      - listitem [ref=e16]:
+        - link "热点内容一图流" [ref=e17] [cursor=pointer]:
+          - /url: javascript:;
+      - listitem [ref=e18]:
+        - link "DFTI测试" [ref=e19] [cursor=pointer]:
+          - /url: javascript:;
+      - listitem [ref=e20]:
+        - link "烽火挑战赛赛事手册" [ref=e21] [cursor=pointer]:
+          - /url: javascript:;
+      - listitem [ref=e22]:
+        - link "S9 相关 " [ref=e23] [cursor=pointer]:
+          - /url: javascript:;
+          - text: S9 相关
+          - generic [ref=e24]: 
+      - listitem [ref=e25]:
+        - link "热门 🔥 " [ref=e26] [cursor=pointer]:
+          - /url: javascript:;
+          - text: 热门 🔥
+          - generic [ref=e27]: 
+      - listitem [ref=e28]:
+        - link "新手攻略 " [ref=e29] [cursor=pointer]:
+          - /url: javascript:;
+          - text: 新手攻略
+          - generic [ref=e30]: 
+      - listitem [ref=e31]:
+        - link "任务攻略 " [ref=e32] [cursor=pointer]:
+          - /url: javascript:;
+          - text: 任务攻略
+          - generic [ref=e33]: 
+      - listitem [ref=e34]:
+        - link "交易行 " [ref=e35] [cursor=pointer]:
+          - /url: javascript:;
+          - text: 交易行
+          - generic [ref=e36]: 
+      - listitem [ref=e37]:
+        - link "活动 " [ref=e38] [cursor=pointer]:
+          - /url: javascript:;
+          - text: 活动
+          - generic [ref=e39]: 
+      - listitem [ref=e40]:
+        - link "数据模拟器 " [ref=e41] [cursor=pointer]:
+          - /url: javascript:;
+          - text: 数据模拟器
+          - generic [ref=e42]: 
+      - listitem [ref=e43]:
+        - link "动态地图 " [ref=e44] [cursor=pointer]:
+          - /url: javascript:;
+          - text: 动态地图
+          - generic [ref=e45]: 
+      - listitem [ref=e46]:
+        - link "DAEKK电竞咖 " [ref=e47] [cursor=pointer]:
+          - /url: javascript:;
+          - text: DAEKK电竞咖
+          - generic [ref=e48]: 
+      - listitem [ref=e49]:
+        - link "网站相关 " [ref=e50] [cursor=pointer]:
+          - /url: javascript:;
+          - text: 网站相关
+          - generic [ref=e51]: 
+      - listitem [ref=e52]:
+        - link "特别鸣谢" [ref=e53] [cursor=pointer]:
+          - /url: javascript:;
+      - listitem [ref=e54]:
+        - link "关于赞助" [ref=e55] [cursor=pointer]:
+          - /url: javascript:;
+      - listitem [ref=e56]:
+        - link [ref=e57] [cursor=pointer]:
+          - /url: javascript:;
+          - img [ref=e58]
+      - listitem [ref=e59]:
+        - link [ref=e60] [cursor=pointer]:
+          - /url: javascript:;
+          - img [ref=e61]
+      - listitem [ref=e62]:
+        - link [ref=e63] [cursor=pointer]:
+          - /url: javascript:;
+          - img [ref=e64]
+      - listitem [ref=e65]:
+        - link [ref=e66] [cursor=pointer]:
+          - /url: javascript:;
+          - img [ref=e67]
+    - generic [ref=e70]:
+      - blockquote [ref=e71]:
+        - generic [ref=e72]:
+          - generic [ref=e73]:
+            - paragraph [ref=e74]:
+              - text: 网站由
+              - link "@Key725" [ref=e75] [cursor=pointer]:
+                - /url: https://space.bilibili.com/11332884
+              - text: 及 热心小伙伴 联合制作及维护。
+            - paragraph [ref=e76]:
+              - text: 网站由
+              - link "@是爱你的白毛" [ref=e77] [cursor=pointer]:
+                - /url: https://space.bilibili.com/452192026
+              - text: 提供防护，购买高防服务器、CDN、游戏盾找
+              - link "@快快网络" [ref=e78] [cursor=pointer]:
+                - /url: http://www.kkidc.com/i/UthIzWqeE
+              - text: 。
+            - paragraph [ref=e79]:
+              - text: 网站官方QQ群
+              - link "1035748373" [ref=e80] [cursor=pointer]:
+                - /url: https://qm.qq.com/q/E2Hb7IZZhS
+              - text: 。
+            - paragraph [ref=e81]:
+              - text: 感谢金主
+              - link "盼之账号交易 @盼之账号交易" [ref=e82] [cursor=pointer]:
+                - /url: https://www.pzds.com/goodsList/391/2000065?pzfrom=UBHKTF
+                - img "盼之账号交易" [ref=e83]
+                - text: "@盼之账号交易"
+              - text: 友情赞助。
+          - generic [ref=e85]:
+            - generic [ref=e86]:
+              - text: 
+              - img "盼之游戏服务" [ref=e88] [cursor=pointer]
+            - button "" [ref=e89] [cursor=pointer]
+            - button "" [ref=e90] [cursor=pointer]
+      - generic [ref=e91]:
+        - blockquote [ref=e92]:
+          - paragraph [ref=e93]: 每日地图密码
+        - generic [ref=e94]:
+          - generic [ref=e97]:
+            - generic [ref=e98]:
+              - paragraph [ref=e99]: 零号大坝
+              - paragraph [ref=e100]: "0129"
+              - paragraph [ref=e101]: 2026-05-10 更新
+            - img "零号大坝" [ref=e102]
+          - generic [ref=e105]:
+            - generic [ref=e106]:
+              - paragraph [ref=e107]: 长弓溪谷
+              - paragraph [ref=e108]: "0185"
+              - paragraph [ref=e109]: 2026-05-10 更新
+            - img "长弓溪谷" [ref=e110]
+          - generic [ref=e113]:
+            - generic [ref=e114]:
+              - paragraph [ref=e115]: 巴克什
+              - paragraph [ref=e116]: "0414"
+              - paragraph [ref=e117]: 2026-05-10 更新
+            - img "巴克什" [ref=e118]
+          - generic [ref=e121]:
+            - generic [ref=e122]:
+              - paragraph [ref=e123]: 航天基地
+              - paragraph [ref=e124]: "0667"
+              - paragraph [ref=e125]: 2026-05-10 更新
+            - img "航天基地" [ref=e126]
+          - generic [ref=e129]:
+            - generic [ref=e130]:
+              - paragraph [ref=e131]: 潮汐监狱
+              - paragraph [ref=e132]: "0475"
+              - paragraph [ref=e133]: 2026-05-10 更新
+            - img "潮汐监狱" [ref=e134]
+      - blockquote [ref=e136]:
+        - paragraph [ref=e137]: 特勤处制作产物推荐
+        - generic [ref=e140] [cursor=pointer]: 小时利润
+      - generic [ref=e143]:
+        - generic [ref=e146]:
+          - generic [ref=e147]:
+            - paragraph [ref=e148]: 技术中心
+            - paragraph [ref=e149]:
+              - text: 当前利润：
+              - strong [ref=e150]: "4274"
+            - paragraph [ref=e151]:
+              - text: 理想售价：
+              - strong [ref=e152]: "58781"
+            - paragraph [ref=e153]:
+              - text: 卖：
+              - strong [ref=e154]: 晚上11点
+          - generic [ref=e155]:
+            - img [ref=e157]
+            - generic [ref=e158]: XCOG突击3.5倍瞄准镜
+        - generic [ref=e161]:
+          - generic [ref=e162]:
+            - paragraph [ref=e163]: 工作台
+            - paragraph [ref=e164]:
+              - text: 当前利润：
+              - strong [ref=e165]: "37618"
+            - paragraph [ref=e166]:
+              - text: 理想售价：
+              - strong [ref=e167]: "4874"
+            - paragraph [ref=e168]:
+              - text: 卖：
+              - strong [ref=e169]: 晚上11点
+          - generic [ref=e170]:
+            - img [ref=e172]
+            - generic [ref=e173]: 9x39mm BP
+        - generic [ref=e176]:
+          - generic [ref=e177]:
+            - paragraph [ref=e178]: 制药台
+            - paragraph [ref=e179]:
+              - text: 当前利润：
+              - strong [ref=e180]: "10372"
+            - paragraph [ref=e181]:
+              - text: 理想售价：
+              - strong [ref=e182]: "181665"
+            - paragraph [ref=e183]:
+              - text: 卖：
+              - strong [ref=e184]: 晚上11点
+          - generic [ref=e185]:
+            - img [ref=e187]
+            - generic [ref=e188]: 精密护甲维修包
+        - generic [ref=e191]:
+          - generic [ref=e192]:
+            - paragraph [ref=e193]: 防具台
+            - paragraph [ref=e194]:
+              - text: 当前利润：
+              - strong [ref=e195]: "31799"
+            - paragraph [ref=e196]:
+              - text: 理想售价：
+              - strong [ref=e197]: "409993"
+            - paragraph [ref=e198]:
+              - text: 卖：
+              - strong [ref=e199]: 晚上11点
+          - generic [ref=e200]:
+            - img [ref=e202]
+            - generic [ref=e203]: FS复合防弹衣
+      - generic [ref=e204]:
+        - blockquote [ref=e205]:
+          - paragraph [ref=e206]: "活动物品需求（研发部门 - 集市 活动时间: 2026/05/08 - 2025/05/15）"
+        - generic [ref=e207]:
+          - generic [ref=e210]:
+            - generic [ref=e211]:
+              - paragraph [ref=e212]:
+                - text: 当前售价：
+                - strong [ref=e213]: "8885"
+              - paragraph [ref=e214]:
+                - text: 理想售价：
+                - strong [ref=e215]: "53732"
+            - generic [ref=e216]:
+              - img [ref=e218]
+              - generic [ref=e219]: 古怪的海盗银币
+          - generic [ref=e222]:
+            - generic [ref=e223]:
+              - paragraph [ref=e224]:
+                - text: 当前售价：
+                - strong [ref=e225]: "22060"
+              - paragraph [ref=e226]:
+                - text: 理想售价：
+                - strong [ref=e227]: "114925"
+            - generic [ref=e228]:
+              - img [ref=e230]
+              - generic [ref=e231]: 黄金饰章
+          - generic [ref=e234]:
+            - generic [ref=e235]:
+              - paragraph [ref=e236]:
+                - text: 当前售价：
+                - strong [ref=e237]: "47473"
+              - paragraph [ref=e238]:
+                - text: 理想售价：
+                - strong [ref=e239]: "65338"
+            - generic [ref=e240]:
+              - img [ref=e242]
+              - generic [ref=e243]: 大豆蛋白粉包
+          - generic [ref=e246]:
+            - generic [ref=e247]:
+              - paragraph [ref=e248]:
+                - text: 当前售价：
+                - strong [ref=e249]: "80255"
+              - paragraph [ref=e250]:
+                - text: 理想售价：
+                - strong [ref=e251]: "124810"
+            - generic [ref=e252]:
+              - img [ref=e254]
+              - generic [ref=e255]: 小糖人姜饼人
+      - generic [ref=e256]:
+        - blockquote [ref=e257]:
+          - paragraph [ref=e258]: 高价格浮动制造材料前四
+        - generic [ref=e259]:
+          - generic [ref=e262]:
+            - generic [ref=e263]:
+              - paragraph [ref=e264]:
+                - text: 当前：
+                - strong [ref=e265]: "107041"
+              - paragraph [ref=e266]:
+                - text: 最低：
+                - strong [ref=e267]: "101686"
+              - paragraph [ref=e268]:
+                - text: 最高：
+                - strong [ref=e269]: "2257180"
+              - paragraph [ref=e270]:
+                - text: 买：
+                - strong [ref=e271]: 凌晨1点
+              - paragraph [ref=e272]:
+                - text: 卖：
+                - strong [ref=e273]: 上午8点
+            - generic [ref=e274]:
+              - img [ref=e276]
+              - generic [ref=e277]: 镜头
+          - generic [ref=e280]:
+            - generic [ref=e281]:
+              - paragraph [ref=e282]:
+                - text: 当前：
+                - strong [ref=e283]: "72219"
+              - paragraph [ref=e284]:
+                - text: 最低：
+                - strong [ref=e285]: "68604"
+              - paragraph [ref=e286]:
+                - text: 最高：
+                - strong [ref=e287]: "388595"
+              - paragraph [ref=e288]:
+                - text: 买：
+                - strong [ref=e289]: 凌晨1点
+              - paragraph [ref=e290]:
+                - text: 卖：
+                - strong [ref=e291]: 上午8点
+            - generic [ref=e292]:
+              - img [ref=e294]
+              - generic [ref=e295]: 可编程处理器
+          - generic [ref=e298]:
+            - generic [ref=e299]:
+              - paragraph [ref=e300]:
+                - text: 当前：
+                - strong [ref=e301]: "47704"
+              - paragraph [ref=e302]:
+                - text: 最低：
+                - strong [ref=e303]: "47704"
+              - paragraph [ref=e304]:
+                - text: 最高：
+                - strong [ref=e305]: "207076"
+              - paragraph [ref=e306]:
+                - text: 买：
+                - strong [ref=e307]: 凌晨0点
+              - paragraph [ref=e308]:
+                - text: 卖：
+                - strong [ref=e309]: 凌晨1点
+            - generic [ref=e310]:
+              - img [ref=e312]
+              - generic [ref=e313]: 已损坏的热像仪
+          - generic [ref=e316]:
+            - generic [ref=e317]:
+              - paragraph [ref=e318]:
+                - text: 当前：
+                - strong [ref=e319]: "121491"
+              - paragraph [ref=e320]:
+                - text: 最低：
+                - strong [ref=e321]: "118791"
+              - paragraph [ref=e322]:
+                - text: 最高：
+                - strong [ref=e323]: "226791"
+              - paragraph [ref=e324]:
+                - text: 买：
+                - strong [ref=e325]: 晚上11点
+              - paragraph [ref=e326]:
+                - text: 卖：
+                - strong [ref=e327]: 上午9点
+            - generic [ref=e328]:
+              - img [ref=e330]
+              - generic [ref=e331]: 移动电缆
+      - generic [ref=e332]:
+        - generic [ref=e333]:
+          - blockquote [ref=e334]:
+            - paragraph [ref=e335]: 热门子弹查询前十
+          - generic [ref=e337]:
+            - generic [ref=e338]:
+              - generic [ref=e339]:
+                - img
+              - generic [ref=e340]: 7.62x51mm M62
+            - generic [ref=e341]:
+              - generic [ref=e342]:
+                - img
+              - generic [ref=e343]: 6.8x51mm Hybrid
+            - generic [ref=e344]:
+              - generic [ref=e345]:
+                - img
+              - generic [ref=e346]: 7.62x39mm AP
+            - generic [ref=e347]:
+              - generic [ref=e348]:
+                - img
+              - generic [ref=e349]: 9x39mm BP
+            - generic [ref=e350]:
+              - generic [ref=e351]:
+                - img
+              - generic [ref=e352]: 5.7x28mm SS190
+            - generic [ref=e353]:
+              - generic [ref=e354]:
+                - img
+              - generic [ref=e355]: 4.6x30mm AP SX
+            - generic [ref=e356]:
+              - generic [ref=e357]:
+                - img
+              - generic [ref=e358]: 5.8x42mm DBP10
+            - generic [ref=e359]:
+              - generic [ref=e360]:
+                - img
+              - generic [ref=e361]: 7.62x51mm M80
+            - generic [ref=e362]:
+              - generic [ref=e363]:
+                - img
+              - generic [ref=e364]: 5.56x45mm M855A1
+            - generic [ref=e365]:
+              - generic [ref=e366]:
+                - img
+              - generic [ref=e367]: 4.6x30mm FMJ SX
+        - generic [ref=e368]:
+          - blockquote [ref=e369]:
+            - paragraph [ref=e370]: 兑换子弹利润
+          - generic [ref=e372]:
+            - generic [ref=e373]:
+              - generic [ref=e374]:
+                - img
+              - generic [ref=e375]:
+                - text: 12 Gauge 8.5毫米鹿弹
+                - text: 利润：15660
+            - generic [ref=e376]:
+              - generic [ref=e377]:
+                - img
+              - generic [ref=e378]:
+                - text: .45 ACP RIP
+                - text: 利润：4616
+            - generic [ref=e379]:
+              - generic [ref=e380]:
+                - img
+              - generic [ref=e381]:
+                - text: 9x19mm RIP
+                - text: 利润：4336
+            - generic [ref=e382]:
+              - generic [ref=e383]:
+                - img
+              - generic [ref=e384]:
+                - text: 12 Gauge独头 RIP
+                - text: 利润：4265
+            - generic [ref=e385]:
+              - generic [ref=e386]:
+                - img
+              - generic [ref=e387]:
+                - text: 5.7x28mm R37.F
+                - text: 利润：1444
+    - paragraph [ref=e389]:
+      - text: Copyright © 2024-2026 · 三角洲行动一图流 ·
+      - link "沪ICP备2024102033号" [ref=e390] [cursor=pointer]:
+        - /url: https://beian.miit.gov.cn
+      - text: ·
+      - link "使用条款&免责声明" [ref=e391] [cursor=pointer]:
+        - /url: javascript:;
+  - list [ref=e392]:
+    - listitem [ref=e393] [cursor=pointer]: 

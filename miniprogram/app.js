@@ -6,7 +6,7 @@ function resolveBaseUrl() {
     const env = accountInfo && accountInfo.miniProgram && accountInfo.miniProgram.envVersion
     // develop=开发版（本地调试）、trial=体验版、release=正式版
     const map = {
-      develop: 'http://localhost:8080/api',
+      develop: 'http://192.168.31.150:8080/api',
       trial: 'https://tools.410622.xyz/api',
       release: 'https://tools.410622.xyz/api'
     }

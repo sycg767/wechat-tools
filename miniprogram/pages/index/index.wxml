@@ -32,30 +32,15 @@
 
   <!-- Category View Mode -->
   <view wx:if="{{viewMode === 'categories'}}" class="view-fade-in">
-    <view
-      wx:if="{{featuredTool}}"
-      class="featured-tool-card"
-      bindtap="handleToolTap"
-      data-tool-id="{{featuredTool.id}}"
-      data-path="{{featuredTool.path}}"
-      data-disabled="{{featuredTool.disabled}}"
-      hover-class="featured-tool-card-hover"
-    >
-      <view class="featured-tool-icon-wrap {{featuredTool.iconClass}}">
-        <view class="bento-icon" style="-webkit-mask-image: {{featuredTool.maskImage}}; mask-image: {{featuredTool.maskImage}};"></view>
-      </view>
-      <view class="featured-tool-content">
-        <view class="featured-tool-title">{{featuredTool.title}}</view>
-        <view class="featured-tool-desc">{{featuredTool.desc}}</view>
-      </view>
-    </view>
-
     <view class="bento-grid">
       <block wx:for="{{categorySections}}" wx:key="id">
         <view
-          class="bento-item {{item.size || 'small'}} {{item.theme}}"
-          bindtap="handleCategoryTap"
-          data-category-id="{{item.id}}"
+          class="bento-item {{item.theme}}"
+          bindtap="handleHomeCardTap"
+          data-category-id="{{item.categoryId}}"
+          data-tool-id="{{item.toolId}}"
+          data-path="{{item.path}}"
+          data-disabled="{{item.disabled}}"
           hover-class="bento-item-hover"
         >
           <view class="card-inner">
@@ -78,7 +63,7 @@
     <view class="bento-grid">
       <block wx:for="{{searchResults}}" wx:key="id">
         <view
-          class="bento-item small {{item.disabled ? 'disabled' : ''}}"
+          class="bento-item {{item.disabled ? 'disabled' : ''}}"
           bindtap="handleToolTap"
           data-tool-id="{{item.id}}"
           data-path="{{item.path}}"
@@ -92,7 +77,7 @@
             </view>
             <view class="content-wrapper">
               <view class="title">{{item.title}}</view>
-              <view class="desc">{{item.category}}</view>
+              <view class="desc">{{item.desc}}</view>
             </view>
           </view>
         </view>
@@ -116,7 +101,7 @@
     <view class="bento-grid">
       <block wx:for="{{currentCategory.items}}" wx:key="id">
         <view
-          class="bento-item {{item.size || 'small'}} {{item.disabled ? 'disabled' : ''}}"
+          class="bento-item {{item.disabled ? 'disabled' : ''}}"
           bindtap="handleToolTap"
           data-tool-id="{{item.id}}"
           data-path="{{item.path}}"
@@ -130,6 +115,7 @@
             </view>
             <view class="content-wrapper">
               <view class="title">{{item.title}}</view>
+              <view class="desc">{{item.desc}}</view>
             </view>
           </view>
         </view>

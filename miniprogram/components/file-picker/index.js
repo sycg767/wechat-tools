@@ -75,7 +75,7 @@ Component({
     chooseImage() {
       wx.chooseImage({
         count: 1,
-        sizeType: ['original', 'compressed'],
+        sizeType: ['original'],
         sourceType: ['album', 'camera'],
         success: (res) => {
           const file = this.buildImageFile(res)

@@ -143,53 +143,6 @@
   min-height: 400rpx;
 }
 
-.featured-tool-card {
-  display: flex;
-  align-items: center;
-  gap: 24rpx;
-  margin: 0 8rpx 40rpx;
-  padding: 28rpx;
-  border-radius: 32rpx;
-  background: linear-gradient(145deg, #FFFFFF 45%, #F5FFF9 100%);
-  border: 1px solid rgba(16, 185, 129, 0.08);
-  box-shadow: 0 10rpx 32rpx rgba(0, 0, 0, 0.04);
-}
-
-.featured-tool-card-hover {
-  transform: scale(0.98);
-  filter: brightness(0.98);
-}
-
-.featured-tool-icon-wrap {
-  width: 112rpx;
-  height: 112rpx;
-  border-radius: 32rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  box-shadow: inset 0 2rpx 4rpx rgba(255, 255, 255, 0.8);
-}
-
-.featured-tool-content {
-  flex: 1;
-  min-width: 0;
-}
-
-.featured-tool-title {
-  font-size: 36rpx;
-  font-weight: 800;
-  color: #111827;
-  line-height: 1.3;
-}
-
-.featured-tool-desc {
-  margin-top: 8rpx;
-  font-size: 24rpx;
-  color: #6B7280;
-  line-height: 1.6;
-}
-
 .no-results {
   display: flex;
   flex-direction: column;
@@ -243,112 +196,70 @@
 /* Bento Grid */
 .bento-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-auto-rows: minmax(200rpx, auto); /* 移除固定高度限制，允许内容撑开 */
-  gap: 32rpx; /* 增加网格间距，提升呼吸感 */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24rpx;
+  padding: 0 4rpx;
 }
 
 .bento-item {
   position: relative;
+  height: 244rpx;
   background: #FFFFFF;
-  border-radius: 32rpx;
-  /* 极其轻微但锐利的阴影 */
-  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(0, 0, 0, 0.02);
+  border-radius: 30rpx;
+  box-shadow: 0 10rpx 28rpx rgba(17, 24, 39, 0.05);
+  border: 1rpx solid rgba(17, 24, 39, 0.04);
   overflow: hidden;
-  /* 优化过渡曲线，使交互更丝滑 */
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  transition: all 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* 现代微渐变系统：降低饱和度，增加通透感 */
-.theme-yellow { background: linear-gradient(145deg, #FFFFFF 50%, #FFFCF0 100%); }
-.theme-rose { background: linear-gradient(145deg, #FFFFFF 50%, #FFF5F5 100%); }
-.theme-blue { background: linear-gradient(145deg, #FFFFFF 50%, #F5F9FF 100%); }
-.theme-emerald { background: linear-gradient(145deg, #FFFFFF 50%, #F5FFF9 100%); }
-
-.bento-item.wide {
-  grid-column: span 2;
-  height: 160rpx; /* 降低大卡片高度 */
-}
-
-.bento-item.wide .card-inner {
-  flex-direction: row;
-  align-items: center;
-  padding: 0 32rpx;
-  gap: 24rpx;
-}
-
-.bento-item.wide .content-wrapper {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 4rpx;
-}
-
-.bento-item.wide .desc {
-  -webkit-line-clamp: 1;
-}
-
-.bento-item.large {
-  grid-column: span 2;
-  grid-row: span 2;
-}
+.theme-yellow { background: linear-gradient(145deg, #FFFFFF 42%, #FFF9D7 100%); }
+.theme-rose { background: linear-gradient(145deg, #FFFFFF 42%, #FFE8ED 100%); }
+.theme-blue { background: linear-gradient(145deg, #FFFFFF 42%, #E8F1FF 100%); }
+.theme-emerald { background: linear-gradient(145deg, #FFFFFF 42%, #E3FFF2 100%); }
+.theme-purple { background: linear-gradient(145deg, #FFFFFF 42%, #F0E9FF 100%); }
 
 .bento-item-hover {
-  /* 触觉反馈：微缩放 + 阴影收敛 */
-  transform: scale(0.96) translateY(4rpx);
-  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.02);
-  filter: brightness(0.97);
+  transform: scale(0.97) translateY(3rpx);
+  box-shadow: 0 4rpx 10rpx rgba(17, 24, 39, 0.04);
+  filter: brightness(0.98);
 }
 
 .card-inner {
-  padding: 32rpx;
+  padding: 24rpx;
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  gap: 10rpx; /* 缩小图标与标题间距 */
+  justify-content: space-between;
   box-sizing: border-box;
   position: relative;
   z-index: 1;
 }
 
-/* 卡片背景微光装饰 */
 .card-glow {
   position: absolute;
-  top: -20%;
-  right: -20%;
-  width: 200rpx;
-  height: 200rpx;
-  background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+  top: -72rpx;
+  right: -72rpx;
+  width: 180rpx;
+  height: 180rpx;
+  background: radial-gradient(circle, rgba(255,255,255,0.86) 0%, rgba(255,255,255,0) 68%);
   pointer-events: none;
   z-index: -1;
-  opacity: 0.5;
 }
 
-/* 针对小卡片的特殊优化 */
-.bento-item.small .card-inner {
-  padding: 32rpx;
-  gap: 16rpx;
-}
-
-/* Icon Styles: 引入轻量化毛玻璃质感 */
 .icon-wrapper {
-  width: 104rpx;
-  height: 104rpx;
-  border-radius: 32rpx;
+  width: 76rpx;
+  height: 76rpx;
+  border-radius: 24rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  /* 增强图标容器的视觉存在感 */
-  box-shadow: inset 0 2rpx 4rpx rgba(255, 255, 255, 0.8);
+  box-shadow: inset 0 2rpx 4rpx rgba(255, 255, 255, 0.82);
 }
 
 .bento-icon {
-  width: 44rpx;
-  height: 44rpx;
+  width: 34rpx;
+  height: 34rpx;
   background-color: currentColor;
   mask-size: contain;
   mask-repeat: no-repeat;
@@ -359,7 +270,7 @@
 }
 
 /* Icon Colors */
-.icon-pdf-word, .icon-pdf-excel, .icon-pdf-merge, .icon-pdf-split, .icon-pdf-watermark, .icon-pdf-manage {
+.icon-pdf-word, .icon-pdf-excel, .icon-pdf-merge, .icon-pdf-split, .icon-pdf-watermark, .icon-pdf-manage, .icon-word-pdf, .icon-signature {
   background-color: #FFF1F2;
   color: #F43F5E;
 }
@@ -369,7 +280,7 @@
   color: #3B82F6;
 }
 
-.icon-rename, .icon-csv-excel, .icon-vault {
+.icon-rename, .icon-csv-excel, .icon-vault, .icon-qr-code, .icon-unit {
   background-color: #ECFDF5;
   color: #10B981;
 }
@@ -384,23 +295,23 @@
   color: #C2410C;
 }
 
-.title {
-  font-size: 36rpx;
-  font-weight: 800; /* 强化标题权重 */
-  color: #1A1A1A;
-  line-height: 1.3;
-  letter-spacing: -0.8rpx;
+.content-wrapper {
+  min-width: 0;
 }
 
-.bento-item.small .title {
-  font-size: 32rpx;
+.title {
+  font-size: 30rpx;
+  font-weight: 800;
+  color: #111827;
+  line-height: 1.22;
+  letter-spacing: -0.4rpx;
 }
 
 .desc {
-  font-size: 24rpx; /* 略微缩小描述，拉开层级对比 */
-  color: #8E8E93;
-  margin-top: 2rpx;
-  line-height: 1.5;
+  margin-top: 10rpx;
+  font-size: 22rpx;
+  color: #7C8491;
+  line-height: 1.38;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;

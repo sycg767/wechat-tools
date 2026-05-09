@@ -1,0 +1,139 @@
+- generic [active]:
+  - generic:
+    - generic [ref=e1]:
+      - heading "三角洲行动一图流" [level=1] [ref=e2]
+      - list [ref=e3]:
+        - listitem [ref=e4]:
+          - generic [ref=e5]: 
+      - list [ref=e6]:
+        - listitem [ref=e7]:
+          - generic [ref=e8]: 
+        - listitem [ref=e9]:
+          - generic [ref=e10]: 
+        - listitem [ref=e11]:
+          - generic [ref=e12]: 
+    - list [ref=e15]:
+      - listitem [ref=e16]:
+        - link "热点内容一图流" [ref=e17] [cursor=pointer]:
+          - /url: javascript:;
+      - listitem [ref=e18]:
+        - link "DFTI测试" [ref=e19] [cursor=pointer]:
+          - /url: javascript:;
+      - listitem [ref=e20]:
+        - link "烽火挑战赛赛事手册" [ref=e21] [cursor=pointer]:
+          - /url: javascript:;
+      - listitem [ref=e22]:
+        - link "S9 相关 " [ref=e23] [cursor=pointer]:
+          - /url: javascript:;
+          - text: S9 相关
+          - generic [ref=e24]: 
+      - listitem [ref=e25]:
+        - link "热门 🔥 " [ref=e26] [cursor=pointer]:
+          - /url: javascript:;
+          - text: 热门 🔥
+          - generic [ref=e27]: 
+      - listitem [ref=e28]:
+        - link "新手攻略 " [ref=e29] [cursor=pointer]:
+          - /url: javascript:;
+          - text: 新手攻略
+          - generic [ref=e30]: 
+      - listitem [ref=e31]:
+        - link "任务攻略 " [ref=e32] [cursor=pointer]:
+          - /url: javascript:;
+          - text: 任务攻略
+          - generic [ref=e33]: 
+      - listitem [ref=e34]:
+        - link "交易行 " [ref=e35] [cursor=pointer]:
+          - /url: javascript:;
+          - text: 交易行
+          - generic [ref=e36]: 
+      - listitem [ref=e37]:
+        - link "活动 " [ref=e38] [cursor=pointer]:
+          - /url: javascript:;
+          - text: 活动
+          - generic [ref=e39]: 
+      - listitem [ref=e40]:
+        - link "数据模拟器 " [ref=e41] [cursor=pointer]:
+          - /url: javascript:;
+          - text: 数据模拟器
+          - generic [ref=e42]: 
+      - listitem [ref=e43]:
+        - link "动态地图 " [ref=e44] [cursor=pointer]:
+          - /url: javascript:;
+          - text: 动态地图
+          - generic [ref=e45]: 
+      - listitem [ref=e46]:
+        - link "DAEKK电竞咖 " [ref=e47] [cursor=pointer]:
+          - /url: javascript:;
+          - text: DAEKK电竞咖
+          - generic [ref=e48]: 
+      - listitem [ref=e49]:
+        - link "网站相关 " [ref=e50] [cursor=pointer]:
+          - /url: javascript:;
+          - text: 网站相关
+          - generic [ref=e51]: 
+      - listitem [ref=e52]:
+        - link "特别鸣谢" [ref=e53] [cursor=pointer]:
+          - /url: javascript:;
+      - listitem [ref=e54]:
+        - link "关于赞助" [ref=e55] [cursor=pointer]:
+          - /url: javascript:;
+      - listitem [ref=e56]:
+        - link [ref=e57] [cursor=pointer]:
+          - /url: javascript:;
+          - img [ref=e58]
+      - listitem [ref=e59]:
+        - link [ref=e60] [cursor=pointer]:
+          - /url: javascript:;
+          - img [ref=e61]
+      - listitem [ref=e62]:
+        - link [ref=e63] [cursor=pointer]:
+          - /url: javascript:;
+          - img [ref=e64]
+      - listitem [ref=e65]:
+        - link [ref=e66] [cursor=pointer]:
+          - /url: javascript:;
+          - img [ref=e67]
+    - blockquote [ref=e71]:
+      - generic [ref=e72]:
+        - generic [ref=e73]:
+          - paragraph [ref=e74]:
+            - text: 网站由
+            - link "@Key725" [ref=e75] [cursor=pointer]:
+              - /url: https://space.bilibili.com/11332884
+            - text: 及 热心小伙伴 联合制作及维护。
+          - paragraph [ref=e76]:
+            - text: 网站由
+            - link "@是爱你的白毛" [ref=e77] [cursor=pointer]:
+              - /url: https://space.bilibili.com/452192026
+            - text: 提供防护，购买高防服务器、CDN、游戏盾找
+            - link "@快快网络" [ref=e78] [cursor=pointer]:
+              - /url: http://www.kkidc.com/i/UthIzWqeE
+            - text: 。
+          - paragraph [ref=e79]:
+            - text: 网站官方QQ群
+            - link "1035748373" [ref=e80] [cursor=pointer]:
+              - /url: https://qm.qq.com/q/E2Hb7IZZhS
+            - text: 。
+          - paragraph [ref=e81]:
+            - text: 感谢金主
+            - link "盼之账号交易 @盼之账号交易" [ref=e82] [cursor=pointer]:
+              - /url: https://www.pzds.com/goodsList/391/2000065?pzfrom=UBHKTF
+              - img "盼之账号交易" [ref=e83]
+              - text: "@盼之账号交易"
+            - text: 友情赞助。
+        - generic [ref=e85]:
+          - generic [ref=e86]:
+            - text: 
+            - img "盼之游戏服务" [ref=e88] [cursor=pointer]
+          - button "" [ref=e89] [cursor=pointer]
+          - button "" [ref=e90] [cursor=pointer]
+    - paragraph [ref=e95]:
+      - text: Copyright © 2024-2026 · 三角洲行动一图流 ·
+      - link "沪ICP备2024102033号" [ref=e96] [cursor=pointer]:
+        - /url: https://beian.miit.gov.cn
+      - text: ·
+      - link "使用条款&免责声明" [ref=e97] [cursor=pointer]:
+        - /url: javascript:;
+  - list [ref=e98]:
+    - listitem [ref=e99] [cursor=pointer]: 

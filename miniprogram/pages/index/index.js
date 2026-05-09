@@ -1,6 +1,5 @@
 const TOOL_PREFS_KEY = 'index_tool_prefs_v1'
 const RECENT_MAX = 10
-const HOME_FEATURED_TOOL_ID = 'password-vault'
 
 const TOOL_DEFS = [
   {
@@ -109,10 +108,10 @@ const TOOL_DEFS = [
   {
     id: 'compress-image',
     title: '图片压缩',
-    desc: '页面骨架已完成，等待后端接口',
+    desc: '上传图片并调节压缩质量',
     path: '/pages-tool/compress-image/index',
     iconClass: 'icon-image',
-    tag: '开发中',
+    tag: '实用',
     disabled: false,
     category: '图片处理',
     order: 10,
@@ -306,6 +305,17 @@ const TOOL_DEFS = [
     order: 1,
     size: 'large',
     svgPath: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z'
+  },
+  {
+    id: 'delta-password',
+    title: '三角洲密码',
+    desc: '每日地图密码速查',
+    path: '/pages-king/delta-password/index',
+    iconClass: 'icon-random',
+    tag: '每日',
+    category: '游戏工具',
+    order: 2,
+    svgPath: 'M12 2l3 7h7l-5.5 4.2 2.2 7L12 16l-6.7 4.2 2.2-7L2 9h7z'
   }
 ]
 
@@ -334,17 +344,17 @@ Page({
     toolSections: [],
     favorites: [],
     recents: [],
-    featuredTool: null,
     viewMode: 'categories', // 'categories', 'sub', or 'search'
     currentCategory: null,
     searchQuery: '',
     searchResults: [],
     categoryDefs: [
-      { id: '游戏工具', title: '游戏工具', desc: '王者计分与娱乐辅助', iconClass: 'icon-eat', size: 'wide', theme: 'theme-yellow', svgPath: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z' },
-      { id: '文档处理', title: '文档处理', desc: 'PDF、Word、Excel 转换', iconClass: 'icon-pdf-word', size: 'wide', theme: 'theme-rose', svgPath: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8' },
-      { id: '图片处理', title: '图片处理', desc: '压缩、证件照、背景切换', iconClass: 'icon-id-photo', size: 'small', theme: 'theme-blue', svgPath: 'M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h18a2 2 0 0 1 2 2z M8.5 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z M21 15l-5-5L5 21' },
-      { id: '效率工具', title: '效率工具', desc: '重命名、二维码、签名', iconClass: 'icon-rename', size: 'small', theme: 'theme-emerald', svgPath: 'M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z' },
-      { id: '轻娱乐', title: '轻娱乐', desc: '吃什么', iconClass: 'icon-eat', size: 'small', theme: 'theme-purple', svgPath: 'M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z M6 1v3M10 1v3M14 1v3' }
+      { id: 'password-vault', toolId: 'password-vault', title: '密码保险箱', desc: '账号密码加密保存', path: '/pages-tool/password-vault/index', iconClass: 'icon-vault', theme: 'theme-emerald', svgPath: 'M12 2 4 7v6c0 5 3.5 9.4 8 10 4.5-.6 8-5 8-10V7l-8-5z M9 11a3 3 0 1 1 6 0v2 M8 13h8v5H8z' },
+      { id: '游戏工具', categoryId: '游戏工具', title: '游戏工具', desc: '王者计分与辅助', iconClass: 'icon-eat', theme: 'theme-yellow', svgPath: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z' },
+      { id: '文档处理', categoryId: '文档处理', title: '文档处理', desc: 'PDF、Word 转换', iconClass: 'icon-pdf-word', theme: 'theme-rose', svgPath: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8' },
+      { id: '图片处理', categoryId: '图片处理', title: '图片处理', desc: '压缩、背景切换', iconClass: 'icon-id-photo', theme: 'theme-blue', svgPath: 'M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h18a2 2 0 0 1 2 2z M8.5 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z M21 15l-5-5L5 21' },
+      { id: '效率工具', categoryId: '效率工具', title: '效率工具', desc: '重命名、二维码', iconClass: 'icon-rename', theme: 'theme-emerald', svgPath: 'M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z' },
+      { id: '轻娱乐', categoryId: '轻娱乐', title: '轻娱乐', desc: '解压、抽签小玩具', iconClass: 'icon-eat', theme: 'theme-purple', svgPath: 'M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z M6 1v3M10 1v3M14 1v3' }
     ]
   },
 
@@ -418,20 +428,16 @@ Page({
   initToolSections() {
     const prefs = this.sanitizePrefs(this.getToolPrefs())
     const toolSections = this.buildSections(this.data.tools, prefs.favorites, prefs.recents)
-    const featuredTool = this.data.tools
-      .filter(tool => tool.id === HOME_FEATURED_TOOL_ID)
-      .map(tool => createToolPresentation(tool, prefs.favorites))[0] || null
 
     this.setData({
       favorites: prefs.favorites,
       recents: prefs.recents,
-      featuredTool,
       toolSections
     })
   },
 
   buildSections(tools, favorites, recents) {
-    const visibleTools = tools.filter((tool) => tool.id !== HOME_FEATURED_TOOL_ID)
+    const visibleTools = tools
     const toolMap = {}
     visibleTools.forEach((tool) => {
       toolMap[tool.id] = createToolPresentation(tool, favorites)
@@ -485,9 +491,6 @@ Page({
     this.setData({
       favorites: prefs.favorites,
       recents: prefs.recents,
-      featuredTool: this.data.tools
-        .filter(tool => tool.id === HOME_FEATURED_TOOL_ID)
-        .map(tool => createToolPresentation(tool, prefs.favorites))[0] || null,
       toolSections: this.buildSections(this.data.tools, prefs.favorites, prefs.recents)
     })
   },
@@ -509,19 +512,19 @@ Page({
     this.setData({
       favorites: prefs.favorites,
       recents: prefs.recents,
-      featuredTool: this.data.tools
-        .filter(tool => tool.id === HOME_FEATURED_TOOL_ID)
-        .map(tool => createToolPresentation(tool, prefs.favorites))[0] || null,
       toolSections: this.buildSections(this.data.tools, prefs.favorites, prefs.recents)
     })
   },
 
-  handleCategoryTap(event) {
-    const { categoryId } = event.currentTarget.dataset
+  handleHomeCardTap(event) {
+    const { categoryId, toolId } = event.currentTarget.dataset
+    if (toolId) {
+      this.handleToolTap(event)
+      return
+    }
+
     const section = this.data.toolSections.find(s => s.key === `cat-${categoryId}`)
     if (section) {
-      // 方案：使用真正的页面跳转来解决左滑返回问题
-      // 将分类 ID 作为参数传递给当前页面，利用微信原生页面栈
       wx.navigateTo({
         url: `/pages/index/index?categoryId=${categoryId}&viewMode=sub`
       })
@@ -556,7 +559,7 @@ Page({
       return
     }
 
-    const results = this.data.tools.filter(tool => tool.id !== HOME_FEATURED_TOOL_ID).filter(tool =>
+    const results = this.data.tools.filter(tool =>
       tool.title.toLowerCase().includes(query) ||
       tool.desc.toLowerCase().includes(query) ||
       tool.category.toLowerCase().includes(query)

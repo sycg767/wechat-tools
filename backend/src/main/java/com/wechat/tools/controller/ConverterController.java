@@ -100,6 +100,7 @@ public class ConverterController {
                                         @RequestParam(value = "originalFileName", required = false) String originalFileName) {
         return fileTaskTemplate.submit(file)
                 .originalName(originalFileName)
+                .requireContentTypePrefix("image/")
                 .asTask("compress-image")
                 .run(ctx -> fileConversionTask.processCompressImage(ctx.taskId(), ctx.fileId(), ctx.fileName(), quality));
     }
