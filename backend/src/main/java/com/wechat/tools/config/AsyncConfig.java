@@ -11,7 +11,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.RejectedExecutionHandler;
 
 @Configuration
-@EnableConfigurationProperties({TencentCosProperties.class, TencentCiProperties.class})
+@EnableConfigurationProperties({TencentCosProperties.class, TencentCiProperties.class, VaultProperties.class})
 public class AsyncConfig {
 
     private static final Logger log = LoggerFactory.getLogger(AsyncConfig.class);

@@ -1,0 +1,23 @@
+<view class="container">
+  <view class="page-header">
+    <view class="page-title">记录详情</view>
+    <view class="page-desc">密码默认掩码显示，点击后仅短时展示，不会写入本地缓存。</view>
+  </view>
+
+  <view class="card form-card" wx:if="{{ item }}">
+    <view class="kv"><text class="k">平台</text><text class="v">{{ item.platform }}</text></view>
+    <view class="kv"><text class="k">账号</text><text class="v" user-select>{{ item.account }}</text></view>
+    <view class="kv"><text class="k">密码</text><text class="v password">{{ revealedPassword || '••••••••••••' }}</text></view>
+    <view class="btn-row">
+      <button class="btn-mini primary" bindtap="revealPassword" loading="{{ revealing }}" disabled="{{ revealing }}">显示密码</button>
+      <button class="btn-mini" bindtap="goEdit">编辑</button>
+      <button class="btn-mini danger" bindtap="removeItem">删除</button>
+    </view>
+
+    <view class="note-box" wx:if="{{ item.note }}">
+      <text class="label">备注</text>
+      <view class="note-text">{{ item.note }}</view>
+    </view>
+
+  </view>
+</view>

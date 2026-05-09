@@ -32,6 +32,24 @@
 
   <!-- Category View Mode -->
   <view wx:if="{{viewMode === 'categories'}}" class="view-fade-in">
+    <view
+      wx:if="{{featuredTool}}"
+      class="featured-tool-card"
+      bindtap="handleToolTap"
+      data-tool-id="{{featuredTool.id}}"
+      data-path="{{featuredTool.path}}"
+      data-disabled="{{featuredTool.disabled}}"
+      hover-class="featured-tool-card-hover"
+    >
+      <view class="featured-tool-icon-wrap {{featuredTool.iconClass}}">
+        <view class="bento-icon" style="-webkit-mask-image: {{featuredTool.maskImage}}; mask-image: {{featuredTool.maskImage}};"></view>
+      </view>
+      <view class="featured-tool-content">
+        <view class="featured-tool-title">{{featuredTool.title}}</view>
+        <view class="featured-tool-desc">{{featuredTool.desc}}</view>
+      </view>
+    </view>
+
     <view class="bento-grid">
       <block wx:for="{{categorySections}}" wx:key="id">
         <view

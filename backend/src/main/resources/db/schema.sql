@@ -83,6 +83,38 @@ CREATE TABLE IF NOT EXISTS qr_short_codes (
 );;
 CREATE INDEX IF NOT EXISTS idx_qr_short_codes_expires_at ON qr_short_codes(expires_at);;
 
+-- 7. 密码保险箱条目表
+CREATE TABLE IF NOT EXISTS vault_items (
+    id BIGSERIAL PRIMARY KEY,
+    user_id UUID NOT NULL REFERENCES users(id),
+    platform VARCHAR(120) NOT NULL,
+    account VARCHAR(160) NOT NULL,
+    password_cipher TEXT NOT NULL,
+    password_iv VARCHAR(64) NOT NULL,
+    note TEXT,
+    deleted_at TIMESTAMP WITH TIME ZONE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    version INTEGER DEFAULT 0
+);;
+CREATE INDEX IF NOT EXISTS idx_vault_items_user_id ON vault_items(user_id);;
+CREATE INDEX IF NOT EXISTS idx_vault_items_user_platform ON vault_items(user_id, platform);;
+
+-- 8. 密码显示审计表
+CREATE TABLE IF NOT EXISTS vault_reveal_audits (
+    id BIGSERIAL PRIMARY KEY,
+    user_id UUID NOT NULL REFERENCES users(id),
+    item_id BIGINT NOT NULL REFERENCES vault_items(id),
+    client_ip VARCHAR(128),
+    user_agent TEXT,
+    success BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    version INTEGER DEFAULT 0
+);;
+CREATE INDEX IF NOT EXISTS idx_vault_reveal_audits_user_id ON vault_reveal_audits(user_id);;
+CREATE INDEX IF NOT EXISTS idx_vault_reveal_audits_item_id ON vault_reveal_audits(item_id);;
+
 -- 自动更新 updated_at 的触发器函数
 CREATE OR REPLACE FUNCTION update_modified_column()
 RETURNS TRIGGER AS $BODY$
@@ -109,4 +141,10 @@ DROP TRIGGER IF EXISTS update_ks_records_modtime ON king_score_records;;
 CREATE TRIGGER update_ks_records_modtime BEFORE UPDATE ON king_score_records FOR EACH ROW EXECUTE PROCEDURE update_modified_column();;
 
 DROP TRIGGER IF EXISTS update_qr_short_codes_modtime ON qr_short_codes;;
+
+DROP TRIGGER IF EXISTS update_vault_items_modtime ON vault_items;;
+CREATE TRIGGER update_vault_items_modtime BEFORE UPDATE ON vault_items FOR EACH ROW EXECUTE PROCEDURE update_modified_column();;
+
+DROP TRIGGER IF EXISTS update_vault_reveal_audits_modtime ON vault_reveal_audits;;
+CREATE TRIGGER update_vault_reveal_audits_modtime BEFORE UPDATE ON vault_reveal_audits FOR EACH ROW EXECUTE PROCEDURE update_modified_column();;
 CREATE TRIGGER update_qr_short_codes_modtime BEFORE UPDATE ON qr_short_codes FOR EACH ROW EXECUTE PROCEDURE update_modified_column();;

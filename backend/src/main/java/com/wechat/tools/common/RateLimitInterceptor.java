@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class RateLimitInterceptor implements HandlerInterceptor {
 
     private static final int LIMIT_PER_MINUTE = 20;
+    private static final int VAULT_REVEAL_LIMIT_PER_MINUTE = 5;
     private static final long WINDOW_MILLIS = 60_000L;
 
     /** Map 容量超过这个阈值就触发一次清理，避免 IP 漂移导致无限增长。 */
@@ -29,13 +30,16 @@ public class RateLimitInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String uri = request.getRequestURI();
-        if (!(uri.contains("/file/upload") || uri.contains("/tool/rename") || uri.contains("/task/create"))) {
+        boolean isCommonProtected = uri.contains("/file/upload") || uri.contains("/tool/rename") || uri.contains("/task/create");
+        boolean isVaultReveal = uri.matches(".*/vault/items/[^/]+/reveal$");
+        if (!isCommonProtected && !isVaultReveal) {
             return true;
         }
 
+        int limit = isVaultReveal ? VAULT_REVEAL_LIMIT_PER_MINUTE : LIMIT_PER_MINUTE;
         String key = request.getRemoteAddr() + ":" + uri;
         SimpleRateLimiter limiter = rateLimiterCache
-                .computeIfAbsent(key, k -> new SimpleRateLimiter(LIMIT_PER_MINUTE, WINDOW_MILLIS));
+                .computeIfAbsent(key, k -> new SimpleRateLimiter(limit, WINDOW_MILLIS));
 
         if (rateLimiterCache.size() > CACHE_PURGE_THRESHOLD) {
             purgeStale();

@@ -3,6 +3,7 @@ package com.wechat.tools.common;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -36,6 +37,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public Result<?> handleMissingParam(MissingServletRequestParameterException e) {
         return Result.error(400, "缺少必填参数：" + e.getParameterName());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Result<?> handleMethodArgumentNotValid(MethodArgumentNotValidException e) {
+        String message = e.getBindingResult().getFieldErrors().stream()
+                .findFirst()
+                .map(error -> error.getDefaultMessage() == null ? "请求参数不合法" : error.getDefaultMessage())
+                .orElse("请求参数不合法");
+        return Result.error(400, message);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)

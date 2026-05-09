@@ -1,5 +1,6 @@
 const TOOL_PREFS_KEY = 'index_tool_prefs_v1'
 const RECENT_MAX = 10
+const HOME_FEATURED_TOOL_ID = 'password-vault'
 
 const TOOL_DEFS = [
   {
@@ -206,6 +207,18 @@ const TOOL_DEFS = [
     svgPath: 'M16 18l6-6-6-6 M8 6l-6 6 6 6 M14 4l-4 16'
   },
   {
+    id: 'password-vault',
+    title: '密码保险箱',
+    desc: '账号密码加密保存与快速检索',
+    path: '/pages-tool/password-vault/index',
+    iconClass: 'icon-vault',
+    tag: '新增',
+    category: '首页推荐',
+    order: 1,
+    size: 'wide',
+    svgPath: 'M12 2 4 7v6c0 5 3.5 9.4 8 10 4.5-.6 8-5 8-10V7l-8-5z M9 11a3 3 0 1 1 6 0v2 M8 13h8v5H8z'
+  },
+  {
     id: 'eat-what',
     title: '今天吃什么',
     desc: '纠结没意义，交给运气吧',
@@ -298,6 +311,17 @@ const TOOL_DEFS = [
 
 const CATEGORY_ORDER = ['游戏工具', '文档处理', '图片处理', '效率工具', '轻娱乐']
 
+function createToolPresentation(tool, favorites) {
+  const svgPath = tool.svgPath || 'M12 2v20M2 12h20'
+  const maskImage = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="${svgPath}"></path></svg>')`
+
+  return {
+    ...tool,
+    isFavorite: favorites.includes(tool.id),
+    maskImage
+  }
+}
+
 function byOrderThenTitle(a, b) {
   const orderDiff = (a.order || 999) - (b.order || 999)
   if (orderDiff !== 0) return orderDiff
@@ -310,6 +334,7 @@ Page({
     toolSections: [],
     favorites: [],
     recents: [],
+    featuredTool: null,
     viewMode: 'categories', // 'categories', 'sub', or 'search'
     currentCategory: null,
     searchQuery: '',
@@ -393,25 +418,23 @@ Page({
   initToolSections() {
     const prefs = this.sanitizePrefs(this.getToolPrefs())
     const toolSections = this.buildSections(this.data.tools, prefs.favorites, prefs.recents)
+    const featuredTool = this.data.tools
+      .filter(tool => tool.id === HOME_FEATURED_TOOL_ID)
+      .map(tool => createToolPresentation(tool, prefs.favorites))[0] || null
 
     this.setData({
       favorites: prefs.favorites,
       recents: prefs.recents,
+      featuredTool,
       toolSections
     })
   },
 
   buildSections(tools, favorites, recents) {
+    const visibleTools = tools.filter((tool) => tool.id !== HOME_FEATURED_TOOL_ID)
     const toolMap = {}
-    tools.forEach((tool) => {
-      const svgPath = tool.svgPath || 'M12 2v20M2 12h20'
-      const maskImage = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="${svgPath}"></path></svg>')`
-      
-      toolMap[tool.id] = {
-        ...tool,
-        isFavorite: favorites.includes(tool.id),
-        maskImage
-      }
+    visibleTools.forEach((tool) => {
+      toolMap[tool.id] = createToolPresentation(tool, favorites)
     })
 
     const sections = []
@@ -431,7 +454,7 @@ Page({
     }
 
     CATEGORY_ORDER.forEach((category) => {
-      const items = tools
+      const items = visibleTools
         .filter((tool) => tool.category === category)
         .map((tool) => ({ ...toolMap[tool.id], sectionType: 'category' }))
         .sort((a, b) => {
@@ -462,6 +485,9 @@ Page({
     this.setData({
       favorites: prefs.favorites,
       recents: prefs.recents,
+      featuredTool: this.data.tools
+        .filter(tool => tool.id === HOME_FEATURED_TOOL_ID)
+        .map(tool => createToolPresentation(tool, prefs.favorites))[0] || null,
       toolSections: this.buildSections(this.data.tools, prefs.favorites, prefs.recents)
     })
   },
@@ -483,6 +509,9 @@ Page({
     this.setData({
       favorites: prefs.favorites,
       recents: prefs.recents,
+      featuredTool: this.data.tools
+        .filter(tool => tool.id === HOME_FEATURED_TOOL_ID)
+        .map(tool => createToolPresentation(tool, prefs.favorites))[0] || null,
       toolSections: this.buildSections(this.data.tools, prefs.favorites, prefs.recents)
     })
   },
@@ -527,7 +556,7 @@ Page({
       return
     }
 
-    const results = this.data.tools.filter(tool =>
+    const results = this.data.tools.filter(tool => tool.id !== HOME_FEATURED_TOOL_ID).filter(tool =>
       tool.title.toLowerCase().includes(query) ||
       tool.desc.toLowerCase().includes(query) ||
       tool.category.toLowerCase().includes(query)

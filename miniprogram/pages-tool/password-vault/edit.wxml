@@ -1,0 +1,24 @@
+<view class="container">
+  <view class="page-header">
+    <view class="page-title">{{ editing ? '编辑记录' : '新增记录' }}</view>
+    <view class="page-desc">平台、账号、密码分开保存，密码会在服务端加密后写入数据库。</view>
+  </view>
+
+  <view class="card form-card">
+    <text class="label">平台</text>
+    <input class="single" value="{{ form.platform }}" data-field="platform" bindinput="onInput" placeholder="例如：GitHub / 微信 / 阿里云" />
+
+    <text class="label mt">账号</text>
+    <input class="single" value="{{ form.account }}" data-field="account" bindinput="onInput" placeholder="邮箱 / 手机号 / 用户名" />
+
+    <text class="label mt">密码{{ editing ? '（留空则不修改）' : '' }}</text>
+    <input class="single" password value="{{ form.password }}" data-field="password" bindinput="onInput" placeholder="请输入密码" />
+
+    <text class="label mt">备注</text>
+    <textarea class="ta" value="{{ form.note }}" data-field="note" bindinput="onInput" placeholder="补充说明，例如二步验证、备用邮箱" auto-height />
+  </view>
+
+  <view class="footer-actions">
+    <button class="btn btn-primary" bindtap="submit" loading="{{ submitting }}" disabled="{{ submitting }}" hover-class="btn-hover">{{ editing ? '保存修改' : '创建记录' }}</button>
+  </view>
+</view>

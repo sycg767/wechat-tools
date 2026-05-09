@@ -1,0 +1,42 @@
+<view class="container">
+  <view class="page-header">
+    <view class="page-title">密码保险箱</view>
+    <view class="page-desc">保存常用平台账号密码，服务端加密存储，默认隐藏密码明文。</view>
+  </view>
+
+  <view class="card form-card search-card">
+    <text class="label">搜索</text>
+    <input class="search-input" value="{{ keyword }}" bindinput="onKeywordInput" confirm-type="search" bindconfirm="onSearchConfirm" placeholder="按平台或账号搜索" />
+    <view class="filter-row">
+      <button class="btn btn-primary add-btn" bindtap="goCreate" hover-class="btn-hover">新增记录</button>
+    </view>
+  </view>
+
+  <view class="notice notice-info" wx:if="{{ !items.length && !loading }}">
+    <view class="notice-head">
+      <view class="notice-icon">i</view>
+      <view class="notice-title">还没有记录</view>
+    </view>
+    <view class="notice-text">先新增一条平台账号信息，后续可按平台或账号快速查找。</view>
+  </view>
+
+  <view class="list">
+    <view class="card item-card" wx:for="{{ items }}" wx:key="id">
+      <view class="item-head">
+        <view class="item-main">
+          <view class="item-title">{{ item.platform }}</view>
+          <view class="item-sub">{{ item.account }}</view>
+        </view>
+        <view class="more-link" bindtap="goDetail" data-id="{{ item.id }}">更多</view>
+      </view>
+      <view class="password-row">
+        <text class="password-value" user-select>{{ revealingId == item.id ? revealedPassword : '••••••••••••' }}</text>
+      </view>
+      <view class="action-row">
+        <view class="mini-action primary" bindtap="revealPassword" data-id="{{ item.id }}">显示</view>
+        <view class="mini-action" bindtap="copyPassword" data-password="{{ revealingId == item.id ? revealedPassword : '' }}">复制</view>
+      </view>
+      <view class="item-note" wx:if="{{ item.note }}">{{ item.note }}</view>
+    </view>
+  </view>
+</view>

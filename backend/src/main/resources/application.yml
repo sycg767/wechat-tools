@@ -96,6 +96,11 @@ tencent:
     keep-remote-files: ${TENCENT_CI_KEEP_REMOTE_FILES:false}
 
 # 监控端点：仅暴露 health/info/prometheus，避免内部接口被外部探测
+vault:
+  crypto-key: ${VAULT_CRYPTO_KEY:change-this-in-env}
+  demo-user-id: ${VAULT_DEMO_USER_ID:}
+  demo-openid: ${VAULT_DEMO_OPENID:vault-demo-user}
+
 management:
   endpoints:
     web:

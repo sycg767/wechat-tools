@@ -33,7 +33,10 @@
         "random-gen/index",
         "pdf-sign/index",
         "md-export/index",
-        "dev-toolkit/index"
+        "dev-toolkit/index",
+        "password-vault/index",
+        "password-vault/edit",
+        "password-vault/detail"
       ]
     },
     {

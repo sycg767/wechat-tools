@@ -1,0 +1,32 @@
+@import "../../app.wxss";
+
+.single,
+.ta {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: var(--border-radius-lg);
+  background: var(--card-subtle);
+  border: 1px solid rgba(17, 24, 39, 0.06);
+  color: var(--text-main);
+}
+
+.single {
+  height: 92rpx;
+  padding: 0 24rpx;
+  font-size: 26rpx;
+}
+
+.ta {
+  min-height: 220rpx;
+  padding: 24rpx;
+  font-size: 26rpx;
+  line-height: 1.7;
+}
+
+.mt {
+  margin-top: 28rpx;
+}
+
+.footer-actions {
+  display: flex;
+}
