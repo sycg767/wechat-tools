@@ -1,6 +1,8 @@
 package com.wechat.tools.task;
 
 import com.baidu.aip.ocr.AipOcr;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wechat.tools.common.TaskStatusResult;
 import com.wechat.tools.config.TencentCiProperties;
 import com.wechat.tools.service.FileStorageService;
@@ -9,15 +11,12 @@ import com.wechat.tools.service.TencentCosObjectService;
 import com.wechat.tools.service.TencentDocProcessService;
 import net.coobird.thumbnailator.Thumbnails;
 import net.sourceforge.tess4j.Tesseract;
-import org.apache.pdfbox.Loader;
-import org.apache.pdfbox.io.RandomAccessReadBuffer;
 import org.apache.pdfbox.multipdf.PDFMergerUtility;
 import org.apache.pdfbox.multipdf.Splitter;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 import org.apache.pdfbox.pdmodel.graphics.state.PDExtendedGraphicsState;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
@@ -95,6 +94,7 @@ public class FileConversionTask {
     private final TencentDocProcessService tencentDocProcessService;
     private final TencentCiProperties tencentCiProperties;
     private final com.wechat.tools.pdf.PdfcpuRunner pdfcpuRunner;
+    private final com.wechat.tools.service.MarkdownConvertService markdownConvertService;
 
     @Value("${baidu.ocr.app-id:}")
     private String baiduAppId;
@@ -131,13 +131,15 @@ public class FileConversionTask {
                               TencentCosObjectService tencentCosObjectService,
                               TencentDocProcessService tencentDocProcessService,
                               TencentCiProperties tencentCiProperties,
-                              com.wechat.tools.pdf.PdfcpuRunner pdfcpuRunner) {
+                              com.wechat.tools.pdf.PdfcpuRunner pdfcpuRunner,
+                              com.wechat.tools.service.MarkdownConvertService markdownConvertService) {
         this.taskService = taskService;
         this.fileStorageService = fileStorageService;
         this.tencentCosObjectService = tencentCosObjectService;
         this.tencentDocProcessService = tencentDocProcessService;
         this.tencentCiProperties = tencentCiProperties;
         this.pdfcpuRunner = pdfcpuRunner;
+        this.markdownConvertService = markdownConvertService;
     }
 
     @Async("taskExecutor")
@@ -383,9 +385,9 @@ public class FileConversionTask {
                     try (java.io.InputStream is = fileStorageService.downloadFile(fileId)) {
                         data = is.readAllBytes();
                     }
-                    PDDocument doc = Loader.loadPDF(data);
+                    PDDocument doc = PDDocument.load(data);
                     documents.add(doc);
-                    merger.addSource(new RandomAccessReadBuffer(data));
+                    merger.addSource(new ByteArrayInputStream(data));
                     
                     int progress = 10 + (int) (((double) (i + 1) / sourceFileIds.size()) * 70);
                     taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, progress));
@@ -429,7 +431,7 @@ public class FileConversionTask {
                 fileData = is.readAllBytes();
             }
             
-            try (PDDocument document = Loader.loadPDF(fileData)) {
+            try (PDDocument document = PDDocument.load(fileData)) {
                 Splitter splitter = new Splitter();
                 
                 // 解析范围，例如 "1-3,5"
@@ -548,7 +550,7 @@ public class FileConversionTask {
             throw new IllegalArgumentException("页面列表不能为空");
         }
 
-        try (PDDocument source = Loader.loadPDF(tempInput.toFile());
+        try (PDDocument source = PDDocument.load(tempInput.toFile());
              PDDocument output = new PDDocument()) {
             int total = source.getNumberOfPages();
 
@@ -601,16 +603,16 @@ public class FileConversionTask {
                 }
             }
             
-            try (PDDocument document = Loader.loadPDF(fileData)) {
+            try (PDDocument document = PDDocument.load(fileData)) {
                 org.apache.pdfbox.pdmodel.font.PDFont font = null;
                 PDImageXObject pdImage = null;
 
                 if ("text".equals(type)) {
                     try {
                         File fontFile = new File("C:/Windows/Fonts/simhei.ttf");
-                        font = fontFile.exists() ? PDType0Font.load(document, fontFile) : new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD);
+                        font = fontFile.exists() ? PDType0Font.load(document, fontFile) : PDType1Font.HELVETICA_BOLD;
                     } catch (Exception e) {
-                        font = new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD);
+                        font = PDType1Font.HELVETICA_BOLD;
                     }
                 } else if ("image".equals(type) && imageData != null) {
                     pdImage = PDImageXObject.createFromByteArray(document, imageData, "watermark");
@@ -967,7 +969,7 @@ public class FileConversionTask {
 
 
     private String extractPdfTextWithOcr(String taskId, byte[] fileData) throws Exception {
-        try (PDDocument document = Loader.loadPDF(fileData)) {
+        try (PDDocument document = PDDocument.load(fileData)) {
             String text = extractPdfTextWithLayout(document);
 
             // 如果提取出的文本为空或长度极短，则判定为扫描件，启动 OCR
@@ -2591,6 +2593,159 @@ public class FileConversionTask {
             return defaultValue;
         }
         return fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
+    }
+
+    /**
+     * PDF 电子签字异步处理。
+     * <p>
+     * 签名定位采用归一化坐标（0-1），对页面尺寸做反归一。注意 PDFBox 用户空间原点在左下，
+     * 而前端拖拽 UI 原点在左上，需要做 y 轴翻转：{@code pdfY = pageHeight - (relY + relHeight) * pageHeight}。
+     */
+    @Async("taskExecutor")
+    public void processPdfSign(String taskId, String sourceFileId, String signatureFileId,
+                               String originalFileName, String signaturesJson) {
+        try {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 10));
+
+            byte[] pdfData;
+            try (java.io.InputStream is = fileStorageService.downloadFile(sourceFileId)) {
+                pdfData = is.readAllBytes();
+            }
+            byte[] signatureData;
+            try (java.io.InputStream is = fileStorageService.downloadFile(signatureFileId)) {
+                signatureData = is.readAllBytes();
+            }
+
+            JsonNode signatures = new ObjectMapper().readTree(signaturesJson);
+            if (!signatures.isArray() || signatures.isEmpty()) {
+                throw new IllegalArgumentException("签名位置列表为空");
+            }
+
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 30));
+
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            try (PDDocument document = PDDocument.load(pdfData)) {
+                PDImageXObject signImage = PDImageXObject.createFromByteArray(
+                        document, signatureData, "signature");
+                int totalPages = document.getNumberOfPages();
+
+                for (JsonNode item : signatures) {
+                    int page = item.path("page").asInt(1);
+                    if (page < 1 || page > totalPages) {
+                        continue;
+                    }
+                    float relX = (float) item.path("x").asDouble(0);
+                    float relY = (float) item.path("y").asDouble(0);
+                    float relW = (float) item.path("width").asDouble(0.2);
+                    float relH = (float) item.path("height").asDouble(0.05);
+
+                    PDPage pdPage = document.getPage(page - 1);
+                    float pageWidth = pdPage.getMediaBox().getWidth();
+                    float pageHeight = pdPage.getMediaBox().getHeight();
+                    int rotation = pdPage.getRotation();
+
+                    // PDFRenderer.renderImageWithDPI 在生成预览缩略图时自动处理了页面旋转，
+                    // 预览图的宽高可能和 MediaBox 不一致（如旋转 90°/270° 时宽高互换）。
+                    // 这里需要按预览图的坐标系来计算，否则签名位置会偏移。
+                    float normWidth, normHeight;
+                    if (rotation == 90 || rotation == 270) {
+                        normWidth = pageHeight;
+                        normHeight = pageWidth;
+                    } else {
+                        normWidth = pageWidth;
+                        normHeight = pageHeight;
+                    }
+
+                    float drawX = relX * normWidth;
+                    float drawW = relW * normWidth;
+                    float drawH = relH * normHeight;
+                    // 前端 y 从顶部计（0=顶）；PDF 坐标系 y 从底部计（0=底）
+                    float drawY = normHeight - (relY * normHeight) - drawH;
+
+                    try (PDPageContentStream cs = new PDPageContentStream(
+                            document, pdPage,
+                            PDPageContentStream.AppendMode.APPEND, true, true)) {
+                        cs.drawImage(signImage, drawX, drawY, drawW, drawH);
+                    }
+                }
+
+                taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 80));
+                document.save(out);
+            }
+
+            String resultName = appendSuffixBeforeExtension(originalFileName, "_signed");
+            String resultFileId = fileStorageService.uploadFile(
+                    resultName,
+                    new ByteArrayInputStream(out.toByteArray()),
+                    out.size(),
+                    "application/pdf");
+            String resultUrl = fileStorageService.getFileUrl(resultFileId, resultName);
+            taskService.updateTaskStatus(taskId, TaskStatusResult.success(taskId, resultUrl, resultName));
+
+            fileStorageService.deleteFile(sourceFileId);
+            fileStorageService.deleteFile(signatureFileId);
+        } catch (Exception e) {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "PDF 签字失败: " + e.getMessage()));
+        }
+    }
+
+    private static String appendSuffixBeforeExtension(String fileName, String suffix) {
+        if (fileName == null || fileName.isBlank()) {
+            return "signed.pdf";
+        }
+        int dot = fileName.lastIndexOf('.');
+        if (dot < 0) {
+            return fileName + suffix;
+        }
+        return fileName.substring(0, dot) + suffix + fileName.substring(dot);
+    }
+
+    @Async("taskExecutor")
+    public void processMdToPdf(String taskId, String markdown, String title) {
+        try {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 30));
+            byte[] pdf = markdownConvertService.toPdf(markdown);
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 80));
+
+            String fileName = ensureExtension(title, ".pdf");
+            String resultFileId = fileStorageService.uploadFile(
+                    fileName, new ByteArrayInputStream(pdf), pdf.length, "application/pdf");
+            String url = fileStorageService.getFileUrl(resultFileId, fileName);
+            taskService.updateTaskStatus(taskId, TaskStatusResult.success(taskId, url, fileName));
+        } catch (Throwable t) {
+            String message = t.getMessage() == null || t.getMessage().isBlank() ? t.getClass().getSimpleName() : t.getMessage();
+            taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "Markdown 转 PDF 失败: " + message));
+        }
+    }
+
+    @Async("taskExecutor")
+    public void processMdToWord(String taskId, String markdown, String title) {
+        try {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 30));
+            byte[] doc = markdownConvertService.toWord(markdown);
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 80));
+
+            // 用 .doc 后缀（Word HTML 模式），Word/WPS/LibreOffice 都能直接打开
+            String fileName = ensureExtension(stripExtension(title), ".doc");
+            String resultFileId = fileStorageService.uploadFile(
+                    fileName, new ByteArrayInputStream(doc), doc.length, "application/msword");
+            String url = fileStorageService.getFileUrl(resultFileId, fileName);
+            taskService.updateTaskStatus(taskId, TaskStatusResult.success(taskId, url, fileName));
+        } catch (Throwable t) {
+            String message = t.getMessage() == null || t.getMessage().isBlank() ? t.getClass().getSimpleName() : t.getMessage();
+            taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "Markdown 转 Word 失败: " + message));
+        }
+    }
+
+    private static String ensureExtension(String name, String ext) {
+        if (name == null || name.isBlank()) return "result" + ext;
+        return name.toLowerCase().endsWith(ext) ? name : name + ext;
+    }
+
+    private static String stripExtension(String name) {
+        if (name == null) return "result";
+        int dot = name.lastIndexOf('.');
+        return dot < 0 ? name : name.substring(0, dot);
     }
 
     private void safeDeleteRemoteObject(String objectKey) {

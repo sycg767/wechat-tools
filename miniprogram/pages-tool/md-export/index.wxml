@@ -1,0 +1,46 @@
+<view class="container">
+  <view class="page-header">
+    <view class="page-title">Markdown 转 PDF / Word</view>
+    <view class="page-desc">支持表格、代码块、任务列表、删除线，可直接导入 .md 文件继续导出。</view>
+  </view>
+
+  <view class="card form-card header-card">
+    <text class="label">文档标题</text>
+    <input class="title-input" placeholder="给文档起个名字" value="{{ title }}" bindinput="onTitleInput" maxlength="50" />
+  </view>
+
+  <view class="card form-card">
+    <view class="card-head">
+      <view class="card-title">Markdown 内容</view>
+      <view class="counter">{{ content.length }}/200000</view>
+    </view>
+
+    <textarea
+      class="md-input"
+      value="{{ content }}"
+      bindinput="onContentInput"
+      placeholder="在这里写 Markdown..."
+      auto-height
+      maxlength="-1"
+    />
+
+    <view class="tool-row">
+      <button class="mini-action" bindtap="chooseMdFile">导入 MD 文件</button>
+      <button class="mini-action" bindtap="loadSample">载入示例</button>
+      <button class="mini-action danger" bindtap="clearAll">清空</button>
+    </view>
+
+    <view class="notice notice-info notice-box">
+      <view class="notice-head">
+        <view class="notice-icon">i</view>
+        <view class="notice-title">导出说明</view>
+      </view>
+      <view class="notice-text">适合笔记、说明文档、表格内容快速导出；PDF 更适合分享，Word 更适合后续编辑。</view>
+    </view>
+  </view>
+
+  <view class="footer-actions">
+    <button class="btn btn-primary {{ submitting ? 'btn-disabled' : '' }}" bindtap="exportPdf" loading="{{ submitting }}" disabled="{{ submitting }}">导出 PDF</button>
+    <button class="btn btn-secondary" bindtap="exportWord" loading="{{ submitting }}" disabled="{{ submitting }}">导出 Word</button>
+  </view>
+</view>

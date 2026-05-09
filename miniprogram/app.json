@@ -1,35 +1,75 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/rename/rename",
-    "pages/pdf-word/index",
     "pages/tasks/index",
-    "pages/task-detail/index",
-    "pages/pdf-excel/index",
-    "pages/compress-image/index",
-    "pages/id-photo-bg/index",
-    "pages/pdf-merge/index",
-    "pages/pdf-split/index",
-    "pages/pdf-watermark/index",
-    "pages/word-pdf/index",
-    "pages/csv-excel/index",
-    "pages/qr-tool/index",
-    "pages/signature/index",
-    "pages/signature-editor/index",
-    "pages/unit-convert/index",
-    "pages/random-gen/index",
-    "pages/eat-what/index",
-    "pages/pdf-manage/index",
-    "pages/king-score/index",
-    "pages/king-score-player/index",
-    "pages/king-score-overview/index",
-    "pages/wooden-fish/index",
-    "pages/book-answer/index",
-    "pages/fish-wheel/index",
-    "pages/bubble-wrap/index",
-    "pages/party-draw/index",
-    "pages/cyber-fortune/index"
+    "pages/task-detail/index"
   ],
+  "subPackages": [
+    {
+      "root": "pages-doc",
+      "name": "doc",
+      "pages": [
+        "pdf-word/index",
+        "word-pdf/index",
+        "pdf-excel/index",
+        "csv-excel/index",
+        "pdf-merge/index",
+        "pdf-split/index",
+        "pdf-watermark/index",
+        "pdf-manage/index"
+      ]
+    },
+    {
+      "root": "pages-tool",
+      "name": "tool",
+      "pages": [
+        "rename/rename",
+        "compress-image/index",
+        "id-photo-bg/index",
+        "qr-tool/index",
+        "signature/index",
+        "signature-editor/index",
+        "unit-convert/index",
+        "random-gen/index",
+        "pdf-sign/index",
+        "md-export/index",
+        "dev-toolkit/index"
+      ]
+    },
+    {
+      "root": "pages-fun",
+      "name": "fun",
+      "pages": [
+        "eat-what/index",
+        "wooden-fish/index",
+        "book-answer/index",
+        "fish-wheel/index",
+        "bubble-wrap/index",
+        "party-draw/index",
+        "cyber-fortune/index"
+      ]
+    },
+    {
+      "root": "pages-king",
+      "name": "king",
+      "pages": [
+        "king-score/index",
+        "king-score-player/index",
+        "king-score-overview/index"
+      ]
+    }
+  ],
+  "preloadRule": {
+    "pages/index/index": {
+      "network": "all",
+      "packages": ["doc", "tool"]
+    },
+    "pages-king/king-score/index": {
+      "network": "all",
+      "packages": ["king"]
+    }
+  },
+  "lazyCodeLoading": "requiredComponents",
   "window": {
     "navigationBarTitleText": "实用工具箱",
     "navigationBarBackgroundColor": "#ffffff",
@@ -41,6 +81,6 @@
   "networkTimeout": {
     "request": 20000,
     "downloadFile": 60000,
-    "uploadFile": 60000
+    "uploadFile": 120000
   }
 }

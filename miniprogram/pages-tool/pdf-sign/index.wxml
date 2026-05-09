@@ -1,0 +1,86 @@
+<view class="container">
+  <view class="page-header">
+    <view class="page-title">PDF 电子签字</view>
+    <view class="page-desc">给 PDF 任意页面盖上手写签名，支持选中后调整大小、拖动位置与重新落点。</view>
+  </view>
+
+  <view class="card form-card">
+    <view class="card-title">第 1 步：选择 PDF</view>
+    <view class="action-row">
+      <button class="btn btn-primary" bindtap="chooseFile" hover-class="btn-hover">{{ pdfFile ? '重新选择 PDF' : '选择 PDF 文件' }}</button>
+    </view>
+    <view class="file-chip" wx:if="{{ pdfFile }}">{{ pdfFile.name }}</view>
+  </view>
+
+  <view class="card form-card" wx:if="{{ pdfFile }}">
+    <view class="card-title">第 2 步：准备签名</view>
+    <view class="action-row">
+      <button class="btn btn-secondary" bindtap="goDrawSignature" hover-class="btn-hover">手写签名</button>
+      <button class="btn btn-secondary" bindtap="pickSignatureImage" hover-class="btn-hover">从相册选</button>
+    </view>
+    <view class="signature-preview" wx:if="{{ signatureBase64 }}">
+      <image src="{{ signatureBase64 }}" mode="aspectFit"></image>
+    </view>
+  </view>
+
+  <view class="card form-card" wx:if="{{ pdfFile && signatureFileId && pages.length }}">
+    <view class="card-title">第 3 步：放置并调整签名</view>
+
+    <view class="page-tabs">
+      <scroll-view scroll-x class="tabs-scroll">
+        <view
+          wx:for="{{ pages }}"
+          wx:key="pageNo"
+          class="tab {{ currentPageIdx === index ? 'tab-active' : '' }}"
+          data-idx="{{ index }}"
+          bindtap="switchPage"
+        >第 {{ item.pageNo }} 页</view>
+      </scroll-view>
+    </view>
+
+    <view class="size-box">
+      <view class="size-row">
+        <text>{{ selectedPlacementKey ? '调整选中签名大小' : '新签名大小' }}</text>
+        <slider min="0.08" max="0.4" step="0.01" value="{{ signatureSize }}" bindchange="changeSize" show-value />
+      </view>
+    </view>
+
+    <view class="canvas-wrap" id="page-canvas" bindtap="onPageTap">
+      <image
+        src="{{ pages[currentPageIdx].thumbnailBase64 }}"
+        mode="widthFix"
+        class="page-thumb"
+      ></image>
+      <view
+        wx:for="{{ placements }}"
+        wx:key="key"
+        wx:if="{{ item.page === pages[currentPageIdx].pageNo }}"
+        class="placement {{ item.key === selectedPlacementKey ? 'placement-active' : '' }}"
+        style="left: {{ item.relX * 100 }}%; top: {{ item.relY * 100 }}%; width: {{ item.relW * 100 }}%; height: {{ item.relH * 100 }}%;"
+        catchtap="onPlacementTap"
+        catchtouchstart="onPlacementTouchStart"
+        catchtouchmove="onPlacementTouchMove"
+        catchtouchend="onPlacementTouchEnd"
+        catchtouchcancel="onPlacementTouchEnd"
+        data-key="{{ item.key }}"
+      >
+        <image src="{{ signatureBase64 }}" mode="aspectFit" class="placement-img"></image>
+        <view class="placement-x" catchtap="removePlacement" data-key="{{ item.key }}">×</view>
+      </view>
+    </view>
+
+    <view class="notice notice-info notice-box">
+      <view class="notice-head">
+        <view class="notice-icon">i</view>
+        <view class="notice-title">操作提示</view>
+      </view>
+      <view class="notice-text">已放置 {{ placements.length }} 处签名。空白处点击：{{ selectedPlacementKey ? '移动选中签名' : '新增签名' }}；再次点击选中签名可取消选择。</view>
+    </view>
+
+    <button class="link-action" bindtap="clearAll" wx:if="{{ placements.length }}">全部清除</button>
+  </view>
+
+  <view class="footer-actions" wx:if="{{ pdfFile && signatureFileId && placements.length }}">
+    <button class="btn btn-primary" bindtap="handleSubmit" loading="{{ submitting }}" disabled="{{ submitting }}" hover-class="btn-hover">生成签名后的 PDF</button>
+  </view>
+</view>

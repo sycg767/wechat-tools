@@ -1,0 +1,25 @@
+# 生产环境配置：仅覆盖与 dev 不同的项，其余从 application.yml 继承。
+# 部署：在 docker-compose 或部署平台设置 SPRING_PROFILES_ACTIVE=prod
+spring:
+  datasource:
+    # 线上必须通过环境变量提供，留空启动时会失败（这是预期，避免误带 root/root）
+    username: ${DB_USER:}
+    password: ${DB_PASSWORD:}
+  sql:
+    init:
+      # 生产不再每次启动跑 schema.sql；表结构变更走运维流程或后续接 Flyway
+      mode: never
+  jpa:
+    hibernate:
+      # validate：仅校验 entity 与表结构是否一致，不自动 DDL（防止改实体毁线上表）
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+
+# 生产关闭 health 详情，避免连接串等敏感信息泄漏
+management:
+  endpoint:
+    health:
+      show-details: never

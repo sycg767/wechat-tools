@@ -8,7 +8,7 @@ FROM eclipse-temurin:17-jre-jammy
 WORKDIR /app
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends tesseract-ocr tesseract-ocr-chi-sim tesseract-ocr-eng ca-certificates \
+    && apt-get install -y --no-install-recommends tesseract-ocr tesseract-ocr-chi-sim tesseract-ocr-eng fonts-noto-cjk ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 COPY tools/pdfcpu/pdfcpu /usr/local/bin/pdfcpu

@@ -11,7 +11,7 @@ import com.qcloud.cos.model.PutObjectRequest;
 import com.qcloud.cos.region.Region;
 import com.wechat.tools.config.TencentCosProperties;
 import com.wechat.tools.service.FileStorageService;
-import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @Service
-@Primary
+@Profile("prod")
 public class TencentCosFileStorageServiceImpl implements FileStorageService {
 
     private final TencentCosProperties cosProperties;

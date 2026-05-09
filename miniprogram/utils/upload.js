@@ -20,14 +20,26 @@ function upload(url, filePath, formData = {}, options = {}) {
       name: 'file',
       formData,
       success: (res) => {
-        const data = JSON.parse(res.data)
-        if (res.statusCode >= 200 && res.statusCode < 300 && data.code === 200) {
+        // wx.uploadFile 返回的 res.data 是字符串，需要先 parse；网关错误/超大响应可能是 HTML 直接 throw
+        let data
+        try {
+          data = JSON.parse(res.data)
+        } catch (e) {
+          reject(new Error(`服务异常 (HTTP ${res.statusCode})`))
+          return
+        }
+        if (res.statusCode >= 200 && res.statusCode < 300 && data && data.code === 200) {
           resolve(data)
           return
         }
-        reject(new Error(data.message || '上传失败'))
+        reject(new Error((data && data.message) || `上传失败 (HTTP ${res.statusCode})`))
       },
-      fail: (error) => reject(new Error(error.errMsg || '上传失败'))
+      fail: (error) => {
+        let msg = (error && error.errMsg) || '上传失败'
+        if (msg.includes('timeout')) msg = '上传超时，请检查网络后重试'
+        else if (msg.includes('fail') || msg.includes('abort')) msg = '网络异常，上传失败'
+        reject(new Error(msg))
+      }
     })
 
     if (uploadTask && typeof uploadTask.onProgressUpdate === 'function') {

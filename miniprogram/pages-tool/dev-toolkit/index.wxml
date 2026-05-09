@@ -1,0 +1,168 @@
+<view class="container">
+  <view class="page-header">
+    <view class="page-title">开发者工具箱</view>
+    <view class="page-desc">提供 JSON、Base64、URL、时间戳、Hash、UUID、颜色与进制等常用开发辅助能力。</view>
+  </view>
+
+  <view class="card mode-card">
+    <scroll-view scroll-x class="tabs">
+      <view
+        wx:for="{{ tabs }}"
+        wx:key="id"
+        class="tab {{ currentTab === item.id ? 'tab-active' : '' }}"
+        data-id="{{ item.id }}"
+        bindtap="switchTab"
+      >{{ item.name }}</view>
+    </scroll-view>
+  </view>
+
+  <view class="card tool-card" wx:if="{{ currentTab === 'json' }}">
+    <text class="label">JSON 输入</text>
+    <textarea class="ta" value="{{ jsonInput }}" bindinput="onJsonInput" placeholder='输入 JSON，例：{"a":1}' auto-height />
+    <view class="btn-row">
+      <button class="btn-mini" bindtap="jsonFormat">格式化</button>
+      <button class="btn-mini" bindtap="jsonMinify">压缩</button>
+      <button class="btn-mini primary" bindtap="jsonValidate">校验</button>
+    </view>
+    <view class="error" wx:if="{{ jsonError }}">{{ jsonError }}</view>
+    <view class="result" wx:if="{{ jsonOutput }}">
+      <view class="result-title">结果<text class="copy" data-text="{{ jsonOutput }}" bindtap="copyResult">复制</text></view>
+      <view class="result-content"><text user-select>{{ jsonOutput }}</text></view>
+    </view>
+  </view>
+
+  <view class="card tool-card" wx:if="{{ currentTab === 'base64' }}">
+    <view class="seg">
+      <view class="seg-item {{ base64Mode === 'encode' ? 'on' : '' }}" data-mode="encode" bindtap="setBase64Mode">编码</view>
+      <view class="seg-item {{ base64Mode === 'decode' ? 'on' : '' }}" data-mode="decode" bindtap="setBase64Mode">解码</view>
+    </view>
+    <text class="label">输入内容</text>
+    <textarea class="ta" value="{{ base64Input }}" bindinput="onBase64Input" placeholder="输入文本" auto-height />
+    <view class="btn-row">
+      <button class="btn-mini primary" bindtap="base64Run">{{ base64Mode === 'encode' ? '编码 →' : '解码 →' }}</button>
+    </view>
+    <view class="result" wx:if="{{ base64Output }}">
+      <view class="result-title">结果<text class="copy" data-text="{{ base64Output }}" bindtap="copyResult">复制</text></view>
+      <view class="result-content"><text user-select>{{ base64Output }}</text></view>
+    </view>
+  </view>
+
+  <view class="card tool-card" wx:if="{{ currentTab === 'url' }}">
+    <view class="seg">
+      <view class="seg-item {{ urlMode === 'encode' ? 'on' : '' }}" data-mode="encode" bindtap="setUrlMode">编码</view>
+      <view class="seg-item {{ urlMode === 'decode' ? 'on' : '' }}" data-mode="decode" bindtap="setUrlMode">解码</view>
+    </view>
+    <text class="label">输入内容</text>
+    <textarea class="ta" value="{{ urlInput }}" bindinput="onUrlInput" placeholder="输入 URL 或参数" auto-height />
+    <view class="btn-row">
+      <button class="btn-mini primary" bindtap="urlRun">{{ urlMode === 'encode' ? '编码 →' : '解码 →' }}</button>
+    </view>
+    <view class="result" wx:if="{{ urlOutput }}">
+      <view class="result-title">结果<text class="copy" data-text="{{ urlOutput }}" bindtap="copyResult">复制</text></view>
+      <view class="result-content"><text user-select>{{ urlOutput }}</text></view>
+    </view>
+  </view>
+
+  <view class="card tool-card" wx:if="{{ currentTab === 'time' }}">
+    <view class="notice notice-info notice-box">
+      <view class="notice-head">
+        <view class="notice-icon">i</view>
+        <view class="notice-title">当前时间</view>
+      </view>
+      <view class="notice-row">{{ timeNow }}</view>
+      <view class="notice-row">{{ timeNowSeconds }} 秒</view>
+    </view>
+    <view class="seg">
+      <view class="seg-item {{ timeMode === 'stamp2date' ? 'on' : '' }}" data-mode="stamp2date" bindtap="setTimeMode">时间戳 → 日期</view>
+      <view class="seg-item {{ timeMode === 'date2stamp' ? 'on' : '' }}" data-mode="date2stamp" bindtap="setTimeMode">日期 → 时间戳</view>
+    </view>
+    <text class="label">输入值</text>
+    <input class="single" value="{{ timeStamp }}" bindinput="onTimeStampInput" placeholder="{{ timeMode === 'stamp2date' ? '秒或毫秒时间戳' : '2026-05-08 12:00:00' }}" />
+    <view class="btn-row">
+      <button class="btn-mini" bindtap="fillCurrentTime">当前</button>
+      <button class="btn-mini primary" bindtap="timeConvert">转换</button>
+    </view>
+    <view class="result" wx:if="{{ timeFormatted }}">
+      <view class="result-title">结果<text class="copy" data-text="{{ timeFormatted }}" bindtap="copyResult">复制</text></view>
+      <view class="result-content"><text user-select>{{ timeFormatted }}</text></view>
+    </view>
+  </view>
+
+  <view class="card tool-card" wx:if="{{ currentTab === 'hash' }}">
+    <view class="card-sub">文本 Hash</view>
+    <textarea class="ta" value="{{ hashInput }}" bindinput="onHashInput" placeholder="输入文本" auto-height />
+    <view class="btn-row">
+      <button class="btn-mini primary" bindtap="hashText">计算文本 Hash</button>
+    </view>
+    <block wx:if="{{ hashTextResult }}">
+      <view class="hash-row" data-text="{{ hashTextResult.md5 }}" bindtap="copyResult">
+        <text class="hash-label">MD5</text><text class="hash-val" user-select>{{ hashTextResult.md5 }}</text>
+      </view>
+      <view class="hash-row" data-text="{{ hashTextResult.sha1 }}" bindtap="copyResult">
+        <text class="hash-label">SHA-1</text><text class="hash-val" user-select>{{ hashTextResult.sha1 }}</text>
+      </view>
+      <view class="hash-row" data-text="{{ hashTextResult.sha256 }}" bindtap="copyResult">
+        <text class="hash-label">SHA-256</text><text class="hash-val" user-select>{{ hashTextResult.sha256 }}</text>
+      </view>
+    </block>
+
+    <view class="card-sub" style="margin-top:32rpx;">文件 Hash（≤50MB）</view>
+    <button class="btn-mini" bindtap="hashFile">选择文件</button>
+    <block wx:if="{{ hashFileResult }}">
+      <view class="kv"><text class="k">文件</text><text class="v" user-select>{{ hashFileResult.fileName }}</text></view>
+      <view class="hash-row" data-text="{{ hashFileResult.md5 }}" bindtap="copyResult">
+        <text class="hash-label">MD5</text><text class="hash-val" user-select>{{ hashFileResult.md5 }}</text>
+      </view>
+      <view class="hash-row" data-text="{{ hashFileResult.sha1 }}" bindtap="copyResult">
+        <text class="hash-label">SHA-1</text><text class="hash-val" user-select>{{ hashFileResult.sha1 }}</text>
+      </view>
+      <view class="hash-row" data-text="{{ hashFileResult.sha256 }}" bindtap="copyResult">
+        <text class="hash-label">SHA-256</text><text class="hash-val" user-select>{{ hashFileResult.sha256 }}</text>
+      </view>
+    </block>
+  </view>
+
+  <view class="card tool-card" wx:if="{{ currentTab === 'uuid' }}">
+    <view class="kv">
+      <text class="k">数量（1-100）</text>
+      <input class="single short" type="number" value="{{ uuidCount }}" bindinput="onUuidCountChange" />
+    </view>
+    <view class="row">
+      <view class="check {{ uuidUpper ? 'on' : '' }}" bindtap="toggleUuidUpper">大写</view>
+      <view class="check {{ uuidNoDash ? 'on' : '' }}" bindtap="toggleUuidNoDash">去掉 -</view>
+    </view>
+    <view class="btn-row">
+      <button class="btn-mini primary" bindtap="generateUuids">生成</button>
+    </view>
+    <view class="uuid-list" wx:if="{{ uuids.length }}">
+      <view wx:for="{{ uuids }}" wx:key="*this" class="uuid-item" data-text="{{ item }}" bindtap="copyResult">
+        <text user-select>{{ item }}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="card tool-card" wx:if="{{ currentTab === 'color' }}">
+    <text class="label">颜色值</text>
+    <input class="single" value="{{ colorHex }}" bindinput="onColorInput" placeholder="#RRGGBB" />
+    <view class="color-preview" style="background: {{ colorHex }};"></view>
+    <view class="kv"><text class="k">HEX</text><text class="v" user-select data-text="{{ colorHex }}" bindtap="copyResult">{{ colorHex }}</text></view>
+    <view class="kv"><text class="k">RGB</text><text class="v" user-select data-text="{{ colorRgb }}" bindtap="copyResult">{{ colorRgb }}</text></view>
+    <view class="kv"><text class="k">HSL</text><text class="v" user-select data-text="{{ colorHsl }}" bindtap="copyResult">{{ colorHsl }}</text></view>
+  </view>
+
+  <view class="card tool-card" wx:if="{{ currentTab === 'radix' }}">
+    <view class="seg">
+      <view class="seg-item {{ radixFrom === 2 ? 'on' : '' }}" data-from="2" bindtap="setRadixFrom">2</view>
+      <view class="seg-item {{ radixFrom === 8 ? 'on' : '' }}" data-from="8" bindtap="setRadixFrom">8</view>
+      <view class="seg-item {{ radixFrom === 10 ? 'on' : '' }}" data-from="10" bindtap="setRadixFrom">10</view>
+      <view class="seg-item {{ radixFrom === 16 ? 'on' : '' }}" data-from="16" bindtap="setRadixFrom">16</view>
+    </view>
+    <text class="label">输入数字</text>
+    <input class="single" value="{{ radixInput }}" bindinput="onRadixInput" placeholder="输入数字" />
+    <view class="error" wx:if="{{ radixError }}">{{ radixError }}</view>
+    <view class="kv"><text class="k">二进制</text><text class="v" user-select data-text="{{ radixResults.bin }}" bindtap="copyResult">{{ radixResults.bin }}</text></view>
+    <view class="kv"><text class="k">八进制</text><text class="v" user-select data-text="{{ radixResults.oct }}" bindtap="copyResult">{{ radixResults.oct }}</text></view>
+    <view class="kv"><text class="k">十进制</text><text class="v" user-select data-text="{{ radixResults.dec }}" bindtap="copyResult">{{ radixResults.dec }}</text></view>
+    <view class="kv"><text class="k">十六进制</text><text class="v" user-select data-text="{{ radixResults.hex }}" bindtap="copyResult">{{ radixResults.hex }}</text></view>
+  </view>
+</view>

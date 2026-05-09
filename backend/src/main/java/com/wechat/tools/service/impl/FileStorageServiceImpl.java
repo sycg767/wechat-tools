@@ -2,6 +2,7 @@ package com.wechat.tools.service.impl;
 
 import com.wechat.tools.service.FileStorageService;
 import jakarta.annotation.PostConstruct;
+import org.springframework.context.annotation.Profile;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
 @Service
-// @Primary // 已切换到 TencentCosFileStorageServiceImpl，此处取消 Primary
+@Profile("!prod")
 public class FileStorageServiceImpl implements FileStorageService {
 
     @Value("${storage.local.base-path:storage}")

@@ -72,6 +72,17 @@ CREATE INDEX IF NOT EXISTS idx_ks_records_session_id ON king_score_records(sessi
 CREATE INDEX IF NOT EXISTS idx_ks_records_member_id ON king_score_records(member_id);;
 CREATE INDEX IF NOT EXISTS idx_ks_records_detail_gin ON king_score_records USING GIN (record_detail);;
 
+-- 6. 二维码短码表（替代进程内 Map，避免重启丢失/多实例不一致）
+CREATE TABLE IF NOT EXISTS qr_short_codes (
+    code VARCHAR(16) PRIMARY KEY,
+    content TEXT NOT NULL,
+    expires_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    version INTEGER DEFAULT 0
+);;
+CREATE INDEX IF NOT EXISTS idx_qr_short_codes_expires_at ON qr_short_codes(expires_at);;
+
 -- 自动更新 updated_at 的触发器函数
 CREATE OR REPLACE FUNCTION update_modified_column()
 RETURNS TRIGGER AS $BODY$
@@ -96,3 +107,6 @@ CREATE TRIGGER update_ks_sessions_modtime BEFORE UPDATE ON king_score_sessions F
 
 DROP TRIGGER IF EXISTS update_ks_records_modtime ON king_score_records;;
 CREATE TRIGGER update_ks_records_modtime BEFORE UPDATE ON king_score_records FOR EACH ROW EXECUTE PROCEDURE update_modified_column();;
+
+DROP TRIGGER IF EXISTS update_qr_short_codes_modtime ON qr_short_codes;;
+CREATE TRIGGER update_qr_short_codes_modtime BEFORE UPDATE ON qr_short_codes FOR EACH ROW EXECUTE PROCEDURE update_modified_column();;
