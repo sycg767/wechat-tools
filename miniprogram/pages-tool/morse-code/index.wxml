@@ -1,0 +1,83 @@
+<view class="container morse-page">
+  <view class="page-header morse-hero">
+    <view>
+      <view class="page-title">摩斯电码</view>
+      <view class="page-desc">文本与电码双向转换，支持节奏预览和历史记录。</view>
+    </view>
+  </view>
+
+  <view class="card panel-card">
+    <view class="mode-switch">
+      <view class="mode-item {{mode === 'encode' ? 'active' : ''}}" bindtap="setMode" data-mode="encode">
+        <text class="mode-title">文本转电码</text>
+        <text class="mode-desc">HELLO → .... . .-.. .-.. ---</text>
+      </view>
+      <view class="mode-item {{mode === 'decode' ? 'active' : ''}}" bindtap="setMode" data-mode="decode">
+        <text class="mode-title">电码转文本</text>
+        <text class="mode-desc">... --- ... → SOS</text>
+      </view>
+    </view>
+
+    <view class="input-head">
+      <text class="label">输入内容</text>
+      <text class="input-tip">{{mode === 'encode' ? '支持英文、数字和常见标点' : '字母间空格，单词间用 / 分隔'}}</text>
+    </view>
+    <textarea class="textarea" value="{{input}}" bindinput="onInput" placeholder="{{mode === 'encode' ? '输入要转换的文本，例如 SOS' : '输入摩斯电码，例如 ... --- ...'}}" />
+
+    <view class="actions">
+      <button class="action-btn primary" bindtap="run">立即转换</button>
+      <button class="action-btn ghost" bindtap="clear">清空</button>
+    </view>
+
+    <view class="error-list" wx:if="{{errors.length}}">
+      <view class="error-item" wx:for="{{errors}}" wx:key="*this">{{item}}</view>
+    </view>
+  </view>
+
+  <view class="card result-card" wx:if="{{output}}">
+    <view class="section-head">
+      <view>
+        <text class="section-title">转换结果</text>
+        <text class="section-subtitle">可直接复制或查看节奏拆分</text>
+      </view>
+      <button class="mini-action" bindtap="copyResult">复制全部</button>
+    </view>
+    <view class="result-box">
+      <text class="result-text">{{output}}</text>
+    </view>
+    <view class="rhythm-block" wx:if="{{rhythm.length}}">
+      <view class="rhythm-title">
+        <text>节奏预览</text>
+        <view class="legend">
+          <text><text class="legend-dot dot"></text>点</text>
+          <text><text class="legend-dot dash"></text>划</text>
+          <text><text class="legend-dot word"></text>词间隔</text>
+        </view>
+      </view>
+      <view class="rhythm">
+        <view class="rhythm-item {{item.type}}" wx:for="{{rhythm}}" wx:key="id">{{item.type === 'gap' ? '' : item.label}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card history-card" wx:if="{{history.length}}">
+    <view class="section-head">
+      <view>
+        <text class="section-title">历史记录</text>
+        <text class="section-subtitle">最近转换内容</text>
+      </view>
+      <button class="mini-action light" bindtap="clearHistory">清空</button>
+    </view>
+    <view class="history-item" wx:for="{{history}}" wx:key="id">
+      <view class="history-main">
+        <view class="history-meta">
+          <text>{{item.title}}</text>
+          <text>{{item.time}}</text>
+        </view>
+        <text class="history-input">{{item.text}}</text>
+        <text class="history-output">{{item.output}}</text>
+      </view>
+      <button class="mini-action light" bindtap="copyItem" data-value="{{item.output}}">复制</button>
+    </view>
+  </view>
+</view>

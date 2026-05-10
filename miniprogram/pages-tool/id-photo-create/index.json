@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "证件照生成",
+  "usingComponents": {
+    "file-picker": "/components/file-picker/index"
+  }
+}

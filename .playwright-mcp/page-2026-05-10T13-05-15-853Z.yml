@@ -1,0 +1,697 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - link "Skip to content" [ref=e4] [cursor=pointer]:
+        - /url: "#start-of-content"
+      - banner [ref=e6]:
+        - heading "Navigation Menu" [level=2] [ref=e7]
+        - generic [ref=e8]:
+          - link "Homepage" [ref=e10] [cursor=pointer]:
+            - /url: /
+            - img [ref=e11]
+          - generic [ref=e13]:
+            - navigation "Global" [ref=e16]:
+              - list [ref=e17]:
+                - listitem [ref=e18]:
+                  - button "Platform" [ref=e20] [cursor=pointer]:
+                    - text: Platform
+                    - img [ref=e21]
+                - listitem [ref=e23]:
+                  - button "Solutions" [ref=e25] [cursor=pointer]:
+                    - text: Solutions
+                    - img [ref=e26]
+                - listitem [ref=e28]:
+                  - button "Resources" [ref=e30] [cursor=pointer]:
+                    - text: Resources
+                    - img [ref=e31]
+                - listitem [ref=e33]:
+                  - button "Open Source" [ref=e35] [cursor=pointer]:
+                    - text: Open Source
+                    - img [ref=e36]
+                - listitem [ref=e38]:
+                  - button "Enterprise" [ref=e40] [cursor=pointer]:
+                    - text: Enterprise
+                    - img [ref=e41]
+                - listitem [ref=e43]:
+                  - link "Pricing" [ref=e44] [cursor=pointer]:
+                    - /url: https://github.com/pricing
+                    - generic [ref=e45]: Pricing
+            - generic [ref=e46]:
+              - button "Search or jump to…" [ref=e49] [cursor=pointer]:
+                - img [ref=e51]
+                - generic [ref=e53]: Search or jump to...
+                - img [ref=e55]
+              - link "Sign in" [ref=e59] [cursor=pointer]:
+                - /url: /login?return_to=https%3A%2F%2Fgithub.com%2F2424004764%2Ftools-web%2Ftree%2Fmaster%2Ffunctions
+              - link "Sign up" [ref=e60] [cursor=pointer]:
+                - /url: /signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Ffiles%2Fdisambiguate&source=header-repo&source_repo=2424004764%2Ftools-web
+              - button "Appearance settings" [ref=e63] [cursor=pointer]:
+                - img
+    - main [ref=e67]:
+      - generic [ref=e68]:
+        - generic [ref=e69]:
+          - generic [ref=e70]:
+            - generic [ref=e71]:
+              - img [ref=e72]
+              - link "2424004764" [ref=e75] [cursor=pointer]:
+                - /url: /2424004764
+              - generic [ref=e76]: /
+              - strong [ref=e77]:
+                - link "tools-web" [ref=e78] [cursor=pointer]:
+                  - /url: /2424004764/tools-web
+              - generic [ref=e79]: Public
+            - generic [ref=e80]:
+              - text: forked from
+              - link "naroat/tools-web" [ref=e81] [cursor=pointer]:
+                - /url: /naroat/tools-web
+          - generic [ref=e82]:
+            - list:
+              - listitem [ref=e83]:
+                - link "You must be signed in to change notification settings" [ref=e84] [cursor=pointer]:
+                  - /url: /login?return_to=%2F2424004764%2Ftools-web
+                  - img [ref=e85]
+                  - text: Notifications
+              - listitem [ref=e87]:
+                - link "Fork 10" [ref=e88] [cursor=pointer]:
+                  - /url: /login?return_to=%2F2424004764%2Ftools-web
+                  - img [ref=e89]
+                  - text: Fork
+                  - generic "10" [ref=e91]
+              - listitem [ref=e92]:
+                - link "You must be signed in to star a repository" [ref=e94] [cursor=pointer]:
+                  - /url: /login?return_to=%2F2424004764%2Ftools-web
+                  - img [ref=e95]
+                  - text: Star
+                  - generic "18 users starred this repository" [ref=e97]: "18"
+        - navigation "Repository" [ref=e98]:
+          - list [ref=e99]:
+            - listitem [ref=e100]:
+              - link "Code" [ref=e101] [cursor=pointer]:
+                - /url: /2424004764/tools-web
+                - img [ref=e102]
+                - generic [ref=e104]: Code
+            - listitem [ref=e105]:
+              - link "Issues" [ref=e106] [cursor=pointer]:
+                - /url: /2424004764/tools-web/issues
+                - img [ref=e107]
+                - generic [ref=e110]: Issues
+            - listitem [ref=e111]:
+              - link "Pull requests" [ref=e112] [cursor=pointer]:
+                - /url: /2424004764/tools-web/pulls
+                - img [ref=e113]
+                - generic [ref=e115]: Pull requests
+            - listitem [ref=e116]:
+              - link "Discussions" [ref=e117] [cursor=pointer]:
+                - /url: /2424004764/tools-web/discussions
+                - img [ref=e118]
+                - generic [ref=e120]: Discussions
+            - listitem [ref=e121]:
+              - link "Actions" [ref=e122] [cursor=pointer]:
+                - /url: /2424004764/tools-web/actions
+                - img [ref=e123]
+                - generic [ref=e125]: Actions
+            - listitem [ref=e126]:
+              - link "Projects" [ref=e127] [cursor=pointer]:
+                - /url: /2424004764/tools-web/projects
+                - img [ref=e128]
+                - generic [ref=e130]: Projects
+            - listitem [ref=e131]:
+              - link "Security and quality" [ref=e132] [cursor=pointer]:
+                - /url: /2424004764/tools-web/security
+                - img [ref=e133]
+                - generic [ref=e135]: Security and quality
+            - listitem [ref=e136]:
+              - link "Insights" [ref=e137] [cursor=pointer]:
+                - /url: /2424004764/tools-web/pulse
+                - img [ref=e138]
+                - generic [ref=e140]: Insights
+      - generic [ref=e148]:
+        - generic [ref=e150]:
+          - generic [ref=e153]:
+            - generic [ref=e154]:
+              - generic [ref=e155]:
+                - heading "Collapse file tree" [level=2] [ref=e156]:
+                  - button "Collapse file tree" [expanded] [ref=e157] [cursor=pointer]:
+                    - img [ref=e158]
+                - heading "Files" [level=2] [ref=e161]
+              - generic [ref=e162]:
+                - button "master branch" [ref=e164] [cursor=pointer]:
+                  - generic [ref=e165]:
+                    - generic [ref=e167]:
+                      - img [ref=e169]
+                      - generic [ref=e172]: master
+                    - generic:
+                      - img
+                - button "Search this repository (forward slash)" [ref=e174] [cursor=pointer]:
+                  - img [ref=e175]
+            - generic [ref=e178]:
+              - img [ref=e180]
+              - combobox "Go to file" [ref=e182]
+            - navigation "File Tree Navigation" [ref=e188]:
+              - tree "Files" [ref=e190]:
+                - treeitem ".claude" [level=1] [ref=e191]:
+                  - generic [ref=e192] [cursor=pointer]:
+                    - img [ref=e194]
+                    - generic [ref=e196]:
+                      - img [ref=e200]
+                      - generic [ref=e202]: .claude
+                - treeitem ".github" [level=1] [ref=e203]:
+                  - generic [ref=e204] [cursor=pointer]:
+                    - img [ref=e206]
+                    - generic [ref=e208]:
+                      - img [ref=e212]
+                      - generic [ref=e214]: .github
+                - treeitem ".superdesign" [level=1] [ref=e215]:
+                  - generic [ref=e216] [cursor=pointer]:
+                    - img [ref=e218]
+                    - generic [ref=e220]:
+                      - img [ref=e224]
+                      - generic [ref=e226]: .superdesign
+                - treeitem "220个" [level=1] [ref=e227]:
+                  - generic [ref=e228] [cursor=pointer]:
+                    - img [ref=e230]
+                    - generic [ref=e232]:
+                      - img [ref=e236]
+                      - generic [ref=e238]: 220个
+                - treeitem "dev-dist" [level=1] [ref=e239]:
+                  - generic [ref=e240] [cursor=pointer]:
+                    - img [ref=e242]
+                    - generic [ref=e244]:
+                      - img [ref=e248]
+                      - generic [ref=e250]: dev-dist
+                - treeitem "dist" [level=1] [ref=e251]:
+                  - generic [ref=e252] [cursor=pointer]:
+                    - img [ref=e254]
+                    - generic [ref=e256]:
+                      - img [ref=e260]
+                      - generic [ref=e262]: dist
+                - treeitem "functions" [expanded] [level=1] [ref=e263]:
+                  - generic [ref=e264] [cursor=pointer]:
+                    - img [ref=e266]
+                    - generic [ref=e268]:
+                      - img [ref=e272]
+                      - generic [ref=e274]: functions
+                  - group "functions" [ref=e275]:
+                    - treeitem "api" [level=2] [ref=e276]:
+                      - generic [ref=e277] [cursor=pointer]:
+                        - img [ref=e282]
+                        - generic [ref=e284]:
+                          - img [ref=e288]
+                          - generic [ref=e290]: api
+                    - treeitem "controllers" [level=2] [ref=e291]:
+                      - generic [ref=e292] [cursor=pointer]:
+                        - img [ref=e297]
+                        - generic [ref=e299]:
+                          - img [ref=e303]
+                          - generic [ref=e305]: controllers
+                    - treeitem "cron" [level=2] [ref=e306]:
+                      - generic [ref=e307] [cursor=pointer]:
+                        - img [ref=e312]
+                        - generic [ref=e314]:
+                          - img [ref=e318]
+                          - generic [ref=e320]: cron
+                    - treeitem "db" [level=2] [ref=e321]:
+                      - generic [ref=e322] [cursor=pointer]:
+                        - img [ref=e327]
+                        - generic [ref=e329]:
+                          - img [ref=e333]
+                          - generic [ref=e335]: db
+                    - treeitem "middlewares" [level=2] [ref=e336]:
+                      - generic [ref=e337] [cursor=pointer]:
+                        - img [ref=e342]
+                        - generic [ref=e344]:
+                          - img [ref=e348]
+                          - generic [ref=e350]: middlewares
+                    - treeitem "routes" [level=2] [ref=e351]:
+                      - generic [ref=e352] [cursor=pointer]:
+                        - img [ref=e357]
+                        - generic [ref=e359]:
+                          - img [ref=e363]
+                          - generic [ref=e365]: routes
+                    - treeitem "s" [level=2] [ref=e366]:
+                      - generic [ref=e367] [cursor=pointer]:
+                        - img [ref=e372]
+                        - generic [ref=e374]:
+                          - img [ref=e378]
+                          - generic [ref=e380]: s
+                    - treeitem "services" [level=2] [ref=e381]:
+                      - generic [ref=e382] [cursor=pointer]:
+                        - img [ref=e387]
+                        - generic [ref=e389]:
+                          - img [ref=e393]
+                          - generic [ref=e395]: services
+                    - treeitem "utils" [level=2] [ref=e396]:
+                      - generic [ref=e397] [cursor=pointer]:
+                        - img [ref=e402]
+                        - generic [ref=e404]:
+                          - img [ref=e408]
+                          - generic [ref=e410]: utils
+                    - treeitem "_middleware.js" [level=2] [ref=e411]:
+                      - generic [ref=e416] [cursor=pointer]:
+                        - img [ref=e419]
+                        - generic [ref=e421]: _middleware.js
+                    - treeitem "_routes.json" [level=2] [ref=e422]:
+                      - generic [ref=e427] [cursor=pointer]:
+                        - img [ref=e430]
+                        - generic [ref=e432]: _routes.json
+                    - treeitem "gitee-auth.js" [level=2] [ref=e433]:
+                      - generic [ref=e438] [cursor=pointer]:
+                        - img [ref=e441]
+                        - generic [ref=e443]: gitee-auth.js
+                    - treeitem "github-auth.js" [level=2] [ref=e444]:
+                      - generic [ref=e449] [cursor=pointer]:
+                        - img [ref=e452]
+                        - generic [ref=e454]: github-auth.js
+                    - treeitem "google-auth.js" [level=2] [ref=e455]:
+                      - generic [ref=e460] [cursor=pointer]:
+                        - img [ref=e463]
+                        - generic [ref=e465]: google-auth.js
+                    - treeitem "linuxdo-auth.js" [level=2] [ref=e466]:
+                      - generic [ref=e471] [cursor=pointer]:
+                        - img [ref=e474]
+                        - generic [ref=e476]: linuxdo-auth.js
+                    - treeitem "proxy.js" [level=2] [ref=e477]:
+                      - generic [ref=e482] [cursor=pointer]:
+                        - img [ref=e485]
+                        - generic [ref=e487]: proxy.js
+                    - treeitem "qq-auth.js" [level=2] [ref=e488]:
+                      - generic [ref=e493] [cursor=pointer]:
+                        - img [ref=e496]
+                        - generic [ref=e498]: qq-auth.js
+                - treeitem "migrations" [level=1] [ref=e499]:
+                  - generic [ref=e500] [cursor=pointer]:
+                    - img [ref=e502]
+                    - generic [ref=e504]:
+                      - img [ref=e508]
+                      - generic [ref=e510]: migrations
+                - treeitem "public" [level=1] [ref=e511]:
+                  - generic [ref=e512] [cursor=pointer]:
+                    - img [ref=e514]
+                    - generic [ref=e516]:
+                      - img [ref=e520]
+                      - generic [ref=e522]: public
+                - treeitem "scripts" [level=1] [ref=e523]:
+                  - generic [ref=e524] [cursor=pointer]:
+                    - img [ref=e526]
+                    - generic [ref=e528]:
+                      - img [ref=e532]
+                      - generic [ref=e534]: scripts
+                - treeitem "src" [level=1] [ref=e535]:
+                  - generic [ref=e536] [cursor=pointer]:
+                    - img [ref=e538]
+                    - generic [ref=e540]:
+                      - img [ref=e544]
+                      - generic [ref=e546]: src
+                - treeitem "supabase" [level=1] [ref=e547]:
+                  - generic [ref=e548] [cursor=pointer]:
+                    - img [ref=e550]
+                    - generic [ref=e552]:
+                      - img [ref=e556]
+                      - generic [ref=e558]: supabase
+                - treeitem "temp" [level=1] [ref=e559]:
+                  - generic [ref=e560] [cursor=pointer]:
+                    - img [ref=e562]
+                    - generic [ref=e564]:
+                      - img [ref=e568]
+                      - generic [ref=e570]: temp
+                - treeitem ".dockerignore" [level=1] [ref=e571]:
+                  - generic [ref=e573] [cursor=pointer]:
+                    - img [ref=e576]
+                    - generic [ref=e578]: .dockerignore
+                - treeitem ".gitignore" [level=1] [ref=e579]:
+                  - generic [ref=e581] [cursor=pointer]:
+                    - img [ref=e584]
+                    - generic [ref=e586]: .gitignore
+                - treeitem ".windsurfrules" [level=1] [ref=e587]:
+                  - generic [ref=e589] [cursor=pointer]:
+                    - img [ref=e592]
+                    - generic [ref=e594]: .windsurfrules
+                - treeitem "CLAUDE.md" [level=1] [ref=e595]:
+                  - generic [ref=e597] [cursor=pointer]:
+                    - img [ref=e600]
+                    - generic [ref=e602]: CLAUDE.md
+                - treeitem "DATA_PROCESSING_ANALYSIS.md" [level=1] [ref=e603]:
+                  - generic [ref=e605] [cursor=pointer]:
+                    - img [ref=e608]
+                    - generic [ref=e610]: DATA_PROCESSING_ANALYSIS.md
+                - treeitem "Dockerfile" [level=1] [ref=e611]:
+                  - generic [ref=e613] [cursor=pointer]:
+                    - img [ref=e616]
+                    - generic [ref=e618]: Dockerfile
+                - treeitem "GOOGLE_LOGIN_SETUP.md" [level=1] [ref=e619]:
+                  - generic [ref=e621] [cursor=pointer]:
+                    - img [ref=e624]
+                    - generic [ref=e626]: GOOGLE_LOGIN_SETUP.md
+                - treeitem "LICENSE" [level=1] [ref=e627]:
+                  - generic [ref=e629] [cursor=pointer]:
+                    - img [ref=e632]
+                    - generic [ref=e634]: LICENSE
+                - treeitem "PERFORMANCE_OPTIMIZATION.md" [level=1] [ref=e635]:
+                  - generic [ref=e637] [cursor=pointer]:
+                    - img [ref=e640]
+                    - generic [ref=e642]: PERFORMANCE_OPTIMIZATION.md
+                - treeitem "README.md" [level=1] [ref=e643]:
+                  - generic [ref=e645] [cursor=pointer]:
+                    - img [ref=e648]
+                    - generic [ref=e650]: README.md
+                - treeitem "TODO_IMPLEMENTATION.md" [level=1] [ref=e651]:
+                  - generic [ref=e653] [cursor=pointer]:
+                    - img [ref=e656]
+                    - generic [ref=e658]: TODO_IMPLEMENTATION.md
+                - treeitem "index.html" [level=1] [ref=e659]:
+                  - generic [ref=e661] [cursor=pointer]:
+                    - img [ref=e664]
+                    - generic [ref=e666]: index.html
+                - treeitem "nginx.conf" [level=1] [ref=e667]:
+                  - generic [ref=e669] [cursor=pointer]:
+                    - img [ref=e672]
+                    - generic [ref=e674]: nginx.conf
+                - treeitem "package.json" [level=1] [ref=e675]:
+                  - generic [ref=e677] [cursor=pointer]:
+                    - img [ref=e680]
+                    - generic [ref=e682]: package.json
+                - treeitem "pnpm-lock.yaml" [level=1] [ref=e683]:
+                  - generic [ref=e685] [cursor=pointer]:
+                    - img [ref=e688]
+                    - generic [ref=e690]: pnpm-lock.yaml
+                - treeitem "postcss.config.js" [level=1] [ref=e691]:
+                  - generic [ref=e693] [cursor=pointer]:
+                    - img [ref=e696]
+                    - generic [ref=e698]: postcss.config.js
+                - treeitem "robots.txt" [level=1] [ref=e699]:
+                  - generic [ref=e701] [cursor=pointer]:
+                    - img [ref=e704]
+                    - generic [ref=e706]: robots.txt
+                - treeitem "sitemap.xml" [level=1] [ref=e707]:
+                  - generic [ref=e709] [cursor=pointer]:
+                    - img [ref=e712]
+                    - generic [ref=e714]: sitemap.xml
+                - treeitem "ssr.config.ts" [level=1] [ref=e715]:
+                  - generic [ref=e717] [cursor=pointer]:
+                    - img [ref=e720]
+                    - generic [ref=e722]: ssr.config.ts
+                - treeitem "tailwind.config.js" [level=1] [ref=e723]:
+                  - generic [ref=e725] [cursor=pointer]:
+                    - img [ref=e728]
+                    - generic [ref=e730]: tailwind.config.js
+                - treeitem "tsconfig.json" [level=1] [ref=e731]:
+                  - generic [ref=e733] [cursor=pointer]:
+                    - img [ref=e736]
+                    - generic [ref=e738]: tsconfig.json
+                - treeitem "tsconfig.node.json" [level=1] [ref=e739]:
+                  - generic [ref=e741] [cursor=pointer]:
+                    - img [ref=e744]
+                    - generic [ref=e746]: tsconfig.node.json
+                - treeitem "vite.config.ts" [level=1] [ref=e747]:
+                  - generic [ref=e749] [cursor=pointer]:
+                    - img [ref=e752]
+                    - generic [ref=e754]: vite.config.ts
+                - treeitem "wrangler.toml" [level=1] [ref=e755]:
+                  - generic [ref=e757] [cursor=pointer]:
+                    - img [ref=e760]
+                    - generic [ref=e762]: wrangler.toml
+          - slider "Draggable pane splitter" [ref=e764]
+        - generic [ref=e767]:
+          - generic [ref=e771]:
+            - generic [ref=e773]:
+              - navigation "Breadcrumbs" [ref=e774]:
+                - heading "Breadcrumbs" [level=2] [ref=e775]
+                - list [ref=e776]:
+                  - listitem [ref=e777]:
+                    - link "tools-web" [ref=e778] [cursor=pointer]:
+                      - /url: /2424004764/tools-web/tree/master
+              - generic [ref=e779]:
+                - text: /
+                - heading "functions" [level=1] [ref=e780]
+                - text: /
+              - button "Copy path" [ref=e781] [cursor=pointer]:
+                - img [ref=e782]
+            - generic [ref=e787]:
+              - heading "Directory actions" [level=2] [ref=e788]
+              - heading "More options" [level=2] [ref=e789]
+              - button "More options" [ref=e790] [cursor=pointer]:
+                - img [ref=e791]
+          - generic [ref=e793]:
+            - generic [ref=e795]:
+              - heading "Latest commit" [level=2] [ref=e796]
+              - generic [ref=e797]:
+                - generic [ref=e799]:
+                  - link "2424004764" [ref=e800] [cursor=pointer]:
+                    - /url: /2424004764
+                    - img "2424004764" [ref=e801]
+                  - link "commits by 2424004764" [ref=e802] [cursor=pointer]:
+                    - /url: /2424004764/tools-web/commits?author=2424004764
+                    - text: "2424004764"
+                - generic [ref=e803]:
+                  - link "feat 新增网址收藏夹功能" [ref=e806] [cursor=pointer]:
+                    - /url: /2424004764/tools-web/commit/c3fd43f770e11d616964959c594d2e33e37cd102
+                  - button "failure" [ref=e807] [cursor=pointer]:
+                    - img [ref=e808]
+              - generic [ref=e810]:
+                - generic [ref=e812]:
+                  - link "Commit c3fd43f" [ref=e813] [cursor=pointer]:
+                    - /url: /2424004764/tools-web/commit/c3fd43f770e11d616964959c594d2e33e37cd102
+                    - text: c3fd43f
+                  - text: ·
+                  - generic "May 4, 2026, 11:52 PM GMT+8" [ref=e814]: May 4, 2026last week
+                - generic [ref=e815]:
+                  - heading "History" [level=2] [ref=e816]
+                  - link "History" [ref=e817] [cursor=pointer]:
+                    - /url: /2424004764/tools-web/commits/master/functions
+                    - generic [ref=e818]:
+                      - generic:
+                        - img
+                      - generic [ref=e819]: History
+            - generic [ref=e821]:
+              - text: This branch is
+              - link "336 commits ahead of" [ref=e822] [cursor=pointer]:
+                - /url: /2424004764/tools-web/compare/naroat%3Atools-web%3Amaster...master
+              - text: and
+              - link "11 commits behind" [ref=e823] [cursor=pointer]:
+                - /url: /2424004764/tools-web/compare/master...naroat%3Atools-web%3Amaster
+              - generic [ref=e824]: naroat/tools-web:master
+              - text: .
+            - generic [ref=e826]:
+              - heading "Folders and files" [level=2] [ref=e827]
+              - table "Folders and files" [ref=e828]:
+                - rowgroup [ref=e829]:
+                  - row "Name Last commit message Last commit date" [ref=e830]:
+                    - columnheader "Name" [ref=e831]
+                    - columnheader "Last commit message" [ref=e832]:
+                      - generic "Last commit message" [ref=e833]
+                    - columnheader "Last commit date" [ref=e834]:
+                      - generic "Last commit date" [ref=e835]
+                - rowgroup [ref=e836]:
+                  - row "parent directory Parent directory" [ref=e837]:
+                    - cell "parent directory Parent directory" [ref=e838]:
+                      - heading "parent directory" [level=3] [ref=e839]
+                      - link "Parent directory" [ref=e840] [cursor=pointer]:
+                        - /url: /2424004764/tools-web/tree/master
+                        - generic [ref=e841]:
+                          - img [ref=e842]
+                          - text: ..
+                  - row "api, (Directory) feat 新增网址收藏夹功能 May 4, 2026last week" [ref=e844]:
+                    - cell "api, (Directory)" [ref=e845]:
+                      - generic [ref=e846]:
+                        - img [ref=e847]
+                        - link "api, (Directory)" [ref=e852] [cursor=pointer]:
+                          - /url: /2424004764/tools-web/tree/master/functions/api
+                          - text: api
+                    - cell "feat 新增网址收藏夹功能" [ref=e853]:
+                      - link "feat 新增网址收藏夹功能" [ref=e856] [cursor=pointer]:
+                        - /url: /2424004764/tools-web/commit/c3fd43f770e11d616964959c594d2e33e37cd102
+                    - cell "May 4, 2026last week" [ref=e857]:
+                      - generic [ref=e858]: May 4, 2026last week
+                  - row "controllers, (Directory) feat 新增网址收藏夹功能 May 4, 2026last week" [ref=e859]:
+                    - cell "controllers, (Directory)" [ref=e860]:
+                      - generic [ref=e861]:
+                        - img [ref=e862]
+                        - link "controllers, (Directory)" [ref=e867] [cursor=pointer]:
+                          - /url: /2424004764/tools-web/tree/master/functions/controllers
+                          - text: controllers
+                    - cell "feat 新增网址收藏夹功能" [ref=e868]:
+                      - link "feat 新增网址收藏夹功能" [ref=e871] [cursor=pointer]:
+                        - /url: /2424004764/tools-web/commit/c3fd43f770e11d616964959c594d2e33e37cd102
+                    - cell "May 4, 2026last week" [ref=e872]:
+                      - generic [ref=e873]: May 4, 2026last week
+                  - row "cron, (Directory) feat 清理supabase改为直接请求的方式 Mar 15, 20262 months ago" [ref=e874]:
+                    - cell "cron, (Directory)" [ref=e875]:
+                      - generic [ref=e876]:
+                        - img [ref=e877]
+                        - link "cron, (Directory)" [ref=e882] [cursor=pointer]:
+                          - /url: /2424004764/tools-web/tree/master/functions/cron
+                          - text: cron
+                    - cell "feat 清理supabase改为直接请求的方式" [ref=e883]:
+                      - link "feat 清理supabase改为直接请求的方式" [ref=e886] [cursor=pointer]:
+                        - /url: /2424004764/tools-web/commit/3a62cb913e93e7539bb3693ad355dbd070a82538
+                    - cell "Mar 15, 20262 months ago" [ref=e887]:
+                      - generic [ref=e888]: Mar 15, 20262 months ago
+                  - row "db, (Directory) feat 新增网址收藏夹功能 May 4, 2026last week" [ref=e889]:
+                    - cell "db, (Directory)" [ref=e890]:
+                      - generic [ref=e891]:
+                        - img [ref=e892]
+                        - link "db, (Directory)" [ref=e897] [cursor=pointer]:
+                          - /url: /2424004764/tools-web/tree/master/functions/db
+                          - text: db
+                    - cell "feat 新增网址收藏夹功能" [ref=e898]:
+                      - link "feat 新增网址收藏夹功能" [ref=e901] [cursor=pointer]:
+                        - /url: /2424004764/tools-web/commit/c3fd43f770e11d616964959c594d2e33e37cd102
+                    - cell "May 4, 2026last week" [ref=e902]:
+                      - generic [ref=e903]: May 4, 2026last week
+                  - row "middlewares, (Directory) feat 新增网址收藏夹功能 May 4, 2026last week" [ref=e904]:
+                    - cell "middlewares, (Directory)" [ref=e905]:
+                      - generic [ref=e906]:
+                        - img [ref=e907]
+                        - link "middlewares, (Directory)" [ref=e912] [cursor=pointer]:
+                          - /url: /2424004764/tools-web/tree/master/functions/middlewares
+                          - text: middlewares
+                    - cell "feat 新增网址收藏夹功能" [ref=e913]:
+                      - link "feat 新增网址收藏夹功能" [ref=e916] [cursor=pointer]:
+                        - /url: /2424004764/tools-web/commit/c3fd43f770e11d616964959c594d2e33e37cd102
+                    - cell "May 4, 2026last week" [ref=e917]:
+                      - generic [ref=e918]: May 4, 2026last week
+                  - row "routes, (Directory) feat 新增网址收藏夹功能 May 4, 2026last week" [ref=e919]:
+                    - cell "routes, (Directory)" [ref=e920]:
+                      - generic [ref=e921]:
+                        - img [ref=e922]
+                        - link "routes, (Directory)" [ref=e927] [cursor=pointer]:
+                          - /url: /2424004764/tools-web/tree/master/functions/routes
+                          - text: routes
+                    - cell "feat 新增网址收藏夹功能" [ref=e928]:
+                      - link "feat 新增网址收藏夹功能" [ref=e931] [cursor=pointer]:
+                        - /url: /2424004764/tools-web/commit/c3fd43f770e11d616964959c594d2e33e37cd102
+                    - cell "May 4, 2026last week" [ref=e932]:
+                      - generic [ref=e933]: May 4, 2026last week
+                  - row "s, (Directory) feat 新增短链功能 May 3, 2026last week" [ref=e934]:
+                    - cell "s, (Directory)" [ref=e935]:
+                      - generic [ref=e936]:
+                        - img [ref=e937]
+                        - link "s, (Directory)" [ref=e942] [cursor=pointer]:
+                          - /url: /2424004764/tools-web/tree/master/functions/s
+                          - text: s
+                    - cell "feat 新增短链功能" [ref=e943]:
+                      - link "feat 新增短链功能" [ref=e946] [cursor=pointer]:
+                        - /url: /2424004764/tools-web/commit/92da2a05fe8e9f5f55adcab1aaa3fb1e8f91276c
+                    - cell "May 3, 2026last week" [ref=e947]:
+                      - generic [ref=e948]: May 3, 2026last week
+                  - row "services, (Directory) feat 新增网址收藏夹功能 May 4, 2026last week" [ref=e949]:
+                    - cell "services, (Directory)" [ref=e950]:
+                      - generic [ref=e951]:
+                        - img [ref=e952]
+                        - link "services, (Directory)" [ref=e957] [cursor=pointer]:
+                          - /url: /2424004764/tools-web/tree/master/functions/services
+                          - text: services
+                    - cell "feat 新增网址收藏夹功能" [ref=e958]:
+                      - link "feat 新增网址收藏夹功能" [ref=e961] [cursor=pointer]:
+                        - /url: /2424004764/tools-web/commit/c3fd43f770e11d616964959c594d2e33e37cd102
+                    - cell "May 4, 2026last week" [ref=e962]:
+                      - generic [ref=e963]: May 4, 2026last week
+                  - row "utils, (Directory) feat 新增网址收藏夹功能 May 4, 2026last week" [ref=e964]:
+                    - cell "utils, (Directory)" [ref=e965]:
+                      - generic [ref=e966]:
+                        - img [ref=e967]
+                        - link "utils, (Directory)" [ref=e972] [cursor=pointer]:
+                          - /url: /2424004764/tools-web/tree/master/functions/utils
+                          - text: utils
+                    - cell "feat 新增网址收藏夹功能" [ref=e973]:
+                      - link "feat 新增网址收藏夹功能" [ref=e976] [cursor=pointer]:
+                        - /url: /2424004764/tools-web/commit/c3fd43f770e11d616964959c594d2e33e37cd102
+                    - cell "May 4, 2026last week" [ref=e977]:
+                      - generic [ref=e978]: May 4, 2026last week
+                  - row "_middleware.js, (File) 新增在线密码管理功能 Jan 24, 20264 months ago" [ref=e979]:
+                    - cell "_middleware.js, (File)" [ref=e980]:
+                      - generic [ref=e981]:
+                        - img [ref=e982]
+                        - link "_middleware.js, (File)" [ref=e987] [cursor=pointer]:
+                          - /url: /2424004764/tools-web/blob/master/functions/_middleware.js
+                          - text: _middleware.js
+                    - cell "新增在线密码管理功能" [ref=e988]:
+                      - link "新增在线密码管理功能" [ref=e991] [cursor=pointer]:
+                        - /url: /2424004764/tools-web/commit/a1d6fb258bcf2b5d39f350bfafc7deb6d0f584a9
+                    - cell "Jan 24, 20264 months ago" [ref=e992]:
+                      - generic [ref=e993]: Jan 24, 20264 months ago
+                  - row "_routes.json, (File) feat 新增网址收藏夹功能 May 4, 2026last week" [ref=e994]:
+                    - cell "_routes.json, (File)" [ref=e995]:
+                      - generic [ref=e996]:
+                        - img [ref=e997]
+                        - link "_routes.json, (File)" [ref=e1002] [cursor=pointer]:
+                          - /url: /2424004764/tools-web/blob/master/functions/_routes.json
+                          - text: _routes.json
+                    - cell "feat 新增网址收藏夹功能" [ref=e1003]:
+                      - link "feat 新增网址收藏夹功能" [ref=e1006] [cursor=pointer]:
+                        - /url: /2424004764/tools-web/commit/c3fd43f770e11d616964959c594d2e33e37cd102
+                    - cell "May 4, 2026last week" [ref=e1007]:
+                      - generic [ref=e1008]: May 4, 2026last week
+                  - row "gitee-auth.js, (File) feat 接入gitee登录方式 Sep 2, 20259 months ago" [ref=e1009]:
+                    - cell "gitee-auth.js, (File)" [ref=e1010]:
+                      - generic [ref=e1011]:
+                        - img [ref=e1012]
+                        - link "gitee-auth.js, (File)" [ref=e1017] [cursor=pointer]:
+                          - /url: /2424004764/tools-web/blob/master/functions/gitee-auth.js
+                          - text: gitee-auth.js
+                    - cell "feat 接入gitee登录方式" [ref=e1018]:
+                      - link "feat 接入gitee登录方式" [ref=e1021] [cursor=pointer]:
+                        - /url: /2424004764/tools-web/commit/4ab7153b387ffd6d6cf964ac3f6ec32237feff0f
+                    - cell "Sep 2, 20259 months ago" [ref=e1022]:
+                      - generic [ref=e1023]: Sep 2, 20259 months ago
+                  - row "github-auth.js, (File) fix 修正github jwt验证 Sep 2, 20259 months ago" [ref=e1024]:
+                    - cell "github-auth.js, (File)" [ref=e1025]:
+                      - generic [ref=e1026]:
+                        - img [ref=e1027]
+                        - link "github-auth.js, (File)" [ref=e1032] [cursor=pointer]:
+                          - /url: /2424004764/tools-web/blob/master/functions/github-auth.js
+                          - text: github-auth.js
+                    - cell "fix 修正github jwt验证" [ref=e1033]:
+                      - link "fix 修正github jwt验证" [ref=e1036] [cursor=pointer]:
+                        - /url: /2424004764/tools-web/commit/e866493eb5983813af1d107d2e41a050eb64dbce
+                    - cell "Sep 2, 20259 months ago" [ref=e1037]:
+                      - generic [ref=e1038]: Sep 2, 20259 months ago
+                  - row "google-auth.js, (File) feat 接入linux.do登录 Aug 31, 20259 months ago" [ref=e1039]:
+                    - cell "google-auth.js, (File)" [ref=e1040]:
+                      - generic [ref=e1041]:
+                        - img [ref=e1042]
+                        - link "google-auth.js, (File)" [ref=e1047] [cursor=pointer]:
+                          - /url: /2424004764/tools-web/blob/master/functions/google-auth.js
+                          - text: google-auth.js
+                    - cell "feat 接入linux.do登录" [ref=e1048]:
+                      - link "feat 接入linux.do登录" [ref=e1051] [cursor=pointer]:
+                        - /url: /2424004764/tools-web/commit/7bd49a916a4e04edfa9900d90def6d3de7b61ead
+                    - cell "Aug 31, 20259 months ago" [ref=e1052]:
+                      - generic [ref=e1053]: Aug 31, 20259 months ago
+                  - row "linuxdo-auth.js, (File) feat 接入linux.do登录 Aug 31, 20259 months ago" [ref=e1054]:
+                    - cell "linuxdo-auth.js, (File)" [ref=e1055]:
+                      - generic [ref=e1056]:
+                        - img [ref=e1057]
+                        - link "linuxdo-auth.js, (File)" [ref=e1062] [cursor=pointer]:
+                          - /url: /2424004764/tools-web/blob/master/functions/linuxdo-auth.js
+                          - text: linuxdo-auth.js
+                    - cell "feat 接入linux.do登录" [ref=e1063]:
+                      - link "feat 接入linux.do登录" [ref=e1066] [cursor=pointer]:
+                        - /url: /2424004764/tools-web/commit/7bd49a916a4e04edfa9900d90def6d3de7b61ead
+                    - cell "Aug 31, 20259 months ago" [ref=e1067]:
+                      - generic [ref=e1068]: Aug 31, 20259 months ago
+                  - row "proxy.js, (File) 修复所有ai能力 Jan 27, 20264 months ago" [ref=e1069]:
+                    - cell "proxy.js, (File)" [ref=e1070]:
+                      - generic [ref=e1071]:
+                        - img [ref=e1072]
+                        - link "proxy.js, (File)" [ref=e1077] [cursor=pointer]:
+                          - /url: /2424004764/tools-web/blob/master/functions/proxy.js
+                          - text: proxy.js
+                    - cell "修复所有ai能力" [ref=e1078]:
+                      - link "修复所有ai能力" [ref=e1081] [cursor=pointer]:
+                        - /url: /2424004764/tools-web/commit/1af7cba811da17b8dde320546de3b42fb64b6486
+                    - cell "Jan 27, 20264 months ago" [ref=e1082]:
+                      - generic [ref=e1083]: Jan 27, 20264 months ago
+                  - row "qq-auth.js, (File) 加上QQ登录按钮 Sep 2, 20259 months ago" [ref=e1084]:
+                    - cell "qq-auth.js, (File)" [ref=e1085]:
+                      - generic [ref=e1086]:
+                        - img [ref=e1087]
+                        - link "qq-auth.js, (File)" [ref=e1092] [cursor=pointer]:
+                          - /url: /2424004764/tools-web/blob/master/functions/qq-auth.js
+                          - text: qq-auth.js
+                    - cell "加上QQ登录按钮" [ref=e1093]:
+                      - link "加上QQ登录按钮" [ref=e1096] [cursor=pointer]:
+                        - /url: /2424004764/tools-web/commit/e25772f3236baab7068efb885d63a877aee8f34b
+                    - cell "Sep 2, 20259 months ago" [ref=e1097]:
+                      - generic [ref=e1098]: Sep 2, 20259 months ago
+  - alert [ref=e1102]

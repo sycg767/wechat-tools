@@ -5,6 +5,10 @@
       <view class="header-title">工具箱</view>
     </view>
     <view class="header-right">
+      <view class="history-pill" bindtap="goToAiConfig">
+        <view class="ai-icon"></view>
+        <text>AI</text>
+      </view>
       <view class="history-pill" bindtap="goToTasks">
         <view class="history-icon"></view>
         <text>历史</text>

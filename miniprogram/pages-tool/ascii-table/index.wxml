@@ -1,0 +1,33 @@
+<view class="container ascii-page">
+  <view class="page-header">
+    <view class="page-title">ASCII 码表</view>
+    <view class="page-desc">快速查询字符、十进制、十六进制和 Unicode 码位。</view>
+  </view>
+
+  <view class="card query-card">
+    <input class="input" value="{{keyword}}" bindinput="onSearch" placeholder="搜索字符、编码或说明" />
+    <text class="clear-btn" bindtap="clearSearch">清空</text>
+  </view>
+
+  <scroll-view class="tabs" scroll-x="true" show-scrollbar="false">
+    <view class="tab {{activeGroup === item ? 'active' : ''}}" wx:for="{{groups}}" wx:key="*this" bindtap="switchGroup" data-group="{{item}}">{{item}}</view>
+  </scroll-view>
+
+  <view class="summary-row">
+    <text>{{list.length}} 条结果</text>
+    <text>点击卡片复制</text>
+  </view>
+
+  <view class="ascii-grid">
+    <view class="ascii-card" wx:for="{{list}}" wx:key="id" bindtap="copyItem" data-value="{{item.copy}}">
+      <view class="char-box">{{item.char}}</view>
+      <view class="ascii-meta">
+        <text class="ascii-title">{{item.group}} · DEC {{item.code}}</text>
+        <text class="ascii-code">HEX {{item.hex}}{{item.binText ? ' · ' + item.binText : ''}}</text>
+        <text class="ascii-desc">{{item.desc}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:if="{{!list.length}}">没有找到匹配码位</view>
+</view>

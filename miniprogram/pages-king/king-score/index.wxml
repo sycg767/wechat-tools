@@ -208,10 +208,11 @@
         </view>
         <view class="settings-tip">百度模式使用后端百度云 OCR；AI 模式按 OpenAI 兼容接口调用。</view>
         <block wx:if="{{settingsForm.ocrMode === 'ai'}}">
-          <input class="modal-input" placeholder="AI 请求地址，例如 https://example.com/v1/chat/completions" value="{{settingsForm.aiBaseUrl}}" bindinput="onAiBaseUrlInput" />
-          <input class="modal-input" placeholder="模型名称，例如 gpt-4.1-mini" value="{{settingsForm.aiModel}}" bindinput="onAiModelInput" />
-          <input class="modal-input" password="{{true}}" placeholder="API Key" value="{{settingsForm.aiApiKey}}" bindinput="onAiApiKeyInput" />
-          <view class="settings-subtip">密钥只保存在当前设备本地，并在本次识别请求时透传给后端。</view>
+          <view class="settings-ai-tip">
+            <text>AI 配置已移至</text>
+            <text class="settings-link" bindtap="goToAiConfig">通用 AI 配置</text>
+          </view>
+          <view class="settings-subtip">密钥只保存在设备本地，识别请求时透传给后端。</view>
         </block>
       </view>
       <view class="modal-footer">

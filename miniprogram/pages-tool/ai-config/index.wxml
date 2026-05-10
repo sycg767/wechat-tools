@@ -1,0 +1,36 @@
+<view class="container ai-config-page">
+  <view class="page-header">
+    <view class="page-title">AI 通用配置</view>
+    <view class="page-desc">填写一次，所有工具通用。用于截图识别、八卦解读等 AI 功能。</view>
+  </view>
+
+  <view class="card">
+    <view class="form-item">
+      <text class="form-label">请求地址</text>
+      <input class="form-input" placeholder="例如：https://api.openai.com/v1" value="{{config.baseUrl}}" bindinput="onBaseUrlInput" />
+      <text class="form-hint">兼容 OpenAI 格式的 API 端点地址</text>
+    </view>
+    <view class="form-item">
+      <text class="form-label">模型</text>
+      <input class="form-input" placeholder="例如：gpt-4o" value="{{config.model}}" bindinput="onModelInput" />
+      <text class="form-hint">使用的模型名称</text>
+    </view>
+    <view class="form-item">
+      <text class="form-label">密钥</text>
+      <input class="form-input" password="{{!showKey}}" placeholder="sk-..." value="{{config.apiKey}}" bindinput="onApiKeyInput" />
+      <view class="form-hint-row">
+        <text class="form-hint">API Key，不会上传到后端，仅本地存储</text>
+        <text class="form-toggle-key" bindtap="toggleKey">{{showKey ? '隐藏' : '显示'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="card hint-card" wx:if="{{issues.length}}">
+    <text class="hint-title">当前配置问题</text>
+    <text class="hint-item" wx:for="{{issues}}" wx:for-item="issue" wx:key="*this">{{issue}}</text>
+  </view>
+
+  <view class="actions">
+    <button class="primary-action" bindtap="saveConfig">保存配置</button>
+  </view>
+</view>

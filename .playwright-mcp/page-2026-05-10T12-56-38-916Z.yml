@@ -1,0 +1,187 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - generic [ref=e7]:
+        - link "一个轻量的在线工具箱 一方工具箱 一个轻量的在线工具箱" [ref=e9] [cursor=pointer]:
+          - /url: /
+          - img "一个轻量的在线工具箱" [ref=e10]
+          - generic [ref=e11]:
+            - generic [ref=e12]: 一方工具箱
+            - generic [ref=e13]: 一个轻量的在线工具箱
+        - menubar [ref=e15]:
+          - menuitem "分类" [expanded] [ref=e16]:
+            - generic [ref=e17] [cursor=pointer]:
+              - img [ref=e18]
+              - generic [ref=e20]: 分类
+              - img [ref=e22]
+            - menu [ref=e24]:
+              - listitem [ref=e25]:
+                - list [ref=e27]:
+                  - menuitem "开发运维" [ref=e28] [cursor=pointer]
+                  - menuitem "文本处理" [ref=e29] [cursor=pointer]
+                  - menuitem "教育学术" [ref=e30] [cursor=pointer]
+                  - menuitem "图片处理" [ref=e31] [cursor=pointer]
+                  - menuitem "数据图表" [ref=e32] [cursor=pointer]
+                  - menuitem "趣味互动" [ref=e33] [cursor=pointer]
+                  - menuitem "选择随机" [ref=e34] [cursor=pointer]
+                  - menuitem "其他工具" [ref=e35] [cursor=pointer]
+                  - menuitem "AI工具" [ref=e36] [cursor=pointer]
+                  - menuitem "好物网站" [ref=e37] [cursor=pointer]
+                  - menuitem "内容管理" [ref=e38] [cursor=pointer]
+          - menuitem "关于本站" [ref=e39] [cursor=pointer]:
+            - img [ref=e40]
+            - generic [ref=e42]: 关于本站
+    - generic [ref=e43]:
+      - generic [ref=e45]:
+        - generic [ref=e46]:
+          - img [ref=e47]
+          - link [ref=e50] [cursor=pointer]:
+            - /url: /
+            - img [ref=e51]
+          - generic [ref=e56]:
+            - generic [ref=e57]:
+              - combobox [ref=e59]
+              - generic [ref=e60]: 输入关键词搜索，如文本、json、图片等
+            - img [ref=e63] [cursor=pointer]
+        - list [ref=e66]:
+          - listitem [ref=e67]:
+            - link "登录" [ref=e68] [cursor=pointer]:
+              - /url: /login
+              - button "登录" [ref=e69]:
+                - generic [ref=e70]: 登录
+      - main [ref=e71]:
+        - generic [ref=e72]:
+          - generic [ref=e73]:
+            - button "返回" [ref=e74] [cursor=pointer]:
+              - img [ref=e76]
+              - generic [ref=e78]: 返回
+            - generic [ref=e79]: PDF转图片
+            - button "扫码访问/分享" [ref=e81] [cursor=pointer]:
+              - img [ref=e82]
+              - generic [ref=e88]: 扫码访问/分享
+          - generic [ref=e89]:
+            - generic [ref=e90]:
+              - generic [ref=e91]:
+                - generic [ref=e92]: 分辨率 (DPI)
+                - generic [ref=e94] [cursor=pointer]:
+                  - generic:
+                    - combobox [ref=e96]
+                    - generic [ref=e97]: 300 DPI (高清)
+                  - img [ref=e100]
+              - generic [ref=e102]:
+                - generic [ref=e103]: 输出格式
+                - generic [ref=e105] [cursor=pointer]:
+                  - generic:
+                    - combobox [ref=e107]
+                    - generic [ref=e108]: PNG (推荐)
+                  - img [ref=e111]
+              - generic [ref=e113]:
+                - generic [ref=e114]: 图片质量
+                - generic [ref=e116] [cursor=pointer]:
+                  - generic:
+                    - combobox [ref=e118]
+                    - generic [ref=e119]: 高质量
+                  - img [ref=e122]
+            - generic [ref=e125]:
+              - generic [ref=e127]:
+                - paragraph [ref=e128]: 拖拽PDF文件到此处，或点击选择文件
+                - paragraph [ref=e129]: 支持单个PDF文件，自动转换所有页面
+              - button "选择PDF文件" [ref=e132] [cursor=pointer]:
+                - generic [ref=e133]: 选择PDF文件
+          - generic [ref=e134]:
+            - separator [ref=e135]:
+              - generic [ref=e136]: 功能说明
+            - list [ref=e139]:
+              - listitem [ref=e140]:
+                - text: •
+                - strong [ref=e141]: 高清转换
+                - text: ：支持150-600 DPI分辨率，确保图片清晰度
+              - listitem [ref=e142]:
+                - text: •
+                - strong [ref=e143]: 多页处理
+                - text: ：自动转换PDF中的所有页面
+              - listitem [ref=e144]:
+                - text: •
+                - strong [ref=e145]: 格式选择
+                - text: ：支持PNG和JPG格式输出
+              - listitem [ref=e146]:
+                - text: •
+                - strong [ref=e147]: 质量控制
+                - text: ：可调节图片质量，平衡文件大小和清晰度
+              - listitem [ref=e148]:
+                - text: •
+                - strong [ref=e149]: 图片预览
+                - text: ：点击图片可放大预览，支持缩放和全屏查看
+              - listitem [ref=e150]:
+                - text: •
+                - strong [ref=e151]: 批量下载
+                - text: ：支持单页下载和批量下载
+              - listitem [ref=e152]:
+                - text: •
+                - strong [ref=e153]: 本地处理
+                - text: ：所有转换在浏览器本地完成，保护文件隐私
+          - generic [ref=e154]:
+            - separator [ref=e155]:
+              - generic [ref=e156]: 使用说明
+            - list [ref=e159]:
+              - listitem [ref=e160]: 1. 选择转换设置（分辨率、格式、质量）
+              - listitem [ref=e161]: 2. 拖拽或点击上传PDF文件
+              - listitem [ref=e162]: 3. 等待自动转换完成
+              - listitem [ref=e163]: 4. 点击图片放大预览或直接下载
+              - listitem [ref=e164]: 5. 下载单页图片或批量下载所有图片
+          - generic [ref=e165]:
+            - separator [ref=e166]:
+              - generic [ref=e167]: 注意事项
+            - list [ref=e170]:
+              - listitem [ref=e171]: • 首次使用需要加载PDF.js库，可能需要等待几秒
+              - listitem [ref=e172]: • 大文件或高分辨率转换需要较长时间，请耐心等待
+              - listitem [ref=e173]: • 暂不支持密码保护的PDF文件
+              - listitem [ref=e174]: • 建议使用现代浏览器以获得最佳体验
+        - generic [ref=e175]:
+          - generic [ref=e176]: 类似功能推荐
+          - generic [ref=e177]:
+            - link "二维码生成" [ref=e178] [cursor=pointer]:
+              - /url: /qrcode/
+            - link "二维码识别" [ref=e179] [cursor=pointer]:
+              - /url: /qrcode-scan/
+            - link "文本转图片" [ref=e180] [cursor=pointer]:
+              - /url: /texttoimg/
+            - link "图片分割" [ref=e181] [cursor=pointer]:
+              - /url: /imgcut/
+            - link "图片、Base64互转" [ref=e182] [cursor=pointer]:
+              - /url: /imagetobase64/
+            - link "图片压缩" [ref=e183] [cursor=pointer]:
+              - /url: /image-compress/
+            - link "闲鱼技能海报生成器" [ref=e184] [cursor=pointer]:
+              - /url: /skill-poster/
+            - link "视频转GIF动图" [ref=e185] [cursor=pointer]:
+              - /url: /video-to-gif/
+            - link "证件照生成" [ref=e186] [cursor=pointer]:
+              - /url: /id-photo/
+            - link "PNG/JPG格式互转" [ref=e187] [cursor=pointer]:
+              - /url: /img-convert/
+            - link "图片水印" [ref=e188] [cursor=pointer]:
+              - /url: /img-watermark/
+        - generic [ref=e190]:
+          - heading "评论交流" [level=3] [ref=e191]:
+            - img [ref=e192]
+            - text: 评论交流
+          - paragraph [ref=e195]:
+            - text: 欢迎在下方留言讨论，如有问题或建议请提交
+            - link "GitHub Issue" [ref=e196] [cursor=pointer]:
+              - /url: https://github.com/2424004764/tools-web/issues
+      - generic [ref=e199]:
+        - generic [ref=e200]: 一个轻量的在线工具箱 © 2019 - 2025 BY Bucaicai
+        - generic [ref=e201]:
+          - link "湘ICP备16007032号-1" [ref=e202] [cursor=pointer]:
+            - /url: https://beian.miit.gov.cn/
+          - generic [ref=e203]: "|"
+          - link "湘公安网备43030202001052号" [ref=e204] [cursor=pointer]:
+            - /url: https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=43030202001052&token=2be051c1-22dd-44ec-9f4b-d41155f2d855
+          - generic [ref=e205]: "|"
+          - link "Tools-Web" [ref=e206] [cursor=pointer]:
+            - /url: https://github.com/2424004764/tools-web
+          - generic [ref=e207]: "|"
+          - link "反馈建议" [ref=e208] [cursor=pointer]:
+            - /url: https://github.com/2424004764/tools-web/issues/new
+  - img

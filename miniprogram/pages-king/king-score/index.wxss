@@ -793,6 +793,8 @@
   color: var(--text-second);
 }
 
+.settings-ai-tip { display: flex; align-items: center; gap: 6rpx; margin: 14rpx 0; font-size: 24rpx; color: var(--text-second); }
+.settings-link { color: var(--text-main); font-weight: 800; text-decoration: underline; }
 .settings-subtip {
   margin-top: -4rpx;
   font-size: 22rpx;

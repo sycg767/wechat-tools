@@ -1,0 +1,843 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - link "Skip to content" [ref=e4] [cursor=pointer]:
+      - /url: "#start-of-content"
+    - banner [ref=e6]:
+      - heading "Navigation Menu" [level=2] [ref=e7]
+      - generic [ref=e8]:
+        - link "Homepage" [ref=e10] [cursor=pointer]:
+          - /url: /
+          - img [ref=e11]
+        - generic [ref=e13]:
+          - navigation "Global" [ref=e16]:
+            - list [ref=e17]:
+              - listitem [ref=e18]:
+                - button "Platform" [ref=e20] [cursor=pointer]:
+                  - text: Platform
+                  - img [ref=e21]
+              - listitem [ref=e23]:
+                - button "Solutions" [ref=e25] [cursor=pointer]:
+                  - text: Solutions
+                  - img [ref=e26]
+              - listitem [ref=e28]:
+                - button "Resources" [ref=e30] [cursor=pointer]:
+                  - text: Resources
+                  - img [ref=e31]
+              - listitem [ref=e33]:
+                - button "Open Source" [ref=e35] [cursor=pointer]:
+                  - text: Open Source
+                  - img [ref=e36]
+              - listitem [ref=e38]:
+                - button "Enterprise" [ref=e40] [cursor=pointer]:
+                  - text: Enterprise
+                  - img [ref=e41]
+              - listitem [ref=e43]:
+                - link "Pricing" [ref=e44] [cursor=pointer]:
+                  - /url: https://github.com/pricing
+                  - generic [ref=e45]: Pricing
+          - generic [ref=e46]:
+            - button "Search or jump to…" [ref=e49] [cursor=pointer]:
+              - img [ref=e51]
+            - link "Sign in" [ref=e54] [cursor=pointer]:
+              - /url: /login?return_to=https%3A%2F%2Fgithub.com%2Fnaroat%2Ftools-web
+            - link "Sign up" [ref=e55] [cursor=pointer]:
+              - /url: /signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E&source=header-repo&source_repo=naroat%2Ftools-web
+            - button "Appearance settings" [ref=e58] [cursor=pointer]:
+              - img
+  - main [ref=e62]:
+    - generic [ref=e63]:
+      - generic [ref=e64]:
+        - generic [ref=e66]:
+          - img [ref=e67]
+          - link "naroat" [ref=e70] [cursor=pointer]:
+            - /url: /naroat
+          - generic [ref=e71]: /
+          - strong [ref=e72]:
+            - link "tools-web" [ref=e73] [cursor=pointer]:
+              - /url: /naroat/tools-web
+          - generic [ref=e74]: Public
+        - generic [ref=e75]:
+          - list:
+            - listitem [ref=e76]:
+              - link "You must be signed in to change notification settings" [ref=e77] [cursor=pointer]:
+                - /url: /login?return_to=%2Fnaroat%2Ftools-web
+                - img [ref=e78]
+                - text: Notifications
+            - listitem [ref=e80]:
+              - link "Fork 117" [ref=e81] [cursor=pointer]:
+                - /url: /login?return_to=%2Fnaroat%2Ftools-web
+                - img [ref=e82]
+                - text: Fork
+                - generic "117" [ref=e84]
+            - listitem [ref=e85]:
+              - link "You must be signed in to star a repository" [ref=e87] [cursor=pointer]:
+                - /url: /login?return_to=%2Fnaroat%2Ftools-web
+                - img [ref=e88]
+                - text: Star
+                - generic "275 users starred this repository" [ref=e90]: "275"
+      - navigation "Repository" [ref=e91]:
+        - list [ref=e92]:
+          - listitem [ref=e93]:
+            - link "Code" [ref=e94] [cursor=pointer]:
+              - /url: /naroat/tools-web
+              - img [ref=e95]
+              - generic [ref=e97]: Code
+          - listitem [ref=e98]:
+            - link "Issues 2" [ref=e99] [cursor=pointer]:
+              - /url: /naroat/tools-web/issues
+              - img [ref=e100]
+              - generic [ref=e103]: Issues
+              - generic "2" [ref=e104]
+          - listitem [ref=e105]:
+            - link "Pull requests" [ref=e106] [cursor=pointer]:
+              - /url: /naroat/tools-web/pulls
+              - img [ref=e107]
+              - generic [ref=e109]: Pull requests
+          - listitem [ref=e110]:
+            - link "Discussions" [ref=e111] [cursor=pointer]:
+              - /url: /naroat/tools-web/discussions
+              - img [ref=e112]
+              - generic [ref=e114]: Discussions
+          - listitem [ref=e115]:
+            - link "Actions" [ref=e116] [cursor=pointer]:
+              - /url: /naroat/tools-web/actions
+              - img [ref=e117]
+              - generic [ref=e119]: Actions
+          - listitem [ref=e120]:
+            - link "Projects" [ref=e121] [cursor=pointer]:
+              - /url: /naroat/tools-web/projects
+              - img [ref=e122]
+              - generic [ref=e124]: Projects
+          - listitem [ref=e125]:
+            - link "Security and quality" [ref=e126] [cursor=pointer]:
+              - /url: /naroat/tools-web/security
+              - img [ref=e127]
+              - generic [ref=e129]: Security and quality
+          - listitem [ref=e130]:
+            - link "Insights" [ref=e131] [cursor=pointer]:
+              - /url: /naroat/tools-web/pulse
+              - img [ref=e132]
+              - generic [ref=e134]: Insights
+    - generic [ref=e147]:
+      - heading "naroat/tools-web" [level=1] [ref=e149]
+      - generic [ref=e150]:
+        - generic [ref=e153]:
+          - generic [ref=e154]:
+            - generic [ref=e155]:
+              - button "master branch" [ref=e157] [cursor=pointer]:
+                - generic [ref=e158]:
+                  - generic [ref=e160]:
+                    - img [ref=e162]
+                    - generic [ref=e165]: master
+                  - generic:
+                    - img
+              - generic [ref=e166]:
+                - link "Go to Branches page" [ref=e167] [cursor=pointer]:
+                  - /url: /naroat/tools-web/branches
+                  - img [ref=e168]
+                - link "Go to Tags page" [ref=e170] [cursor=pointer]:
+                  - /url: /naroat/tools-web/tags
+                  - img [ref=e171]
+            - generic [ref=e173]:
+              - generic [ref=e177]:
+                - img [ref=e179]
+                - combobox "Go to file" [ref=e181]
+              - button "Code" [ref=e182] [cursor=pointer]:
+                - generic [ref=e183]:
+                  - generic:
+                    - img
+                  - generic [ref=e184]: Code
+                  - generic:
+                    - img
+          - generic [ref=e185]:
+            - generic [ref=e186]:
+              - heading "Folders and files" [level=2] [ref=e187]
+              - table "Folders and files" [ref=e188]:
+                - rowgroup:
+                  - row "Name Last commit message Last commit date":
+                    - columnheader "Name"
+                    - columnheader "Last commit message":
+                      - generic "Last commit message"
+                    - columnheader "Last commit date":
+                      - generic "Last commit date"
+                - rowgroup [ref=e189]:
+                  - row "Latest commit naroat commits by naroat fix Commit 3106e47 · Mar 2, 20262 months ago History 116 Commits" [ref=e190]:
+                    - cell "Latest commit naroat commits by naroat fix Commit 3106e47 · Mar 2, 20262 months ago History 116 Commits" [ref=e191]:
+                      - generic [ref=e192]:
+                        - heading "Latest commit" [level=2] [ref=e193]
+                        - generic [ref=e194]:
+                          - generic [ref=e196]:
+                            - link "naroat" [ref=e197] [cursor=pointer]:
+                              - /url: /naroat
+                              - img "naroat" [ref=e198]
+                            - link "commits by naroat" [ref=e199] [cursor=pointer]:
+                              - /url: /naroat/tools-web/commits?author=naroat
+                              - text: naroat
+                          - link "fix" [ref=e203] [cursor=pointer]:
+                            - /url: /naroat/tools-web/commit/3106e47ad181e8e9af40ec57e3929f49a820d5f9
+                        - generic [ref=e204]:
+                          - generic [ref=e206]:
+                            - link "Commit 3106e47" [ref=e207] [cursor=pointer]:
+                              - /url: /naroat/tools-web/commit/3106e47ad181e8e9af40ec57e3929f49a820d5f9
+                              - text: "3106e47"
+                            - text: ·
+                            - generic "Mar 2, 2026, 9:37 PM GMT+8" [ref=e208]: Mar 2, 20262 months ago
+                          - generic [ref=e209]:
+                            - heading "History" [level=2] [ref=e210]
+                            - link "116 Commits" [ref=e211] [cursor=pointer]:
+                              - /url: /naroat/tools-web/commits/master/
+                              - generic [ref=e212]:
+                                - generic:
+                                  - img
+                                - generic [ref=e213]: 116 Commits
+                  - row "public, (Directory) feat： 调整工具分类 Mar 2, 20262 months ago" [ref=e214]:
+                    - cell "public, (Directory)" [ref=e215]:
+                      - generic [ref=e216]:
+                        - img [ref=e217]
+                        - link "public, (Directory)" [ref=e222] [cursor=pointer]:
+                          - /url: /naroat/tools-web/tree/master/public
+                          - text: public
+                    - cell "feat： 调整工具分类" [ref=e223]:
+                      - link "feat： 调整工具分类" [ref=e226] [cursor=pointer]:
+                        - /url: /naroat/tools-web/commit/51879358889993e9ccfa7425795ea48fa865e846
+                    - cell "Mar 2, 20262 months ago" [ref=e227]:
+                      - generic [ref=e228]: Mar 2, 20262 months ago
+                  - row "scripts, (Directory) init Nov 28, 20233 years ago" [ref=e229]:
+                    - cell "scripts, (Directory)" [ref=e230]:
+                      - generic [ref=e231]:
+                        - img [ref=e232]
+                        - link "scripts, (Directory)" [ref=e237] [cursor=pointer]:
+                          - /url: /naroat/tools-web/tree/master/scripts
+                          - text: scripts
+                    - cell "init" [ref=e238]:
+                      - link "init" [ref=e241] [cursor=pointer]:
+                        - /url: /naroat/tools-web/commit/5621838cf4ce143438f193b2297af271640c9aa8
+                    - cell "Nov 28, 20233 years ago" [ref=e242]:
+                      - generic [ref=e243]: Nov 28, 20233 years ago
+                  - row "src, (Directory) fix Mar 2, 20262 months ago" [ref=e244]:
+                    - cell "src, (Directory)" [ref=e245]:
+                      - generic [ref=e246]:
+                        - img [ref=e247]
+                        - link "src, (Directory)" [ref=e252] [cursor=pointer]:
+                          - /url: /naroat/tools-web/tree/master/src
+                          - text: src
+                    - cell "fix" [ref=e253]:
+                      - link "fix" [ref=e256] [cursor=pointer]:
+                        - /url: /naroat/tools-web/commit/c23f06df50e1e907744ec09c507b063db1ff0b6b
+                    - cell "Mar 2, 20262 months ago" [ref=e257]:
+                      - generic [ref=e258]: Mar 2, 20262 months ago
+                  - 'row ".dockerignore, (File) feat: docker部署方案 May 15, 20242 years ago" [ref=e259]':
+                    - cell ".dockerignore, (File)" [ref=e260]:
+                      - generic [ref=e261]:
+                        - img [ref=e262]
+                        - link ".dockerignore, (File)" [ref=e267] [cursor=pointer]:
+                          - /url: /naroat/tools-web/blob/master/.dockerignore
+                          - text: .dockerignore
+                    - 'cell "feat: docker部署方案" [ref=e268]':
+                      - 'link "feat: docker部署方案" [ref=e271] [cursor=pointer]':
+                        - /url: /naroat/tools-web/commit/097d8fc0b83eeb827f157d32c54e2d483efb07aa
+                    - cell "May 15, 20242 years ago" [ref=e272]:
+                      - generic [ref=e273]: May 15, 20242 years ago
+                  - row ".env.example, (File) feat：页面美化，添加广告位 Mar 2, 20262 months ago" [ref=e274]:
+                    - cell ".env.example, (File)" [ref=e275]:
+                      - generic [ref=e276]:
+                        - img [ref=e277]
+                        - link ".env.example, (File)" [ref=e282] [cursor=pointer]:
+                          - /url: /naroat/tools-web/blob/master/.env.example
+                          - text: .env.example
+                    - cell "feat：页面美化，添加广告位" [ref=e283]:
+                      - link "feat：页面美化，添加广告位" [ref=e286] [cursor=pointer]:
+                        - /url: /naroat/tools-web/commit/226997fb2579cdcb8f922974a5b62d0bcfaf8131
+                    - cell "Mar 2, 20262 months ago" [ref=e287]:
+                      - generic [ref=e288]: Mar 2, 20262 months ago
+                  - 'row ".gitignore, (File) feat: 新增工具 Mar 2, 20262 months ago" [ref=e289]':
+                    - cell ".gitignore, (File)" [ref=e290]:
+                      - generic [ref=e291]:
+                        - img [ref=e292]
+                        - link ".gitignore, (File)" [ref=e297] [cursor=pointer]:
+                          - /url: /naroat/tools-web/blob/master/.gitignore
+                          - text: .gitignore
+                    - 'cell "feat: 新增工具" [ref=e298]':
+                      - 'link "feat: 新增工具" [ref=e301] [cursor=pointer]':
+                        - /url: /naroat/tools-web/commit/0701b6a286a7595a3964952bc047839edd8b1115
+                    - cell "Mar 2, 20262 months ago" [ref=e302]:
+                      - generic [ref=e303]: Mar 2, 20262 months ago
+                  - row "Dockerfile, (File) fix Mar 2, 20262 months ago" [ref=e304]:
+                    - cell "Dockerfile, (File)" [ref=e305]:
+                      - generic [ref=e306]:
+                        - img [ref=e307]
+                        - link "Dockerfile, (File)" [ref=e312] [cursor=pointer]:
+                          - /url: /naroat/tools-web/blob/master/Dockerfile
+                          - text: Dockerfile
+                    - cell "fix" [ref=e313]:
+                      - link "fix" [ref=e316] [cursor=pointer]:
+                        - /url: /naroat/tools-web/commit/3106e47ad181e8e9af40ec57e3929f49a820d5f9
+                    - cell "Mar 2, 20262 months ago" [ref=e317]:
+                      - generic [ref=e318]: Mar 2, 20262 months ago
+                  - row "LICENSE, (File) feat：添加版权信息 Dec 1, 20233 years ago" [ref=e319]:
+                    - cell "LICENSE, (File)" [ref=e320]:
+                      - generic [ref=e321]:
+                        - img [ref=e322]
+                        - link "LICENSE, (File)" [ref=e327] [cursor=pointer]:
+                          - /url: /naroat/tools-web/blob/master/LICENSE
+                          - text: LICENSE
+                    - cell "feat：添加版权信息" [ref=e328]:
+                      - link "feat：添加版权信息" [ref=e331] [cursor=pointer]:
+                        - /url: /naroat/tools-web/commit/b6bc1ad809a789157b9ddd2b156ff7ba632fc251
+                    - cell "Dec 1, 20233 years ago" [ref=e332]:
+                      - generic [ref=e333]: Dec 1, 20233 years ago
+                  - row "README.md, (File) fix Mar 2, 20262 months ago" [ref=e334]:
+                    - cell "README.md, (File)" [ref=e335]:
+                      - generic [ref=e336]:
+                        - img [ref=e337]
+                        - link "README.md, (File)" [ref=e342] [cursor=pointer]:
+                          - /url: /naroat/tools-web/blob/master/README.md
+                          - text: README.md
+                    - cell "fix" [ref=e343]:
+                      - link "fix" [ref=e346] [cursor=pointer]:
+                        - /url: /naroat/tools-web/commit/c23f06df50e1e907744ec09c507b063db1ff0b6b
+                    - cell "Mar 2, 20262 months ago" [ref=e347]:
+                      - generic [ref=e348]: Mar 2, 20262 months ago
+                  - row "index.html, (File) Merge branch 'feature/06' Jul 5, 20242 years ago" [ref=e349]:
+                    - cell "index.html, (File)" [ref=e350]:
+                      - generic [ref=e351]:
+                        - img [ref=e352]
+                        - link "index.html, (File)" [ref=e357] [cursor=pointer]:
+                          - /url: /naroat/tools-web/blob/master/index.html
+                          - text: index.html
+                    - cell "Merge branch 'feature/06'" [ref=e358]:
+                      - link "Merge branch 'feature/06'" [ref=e361] [cursor=pointer]:
+                        - /url: /naroat/tools-web/commit/a5233c55c620222bcb6d879dae8e2c5f16ce94a4
+                    - cell "Jul 5, 20242 years ago" [ref=e362]:
+                      - generic [ref=e363]: Jul 5, 20242 years ago
+                  - 'row "nginx.conf, (File) feat: docker部署方案 May 15, 20242 years ago" [ref=e364]':
+                    - cell "nginx.conf, (File)" [ref=e365]:
+                      - generic [ref=e366]:
+                        - img [ref=e367]
+                        - link "nginx.conf, (File)" [ref=e372] [cursor=pointer]:
+                          - /url: /naroat/tools-web/blob/master/nginx.conf
+                          - text: nginx.conf
+                    - 'cell "feat: docker部署方案" [ref=e373]':
+                      - 'link "feat: docker部署方案" [ref=e376] [cursor=pointer]':
+                        - /url: /naroat/tools-web/commit/097d8fc0b83eeb827f157d32c54e2d483efb07aa
+                    - cell "May 15, 20242 years ago" [ref=e377]:
+                      - generic [ref=e378]: May 15, 20242 years ago
+                  - row "package.json, (File) fix Mar 2, 20262 months ago" [ref=e379]:
+                    - cell "package.json, (File)" [ref=e380]:
+                      - generic [ref=e381]:
+                        - img [ref=e382]
+                        - link "package.json, (File)" [ref=e387] [cursor=pointer]:
+                          - /url: /naroat/tools-web/blob/master/package.json
+                          - text: package.json
+                    - cell "fix" [ref=e388]:
+                      - link "fix" [ref=e391] [cursor=pointer]:
+                        - /url: /naroat/tools-web/commit/94d3bee8459f4ab9509262b9a6703748ea982e73
+                    - cell "Mar 2, 20262 months ago" [ref=e392]:
+                      - generic [ref=e393]: Mar 2, 20262 months ago
+                  - row "pnpm-lock.yaml, (File) fix Mar 2, 20262 months ago" [ref=e394]:
+                    - cell "pnpm-lock.yaml, (File)" [ref=e395]:
+                      - generic [ref=e396]:
+                        - img [ref=e397]
+                        - link "pnpm-lock.yaml, (File)" [ref=e402] [cursor=pointer]:
+                          - /url: /naroat/tools-web/blob/master/pnpm-lock.yaml
+                          - text: pnpm-lock.yaml
+                    - cell "fix" [ref=e403]:
+                      - link "fix" [ref=e406] [cursor=pointer]:
+                        - /url: /naroat/tools-web/commit/94d3bee8459f4ab9509262b9a6703748ea982e73
+                    - cell "Mar 2, 20262 months ago" [ref=e407]:
+                      - generic [ref=e408]: Mar 2, 20262 months ago
+                  - row "postcss.config.js, (File) init Nov 28, 20233 years ago" [ref=e409]:
+                    - cell "postcss.config.js, (File)" [ref=e410]:
+                      - generic [ref=e411]:
+                        - img [ref=e412]
+                        - link "postcss.config.js, (File)" [ref=e417] [cursor=pointer]:
+                          - /url: /naroat/tools-web/blob/master/postcss.config.js
+                          - text: postcss.config.js
+                    - cell "init" [ref=e418]:
+                      - link "init" [ref=e421] [cursor=pointer]:
+                        - /url: /naroat/tools-web/commit/5621838cf4ce143438f193b2297af271640c9aa8
+                    - cell "Nov 28, 20233 years ago" [ref=e422]:
+                      - generic [ref=e423]: Nov 28, 20233 years ago
+                  - row "ssr.config.ts, (File) fix Mar 2, 20262 months ago" [ref=e424]:
+                    - cell "ssr.config.ts, (File)" [ref=e425]:
+                      - generic [ref=e426]:
+                        - img [ref=e427]
+                        - link "ssr.config.ts, (File)" [ref=e432] [cursor=pointer]:
+                          - /url: /naroat/tools-web/blob/master/ssr.config.ts
+                          - text: ssr.config.ts
+                    - cell "fix" [ref=e433]:
+                      - link "fix" [ref=e436] [cursor=pointer]:
+                        - /url: /naroat/tools-web/commit/c23f06df50e1e907744ec09c507b063db1ff0b6b
+                    - cell "Mar 2, 20262 months ago" [ref=e437]:
+                      - generic [ref=e438]: Mar 2, 20262 months ago
+                  - 'row "tailwind.config.js, (File) feat: 平板和小屏幕适配 Feb 19, 20242 years ago" [ref=e439]':
+                    - cell "tailwind.config.js, (File)" [ref=e440]:
+                      - generic [ref=e441]:
+                        - img [ref=e442]
+                        - link "tailwind.config.js, (File)" [ref=e447] [cursor=pointer]:
+                          - /url: /naroat/tools-web/blob/master/tailwind.config.js
+                          - text: tailwind.config.js
+                    - 'cell "feat: 平板和小屏幕适配" [ref=e448]':
+                      - 'link "feat: 平板和小屏幕适配" [ref=e451] [cursor=pointer]':
+                        - /url: /naroat/tools-web/commit/7456b9a35f3f8388c9fe1c344095ab444546bb47
+                    - cell "Feb 19, 20242 years ago" [ref=e452]:
+                      - generic [ref=e453]: Feb 19, 20242 years ago
+                  - row "tsconfig.json, (File) fix Mar 2, 20262 months ago" [ref=e454]:
+                    - cell "tsconfig.json, (File)" [ref=e455]:
+                      - generic [ref=e456]:
+                        - img [ref=e457]
+                        - link "tsconfig.json, (File)" [ref=e462] [cursor=pointer]:
+                          - /url: /naroat/tools-web/blob/master/tsconfig.json
+                          - text: tsconfig.json
+                    - cell "fix" [ref=e463]:
+                      - link "fix" [ref=e466] [cursor=pointer]:
+                        - /url: /naroat/tools-web/commit/94d3bee8459f4ab9509262b9a6703748ea982e73
+                    - cell "Mar 2, 20262 months ago" [ref=e467]:
+                      - generic [ref=e468]: Mar 2, 20262 months ago
+                  - 'row "tsconfig.node.json, (File) fix: debug Dec 10, 20233 years ago" [ref=e469]':
+                    - cell "tsconfig.node.json, (File)" [ref=e470]:
+                      - generic [ref=e471]:
+                        - img [ref=e472]
+                        - link "tsconfig.node.json, (File)" [ref=e477] [cursor=pointer]:
+                          - /url: /naroat/tools-web/blob/master/tsconfig.node.json
+                          - text: tsconfig.node.json
+                    - 'cell "fix: debug" [ref=e478]':
+                      - 'link "fix: debug" [ref=e481] [cursor=pointer]':
+                        - /url: /naroat/tools-web/commit/e1b0a0de9900c8ec6c4a026a40f418d9f4289c97
+                    - cell "Dec 10, 20233 years ago" [ref=e482]:
+                      - generic [ref=e483]: Dec 10, 20233 years ago
+                  - 'row "vite.config.ts, (File) feat: docker部署方案 May 15, 20242 years ago" [ref=e484]':
+                    - cell "vite.config.ts, (File)" [ref=e485]:
+                      - generic [ref=e486]:
+                        - img [ref=e487]
+                        - link "vite.config.ts, (File)" [ref=e492] [cursor=pointer]:
+                          - /url: /naroat/tools-web/blob/master/vite.config.ts
+                          - text: vite.config.ts
+                    - 'cell "feat: docker部署方案" [ref=e493]':
+                      - 'link "feat: docker部署方案" [ref=e496] [cursor=pointer]':
+                        - /url: /naroat/tools-web/commit/097d8fc0b83eeb827f157d32c54e2d483efb07aa
+                    - cell "May 15, 20242 years ago" [ref=e497]:
+                      - generic [ref=e498]: May 15, 20242 years ago
+            - generic [ref=e500]:
+              - generic [ref=e501]:
+                - heading "Repository files navigation" [level=2] [ref=e502]
+                - navigation "Repository files" [ref=e503]:
+                  - list [ref=e504]:
+                    - listitem [ref=e505]:
+                      - link "README" [ref=e506] [cursor=pointer]:
+                        - /url: "#"
+                        - img [ref=e508]
+                        - generic [ref=e510]: README
+                    - listitem [ref=e511]:
+                      - link "MIT license" [ref=e512] [cursor=pointer]:
+                        - /url: "#"
+                        - img [ref=e514]
+                        - generic [ref=e516]: MIT license
+                - button "Outline" [ref=e517] [cursor=pointer]:
+                  - img [ref=e518]
+              - article [ref=e521]:
+                - generic [ref=e522]:
+                  - generic [ref=e523]: _______ _ __ __ _ |__ __| | | \ \ / / | | | | ___ ___ | |___ _____\ \ /\ / /__| |__ | |/ _ \ / _ \| / __|______\ \/ \/ / _ \ '_ \ | | (_) | (_) | \__ \ \ /\ / __/ |_) | |_|\___/ \___/|_|___/ \/ \/ \___|_.__/
+                  - paragraph [ref=e524]: 只需简单几步，即可快速搭建属于自己的在线工具箱。
+                  - paragraph [ref=e525]:
+                    - link "node" [ref=e526] [cursor=pointer]:
+                      - /url: /naroat/tools-web/blob/master/node
+                      - img "node" [ref=e527]
+                    - link "vue" [ref=e528] [cursor=pointer]:
+                      - /url: /naroat/tools-web/blob/master/vue
+                      - img "vue" [ref=e529]
+                    - link "tailwindcss" [ref=e530] [cursor=pointer]:
+                      - /url: /naroat/tools-web/blob/master/tailwindcss
+                      - img "tailwindcss" [ref=e531]
+                    - link "elementplus" [ref=e532] [cursor=pointer]:
+                      - /url: /naroat/tools-web/blob/master/elementplus
+                      - img "elementplus" [ref=e533]
+                    - link "license" [ref=e534] [cursor=pointer]:
+                      - /url: /naroat/tools-web/blob/master/LICENSE
+                      - img "license" [ref=e535]
+                - generic [ref=e536]:
+                  - heading "目录" [level=2] [ref=e537]
+                  - 'link "Permalink: 目录" [ref=e538] [cursor=pointer]':
+                    - /url: "#目录"
+                    - img [ref=e539]
+                - list [ref=e541]:
+                  - listitem [ref=e542]:
+                    - link "功能展览" [ref=e543] [cursor=pointer]:
+                      - /url: "#%E5%8A%9F%E8%83%BD%E5%B1%95%E8%A7%88"
+                  - listitem [ref=e544]:
+                    - link "开始使用" [ref=e545] [cursor=pointer]:
+                      - /url: "#%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8"
+                    - list [ref=e546]:
+                      - listitem [ref=e547]:
+                        - link "Docker部署" [ref=e548] [cursor=pointer]:
+                          - /url: "#Docker%E9%83%A8%E7%BD%B2"
+                      - listitem [ref=e549]:
+                        - link "手动部署" [ref=e550] [cursor=pointer]:
+                          - /url: "#%E6%89%8B%E5%8A%A8%E9%83%A8%E7%BD%B2"
+                  - listitem [ref=e551]:
+                    - link "工具列表" [ref=e552] [cursor=pointer]:
+                      - /url: "#%E5%B7%A5%E5%85%B7%E5%88%97%E8%A1%A8"
+                  - listitem [ref=e553]:
+                    - link "其他" [ref=e554] [cursor=pointer]:
+                      - /url: "#%E5%85%B6%E4%BB%96"
+                - generic [ref=e555]:
+                  - heading "功能展示" [level=2] [ref=e556]
+                  - 'link "Permalink: 功能展示" [ref=e557] [cursor=pointer]':
+                    - /url: "#功能展示"
+                    - img [ref=e558]
+                - paragraph [ref=e560]:
+                  - text: 在线站点：
+                  - link "Tools-Web" [ref=e561] [cursor=pointer]:
+                    - /url: https://tools.ranblogs.com
+                - generic [ref=e562]:
+                  - heading "开始使用" [level=2] [ref=e563]
+                  - 'link "Permalink: 开始使用" [ref=e564] [cursor=pointer]':
+                    - /url: "#开始使用"
+                    - img [ref=e565]
+                - generic [ref=e567]:
+                  - heading "Docker部署" [level=3] [ref=e568]
+                  - 'link "Permalink: Docker部署" [ref=e569] [cursor=pointer]':
+                    - /url: "#docker部署"
+                    - img [ref=e570]
+                - generic [ref=e572]:
+                  - code [ref=e574]: docker run -d --name tools-web --restart unless-stopped -p 8080:80 docker0796/tools-web:latest
+                  - button "Copy" [ref=e576] [cursor=pointer]:
+                    - img [ref=e577]
+                - paragraph [ref=e580]:
+                  - text: 访问：
+                  - code [ref=e581]: http://127.0.0.1:8080
+                - generic [ref=e582]:
+                  - heading "手动部署" [level=3] [ref=e583]
+                  - 'link "Permalink: 手动部署" [ref=e584] [cursor=pointer]':
+                    - /url: "#手动部署"
+                    - img [ref=e585]
+                - paragraph [ref=e587]:
+                  - text: 安装
+                  - code [ref=e588]: pnpm
+                - generic [ref=e589]:
+                  - code [ref=e591]: npm install pnpm -g
+                  - button "Copy" [ref=e593] [cursor=pointer]:
+                    - img [ref=e594]
+                - paragraph [ref=e597]: 克隆
+                - generic [ref=e598]:
+                  - code [ref=e600]: git clone --depth=1 https://github.com/naroat/tools-web.git
+                  - button "Copy" [ref=e602] [cursor=pointer]:
+                    - img [ref=e603]
+                - paragraph [ref=e606]: 安装
+                - generic [ref=e607]:
+                  - code [ref=e609]: "# 进入项目 cd tools-web # 复制配置文件 cp .env.example .env.development # 安装 pnpm install"
+                  - button "Copy" [ref=e611] [cursor=pointer]:
+                    - img [ref=e612]
+                - paragraph [ref=e615]: 启动
+                - generic [ref=e616]:
+                  - code [ref=e618]: pnpm dev
+                  - button "Copy" [ref=e620] [cursor=pointer]:
+                    - img [ref=e621]
+                - paragraph [ref=e624]: 打包
+                - generic [ref=e625]:
+                  - code [ref=e627]: pnpm build
+                  - button "Copy" [ref=e629] [cursor=pointer]:
+                    - img [ref=e630]
+                - paragraph [ref=e633]:
+                  - text: 打包seo静态页面:复制
+                  - code [ref=e634]: .env.development
+                  - text: 文件，并将文件名修改为
+                  - code [ref=e635]: .env.production
+                  - text: ",将里面的"
+                  - code [ref=e636]: NODE_ENV
+                  - text: 的值改为
+                  - code [ref=e637]: productio
+                  - text: ",然后运行下面打包命令"
+                - generic [ref=e638]:
+                  - code [ref=e640]: pnpm build:pro
+                  - button "Copy" [ref=e642] [cursor=pointer]:
+                    - img [ref=e643]
+                - generic [ref=e646]:
+                  - heading "工具列表" [level=2] [ref=e647]
+                  - 'link "Permalink: 工具列表" [ref=e648] [cursor=pointer]':
+                    - /url: "#工具列表"
+                    - img [ref=e649]
+                - list [ref=e651]:
+                  - listitem [ref=e652]:
+                    - paragraph [ref=e653]: 开发运维
+                    - list [ref=e654]:
+                      - listitem [ref=e655]: 随机密码生成
+                      - listitem [ref=e656]: URL编码/解码
+                      - listitem [ref=e657]: UUID生成器
+                      - listitem [ref=e658]: 时间戳转换
+                      - listitem [ref=e659]: MD5在线加密
+                      - listitem [ref=e660]: Json在线转换
+                      - listitem [ref=e661]: 正则测试工具
+                      - listitem [ref=e662]: Unicode转中文
+                      - listitem [ref=e663]: HTTP状态码
+                      - listitem [ref=e664]: JWT解析
+                      - listitem [ref=e665]: html实体转义
+                      - listitem [ref=e666]: js代码格式化/压缩
+                      - listitem [ref=e667]: Html代码格式化
+                      - listitem [ref=e668]: Css代码格式化/压缩
+                      - listitem [ref=e669]: Base64加解密
+                      - listitem [ref=e670]: 进制转换计算器
+                      - listitem [ref=e671]: 数据存储单位换算
+                      - listitem [ref=e672]: Hash计算器
+                      - listitem [ref=e673]: XML格式化
+                      - listitem [ref=e674]: SQL格式化
+                  - listitem [ref=e675]:
+                    - paragraph [ref=e676]: 文本处理
+                    - list [ref=e677]:
+                      - listitem [ref=e678]: 文本对比
+                      - listitem [ref=e679]: markdown编辑器
+                      - listitem [ref=e680]: ASCII字形生成器
+                      - listitem [ref=e681]: 文本去重
+                      - listitem [ref=e682]: 在线文本编辑/HTML获取
+                      - listitem [ref=e683]: 字数统计
+                      - listitem [ref=e684]: 文本替换
+                      - listitem [ref=e685]: 文本处理工作流
+                      - listitem [ref=e686]: 词频统计
+                  - listitem [ref=e687]:
+                    - paragraph [ref=e688]: 教育学术
+                    - list [ref=e689]:
+                      - listitem [ref=e690]: 单位换算
+                      - listitem [ref=e691]: 摩斯电码
+                      - listitem [ref=e692]: 常用进制转换
+                      - listitem [ref=e693]: ASCII码表
+                      - listitem [ref=e694]: 长度单位转换
+                      - listitem [ref=e695]: 面积单位转换
+                      - listitem [ref=e696]: 重量单位转换
+                      - listitem [ref=e697]: 时间单位转换
+                      - listitem [ref=e698]: 温度单位转换
+                      - listitem [ref=e699]: 压力单位转换
+                      - listitem [ref=e700]: 热量单位转换
+                      - listitem [ref=e701]: 功率单位转换
+                  - listitem [ref=e702]:
+                    - paragraph [ref=e703]: 图片处理
+                    - list [ref=e704]:
+                      - listitem [ref=e705]: 二维码生成
+                      - listitem [ref=e706]: 在线图片处理
+                      - listitem [ref=e707]: 文本转图片
+                      - listitem [ref=e708]: 图片分割
+                      - listitem [ref=e709]: 传图取色
+                      - listitem [ref=e710]: 图片水印添加
+                  - listitem [ref=e711]:
+                    - paragraph [ref=e712]: 数据图表
+                    - list [ref=e713]:
+                      - listitem [ref=e714]: 柱状图
+                      - listitem [ref=e715]: 折线图
+                      - listitem [ref=e716]: 饼图
+                      - listitem [ref=e717]: 散点图
+                      - listitem [ref=e718]: 词云生成
+                  - listitem [ref=e719]:
+                    - paragraph [ref=e720]: 选择随机
+                    - list [ref=e721]:
+                      - listitem [ref=e722]: 生成随机数
+                      - listitem [ref=e723]: 帮我决定
+                      - listitem [ref=e724]: 抛硬币
+                      - listitem [ref=e725]: 投骰子
+                      - listitem [ref=e726]: 抽签工具
+                      - listitem [ref=e727]: 转盘工具
+                  - listitem [ref=e728]:
+                    - paragraph [ref=e729]: 其他工具
+                    - list [ref=e730]:
+                      - listitem [ref=e731]: 数字转金额大写
+                      - listitem [ref=e732]: 手持弹幕
+                      - listitem [ref=e733]: 色板
+                      - listitem [ref=e734]: Color选择器
+                      - listitem [ref=e735]: 番茄时钟
+                      - listitem [ref=e736]: 反应速度测试
+                      - listitem [ref=e737]: m3u8在线播放
+                      - listitem [ref=e738]: 剪刀石头布
+                      - listitem [ref=e739]: Emoji表情大全
+                      - listitem [ref=e740]: 简易计算器
+                - generic [ref=e741]:
+                  - heading "其他" [level=2] [ref=e742]
+                  - 'link "Permalink: 其他" [ref=e743] [cursor=pointer]':
+                    - /url: "#其他"
+                    - img [ref=e744]
+                - paragraph [ref=e746]: "Q: 我应该如何添加新功能？"
+                - paragraph [ref=e747]: "A:"
+                - list [ref=e748]:
+                  - listitem [ref=e749]:
+                    - text: 在
+                    - code [ref=e750]: components/Tools/tools.ts
+                    - text: 文件中添加工具信息
+                  - listitem [ref=e751]:
+                    - text: 在
+                    - code [ref=e752]: router/router.ts
+                    - text: 中添加路由
+                  - listitem [ref=e753]:
+                    - text: 目录
+                    - code [ref=e754]: components/Tools
+                    - text: 中添加新的工具组件
+                - paragraph [ref=e755]:
+                  - text: "Q: 我可以参与开发"
+                  - code [ref=e756]: Tools-Web
+                  - text: 吗？
+                - paragraph [ref=e757]:
+                  - text: "A: 当然可以，随时欢迎提交"
+                  - code [ref=e758]: PR
+        - generic [ref=e762]:
+          - generic [ref=e765]:
+            - heading "About" [level=2] [ref=e766]
+            - paragraph [ref=e767]: 在线工具站; 工具分类覆盖开发运维、文本处理、图片处理、图表处理、随机工具、查询工具等；常见工具json转换、密码生成、时间戳、单位换算、在线图片编辑
+            - generic [ref=e768]:
+              - img [ref=e769]
+              - link "tools.ranblogs.com" [ref=e772] [cursor=pointer]:
+                - /url: https://tools.ranblogs.com
+            - heading "Topics" [level=3] [ref=e773]
+            - generic [ref=e775]:
+              - link "javascript" [ref=e776] [cursor=pointer]:
+                - /url: /topics/javascript
+              - link "json" [ref=e777] [cursor=pointer]:
+                - /url: /topics/json
+              - link "typescript" [ref=e778] [cursor=pointer]:
+                - /url: /topics/typescript
+              - link "tools" [ref=e779] [cursor=pointer]:
+                - /url: /topics/tools
+              - link "tool" [ref=e780] [cursor=pointer]:
+                - /url: /topics/tool
+              - link "ts" [ref=e781] [cursor=pointer]:
+                - /url: /topics/ts
+              - link "webtools" [ref=e782] [cursor=pointer]:
+                - /url: /topics/webtools
+              - link "tailwind" [ref=e783] [cursor=pointer]:
+                - /url: /topics/tailwind
+              - link "tools-web" [ref=e784] [cursor=pointer]:
+                - /url: /topics/tools-web
+              - link "toolsweb" [ref=e785] [cursor=pointer]:
+                - /url: /topics/toolsweb
+            - heading "Resources" [level=3] [ref=e786]
+            - link "Readme" [ref=e788] [cursor=pointer]:
+              - /url: "#readme-ov-file"
+              - img [ref=e789]
+              - text: Readme
+            - heading "License" [level=3] [ref=e791]
+            - link "MIT license" [ref=e793] [cursor=pointer]:
+              - /url: "#MIT-1-ov-file"
+              - img [ref=e794]
+              - text: MIT license
+            - link "Activity" [ref=e797] [cursor=pointer]:
+              - /url: /naroat/tools-web/activity
+              - img [ref=e798]
+              - text: Activity
+            - heading "Stars" [level=3] [ref=e800]
+            - link "275 stars" [ref=e802] [cursor=pointer]:
+              - /url: /naroat/tools-web/stargazers
+              - img [ref=e803]
+              - strong [ref=e805]: "275"
+              - text: stars
+            - heading "Watchers" [level=3] [ref=e806]
+            - link "2 watching" [ref=e808] [cursor=pointer]:
+              - /url: /naroat/tools-web/watchers
+              - img [ref=e809]
+              - strong [ref=e811]: "2"
+              - text: watching
+            - heading "Forks" [level=3] [ref=e812]
+            - link "117 forks" [ref=e814] [cursor=pointer]:
+              - /url: /naroat/tools-web/forks
+              - img [ref=e815]
+              - strong [ref=e817]: "117"
+              - text: forks
+            - link "Report repository" [ref=e819] [cursor=pointer]:
+              - /url: /contact/report-content?content_url=https%3A%2F%2Fgithub.com%2Fnaroat%2Ftools-web&report=naroat+%28user%29
+          - generic [ref=e821]:
+            - heading "Releases 5" [level=2] [ref=e822]:
+              - link "Releases 5" [ref=e823] [cursor=pointer]:
+                - /url: /naroat/tools-web/releases
+                - text: Releases
+                - generic "5" [ref=e824]
+            - link "V1.3.5 Latest Mar 2, 2026on Mar 2" [ref=e825] [cursor=pointer]:
+              - /url: /naroat/tools-web/releases/tag/v1.3.5
+              - img [ref=e826]
+              - generic [ref=e828]:
+                - generic [ref=e829]:
+                  - generic [ref=e830]: V1.3.5
+                  - 'generic "Label: Latest" [ref=e831]': Latest
+                - generic [ref=e832]: Mar 2, 2026on Mar 2
+            - link "+ 4 releases" [ref=e834] [cursor=pointer]:
+              - /url: /naroat/tools-web/releases
+          - generic [ref=e836]:
+            - heading "Contributors 3" [level=2] [ref=e837]:
+              - link "Contributors 3" [ref=e838] [cursor=pointer]:
+                - /url: /naroat/tools-web/graphs/contributors
+                - text: Contributors
+                - generic "3" [ref=e839]
+            - list [ref=e840]:
+              - listitem [ref=e841]:
+                - link "@naroat" [ref=e842] [cursor=pointer]:
+                  - /url: https://github.com/naroat
+                  - img "@naroat" [ref=e843]
+                - link "naroat Naroat" [ref=e845] [cursor=pointer]:
+                  - /url: https://github.com/naroat
+                  - strong [ref=e846]: naroat
+                  - text: Naroat
+              - listitem [ref=e847]:
+                - link "@chdjj" [ref=e848] [cursor=pointer]:
+                  - /url: https://github.com/chdjj
+                  - img "@chdjj" [ref=e849]
+                - link "chdjj L蜜瓜" [ref=e851] [cursor=pointer]:
+                  - /url: https://github.com/chdjj
+                  - strong [ref=e852]: chdjj
+                  - text: L蜜瓜
+              - listitem [ref=e853]:
+                - link "@anyanf" [ref=e854] [cursor=pointer]:
+                  - /url: https://github.com/anyanf
+                  - img "@anyanf" [ref=e855]
+                - link "anyanf 安彦风" [ref=e857] [cursor=pointer]:
+                  - /url: https://github.com/anyanf
+                  - strong [ref=e858]: anyanf
+                  - text: 安彦风
+          - generic [ref=e860]:
+            - heading "Languages" [level=2] [ref=e861]
+            - list [ref=e867]:
+              - listitem [ref=e868]:
+                - link "Vue 85.0%" [ref=e869] [cursor=pointer]:
+                  - /url: /naroat/tools-web/search?l=vue
+                  - img [ref=e870]
+                  - generic [ref=e872]: Vue
+                  - generic [ref=e873]: 85.0%
+              - listitem [ref=e874]:
+                - link "TypeScript 14.5%" [ref=e875] [cursor=pointer]:
+                  - /url: /naroat/tools-web/search?l=typescript
+                  - img [ref=e876]
+                  - generic [ref=e878]: TypeScript
+                  - generic [ref=e879]: 14.5%
+              - listitem [ref=e880]:
+                - generic [ref=e881]:
+                  - img [ref=e882]
+                  - generic [ref=e884]: Other
+                  - generic [ref=e885]: 0.5%
+  - contentinfo [ref=e887]:
+    - heading "Footer" [level=2] [ref=e888]
+    - generic [ref=e889]:
+      - generic [ref=e890]:
+        - link "GitHub Homepage" [ref=e891] [cursor=pointer]:
+          - /url: https://github.com
+          - img [ref=e892]
+        - generic [ref=e894]: © 2026 GitHub, Inc.
+      - navigation "Footer" [ref=e895]:
+        - heading "Footer navigation" [level=3] [ref=e896]
+        - list "Footer navigation" [ref=e897]:
+          - listitem [ref=e898]:
+            - link "Terms" [ref=e899] [cursor=pointer]:
+              - /url: https://docs.github.com/site-policy/github-terms/github-terms-of-service
+          - listitem [ref=e900]:
+            - link "Privacy" [ref=e901] [cursor=pointer]:
+              - /url: https://docs.github.com/site-policy/privacy-policies/github-privacy-statement
+          - listitem [ref=e902]:
+            - link "Security" [ref=e903] [cursor=pointer]:
+              - /url: https://github.com/security
+          - listitem [ref=e904]:
+            - link "Status" [ref=e905] [cursor=pointer]:
+              - /url: https://www.githubstatus.com/
+          - listitem [ref=e906]:
+            - link "Community" [ref=e907] [cursor=pointer]:
+              - /url: https://github.community/
+          - listitem [ref=e908]:
+            - link "Docs" [ref=e909] [cursor=pointer]:
+              - /url: https://docs.github.com/
+          - listitem [ref=e910]:
+            - link "Contact" [ref=e911] [cursor=pointer]:
+              - /url: https://support.github.com?tags=dotcom-footer
+          - listitem [ref=e912]:
+            - button "Manage cookies" [ref=e914] [cursor=pointer]
+          - listitem [ref=e915]:
+            - button "Do not share my personal information" [ref=e917] [cursor=pointer]

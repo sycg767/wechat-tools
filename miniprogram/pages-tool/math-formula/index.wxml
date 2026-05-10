@@ -1,0 +1,56 @@
+<view class="container">
+  <view class="page-header">
+    <view class="page-title">数学公式查询</view>
+    <view class="page-desc">覆盖代数、几何、三角、解析几何、微积分、概率统计，支持搜索、详情和复制。</view>
+  </view>
+
+  <view class="summary-card card">
+    <text class="summary-num">{{list.length}}</text>
+    <text class="summary-text">条结果</text>
+  </view>
+
+  <scroll-view class="tabs" scroll-x="true" enable-flex="true" show-scrollbar="false">
+    <view class="tab {{activeCategory === item ? 'active' : ''}}" wx:for="{{categories}}" wx:key="*this" bindtap="switchCategory" data-category="{{item}}">{{item}}</view>
+  </scroll-view>
+
+  <view class="card search-card">
+    <input class="input" value="{{keyword}}" bindinput="onSearch" placeholder="搜索公式名称、变量、场景或例题" />
+  </view>
+
+  <view class="formula-list">
+    <view class="card formula-card" wx:for="{{list}}" wx:key="id" wx:for-index="index" bindtap="showDetail" data-index="{{index}}">
+      <view class="formula-top">
+        <view class="formula-main">
+          <text class="formula-name">{{item.name}}</text>
+          <text class="formula-category">{{item.category}}</text>
+        </view>
+        <view class="actions" catchtap="noop">
+          <button class="mini-btn" data-index="{{index}}" catchtap="copyItem">复制</button>
+        </view>
+      </view>
+      <text class="formula-text">{{item.formula}}</text>
+      <text class="formula-desc">{{item.scene}}</text>
+    </view>
+  </view>
+
+  <view class="empty" wx:if="{{!list.length}}">没有找到匹配公式</view>
+
+  <view class="detail-mask" wx:if="{{selectedItem}}" catchtap="closeDetail">
+    <view class="detail-card" catchtap="noop">
+      <view class="detail-head">
+        <view class="formula-main">
+          <text class="formula-name">{{selectedItem.name}}</text>
+          <text class="formula-category">{{selectedItem.category}}</text>
+        </view>
+        <button class="mini-btn close" catchtap="closeDetail">关闭</button>
+      </view>
+      <text class="formula-text detail-formula">{{selectedItem.formula}}</text>
+      <view class="detail-section"><text class="label">变量解释</text><text class="value">{{selectedItem.variables}}</text></view>
+      <view class="detail-section"><text class="label">适用场景</text><text class="value">{{selectedItem.scene}}</text></view>
+      <view class="detail-section"><text class="label">例题</text><text class="value">{{selectedItem.example}}</text></view>
+      <view class="detail-actions">
+        <button class="main-btn" data-detail="true" catchtap="copyItem">复制详情</button>
+      </view>
+    </view>
+  </view>
+</view>

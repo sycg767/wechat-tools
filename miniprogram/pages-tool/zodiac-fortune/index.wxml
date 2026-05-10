@@ -1,0 +1,147 @@
+<view class="container zodiac-page">
+  <view class="page-header">
+    <view class="page-title">星座运势查询</view>
+    <view class="page-desc">生成每日星座日运卡片，包含综合、关系、事业、财富和健康提醒。</view>
+  </view>
+
+  <view class="card select-card">
+    <view class="section-head">
+      <view>
+        <text class="section-title">选择星座</text>
+        <text class="section-subtitle">当前：{{selected}}</text>
+      </view>
+      <button class="primary-action" loading="{{loading}}" disabled="{{loading}}" bindtap="generateFortune">{{loading ? '生成中' : '生成今日'}}</button>
+    </view>
+    <view class="zodiac-grid">
+      <view wx:for="{{zodiacs}}" wx:key="name" class="zodiac {{selected === item.name ? 'active' : ''}}" data-name="{{item.name}}" bindtap="onZodiacTap">
+        <text class="zodiac-name">{{item.name}}</text>
+        <text class="zodiac-range">{{item.range}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-card card" wx:if="{{!result}}">
+    <text class="empty-title">还没有今日运势</text>
+    <text class="empty-desc">选择星座后点击“生成今日”，当天同一星座会固定生成同一张日运卡片。</text>
+  </view>
+
+  <view wx:if="{{result}}">
+    <view class="card result-card">
+      <view class="result-head">
+        <view class="result-title-block">
+          <text class="result-name">{{result.name}}</text>
+          <text class="result-date">{{result.date}} · {{result.range}}</text>
+          <text class="source-pill">{{result.sourceLabel}}</text>
+        </view>
+        <button class="secondary-action" bindtap="copyResult">复制</button>
+      </view>
+
+      <view class="astro-tags">
+        <text>{{result.element}}</text>
+        <text>{{result.mode}}</text>
+        <text>守护星：{{result.ruler}}</text>
+        <text>{{result.traits}}</text>
+      </view>
+
+      <view class="axis-panel">
+        <view>
+          <text class="axis-label">今日主轴</text>
+          <text class="axis-title">{{result.axis}}</text>
+        </view>
+        <view class="score-main">
+          <text class="score">{{result.score}}</text>
+          <text class="score-stars">{{result.stars}}</text>
+        </view>
+      </view>
+
+      <text class="summary-text">{{result.summary}}</text>
+      <view class="fallback-tip" wx:if="{{result.fallbackReason}}">{{result.fallbackReason}}</view>
+      <view class="astro-data" wx:if="{{result.astroData && result.astroData.length}}">
+        <text class="astro-data-title">今日天象</text>
+        <view class="astro-data-list">
+          <view class="astro-data-item" wx:for="{{result.astroData}}" wx:key="label">
+            <text>{{item.label}}</text>
+            <text>{{item.value}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="card section-card">
+      <view class="section-head compact">
+        <view>
+          <text class="section-title">领域运势</text>
+          <text class="section-subtitle">从关系、行动和身体节奏拆解今日重点</text>
+        </view>
+      </view>
+      <view class="fortune-list">
+        <view class="fortune-item" wx:for="{{result.sections}}" wx:key="key">
+          <view class="fortune-top">
+            <text class="fortune-title">{{item.title}}</text>
+            <view class="fortune-score">
+              <text>{{item.score}}</text>
+              <text>{{item.stars}}</text>
+            </view>
+          </view>
+          <text class="fortune-text">{{item.text}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="card lucky-card">
+      <view class="section-head compact">
+        <view>
+          <text class="section-title">幸运参考</text>
+          <text class="section-subtitle">轻娱乐参考，不作为决策依据</text>
+        </view>
+      </view>
+      <view class="lucky-grid">
+        <view class="lucky-item"><text class="lucky-label">幸运色</text><text class="lucky-value">{{result.luckyColor}}</text></view>
+        <view class="lucky-item"><text class="lucky-label">幸运数字</text><text class="lucky-value">{{result.luckyNumber}}</text></view>
+        <view class="lucky-item"><text class="lucky-label">幸运时间</text><text class="lucky-value">{{result.luckyTime}}</text></view>
+        <view class="lucky-item"><text class="lucky-label">幸运方位</text><text class="lucky-value">{{result.luckyDirection}}</text></view>
+        <view class="lucky-item"><text class="lucky-label">贵人星座</text><text class="lucky-value">{{result.supportSign}}</text></view>
+        <view class="lucky-item"><text class="lucky-label">提防星座</text><text class="lucky-value">{{result.watchSign}}</text></view>
+      </view>
+    </view>
+
+    <view class="card advice-card">
+      <view class="do-dont-grid">
+        <view class="do-dont-item"><text class="do-dont-label">宜</text><text class="do-dont-text">{{result.dos}}</text></view>
+        <view class="do-dont-item"><text class="do-dont-label">忌</text><text class="do-dont-text">{{result.donts}}</text></view>
+      </view>
+      <view class="daily-advice">
+        <text class="advice-label">今日行动建议</text>
+        <text class="advice-text">{{result.advice}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="card history-card" wx:if="{{history.length}}">
+    <view class="section-head compact">
+      <view>
+        <text class="section-title">历史记录</text>
+        <text class="section-subtitle">最近生成的日运卡片</text>
+      </view>
+    </view>
+    <view class="history-item" wx:for="{{history}}" wx:key="id" wx:for-index="index">
+      <view class="history-top">
+        <view class="history-main">
+          <text class="history-title">{{item.name}} · {{item.axis}}</text>
+          <text class="history-date">{{item.date}}</text>
+        </view>
+        <view class="history-actions">
+          <text class="history-score">{{item.score}}分</text>
+          <button class="history-copy" data-index="{{index}}" bindtap="copyHistory">复制</button>
+        </view>
+      </view>
+      <view class="history-tags">
+        <text>宜 {{item.dos}}</text>
+        <text>忌 {{item.donts}}</text>
+        <text>{{item.luckyColor}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="disclaimer">{{disclaimer}}</view>
+</view>

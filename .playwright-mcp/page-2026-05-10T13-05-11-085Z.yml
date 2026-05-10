@@ -1,0 +1,872 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - link "Skip to content" [ref=e4] [cursor=pointer]:
+        - /url: "#start-of-content"
+      - banner [ref=e6]:
+        - heading "Navigation Menu" [level=2] [ref=e7]
+        - generic [ref=e8]:
+          - link "Homepage" [ref=e10] [cursor=pointer]:
+            - /url: /
+            - img [ref=e11]
+          - generic [ref=e13]:
+            - navigation "Global" [ref=e16]:
+              - list [ref=e17]:
+                - listitem [ref=e18]:
+                  - button "Platform" [ref=e20] [cursor=pointer]:
+                    - text: Platform
+                    - img [ref=e21]
+                - listitem [ref=e23]:
+                  - button "Solutions" [ref=e25] [cursor=pointer]:
+                    - text: Solutions
+                    - img [ref=e26]
+                - listitem [ref=e28]:
+                  - button "Resources" [ref=e30] [cursor=pointer]:
+                    - text: Resources
+                    - img [ref=e31]
+                - listitem [ref=e33]:
+                  - button "Open Source" [ref=e35] [cursor=pointer]:
+                    - text: Open Source
+                    - img [ref=e36]
+                - listitem [ref=e38]:
+                  - button "Enterprise" [ref=e40] [cursor=pointer]:
+                    - text: Enterprise
+                    - img [ref=e41]
+                - listitem [ref=e43]:
+                  - link "Pricing" [ref=e44] [cursor=pointer]:
+                    - /url: https://github.com/pricing
+                    - generic [ref=e45]: Pricing
+            - generic [ref=e46]:
+              - button "Search or jump to…" [ref=e49] [cursor=pointer]:
+                - img [ref=e51]
+                - generic [ref=e53]: Search or jump to...
+                - img [ref=e55]
+              - link "Sign in" [ref=e59] [cursor=pointer]:
+                - /url: /login?return_to=https%3A%2F%2Fgithub.com%2F2424004764%2Ftools-web%2Fblob%2Fmaster%2FREADME.md
+              - link "Sign up" [ref=e60] [cursor=pointer]:
+                - /url: /signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Fblob%2Fshow&source=header-repo&source_repo=2424004764%2Ftools-web
+              - button "Appearance settings" [ref=e63] [cursor=pointer]:
+                - img
+    - main [ref=e67]:
+      - generic [ref=e68]:
+        - generic [ref=e69]:
+          - generic [ref=e70]:
+            - generic [ref=e71]:
+              - img [ref=e72]
+              - link "2424004764" [ref=e75] [cursor=pointer]:
+                - /url: /2424004764
+              - generic [ref=e76]: /
+              - strong [ref=e77]:
+                - link "tools-web" [ref=e78] [cursor=pointer]:
+                  - /url: /2424004764/tools-web
+              - generic [ref=e79]: Public
+            - generic [ref=e80]:
+              - text: forked from
+              - link "naroat/tools-web" [ref=e81] [cursor=pointer]:
+                - /url: /naroat/tools-web
+          - generic [ref=e82]:
+            - list:
+              - listitem [ref=e83]:
+                - link "You must be signed in to change notification settings" [ref=e84] [cursor=pointer]:
+                  - /url: /login?return_to=%2F2424004764%2Ftools-web
+                  - img [ref=e85]
+                  - text: Notifications
+              - listitem [ref=e87]:
+                - link "Fork 10" [ref=e88] [cursor=pointer]:
+                  - /url: /login?return_to=%2F2424004764%2Ftools-web
+                  - img [ref=e89]
+                  - text: Fork
+                  - generic "10" [ref=e91]
+              - listitem [ref=e92]:
+                - link "You must be signed in to star a repository" [ref=e94] [cursor=pointer]:
+                  - /url: /login?return_to=%2F2424004764%2Ftools-web
+                  - img [ref=e95]
+                  - text: Star
+                  - generic "18 users starred this repository" [ref=e97]: "18"
+        - navigation "Repository" [ref=e98]:
+          - list [ref=e99]:
+            - listitem [ref=e100]:
+              - link "Code" [ref=e101] [cursor=pointer]:
+                - /url: /2424004764/tools-web
+                - img [ref=e102]
+                - generic [ref=e104]: Code
+            - listitem [ref=e105]:
+              - link "Issues" [ref=e106] [cursor=pointer]:
+                - /url: /2424004764/tools-web/issues
+                - img [ref=e107]
+                - generic [ref=e110]: Issues
+            - listitem [ref=e111]:
+              - link "Pull requests" [ref=e112] [cursor=pointer]:
+                - /url: /2424004764/tools-web/pulls
+                - img [ref=e113]
+                - generic [ref=e115]: Pull requests
+            - listitem [ref=e116]:
+              - link "Discussions" [ref=e117] [cursor=pointer]:
+                - /url: /2424004764/tools-web/discussions
+                - img [ref=e118]
+                - generic [ref=e120]: Discussions
+            - listitem [ref=e121]:
+              - link "Actions" [ref=e122] [cursor=pointer]:
+                - /url: /2424004764/tools-web/actions
+                - img [ref=e123]
+                - generic [ref=e125]: Actions
+            - listitem [ref=e126]:
+              - link "Projects" [ref=e127] [cursor=pointer]:
+                - /url: /2424004764/tools-web/projects
+                - img [ref=e128]
+                - generic [ref=e130]: Projects
+            - listitem [ref=e131]:
+              - link "Security and quality" [ref=e132] [cursor=pointer]:
+                - /url: /2424004764/tools-web/security
+                - img [ref=e133]
+                - generic [ref=e135]: Security and quality
+            - listitem [ref=e136]:
+              - link "Insights" [ref=e137] [cursor=pointer]:
+                - /url: /2424004764/tools-web/pulse
+                - img [ref=e138]
+                - generic [ref=e140]: Insights
+      - generic [ref=e148]:
+        - generic [ref=e150]:
+          - generic [ref=e153]:
+            - generic [ref=e154]:
+              - generic [ref=e155]:
+                - heading "Collapse file tree" [level=2] [ref=e156]:
+                  - button "Collapse file tree" [expanded] [ref=e157] [cursor=pointer]:
+                    - img [ref=e158]
+                - heading "Files" [level=2] [ref=e161]
+              - generic [ref=e162]:
+                - button "master branch" [ref=e164] [cursor=pointer]:
+                  - generic [ref=e165]:
+                    - generic [ref=e167]:
+                      - img [ref=e169]
+                      - generic [ref=e172]: master
+                    - generic:
+                      - img
+                - button "Search this repository (forward slash)" [ref=e174] [cursor=pointer]:
+                  - img [ref=e175]
+            - generic [ref=e178]:
+              - img [ref=e180]
+              - combobox "Go to file" [ref=e182]
+            - navigation "File Tree Navigation" [ref=e189]:
+              - tree "Files" [ref=e191]:
+                - treeitem ".claude" [level=1] [ref=e192]:
+                  - generic [ref=e193] [cursor=pointer]:
+                    - img [ref=e195]
+                    - generic [ref=e197]:
+                      - img [ref=e201]
+                      - generic [ref=e203]: .claude
+                - treeitem ".github" [level=1] [ref=e204]:
+                  - generic [ref=e205] [cursor=pointer]:
+                    - img [ref=e207]
+                    - generic [ref=e209]:
+                      - img [ref=e213]
+                      - generic [ref=e215]: .github
+                - treeitem ".superdesign" [level=1] [ref=e216]:
+                  - generic [ref=e217] [cursor=pointer]:
+                    - img [ref=e219]
+                    - generic [ref=e221]:
+                      - img [ref=e225]
+                      - generic [ref=e227]: .superdesign
+                - treeitem "220个" [level=1] [ref=e228]:
+                  - generic [ref=e229] [cursor=pointer]:
+                    - img [ref=e231]
+                    - generic [ref=e233]:
+                      - img [ref=e237]
+                      - generic [ref=e239]: 220个
+                - treeitem "dev-dist" [level=1] [ref=e240]:
+                  - generic [ref=e241] [cursor=pointer]:
+                    - img [ref=e243]
+                    - generic [ref=e245]:
+                      - img [ref=e249]
+                      - generic [ref=e251]: dev-dist
+                - treeitem "dist" [level=1] [ref=e252]:
+                  - generic [ref=e253] [cursor=pointer]:
+                    - img [ref=e255]
+                    - generic [ref=e257]:
+                      - img [ref=e261]
+                      - generic [ref=e263]: dist
+                - treeitem "functions" [level=1] [ref=e264]:
+                  - generic [ref=e265] [cursor=pointer]:
+                    - img [ref=e267]
+                    - generic [ref=e269]:
+                      - img [ref=e273]
+                      - generic [ref=e275]: functions
+                - treeitem "migrations" [level=1] [ref=e276]:
+                  - generic [ref=e277] [cursor=pointer]:
+                    - img [ref=e279]
+                    - generic [ref=e281]:
+                      - img [ref=e285]
+                      - generic [ref=e287]: migrations
+                - treeitem "public" [level=1] [ref=e288]:
+                  - generic [ref=e289] [cursor=pointer]:
+                    - img [ref=e291]
+                    - generic [ref=e293]:
+                      - img [ref=e297]
+                      - generic [ref=e299]: public
+                - treeitem "scripts" [level=1] [ref=e300]:
+                  - generic [ref=e301] [cursor=pointer]:
+                    - img [ref=e303]
+                    - generic [ref=e305]:
+                      - img [ref=e309]
+                      - generic [ref=e311]: scripts
+                - treeitem "src" [level=1] [ref=e312]:
+                  - generic [ref=e313] [cursor=pointer]:
+                    - img [ref=e315]
+                    - generic [ref=e317]:
+                      - img [ref=e321]
+                      - generic [ref=e323]: src
+                - treeitem "supabase" [level=1] [ref=e324]:
+                  - generic [ref=e325] [cursor=pointer]:
+                    - img [ref=e327]
+                    - generic [ref=e329]:
+                      - img [ref=e333]
+                      - generic [ref=e335]: supabase
+                - treeitem "temp" [level=1] [ref=e336]:
+                  - generic [ref=e337] [cursor=pointer]:
+                    - img [ref=e339]
+                    - generic [ref=e341]:
+                      - img [ref=e345]
+                      - generic [ref=e347]: temp
+                - treeitem ".dockerignore" [level=1] [ref=e348]:
+                  - generic [ref=e350] [cursor=pointer]:
+                    - img [ref=e353]
+                    - generic [ref=e355]: .dockerignore
+                - treeitem ".gitignore" [level=1] [ref=e356]:
+                  - generic [ref=e358] [cursor=pointer]:
+                    - img [ref=e361]
+                    - generic [ref=e363]: .gitignore
+                - treeitem ".windsurfrules" [level=1] [ref=e364]:
+                  - generic [ref=e366] [cursor=pointer]:
+                    - img [ref=e369]
+                    - generic [ref=e371]: .windsurfrules
+                - treeitem "CLAUDE.md" [level=1] [ref=e372]:
+                  - generic [ref=e374] [cursor=pointer]:
+                    - img [ref=e377]
+                    - generic [ref=e379]: CLAUDE.md
+                - treeitem "DATA_PROCESSING_ANALYSIS.md" [level=1] [ref=e380]:
+                  - generic [ref=e382] [cursor=pointer]:
+                    - img [ref=e385]
+                    - generic [ref=e387]: DATA_PROCESSING_ANALYSIS.md
+                - treeitem "Dockerfile" [level=1] [ref=e388]:
+                  - generic [ref=e390] [cursor=pointer]:
+                    - img [ref=e393]
+                    - generic [ref=e395]: Dockerfile
+                - treeitem "GOOGLE_LOGIN_SETUP.md" [level=1] [ref=e396]:
+                  - generic [ref=e398] [cursor=pointer]:
+                    - img [ref=e401]
+                    - generic [ref=e403]: GOOGLE_LOGIN_SETUP.md
+                - treeitem "LICENSE" [level=1] [ref=e404]:
+                  - generic [ref=e406] [cursor=pointer]:
+                    - img [ref=e409]
+                    - generic [ref=e411]: LICENSE
+                - treeitem "PERFORMANCE_OPTIMIZATION.md" [level=1] [ref=e412]:
+                  - generic [ref=e414] [cursor=pointer]:
+                    - img [ref=e417]
+                    - generic [ref=e419]: PERFORMANCE_OPTIMIZATION.md
+                - treeitem "README.md" [level=1] [ref=e420]:
+                  - generic [ref=e422] [cursor=pointer]:
+                    - img [ref=e425]
+                    - generic [ref=e427]: README.md
+                - treeitem "TODO_IMPLEMENTATION.md" [level=1] [ref=e428]:
+                  - generic [ref=e430] [cursor=pointer]:
+                    - img [ref=e433]
+                    - generic [ref=e435]: TODO_IMPLEMENTATION.md
+                - treeitem "index.html" [level=1] [ref=e436]:
+                  - generic [ref=e438] [cursor=pointer]:
+                    - img [ref=e441]
+                    - generic [ref=e443]: index.html
+                - treeitem "nginx.conf" [level=1] [ref=e444]:
+                  - generic [ref=e446] [cursor=pointer]:
+                    - img [ref=e449]
+                    - generic [ref=e451]: nginx.conf
+                - treeitem "package.json" [level=1] [ref=e452]:
+                  - generic [ref=e454] [cursor=pointer]:
+                    - img [ref=e457]
+                    - generic [ref=e459]: package.json
+                - treeitem "pnpm-lock.yaml" [level=1] [ref=e460]:
+                  - generic [ref=e462] [cursor=pointer]:
+                    - img [ref=e465]
+                    - generic [ref=e467]: pnpm-lock.yaml
+                - treeitem "postcss.config.js" [level=1] [ref=e468]:
+                  - generic [ref=e470] [cursor=pointer]:
+                    - img [ref=e473]
+                    - generic [ref=e475]: postcss.config.js
+                - treeitem "robots.txt" [level=1] [ref=e476]:
+                  - generic [ref=e478] [cursor=pointer]:
+                    - img [ref=e481]
+                    - generic [ref=e483]: robots.txt
+                - treeitem "sitemap.xml" [level=1] [ref=e484]:
+                  - generic [ref=e486] [cursor=pointer]:
+                    - img [ref=e489]
+                    - generic [ref=e491]: sitemap.xml
+                - treeitem "ssr.config.ts" [level=1] [ref=e492]:
+                  - generic [ref=e494] [cursor=pointer]:
+                    - img [ref=e497]
+                    - generic [ref=e499]: ssr.config.ts
+                - treeitem "tailwind.config.js" [level=1] [ref=e500]:
+                  - generic [ref=e502] [cursor=pointer]:
+                    - img [ref=e505]
+                    - generic [ref=e507]: tailwind.config.js
+                - treeitem "tsconfig.json" [level=1] [ref=e508]:
+                  - generic [ref=e510] [cursor=pointer]:
+                    - img [ref=e513]
+                    - generic [ref=e515]: tsconfig.json
+                - treeitem "tsconfig.node.json" [level=1] [ref=e516]:
+                  - generic [ref=e518] [cursor=pointer]:
+                    - img [ref=e521]
+                    - generic [ref=e523]: tsconfig.node.json
+                - treeitem "vite.config.ts" [level=1] [ref=e524]:
+                  - generic [ref=e526] [cursor=pointer]:
+                    - img [ref=e529]
+                    - generic [ref=e531]: vite.config.ts
+                - treeitem "wrangler.toml" [level=1] [ref=e532]:
+                  - generic [ref=e534] [cursor=pointer]:
+                    - img [ref=e537]
+                    - generic [ref=e539]: wrangler.toml
+          - slider "Draggable pane splitter" [ref=e541]
+        - generic [ref=e544]:
+          - generic [ref=e548]:
+            - generic [ref=e550]:
+              - navigation "Breadcrumbs" [ref=e551]:
+                - heading "Breadcrumbs" [level=2] [ref=e552]
+                - list [ref=e553]:
+                  - listitem [ref=e554]:
+                    - link "tools-web" [ref=e555] [cursor=pointer]:
+                      - /url: /2424004764/tools-web/tree/master
+              - generic [ref=e556]:
+                - text: /
+                - heading "README.md" [level=1] [ref=e557]
+              - button "Copy path" [ref=e558] [cursor=pointer]:
+                - img [ref=e559]
+            - button "More file actions" [ref=e565] [cursor=pointer]:
+              - img [ref=e566]
+          - generic [ref=e568]:
+            - generic [ref=e570]:
+              - heading "Latest commit" [level=2] [ref=e571]
+              - generic [ref=e572]:
+                - generic [ref=e574]:
+                  - link "2424004764" [ref=e575] [cursor=pointer]:
+                    - /url: /2424004764
+                    - img "2424004764" [ref=e576]
+                  - link "commits by 2424004764" [ref=e577] [cursor=pointer]:
+                    - /url: /2424004764/tools-web/commits?author=2424004764
+                    - text: "2424004764"
+                - generic [ref=e578]:
+                  - link "feat 新增短链功能" [ref=e581] [cursor=pointer]:
+                    - /url: /2424004764/tools-web/commit/92da2a05fe8e9f5f55adcab1aaa3fb1e8f91276c
+                  - button "success" [ref=e582] [cursor=pointer]:
+                    - img [ref=e583]
+              - generic [ref=e585]:
+                - generic [ref=e587]:
+                  - link "Commit 92da2a0" [ref=e588] [cursor=pointer]:
+                    - /url: /2424004764/tools-web/commit/92da2a05fe8e9f5f55adcab1aaa3fb1e8f91276c
+                    - text: 92da2a0
+                  - text: ·
+                  - generic "May 3, 2026, 10:45 PM GMT+8" [ref=e589]: May 3, 2026last week
+                - generic [ref=e590]:
+                  - heading "History" [level=2] [ref=e591]
+                  - link "History" [ref=e592] [cursor=pointer]:
+                    - /url: /2424004764/tools-web/commits/master/README.md
+                    - generic [ref=e593]:
+                      - generic:
+                        - img
+                      - generic [ref=e594]: History
+            - generic [ref=e596]:
+              - generic [ref=e598]:
+                - heading "File metadata and controls" [level=2] [ref=e599]
+                - generic [ref=e600]:
+                  - list "File view" [ref=e601]:
+                    - listitem [ref=e602]:
+                      - button "Preview" [ref=e603] [cursor=pointer]:
+                        - generic [ref=e605]: Preview
+                    - listitem [ref=e606]:
+                      - button "Code" [ref=e607] [cursor=pointer]:
+                        - generic [ref=e609]: Code
+                    - listitem [ref=e610]:
+                      - button "Blame" [ref=e611] [cursor=pointer]:
+                        - generic [ref=e613]: Blame
+                  - generic "12 KB" [ref=e616]: 356 lines (283 loc) · 12 KB
+                - generic [ref=e617]:
+                  - generic [ref=e618]:
+                    - generic [ref=e619]:
+                      - link "Raw" [ref=e621] [cursor=pointer]:
+                        - /url: https://github.com/2424004764/tools-web/raw/refs/heads/master/README.md
+                        - generic [ref=e623]: Raw
+                      - button "Copy raw file" [ref=e625] [cursor=pointer]:
+                        - img [ref=e626]
+                      - button "Download raw file" [ref=e630] [cursor=pointer]:
+                        - img [ref=e631]
+                    - generic [ref=e634]:
+                      - button "You must be signed in to make or propose changes" [disabled] [ref=e636]:
+                        - img [ref=e637]
+                      - button "More edit options" [ref=e640] [cursor=pointer]:
+                        - img [ref=e641]
+                  - button "Outline" [ref=e643] [cursor=pointer]:
+                    - img [ref=e644]
+              - region "README.md" [ref=e647]:
+                - article [ref=e649]:
+                  - generic [ref=e650]:
+                    - generic [ref=e651]: _______ _ __ __ _ |__ __| | | \ \ / / | | | | ___ ___ | |___ _____\ \ /\ / /__| |__ | |/ _ \ / _ \| / __|______\ \/ \/ / _ \ '_ \ | | (_) | (_) | \__ \ \ /\ / __/ |_) | |_|\___/ \___/|_|___/ \/ \/ \___|_.__/
+                    - paragraph [ref=e652]: 只需简单几步，即可快速搭建属于自己的在线工具箱。
+                    - paragraph [ref=e653]:
+                      - link "node" [ref=e654] [cursor=pointer]:
+                        - /url: /2424004764/tools-web/blob/master/node
+                        - img "node" [ref=e655]
+                      - link "pnpm" [ref=e656] [cursor=pointer]:
+                        - /url: /2424004764/tools-web/blob/master/pnpm
+                        - img "pnpm" [ref=e657]
+                      - link "vue" [ref=e658] [cursor=pointer]:
+                        - /url: /2424004764/tools-web/blob/master/vue
+                        - img "vue" [ref=e659]
+                      - link "tailwindcss" [ref=e660] [cursor=pointer]:
+                        - /url: /2424004764/tools-web/blob/master/tailwindcss
+                        - img "tailwindcss" [ref=e661]
+                      - link "elementplus" [ref=e662] [cursor=pointer]:
+                        - /url: /2424004764/tools-web/blob/master/elementplus
+                        - img "elementplus" [ref=e663]
+                      - link "license" [ref=e664] [cursor=pointer]:
+                        - /url: /2424004764/tools-web/blob/master/LICENSE
+                        - img "license" [ref=e665]
+                  - paragraph [ref=e666]:
+                    - text: 本仓库fork于：
+                    - link "Tools-Web" [ref=e667] [cursor=pointer]:
+                      - /url: https://github.com/naroat/tools-web
+                    - text: ，感谢naroat做出的贡献！能让我方便在此基础上添加新功能。
+                  - paragraph [ref=e668]: 一站式在线工具箱：覆盖开发运维、文本处理、图片处理、数据图表、趣味互动、选择随机、教育学术与 AI 工具；提供 JSON/CSV/TSV 互转、随机密码/UUID、时间戳与进制转换、单位换算、URL 编解码/参数解析、正则测试、Markdown、文本对比/去重、哈希校验、文件大小转换、HTTP 状态码、JWT 解析、Cron 表达式、HTML 实体、二维码生成与识别、在线图片编辑/分割/转 Base64、文本转图片、色板取色器、柱状/折线/饼/散点图、摩斯电码，以及贪吃蛇/2048/俄罗斯方块/扫雷/打地鼠/数字华容道/数独等小游戏，另含 IP 查询、网站信息获取、AI 起名/变量名/文生图/翻译与在线请求调试等实用功能。
+                  - generic [ref=e669]:
+                    - heading "目录" [level=2] [ref=e670]
+                    - 'link "Permalink: 目录" [ref=e671] [cursor=pointer]':
+                      - /url: "#目录"
+                      - img [ref=e672]
+                  - list [ref=e674]:
+                    - listitem [ref=e675]:
+                      - link "功能展览" [ref=e676] [cursor=pointer]:
+                        - /url: "#%E5%8A%9F%E8%83%BD%E5%B1%95%E8%A7%88"
+                    - listitem [ref=e677]:
+                      - link "开始使用" [ref=e678] [cursor=pointer]:
+                        - /url: "#%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8"
+                      - list [ref=e679]:
+                        - listitem [ref=e680]:
+                          - link "Docker部署" [ref=e681] [cursor=pointer]:
+                            - /url: "#Docker%E9%83%A8%E7%BD%B2"
+                        - listitem [ref=e682]:
+                          - link "手动部署" [ref=e683] [cursor=pointer]:
+                            - /url: "#%E6%89%8B%E5%8A%A8%E9%83%A8%E7%BD%B2"
+                        - listitem [ref=e684]:
+                          - link "cloudflare部署" [ref=e685] [cursor=pointer]:
+                            - /url: "#Cloudflare%E9%83%A8%E7%BD%B2"
+                    - listitem [ref=e686]:
+                      - link "工具列表" [ref=e687] [cursor=pointer]:
+                        - /url: "#%E5%B7%A5%E5%85%B7%E5%88%97%E8%A1%A8"
+                    - listitem [ref=e688]:
+                      - link "其他" [ref=e689] [cursor=pointer]:
+                        - /url: "#%E5%85%B6%E4%BB%96"
+                  - generic [ref=e690]:
+                    - heading "功能展示" [level=2] [ref=e691]
+                    - 'link "Permalink: 功能展示" [ref=e692] [cursor=pointer]':
+                      - /url: "#功能展示"
+                      - img [ref=e693]
+                  - paragraph [ref=e695]:
+                    - text: 在线站点：
+                    - link "Tools-Web" [ref=e696] [cursor=pointer]:
+                      - /url: https://tool.fologde.com/
+                  - generic [ref=e697]:
+                    - heading "网站效果图" [level=2] [ref=e698]
+                    - 'link "Permalink: 网站效果图" [ref=e699] [cursor=pointer]':
+                      - /url: "#网站效果图"
+                      - img [ref=e700]
+                  - link "image" [ref=e702] [cursor=pointer]:
+                    - /url: https://private-user-images.githubusercontent.com/24261680/536175625-a84b26dc-561f-41b9-92a3-5c8ec8c34828.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Nzg0MTg2MDgsIm5iZiI6MTc3ODQxODMwOCwicGF0aCI6Ii8yNDI2MTY4MC81MzYxNzU2MjUtYTg0YjI2ZGMtNTYxZi00MWI5LTkyYTMtNWM4ZWM4YzM0ODI4LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNjA1MTAlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjYwNTEwVDEzMDUwOFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWU3ZGIyNWFiMTYwODU1NzcxMGNhMWUxNTQ2NDFkMTExYzJmODI0NTI4MzM0ZDI2MmFkYjYxY2RmMTQwM2NjNzEmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JnJlc3BvbnNlLWNvbnRlbnQtdHlwZT1pbWFnZSUyRnBuZyJ9.DaoyS5osIiq0Wyv8yvp1PAEKm69n4yXJ8sDodQvjV28
+                    - img "image" [ref=e703]
+                  - link "image" [ref=e704] [cursor=pointer]:
+                    - /url: https://private-user-images.githubusercontent.com/24261680/536175830-bc2e19b0-d788-460c-9199-93ae142b7dec.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Nzg0MTg2MDgsIm5iZiI6MTc3ODQxODMwOCwicGF0aCI6Ii8yNDI2MTY4MC81MzYxNzU4MzAtYmMyZTE5YjAtZDc4OC00NjBjLTkxOTktOTNhZTE0MmI3ZGVjLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNjA1MTAlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjYwNTEwVDEzMDUwOFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWI4ZGU4NDhjZWZlMTJkYzBjODVkZGU4ZmFkMjBmY2U4OGU1MWJjZjM0NjBhMTAwMWNlNTkwMGViMTI5ZjI0ZDMmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JnJlc3BvbnNlLWNvbnRlbnQtdHlwZT1pbWFnZSUyRnBuZyJ9.Snrxb9v8py2ZwbvIsvhzhGqf1LhQFTxQmpd6HtLhKN4
+                    - img "image" [ref=e705]
+                  - link "image" [ref=e706] [cursor=pointer]:
+                    - /url: https://private-user-images.githubusercontent.com/24261680/536175946-92784ca1-f570-43fc-888b-b7e95203e2f8.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Nzg0MTg2MDgsIm5iZiI6MTc3ODQxODMwOCwicGF0aCI6Ii8yNDI2MTY4MC81MzYxNzU5NDYtOTI3ODRjYTEtZjU3MC00M2ZjLTg4OGItYjdlOTUyMDNlMmY4LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNjA1MTAlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjYwNTEwVDEzMDUwOFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTc4NGFjOWE5MzE0ZWZmMWQwZjI3YWY5MWI2YWYwM2E0MDk0ZjQyMzY3YTU1NzFmMDJmNzZiMWNiZjNjMzU0Y2UmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JnJlc3BvbnNlLWNvbnRlbnQtdHlwZT1pbWFnZSUyRnBuZyJ9.RmgYr7IC82tQpb-D8eyxqAeBekSB4DnVdUygqcmZ_30
+                    - img "image" [ref=e707]
+                  - link "image" [ref=e708] [cursor=pointer]:
+                    - /url: https://private-user-images.githubusercontent.com/24261680/536176076-a9e2597e-5327-409d-a45f-c04f6546fdd7.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Nzg0MTg2MDgsIm5iZiI6MTc3ODQxODMwOCwicGF0aCI6Ii8yNDI2MTY4MC81MzYxNzYwNzYtYTllMjU5N2UtNTMyNy00MDlkLWE0NWYtYzA0ZjY1NDZmZGQ3LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNjA1MTAlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjYwNTEwVDEzMDUwOFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTc5NTdmM2VhMmU5MGM0YzI5NmQyYTRhZTdiN2QxZjMwOWM5ZDljNTdkZjUzZTk2MmNlMmQ2OGE0ZGM4YzM4YjAmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JnJlc3BvbnNlLWNvbnRlbnQtdHlwZT1pbWFnZSUyRnBuZyJ9.iniW2yooVoPz7xTNGvh-ZB1nNpXNYf7IXqENOa3MXxM
+                    - img "image" [ref=e709]
+                  - link "image" [ref=e710] [cursor=pointer]:
+                    - /url: https://private-user-images.githubusercontent.com/24261680/536176253-2d6e6c4c-af25-49d3-9a19-354823a3d507.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Nzg0MTg2MDgsIm5iZiI6MTc3ODQxODMwOCwicGF0aCI6Ii8yNDI2MTY4MC81MzYxNzYyNTMtMmQ2ZTZjNGMtYWYyNS00OWQzLTlhMTktMzU0ODIzYTNkNTA3LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNjA1MTAlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjYwNTEwVDEzMDUwOFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTJiMGI0MWZkZWExZWRjYWQ3NjQzMjgzOWRlYjVkMGFlYTliNTMyNjQyYmFhMTVhNjE0OWI2ODZiY2FhY2IzODAmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JnJlc3BvbnNlLWNvbnRlbnQtdHlwZT1pbWFnZSUyRnBuZyJ9.Z4pH40zm7llxVqJOQAFEla9s_l9Hbty8aGR4RTLFJL0
+                    - img "image" [ref=e711]
+                  - generic [ref=e712]:
+                    - heading "开始使用" [level=2] [ref=e713]
+                    - 'link "Permalink: 开始使用" [ref=e714] [cursor=pointer]':
+                      - /url: "#开始使用"
+                      - img [ref=e715]
+                  - paragraph [ref=e717]: 我的node版本：22.13.1、pnpm版本：10.14.0
+                  - generic [ref=e718]:
+                    - heading "Docker部署" [level=3] [ref=e719]
+                    - 'link "Permalink: Docker部署" [ref=e720] [cursor=pointer]':
+                      - /url: "#docker部署"
+                      - img [ref=e721]
+                  - generic [ref=e723]:
+                    - code [ref=e725]: docker run -d --name tools-web --restart unless-stopped -p 8080:80 docker0796/tools-web:latest
+                    - button "Copy" [ref=e727] [cursor=pointer]:
+                      - img [ref=e728]
+                  - paragraph [ref=e731]:
+                    - text: 访问：
+                    - code [ref=e732]: http://127.0.0.1:8080
+                  - generic [ref=e733]:
+                    - heading "手动部署" [level=3] [ref=e734]
+                    - 'link "Permalink: 手动部署" [ref=e735] [cursor=pointer]':
+                      - /url: "#手动部署"
+                      - img [ref=e736]
+                  - paragraph [ref=e738]:
+                    - text: 安装
+                    - code [ref=e739]: pnpm
+                  - generic [ref=e740]:
+                    - code [ref=e742]: npm install pnpm -g
+                    - button "Copy" [ref=e744] [cursor=pointer]:
+                      - img [ref=e745]
+                  - paragraph [ref=e748]: 克隆
+                  - generic [ref=e749]:
+                    - code [ref=e751]: git clone https://github.com/2424004764/tools-web.git
+                    - button "Copy" [ref=e753] [cursor=pointer]:
+                      - img [ref=e754]
+                  - paragraph [ref=e757]: 安装
+                  - generic [ref=e758]:
+                    - code [ref=e760]: "# 进入项目 cd tools-web # 复制配置文件 cp .env.example .env.development # 安装 pnpm install"
+                    - button "Copy" [ref=e762] [cursor=pointer]:
+                      - img [ref=e763]
+                  - paragraph [ref=e766]: 启动
+                  - generic [ref=e767]:
+                    - code [ref=e769]: pnpm dev
+                    - button "Copy" [ref=e771] [cursor=pointer]:
+                      - img [ref=e772]
+                  - paragraph [ref=e775]: 打包
+                  - generic [ref=e776]:
+                    - code [ref=e778]: "windows命令 // 打包并且将根目录的functions文件夹全部内容和wrangler.toml文件复制到/dist文件夹下 pnpm build && xcopy /E /I /H /Y .\\functions\\* .\\dist\\functions\\ && xcopy /Y .\\wrangler.toml .\\dist\\ && xcopy /Y .\\robots.txt .\\dist\\ && xcopy /Y .\\sitemap.xml .\\dist\\ // 打包静态页面并且将根目录的functions文件夹全部内容和wrangler.toml文件复制到/dist文件夹下 pnpm build:pro && xcopy /E /I /H /Y .\\functions\\* .\\dist\\functions\\ && xcopy /Y .\\wrangler.toml .\\dist\\ && xcopy /Y .\\robots.txt .\\dist\\ && xcopy /Y .\\sitemap.xml .\\dist\\ linux只需要改一下复制的命令即可: pnpm build && cp -r ./functions/* ./dist/functions/ && cp ./wrangler.toml ./dist/ && cp ./robots.txt ./dist/ && cp ./sitemap.xml ./dist/ && git add . && git commit -m \"debug\" && git push origin master"
+                    - button "Copy" [ref=e780] [cursor=pointer]:
+                      - img [ref=e781]
+                  - paragraph [ref=e784]: 编译 && 移动 && 提交一条命令搞定：
+                  - generic [ref=e785]:
+                    - code [ref=e787]: pnpm build && cp -r ./functions/* ./dist/functions/ && cp ./wrangler.toml ./dist/ && cp ./robots.txt ./dist/ && cp ./sitemap.xml ./dist/
+                    - button "Copy" [ref=e789] [cursor=pointer]:
+                      - img [ref=e790]
+                  - paragraph [ref=e793]:
+                    - text: 打包seo静态页面:复制
+                    - code [ref=e794]: .env.development
+                    - text: 文件，并将文件名修改为
+                    - code [ref=e795]: .env.production
+                    - text: ",将里面的"
+                    - code [ref=e796]: NODE_ENV
+                    - text: 的值改为
+                    - code [ref=e797]: production
+                    - text: ",然后运行下面打包命令"
+                  - generic [ref=e798]:
+                    - code [ref=e800]: pnpm build:pro
+                    - button "Copy" [ref=e802] [cursor=pointer]:
+                      - img [ref=e803]
+                  - paragraph [ref=e806]: git提交
+                  - generic [ref=e807]:
+                    - code [ref=e809]: git add . && git commit -m "feat 新增xx功能" && git push origin master
+                    - button "Copy" [ref=e811] [cursor=pointer]:
+                      - img [ref=e812]
+                  - generic [ref=e815]:
+                    - heading "Cloudflare部署" [level=3] [ref=e816]
+                    - 'link "Permalink: Cloudflare部署" [ref=e817] [cursor=pointer]':
+                      - /url: "#cloudflare部署"
+                      - img [ref=e818]
+                  - paragraph [ref=e820]:
+                    - text: 详见我的公众号文章：
+                    - link "https://mp.weixin.qq.com/s/kIrz2uAv0cmT3f2rPWbtdQ" [ref=e821] [cursor=pointer]:
+                      - /url: https://mp.weixin.qq.com/s/RXWAGN6OpKw2qa1DKF_5-g
+                  - generic [ref=e822]:
+                    - heading "本地调试functions" [level=2] [ref=e823]
+                    - 'link "Permalink: 本地调试functions" [ref=e824] [cursor=pointer]':
+                      - /url: "#本地调试functions"
+                      - img [ref=e825]
+                  - paragraph [ref=e827]: 根目录执行命令：
+                  - generic [ref=e828]:
+                    - code [ref=e830]: pnpm install wrangler wrangler pages dev .
+                    - button "Copy" [ref=e832] [cursor=pointer]:
+                      - img [ref=e833]
+                  - paragraph [ref=e836]: 然后会启动一个服务，之后就可以像请求functions一样的方式调用的，只是把请求地址改成本地的
+                  - generic [ref=e837]:
+                    - heading "功能开发日志" [level=2] [ref=e838]
+                    - 'link "Permalink: 功能开发日志" [ref=e839] [cursor=pointer]':
+                      - /url: "#功能开发日志"
+                      - img [ref=e840]
+                  - list [ref=e842]:
+                    - listitem [ref=e843]: 2025年8月2日 新增文生图
+                    - listitem [ref=e844]: 2025年8月5日 新增cron表达式生成器
+                    - listitem [ref=e845]: 2025年8月6日 新增二维码识别、文件大小转换、贪吃蛇小游戏、记忆力翻牌、俄罗斯方块小游戏、打地鼠小游戏功能
+                    - listitem [ref=e846]: 2025-08-07 新增数独小游戏
+                    - listitem [ref=e847]: 2025-08-08 新增AI工具导航、postman lite功能
+                    - listitem [ref=e848]: 2025-08-10 新增哈希校验功能
+                    - listitem [ref=e849]: 2025-08-11 新增CSV/TSV互转JSON、命名风格转换、AI起变量名、AI起名功能
+                    - listitem [ref=e850]: 2025-08-12 新增AI翻译、AI小学作文功能
+                    - listitem [ref=e851]: 2025-08-12 新增 AI每日励志鸡汤文 功能
+                    - listitem [ref=e852]: 2025-08-14 新增 图片在线压缩 功能
+                    - listitem [ref=e853]: 2025-08-15 新增AI五子棋功能
+                    - listitem [ref=e854]: 2025-08-15 新增好物网站导航功能
+                    - listitem [ref=e855]: 2025-08-16 新增用户登录功能
+                    - listitem [ref=e856]: 2025-08-20 新增谷歌登录方式
+                    - listitem [ref=e857]: 2025-08-21 新增笔记备忘录功能，支持在线创建、编辑、删除笔记，数据安全存储在D1数据库
+                    - listitem [ref=e858]: 2025-08-28 新增物品辐射量示例功能、Cookie解析功能
+                    - listitem [ref=e859]: 2025-08-19 新增猜数字游戏
+                    - listitem [ref=e860]: 2025-08-30 点击功能时，增加loading效果、新增3D数学方程式、算法可视化功能
+                    - listitem [ref=e861]:
+                      - text: 2025-08-31 新增假如你有100亿、AI提示词仓库功能、接入linux.do（
+                      - link "https://connect.linux.do/dash/sso）登录方式" [ref=e862] [cursor=pointer]:
+                        - /url: https://connect.linux.do/dash/sso%EF%BC%89%E7%99%BB%E5%BD%95%E6%96%B9%E5%BC%8F
+                    - listitem [ref=e863]: 2025-09-01 新增pdf转图片功能
+                    - listitem [ref=e864]:
+                      - text: 2025-09-02 接入gitee（
+                      - link "https://gitee.com/oauth/applications）、github（https://github.com/settings/developers）登录方式" [ref=e865] [cursor=pointer]:
+                        - /url: https://gitee.com/oauth/applications%EF%BC%89%E3%80%81github%EF%BC%88https://github.com/settings/developers%EF%BC%89%E7%99%BB%E5%BD%95%E6%96%B9%E5%BC%8F
+                    - listitem [ref=e866]:
+                      - text: 2025-09-02 接入QQ（
+                      - link "https://connect.qq.com/manage.html#/）登录方式" [ref=e867] [cursor=pointer]:
+                        - /url: https://connect.qq.com/manage.html#/%EF%BC%89%E7%99%BB%E5%BD%95%E6%96%B9%E5%BC%8F
+                    - listitem [ref=e868]: 2025-09-06 新增MySQL转Go结构体功能
+                    - listitem [ref=e869]: 2025-09-07 新增数字序号记忆小游戏
+                    - listitem [ref=e870]: 2025-09-08 新增个人简历功能
+                    - listitem [ref=e871]: 2025-09-09 新增公司对比功能，支持多维度对比公司薪资、福利、工作时间等信息，历史记录存储
+                    - listitem [ref=e872]: 2025-09-10 新增AI面试功能，模拟真实面试场景，支持前端、后端、产品等多种岗位类型，提升面试表现
+                    - listitem [ref=e873]: "2025-09-14: 新增最低工资标准查询功能，支持全国31个省市最低工资标准查询"
+                    - listitem [ref=e874]: "2025-09-14: 新增QA问答页面制作功能，支持创建个性化问答页面，可生成公开链接"
+                    - listitem [ref=e875]: "2025-01-13: 新增字符串去空格功能，支持去除所有空格、去除首尾空格、去除多余空格、去除空行等多种模式"
+                    - listitem [ref=e876]: "2025-01-13: 新增Base64编码/解码功能，支持文本的Base64编码与解码，双向实时转换"
+                    - listitem [ref=e877]: "2025-01-13: 图片转Base64功能升级，支持Base64转图片，实现图片与Base64双向互转"
+                    - listitem [ref=e878]: "2025-03-20: 新增逻辑思维训练功能，包含真话谎话题、逻辑推理题、数学思维题、序列推理题等多种题型"
+                    - listitem [ref=e879]: "2025-03-28: 新增证件照生成功能，支持一寸、二寸、护照、身份证等预设尺寸，支持矩形和四边形透视裁剪，可导出JPG和PNG格式"
+                    - listitem [ref=e880]: "2026-04-25: 新增MongoDB JSON转SQLite功能，支持JSON数组和NDJSON格式导入，自动推断表结构，支持嵌套对象展开和下载SQLite数据库文件"
+                    - listitem [ref=e881]: "2026-05-02: 新增PNG/JPG格式互转功能"
+                    - listitem [ref=e882]: "2026-05-03: 新增短链接生成器功能，支持自定义后缀和访问统计"
+                  - generic [ref=e883]:
+                    - heading "工具列表" [level=2] [ref=e884]
+                    - 'link "Permalink: 工具列表" [ref=e885] [cursor=pointer]':
+                      - /url: "#工具列表"
+                      - img [ref=e886]
+                  - generic [ref=e888]:
+                    - heading "用户管理" [level=3] [ref=e889]
+                    - 'link "Permalink: 用户管理" [ref=e890] [cursor=pointer]':
+                      - /url: "#用户管理"
+                      - img [ref=e891]
+                  - list [ref=e893]:
+                    - listitem [ref=e894]:
+                      - paragraph [ref=e895]: 用户登录 (Google OAuth)
+                    - listitem [ref=e896]:
+                      - paragraph [ref=e897]: 用户信息管理
+                    - listitem [ref=e898]:
+                      - paragraph [ref=e899]: 个人简历
+                    - listitem [ref=e900]:
+                      - paragraph [ref=e901]: 开发运维
+                      - list [ref=e902]:
+                        - listitem [ref=e903]: 随机密码生成
+                        - listitem [ref=e904]: URL编码/解码
+                        - listitem [ref=e905]: UUID生成器
+                        - listitem [ref=e906]: 时间戳转换
+                        - listitem [ref=e907]: MD5在线加密
+                        - listitem [ref=e908]: Json在线转换
+                        - listitem [ref=e909]: CSV/TSV ↔ JSON 互转
+                        - listitem [ref=e910]: 正则测试工具
+                        - listitem [ref=e911]: Unicode转中文
+                        - listitem [ref=e912]: HTTP状态码
+                        - listitem [ref=e913]: JWT解析
+                        - listitem [ref=e914]: 文件大小转换
+                        - listitem [ref=e915]: Cron表达式生成器
+                        - listitem [ref=e916]: html实体转义
+                        - listitem [ref=e917]: 在线请求调试
+                        - listitem [ref=e918]: URL 参数解析/构造
+                        - listitem [ref=e919]: 命名风格转换
+                        - listitem [ref=e920]: 哈希校验/HMAC
+                        - listitem [ref=e921]: Cookie解析
+                        - listitem [ref=e922]: Base64编码/解码
+                        - listitem [ref=e923]: 算法可视化
+                        - listitem [ref=e924]: MySQL转Go结构体
+                        - listitem [ref=e925]: MongoDB JSON 转 SQLite
+                    - listitem [ref=e926]:
+                      - paragraph [ref=e927]: 文本处理
+                      - list [ref=e928]:
+                        - listitem [ref=e929]: 文本对比
+                        - listitem [ref=e930]: markdown编辑器
+                        - listitem [ref=e931]: 字数统计
+                        - listitem [ref=e932]: 文本去重
+                        - listitem [ref=e933]: 字符串去空格
+                        - listitem [ref=e934]: ASCII字形生成器
+                        - listitem [ref=e935]: 在线文本编辑/HTML获取
+                    - listitem [ref=e936]:
+                      - paragraph [ref=e937]: 图片处理
+                      - list [ref=e938]:
+                        - listitem [ref=e939]: 二维码生成
+                        - listitem [ref=e940]: 二维码识别
+                        - listitem [ref=e941]: 文本转图片
+                        - listitem [ref=e942]: 图片分割
+                        - listitem [ref=e943]: 图片转Base64（支持Base64转图片）
+                        - listitem [ref=e944]: 在线编辑图片
+                        - listitem [ref=e945]: pdf转图片
+                        - listitem [ref=e946]: 证件照生成
+                        - listitem [ref=e947]: 图片水印
+                        - listitem [ref=e948]: PNG/JPG格式互转
+                    - listitem [ref=e949]:
+                      - paragraph [ref=e950]: 数据图表
+                      - list [ref=e951]:
+                        - listitem [ref=e952]: 柱状图
+                        - listitem [ref=e953]: 折线图
+                        - listitem [ref=e954]: 饼图
+                        - listitem [ref=e955]: 散点图
+                    - listitem [ref=e956]:
+                      - paragraph [ref=e957]: 选择随机
+                      - list [ref=e958]:
+                        - listitem [ref=e959]: 生成随机数
+                        - listitem [ref=e960]: 帮我决定
+                        - listitem [ref=e961]: 抛硬币
+                        - listitem [ref=e962]: 投骰子
+                    - listitem [ref=e963]:
+                      - paragraph [ref=e964]: 教育学术
+                      - list [ref=e965]:
+                        - listitem [ref=e966]: 单位换算
+                        - listitem [ref=e967]: 常用进制转换
+                        - listitem [ref=e968]: ASCII码表
+                        - listitem [ref=e969]: 长度单位转换
+                        - listitem [ref=e970]: 面积单位转换
+                        - listitem [ref=e971]: 重量单位转换
+                        - listitem [ref=e972]: 时间单位转换
+                        - listitem [ref=e973]: 温度单位转换
+                        - listitem [ref=e974]: 压力单位转换
+                        - listitem [ref=e975]: 热量单位转换
+                        - listitem [ref=e976]: 功率单位转换
+                        - listitem [ref=e977]: 摩斯电码
+                        - listitem [ref=e978]: 数学公式查询
+                        - listitem [ref=e979]: 物品辐射量示例
+                        - listitem [ref=e980]: 3D数学方程式
+                        - listitem [ref=e981]: 逻辑思维训练
+                        - listitem [ref=e982]: 毛选名句
+                    - listitem [ref=e983]:
+                      - paragraph [ref=e984]: 趣味互动
+                      - list [ref=e985]:
+                        - listitem [ref=e986]: 贪吃蛇
+                        - listitem [ref=e987]: 记忆力翻牌
+                        - listitem [ref=e988]: 俄罗斯方块
+                        - listitem [ref=e989]: 打地鼠
+                        - listitem [ref=e990]: "2048"
+                        - listitem [ref=e991]: 扫雷
+                        - listitem [ref=e992]: 数字华容道
+                        - listitem [ref=e993]: 数独游戏
+                        - listitem [ref=e994]: AI五子棋
+                        - listitem [ref=e995]: 假如你有100亿
+                        - listitem [ref=e996]: 数字序号记忆
+                    - listitem [ref=e997]:
+                      - paragraph [ref=e998]: 好物网站
+                      - list [ref=e999]:
+                        - listitem [ref=e1000]: 好物网站导航
+                    - listitem [ref=e1001]:
+                      - paragraph [ref=e1002]: 查询相关
+                      - list [ref=e1003]:
+                        - listitem [ref=e1004]: IP查询
+                        - listitem [ref=e1005]: 网站信息获取
+                    - listitem [ref=e1006]:
+                      - paragraph [ref=e1007]: 其他工具
+                      - list [ref=e1008]:
+                        - listitem [ref=e1009]: 数字转金额大写
+                        - listitem [ref=e1010]: 手持弹幕
+                        - listitem [ref=e1011]: 色板
+                        - listitem [ref=e1012]: Color选择器
+                        - listitem [ref=e1013]: 简历管理
+                        - listitem [ref=e1014]: 公司对比
+                        - listitem [ref=e1015]: 最低工资标准查询
+                        - listitem [ref=e1016]: 号码一览
+                        - listitem [ref=e1017]: QA问答页面制作
+                    - listitem [ref=e1018]:
+                      - paragraph [ref=e1019]: AI 工具
+                      - list [ref=e1020]:
+                        - listitem [ref=e1021]: 在线文生图
+                        - listitem [ref=e1022]: AI工具导航
+                        - listitem [ref=e1023]: AI起变量名
+                        - listitem [ref=e1024]: AI起名
+                        - listitem [ref=e1025]: AI翻译
+                        - listitem [ref=e1026]: AI小学作文
+                        - listitem [ref=e1027]: AI每日励志鸡汤文
+                        - listitem [ref=e1028]: AI对话
+                        - listitem [ref=e1029]: AI面试
+                        - listitem [ref=e1030]: AI提示词仓库
+                    - listitem [ref=e1031]:
+                      - paragraph [ref=e1032]: 笔记备忘录 - 在线笔记记录工具，支持创建、编辑、删除笔记，数据安全存储
+                    - listitem [ref=e1033]:
+                      - paragraph [ref=e1034]: 临时聊天室 - 基于 Supabase Realtime 的临时聊天室，支持扫码加入、链接分享、口令进入
+                  - generic [ref=e1035]:
+                    - heading "环境变量配置" [level=2] [ref=e1036]
+                    - 'link "Permalink: 环境变量配置" [ref=e1037] [cursor=pointer]':
+                      - /url: "#环境变量配置"
+                      - img [ref=e1038]
+                  - paragraph [ref=e1040]:
+                    - text: 项目使用
+                    - code [ref=e1041]: .env.development
+                    - text: 和
+                    - code [ref=e1042]: .env.production
+                    - text: 管理环境变量。主要配置项：
+                  - generic [ref=e1043]:
+                    - generic [ref=e1044]:
+                      - generic [ref=e1045]: "# Supabase 配置（临时聊天室功能需要）"
+                      - text: VITE_SUPABASE_URL=
+                      - generic [ref=e1046]: "'https://your-project.supabase.co'"
+                      - text: VITE_SUPABASE_ANON_KEY=
+                      - generic [ref=e1047]: "'your-anon-key'"
+                    - button "Copy" [ref=e1049] [cursor=pointer]:
+                      - img [ref=e1050]
+                  - generic [ref=e1053]:
+                    - heading "Supabase 临时聊天室配置（有免费额度，小项目使用）" [level=3] [ref=e1054]
+                    - 'link "Permalink: Supabase 临时聊天室配置（有免费额度，小项目使用）" [ref=e1055] [cursor=pointer]':
+                      - /url: "#supabase-临时聊天室配置有免费额度小项目使用"
+                      - img [ref=e1056]
+                  - list [ref=e1058]:
+                    - listitem [ref=e1059]:
+                      - paragraph [ref=e1060]:
+                        - strong [ref=e1061]: 创建 Supabase 项目
+                        - text: ：访问
+                        - link "https://supabase.com" [ref=e1062] [cursor=pointer]:
+                          - /url: https://supabase.com
+                        - text: 创建免费项目
+                    - listitem [ref=e1063]:
+                      - paragraph [ref=e1064]:
+                        - strong [ref=e1065]: 创建数据表
+                        - text: ：在 Supabase SQL Editor 中执行以下 SQL：
+                  - generic [ref=e1066]:
+                    - generic [ref=e1067]:
+                      - text: CREATE TABLE chat_messages ( id UUID DEFAULT gen_random_uuid() PRIMARY KEY, room_id TEXT NOT NULL, nickname TEXT NOT NULL, content TEXT NOT NULL, created_at TIMESTAMPTZ DEFAULT NOW() );
+                      - generic [ref=e1068]: "-- 启用 Realtime 功能"
+                      - text: ALTER PUBLICATION supabase_realtime ADD TABLE chat_messages;
+                    - button "Copy" [ref=e1070] [cursor=pointer]:
+                      - img [ref=e1071]
+                  - list [ref=e1074]:
+                    - listitem [ref=e1075]:
+                      - strong [ref=e1076]: 获取密钥
+                      - text: ：在 Project Settings > API 中复制 URL 和 anon key，填入环境变量
+                  - generic [ref=e1077]:
+                    - heading "其他" [level=2] [ref=e1078]
+                    - 'link "Permalink: 其他" [ref=e1079] [cursor=pointer]':
+                      - /url: "#其他"
+                      - img [ref=e1080]
+                  - paragraph [ref=e1082]: "Q: 我应该如何添加新功能？"
+                  - paragraph [ref=e1083]: "A:"
+                  - list [ref=e1084]:
+                    - listitem [ref=e1085]:
+                      - text: 在
+                      - code [ref=e1086]: components/Tools/tools.ts
+                      - text: 文件中添加工具信息
+                    - listitem [ref=e1087]:
+                      - text: 在
+                      - code [ref=e1088]: router/router.ts
+                      - text: 中添加路由
+                    - listitem [ref=e1089]:
+                      - text: 拷贝示例目录
+                      - code [ref=e1090]: components/Tools/Example
+                      - text: 修改名称，在这个拷贝出来的目录中开发工具即可
+                  - paragraph [ref=e1091]:
+                    - text: "Q: 我可以参与开发"
+                    - code [ref=e1092]: Tools-Web
+                    - text: 吗？
+                  - paragraph [ref=e1093]:
+                    - text: "A: 当然可以，随时欢迎提交"
+                    - code [ref=e1094]: PR
+                  - paragraph [ref=e1095]: Q：有问题怎么反馈呢？
+                  - paragraph [ref=e1096]:
+                    - text: A：可以提issue，或者加入微信群，如果群满或者二维码链接过期，则联系开发者，微信：yifang_self，微信群二维码：
+                    - link [ref=e1097] [cursor=pointer]:
+                      - /url: https://private-user-images.githubusercontent.com/24261680/536174865-7cba19dd-eba6-4458-aef3-e8169ef4fc45.jpg?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Nzg0MTg2MDgsIm5iZiI6MTc3ODQxODMwOCwicGF0aCI6Ii8yNDI2MTY4MC81MzYxNzQ4NjUtN2NiYTE5ZGQtZWJhNi00NDU4LWFlZjMtZTgxNjllZjRmYzQ1LmpwZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNjA1MTAlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjYwNTEwVDEzMDUwOFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWY1MjFmMjIxYzk5MTE3OWE1MWVhMDRkY2NkMjlhNTdmM2IyOTdmYWQ4OTI4ZDc3NTM4ZjU0ZDM2YTgzNzY4MTQmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JnJlc3BvbnNlLWNvbnRlbnQtdHlwZT1pbWFnZSUyRmpwZWcifQ.FHkvTYbIw-N8UBF-vOPjTg2qqEjik9NkbZFOXTvBJZI
+                      - img [ref=e1098]
+  - alert [ref=e1102]

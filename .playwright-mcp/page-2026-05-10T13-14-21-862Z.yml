@@ -1,0 +1,1458 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - link "Skip to content" [ref=e4] [cursor=pointer]:
+        - /url: "#start-of-content"
+      - banner [ref=e6]:
+        - heading "Navigation Menu" [level=2] [ref=e7]
+        - generic [ref=e8]:
+          - link "Homepage" [ref=e10] [cursor=pointer]:
+            - /url: /
+            - img [ref=e11]
+          - generic [ref=e13]:
+            - navigation "Global" [ref=e16]:
+              - list [ref=e17]:
+                - listitem [ref=e18]:
+                  - button "Platform" [ref=e20] [cursor=pointer]:
+                    - text: Platform
+                    - img [ref=e21]
+                - listitem [ref=e23]:
+                  - button "Solutions" [ref=e25] [cursor=pointer]:
+                    - text: Solutions
+                    - img [ref=e26]
+                - listitem [ref=e28]:
+                  - button "Resources" [ref=e30] [cursor=pointer]:
+                    - text: Resources
+                    - img [ref=e31]
+                - listitem [ref=e33]:
+                  - button "Open Source" [ref=e35] [cursor=pointer]:
+                    - text: Open Source
+                    - img [ref=e36]
+                - listitem [ref=e38]:
+                  - button "Enterprise" [ref=e40] [cursor=pointer]:
+                    - text: Enterprise
+                    - img [ref=e41]
+                - listitem [ref=e43]:
+                  - link "Pricing" [ref=e44] [cursor=pointer]:
+                    - /url: https://github.com/pricing
+                    - generic [ref=e45]: Pricing
+            - generic [ref=e46]:
+              - button "Search or jump to…" [ref=e49] [cursor=pointer]:
+                - img [ref=e51]
+                - generic [ref=e53]: Search or jump to...
+                - img [ref=e55]
+              - link "Sign in" [ref=e59] [cursor=pointer]:
+                - /url: /login?return_to=https%3A%2F%2Fgithub.com%2F2424004764%2Ftools-web%2Fblob%2Fmaster%2Fpackage.json
+              - link "Sign up" [ref=e60] [cursor=pointer]:
+                - /url: /signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Fblob%2Fshow&source=header-repo&source_repo=2424004764%2Ftools-web
+              - button "Appearance settings" [ref=e63] [cursor=pointer]:
+                - img
+    - main [ref=e67]:
+      - generic [ref=e68]:
+        - generic [ref=e69]:
+          - generic [ref=e70]:
+            - generic [ref=e71]:
+              - img [ref=e72]
+              - link "2424004764" [ref=e75] [cursor=pointer]:
+                - /url: /2424004764
+              - generic [ref=e76]: /
+              - strong [ref=e77]:
+                - link "tools-web" [ref=e78] [cursor=pointer]:
+                  - /url: /2424004764/tools-web
+              - generic [ref=e79]: Public
+            - generic [ref=e80]:
+              - text: forked from
+              - link "naroat/tools-web" [ref=e81] [cursor=pointer]:
+                - /url: /naroat/tools-web
+          - generic [ref=e82]:
+            - list:
+              - listitem [ref=e83]:
+                - link "You must be signed in to change notification settings" [ref=e84] [cursor=pointer]:
+                  - /url: /login?return_to=%2F2424004764%2Ftools-web
+                  - img [ref=e85]
+                  - text: Notifications
+              - listitem [ref=e87]:
+                - link "Fork 10" [ref=e88] [cursor=pointer]:
+                  - /url: /login?return_to=%2F2424004764%2Ftools-web
+                  - img [ref=e89]
+                  - text: Fork
+                  - generic "10" [ref=e91]
+              - listitem [ref=e92]:
+                - link "You must be signed in to star a repository" [ref=e94] [cursor=pointer]:
+                  - /url: /login?return_to=%2F2424004764%2Ftools-web
+                  - img [ref=e95]
+                  - text: Star
+                  - generic "18 users starred this repository" [ref=e97]: "18"
+        - navigation "Repository" [ref=e98]:
+          - list [ref=e99]:
+            - listitem [ref=e100]:
+              - link "Code" [ref=e101] [cursor=pointer]:
+                - /url: /2424004764/tools-web
+                - img [ref=e102]
+                - generic [ref=e104]: Code
+            - listitem [ref=e105]:
+              - link "Issues" [ref=e106] [cursor=pointer]:
+                - /url: /2424004764/tools-web/issues
+                - img [ref=e107]
+                - generic [ref=e110]: Issues
+            - listitem [ref=e111]:
+              - link "Pull requests" [ref=e112] [cursor=pointer]:
+                - /url: /2424004764/tools-web/pulls
+                - img [ref=e113]
+                - generic [ref=e115]: Pull requests
+            - listitem [ref=e116]:
+              - link "Discussions" [ref=e117] [cursor=pointer]:
+                - /url: /2424004764/tools-web/discussions
+                - img [ref=e118]
+                - generic [ref=e120]: Discussions
+            - listitem [ref=e121]:
+              - link "Actions" [ref=e122] [cursor=pointer]:
+                - /url: /2424004764/tools-web/actions
+                - img [ref=e123]
+                - generic [ref=e125]: Actions
+            - listitem [ref=e126]:
+              - link "Projects" [ref=e127] [cursor=pointer]:
+                - /url: /2424004764/tools-web/projects
+                - img [ref=e128]
+                - generic [ref=e130]: Projects
+            - listitem [ref=e131]:
+              - link "Security and quality" [ref=e132] [cursor=pointer]:
+                - /url: /2424004764/tools-web/security
+                - img [ref=e133]
+                - generic [ref=e135]: Security and quality
+            - listitem [ref=e136]:
+              - link "Insights" [ref=e137] [cursor=pointer]:
+                - /url: /2424004764/tools-web/pulse
+                - img [ref=e138]
+                - generic [ref=e140]: Insights
+      - generic [ref=e148]:
+        - generic [ref=e150]:
+          - generic [ref=e153]:
+            - generic [ref=e154]:
+              - generic [ref=e155]:
+                - heading "Collapse file tree" [level=2] [ref=e156]:
+                  - button "Collapse file tree" [expanded] [ref=e157] [cursor=pointer]:
+                    - img [ref=e158]
+                - heading "Files" [level=2] [ref=e161]
+              - generic [ref=e162]:
+                - button "master branch" [ref=e164] [cursor=pointer]:
+                  - generic [ref=e165]:
+                    - generic [ref=e167]:
+                      - img [ref=e169]
+                      - generic [ref=e172]: master
+                    - generic:
+                      - img
+                - button "Search this repository (forward slash)" [ref=e174] [cursor=pointer]:
+                  - img [ref=e175]
+            - generic [ref=e178]:
+              - img [ref=e180]
+              - combobox "Go to file" [ref=e182]
+            - navigation "File Tree Navigation" [ref=e189]:
+              - tree "Files" [ref=e191]:
+                - treeitem ".claude" [level=1] [ref=e192]:
+                  - generic [ref=e193] [cursor=pointer]:
+                    - img [ref=e195]
+                    - generic [ref=e197]:
+                      - img [ref=e201]
+                      - generic [ref=e203]: .claude
+                - treeitem ".github" [level=1] [ref=e204]:
+                  - generic [ref=e205] [cursor=pointer]:
+                    - img [ref=e207]
+                    - generic [ref=e209]:
+                      - img [ref=e213]
+                      - generic [ref=e215]: .github
+                - treeitem ".superdesign" [level=1] [ref=e216]:
+                  - generic [ref=e217] [cursor=pointer]:
+                    - img [ref=e219]
+                    - generic [ref=e221]:
+                      - img [ref=e225]
+                      - generic [ref=e227]: .superdesign
+                - treeitem "220个" [level=1] [ref=e228]:
+                  - generic [ref=e229] [cursor=pointer]:
+                    - img [ref=e231]
+                    - generic [ref=e233]:
+                      - img [ref=e237]
+                      - generic [ref=e239]: 220个
+                - treeitem "dev-dist" [level=1] [ref=e240]:
+                  - generic [ref=e241] [cursor=pointer]:
+                    - img [ref=e243]
+                    - generic [ref=e245]:
+                      - img [ref=e249]
+                      - generic [ref=e251]: dev-dist
+                - treeitem "dist" [level=1] [ref=e252]:
+                  - generic [ref=e253] [cursor=pointer]:
+                    - img [ref=e255]
+                    - generic [ref=e257]:
+                      - img [ref=e261]
+                      - generic [ref=e263]: dist
+                - treeitem "functions" [level=1] [ref=e264]:
+                  - generic [ref=e265] [cursor=pointer]:
+                    - img [ref=e267]
+                    - generic [ref=e269]:
+                      - img [ref=e273]
+                      - generic [ref=e275]: functions
+                - treeitem "migrations" [level=1] [ref=e276]:
+                  - generic [ref=e277] [cursor=pointer]:
+                    - img [ref=e279]
+                    - generic [ref=e281]:
+                      - img [ref=e285]
+                      - generic [ref=e287]: migrations
+                - treeitem "public" [level=1] [ref=e288]:
+                  - generic [ref=e289] [cursor=pointer]:
+                    - img [ref=e291]
+                    - generic [ref=e293]:
+                      - img [ref=e297]
+                      - generic [ref=e299]: public
+                - treeitem "scripts" [level=1] [ref=e300]:
+                  - generic [ref=e301] [cursor=pointer]:
+                    - img [ref=e303]
+                    - generic [ref=e305]:
+                      - img [ref=e309]
+                      - generic [ref=e311]: scripts
+                - treeitem "src" [level=1] [ref=e312]:
+                  - generic [ref=e313] [cursor=pointer]:
+                    - img [ref=e315]
+                    - generic [ref=e317]:
+                      - img [ref=e321]
+                      - generic [ref=e323]: src
+                - treeitem "supabase" [level=1] [ref=e324]:
+                  - generic [ref=e325] [cursor=pointer]:
+                    - img [ref=e327]
+                    - generic [ref=e329]:
+                      - img [ref=e333]
+                      - generic [ref=e335]: supabase
+                - treeitem "temp" [level=1] [ref=e336]:
+                  - generic [ref=e337] [cursor=pointer]:
+                    - img [ref=e339]
+                    - generic [ref=e341]:
+                      - img [ref=e345]
+                      - generic [ref=e347]: temp
+                - treeitem ".dockerignore" [level=1] [ref=e348]:
+                  - generic [ref=e350] [cursor=pointer]:
+                    - img [ref=e353]
+                    - generic [ref=e355]: .dockerignore
+                - treeitem ".gitignore" [level=1] [ref=e356]:
+                  - generic [ref=e358] [cursor=pointer]:
+                    - img [ref=e361]
+                    - generic [ref=e363]: .gitignore
+                - treeitem ".windsurfrules" [level=1] [ref=e364]:
+                  - generic [ref=e366] [cursor=pointer]:
+                    - img [ref=e369]
+                    - generic [ref=e371]: .windsurfrules
+                - treeitem "CLAUDE.md" [level=1] [ref=e372]:
+                  - generic [ref=e374] [cursor=pointer]:
+                    - img [ref=e377]
+                    - generic [ref=e379]: CLAUDE.md
+                - treeitem "DATA_PROCESSING_ANALYSIS.md" [level=1] [ref=e380]:
+                  - generic [ref=e382] [cursor=pointer]:
+                    - img [ref=e385]
+                    - generic [ref=e387]: DATA_PROCESSING_ANALYSIS.md
+                - treeitem "Dockerfile" [level=1] [ref=e388]:
+                  - generic [ref=e390] [cursor=pointer]:
+                    - img [ref=e393]
+                    - generic [ref=e395]: Dockerfile
+                - treeitem "GOOGLE_LOGIN_SETUP.md" [level=1] [ref=e396]:
+                  - generic [ref=e398] [cursor=pointer]:
+                    - img [ref=e401]
+                    - generic [ref=e403]: GOOGLE_LOGIN_SETUP.md
+                - treeitem "LICENSE" [level=1] [ref=e404]:
+                  - generic [ref=e406] [cursor=pointer]:
+                    - img [ref=e409]
+                    - generic [ref=e411]: LICENSE
+                - treeitem "PERFORMANCE_OPTIMIZATION.md" [level=1] [ref=e412]:
+                  - generic [ref=e414] [cursor=pointer]:
+                    - img [ref=e417]
+                    - generic [ref=e419]: PERFORMANCE_OPTIMIZATION.md
+                - treeitem "README.md" [level=1] [ref=e420]:
+                  - generic [ref=e422] [cursor=pointer]:
+                    - img [ref=e425]
+                    - generic [ref=e427]: README.md
+                - treeitem "TODO_IMPLEMENTATION.md" [level=1] [ref=e428]:
+                  - generic [ref=e430] [cursor=pointer]:
+                    - img [ref=e433]
+                    - generic [ref=e435]: TODO_IMPLEMENTATION.md
+                - treeitem "index.html" [level=1] [ref=e436]:
+                  - generic [ref=e438] [cursor=pointer]:
+                    - img [ref=e441]
+                    - generic [ref=e443]: index.html
+                - treeitem "nginx.conf" [level=1] [ref=e444]:
+                  - generic [ref=e446] [cursor=pointer]:
+                    - img [ref=e449]
+                    - generic [ref=e451]: nginx.conf
+                - treeitem "package.json" [level=1] [ref=e452]:
+                  - generic [ref=e454] [cursor=pointer]:
+                    - img [ref=e457]
+                    - generic [ref=e459]: package.json
+                - treeitem "pnpm-lock.yaml" [level=1] [ref=e460]:
+                  - generic [ref=e462] [cursor=pointer]:
+                    - img [ref=e465]
+                    - generic [ref=e467]: pnpm-lock.yaml
+                - treeitem "postcss.config.js" [level=1] [ref=e468]:
+                  - generic [ref=e470] [cursor=pointer]:
+                    - img [ref=e473]
+                    - generic [ref=e475]: postcss.config.js
+                - treeitem "robots.txt" [level=1] [ref=e476]:
+                  - generic [ref=e478] [cursor=pointer]:
+                    - img [ref=e481]
+                    - generic [ref=e483]: robots.txt
+                - treeitem "sitemap.xml" [level=1] [ref=e484]:
+                  - generic [ref=e486] [cursor=pointer]:
+                    - img [ref=e489]
+                    - generic [ref=e491]: sitemap.xml
+                - treeitem "ssr.config.ts" [level=1] [ref=e492]:
+                  - generic [ref=e494] [cursor=pointer]:
+                    - img [ref=e497]
+                    - generic [ref=e499]: ssr.config.ts
+                - treeitem "tailwind.config.js" [level=1] [ref=e500]:
+                  - generic [ref=e502] [cursor=pointer]:
+                    - img [ref=e505]
+                    - generic [ref=e507]: tailwind.config.js
+                - treeitem "tsconfig.json" [level=1] [ref=e508]:
+                  - generic [ref=e510] [cursor=pointer]:
+                    - img [ref=e513]
+                    - generic [ref=e515]: tsconfig.json
+                - treeitem "tsconfig.node.json" [level=1] [ref=e516]:
+                  - generic [ref=e518] [cursor=pointer]:
+                    - img [ref=e521]
+                    - generic [ref=e523]: tsconfig.node.json
+                - treeitem "vite.config.ts" [level=1] [ref=e524]:
+                  - generic [ref=e526] [cursor=pointer]:
+                    - img [ref=e529]
+                    - generic [ref=e531]: vite.config.ts
+                - treeitem "wrangler.toml" [level=1] [ref=e532]:
+                  - generic [ref=e534] [cursor=pointer]:
+                    - img [ref=e537]
+                    - generic [ref=e539]: wrangler.toml
+          - slider "Draggable pane splitter" [ref=e541]
+        - generic [ref=e544]:
+          - generic [ref=e548]:
+            - generic [ref=e550]:
+              - navigation "Breadcrumbs" [ref=e551]:
+                - heading "Breadcrumbs" [level=2] [ref=e552]
+                - list [ref=e553]:
+                  - listitem [ref=e554]:
+                    - link "tools-web" [ref=e555] [cursor=pointer]:
+                      - /url: /2424004764/tools-web/tree/master
+              - generic [ref=e556]:
+                - text: /
+                - heading "package.json" [level=1] [ref=e557]
+              - button "Copy path" [ref=e558] [cursor=pointer]:
+                - img [ref=e559]
+            - button "More file actions" [ref=e565] [cursor=pointer]:
+              - img [ref=e566]
+          - generic [ref=e568]:
+            - generic [ref=e570]:
+              - heading "Latest commit" [level=2] [ref=e571]
+              - generic [ref=e572]:
+                - generic [ref=e574]:
+                  - link "2424004764" [ref=e575] [cursor=pointer]:
+                    - /url: /2424004764
+                    - img "2424004764" [ref=e576]
+                  - link "commits by 2424004764" [ref=e577] [cursor=pointer]:
+                    - /url: /2424004764/tools-web/commits?author=2424004764
+                    - text: "2424004764"
+                - generic [ref=e578]:
+                  - link "feat 新增pwa功能" [ref=e581] [cursor=pointer]:
+                    - /url: /2424004764/tools-web/commit/68a721ae6adeae41bd6f6ef4abe448b13af934e2
+                  - button "success" [ref=e582] [cursor=pointer]:
+                    - img [ref=e583]
+              - generic [ref=e585]:
+                - generic [ref=e587]:
+                  - link "Commit 68a721a" [ref=e588] [cursor=pointer]:
+                    - /url: /2424004764/tools-web/commit/68a721ae6adeae41bd6f6ef4abe448b13af934e2
+                    - text: 68a721a
+                  - text: ·
+                  - generic "May 5, 2026, 10:59 PM GMT+8" [ref=e589]: May 5, 20265 days ago
+                - generic [ref=e590]:
+                  - heading "History" [level=2] [ref=e591]
+                  - link "History" [ref=e592] [cursor=pointer]:
+                    - /url: /2424004764/tools-web/commits/master/package.json
+                    - generic [ref=e593]:
+                      - generic:
+                        - img
+                      - generic [ref=e594]: History
+            - generic [ref=e596]:
+              - generic [ref=e598]:
+                - heading "File metadata and controls" [level=2] [ref=e599]
+                - generic [ref=e600]:
+                  - list "File view" [ref=e601]:
+                    - listitem [ref=e602]:
+                      - button "Code" [ref=e603] [cursor=pointer]:
+                        - generic [ref=e605]: Code
+                    - listitem [ref=e606]:
+                      - button "Blame" [ref=e607] [cursor=pointer]:
+                        - generic [ref=e609]: Blame
+                  - generic "3.18 KB" [ref=e612]: 100 lines (100 loc) · 3.18 KB
+                - generic [ref=e613]:
+                  - generic [ref=e614]:
+                    - generic [ref=e615]:
+                      - link "Raw" [ref=e617] [cursor=pointer]:
+                        - /url: https://github.com/2424004764/tools-web/raw/refs/heads/master/package.json
+                        - generic [ref=e619]: Raw
+                      - button "Copy raw file" [ref=e621] [cursor=pointer]:
+                        - img [ref=e622]
+                      - button "Download raw file" [ref=e626] [cursor=pointer]:
+                        - img [ref=e627]
+                    - generic [ref=e630]:
+                      - button "You must be signed in to make or propose changes" [disabled] [ref=e632]:
+                        - img [ref=e633]
+                      - button "More edit options" [ref=e636] [cursor=pointer]:
+                        - img [ref=e637]
+                  - button "Open symbols panel" [ref=e639] [cursor=pointer]:
+                    - img [ref=e640]
+              - region "package.json" [ref=e643]:
+                - generic [ref=e647]:
+                  - textbox "file content" [ref=e652]: "{ \"name\": \"rbl-tools-web\", \"private\": true, \"version\": \"0.0.0\", \"type\": \"module\", \"scripts\": { \"dev\": \"vite\", \"dev:wrangler\": \"wrangler pages dev . --local --d1 yifang-tool:afdabfae-6edd-4def-8e77-6a1171009b9c\", \"build\": \"vue-tsc --noEmit && node --max_old_space_size=8192 node_modules/vite/bin/vite.js build --mode development\", \"build:pro\": \"vue-tsc --noEmit && node --max_old_space_size=8192 node_modules/vite/bin/vite.js build --mode production\", \"preview\": \"vite preview\", \"generate:sitemap\": \"node scripts/generate-sitemap.js\", \"postinstall\": \"node -e \\\"['sql-wasm.wasm','sql-wasm-browser.wasm'].forEach(f=>{try{require('fs').copyFileSync('node_modules/sql.js/dist/'+f,'public/'+f)}catch(e){}})\\\"\" }, \"dependencies\": { \"@codemirror/commands\": \"^6.3.2\", \"@codemirror/lang-javascript\": \"^6.2.1\", \"@codemirror/lang-json\": \"^6.0.1\", \"@codemirror/language\": \"^6.9.3\", \"@codemirror/lint\": \"^6.4.2\", \"@codemirror/search\": \"^6.5.5\", \"@codemirror/state\": \"^6.4.1\", \"@codemirror/theme-one-dark\": \"^6.1.2\", \"@codemirror/view\": \"^6.22.1\", \"@element-plus/icons-vue\": \"^2.3.1\", \"@google-cloud/local-auth\": \"^3.0.1\", \"@kangc/v-md-editor\": \"^2.3.18\", \"@supabase/supabase-js\": \"^2.95.3\", \"@toast-ui/editor\": \"^3.2.2\", \"@types/three\": \"^0.160.0\", \"@vueuse/core\": \"^10.9.0\", \"@wangeditor/editor\": \"^5.1.23\", \"@wangeditor/editor-for-vue\": \"^5.1.12\", \"axios\": \"^1.6.2\", \"codemirror\": \"^5.65.19\", \"codemirror-editor-vue3\": \"^2.8.0\", \"colord\": \"^2.9.3\", \"compressorjs\": \"^1.2.1\", \"cron-parser\": \"^5.3.0\", \"crypto-js\": \"^4.2.0\", \"csso\": \"^5.0.5\", \"default-passive-events\": \"^2.0.0\", \"echarts\": \"^5.5.0\", \"element-plus\": \"^2.11.1\", \"figlet\": \"^1.7.0\", \"googleapis\": \"^156.0.0\", \"gun\": \"^0.2020.1241\", \"highlight.js\": \"^11.9.0\", \"html2canvas\": \"^1.4.1\", \"imorse\": \"^1.0.0\", \"jsdom\": \"^27.0.0\", \"jspdf\": \"^3.0.2\", \"jszip\": \"^3.10.1\", \"jwt-decode\": \"^4.0.0\", \"lodash\": \"^4.17.21\", \"markdown-it\": \"^14.1.0\", \"pdfjs-dist\": \"^4.0.379\", \"prettier\": \"^3.3.2\", \"prismjs\": \"^1.29.0\", \"qrcode-reader-vue3\": \"^3.1.4\", \"qrcode-vue3\": \"^1.7.1\", \"randomatic\": \"^3.1.1\", \"sass\": \"^1.69.5\", \"sass-loader\": \"^13.3.2\", \"sql.js\": \"^1.14.1\", \"terser\": \"^5.31.1\", \"three\": \"^0.160.0\", \"ts-md5\": \"^1.3.1\", \"tui-image-editor\": \"^3.15.3\", \"uuid\": \"^9.0.1\", \"v-code-diff\": \"^1.8.0\", \"v-viewer\": \"^3.0.22\", \"viewerjs\": \"^1.11.7\", \"vite-plugin-seo-prerender\": \"^0.5.0\", \"vue\": \"^3.3.10\", \"vue-clipboard3\": \"^2.0.0\", \"vue-codemirror\": \"^6.1.1\", \"vue3-danmaku\": \"^1.6.0\", \"x-data-spreadsheet\": \"^1.1.9\", \"xlsx\": \"^0.18.5\" }, \"devDependencies\": { \"@vitejs/plugin-vue\": \"^4.5.1\", \"autoprefixer\": \"^10.4.16\", \"fast-glob\": \"^3.3.2\", \"jimp\": \"^1.6.1\", \"less\": \"^4.2.0\", \"path\": \"^0.12.7\", \"pinia\": \"^2.1.7\", \"sharp\": \"^0.34.5\", \"tailwindcss\": \"^3.3.5\", \"typescript\": \"^5.9.2\", \"vite\": \"^4.5.1\", \"vite-plugin-html\": \"^3.2.0\", \"vite-plugin-pwa\": \"^0.17.5\", \"vite-plugin-svg-icons\": \"^2.0.1\", \"vue-router\": \"^4.2.5\", \"vue-tsc\": \"^3.0.4\" } }"
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic [ref=e653]:
+                          - generic [ref=e654] [cursor=pointer]: "1"
+                          - generic [ref=e655] [cursor=pointer]: "2"
+                          - generic [ref=e656] [cursor=pointer]: "3"
+                          - generic [ref=e657] [cursor=pointer]: "4"
+                          - generic [ref=e658] [cursor=pointer]: "5"
+                          - generic [ref=e659] [cursor=pointer]: "6"
+                          - generic [ref=e660] [cursor=pointer]: "7"
+                          - generic [ref=e661] [cursor=pointer]: "8"
+                          - generic [ref=e662] [cursor=pointer]: "9"
+                          - generic [ref=e663] [cursor=pointer]: "10"
+                          - generic [ref=e664] [cursor=pointer]: "11"
+                          - generic [ref=e665] [cursor=pointer]: "12"
+                          - generic [ref=e666] [cursor=pointer]: "13"
+                          - generic [ref=e667] [cursor=pointer]: "14"
+                          - generic [ref=e668] [cursor=pointer]: "15"
+                          - generic [ref=e669] [cursor=pointer]: "16"
+                          - generic [ref=e670] [cursor=pointer]: "17"
+                          - generic [ref=e671] [cursor=pointer]: "18"
+                          - generic [ref=e672] [cursor=pointer]: "19"
+                          - generic [ref=e673] [cursor=pointer]: "20"
+                          - generic [ref=e674] [cursor=pointer]: "21"
+                          - generic [ref=e675] [cursor=pointer]: "22"
+                          - generic [ref=e676] [cursor=pointer]: "23"
+                          - generic [ref=e677] [cursor=pointer]: "24"
+                          - generic [ref=e678] [cursor=pointer]: "25"
+                          - generic [ref=e679] [cursor=pointer]: "26"
+                          - generic [ref=e680] [cursor=pointer]: "27"
+                          - generic [ref=e681] [cursor=pointer]: "28"
+                          - generic [ref=e682] [cursor=pointer]: "29"
+                          - generic [ref=e683] [cursor=pointer]: "30"
+                          - generic [ref=e684] [cursor=pointer]: "31"
+                          - generic [ref=e685] [cursor=pointer]: "32"
+                          - generic [ref=e686] [cursor=pointer]: "33"
+                          - generic [ref=e687] [cursor=pointer]: "34"
+                          - generic [ref=e688] [cursor=pointer]: "35"
+                          - generic [ref=e689] [cursor=pointer]: "36"
+                          - generic [ref=e690] [cursor=pointer]: "37"
+                          - generic [ref=e691] [cursor=pointer]: "38"
+                          - generic [ref=e692] [cursor=pointer]: "39"
+                          - generic [ref=e693] [cursor=pointer]: "40"
+                          - generic [ref=e694] [cursor=pointer]: "41"
+                          - generic [ref=e695] [cursor=pointer]: "42"
+                          - generic [ref=e696] [cursor=pointer]: "43"
+                          - generic [ref=e697] [cursor=pointer]: "44"
+                          - generic [ref=e698] [cursor=pointer]: "45"
+                          - generic [ref=e699] [cursor=pointer]: "46"
+                          - generic [ref=e700] [cursor=pointer]: "47"
+                          - generic [ref=e701] [cursor=pointer]: "48"
+                          - generic [ref=e702] [cursor=pointer]: "49"
+                          - generic [ref=e703] [cursor=pointer]: "50"
+                          - generic [ref=e704] [cursor=pointer]: "51"
+                          - generic [ref=e705] [cursor=pointer]: "52"
+                          - generic [ref=e706] [cursor=pointer]: "53"
+                          - generic [ref=e707] [cursor=pointer]: "54"
+                          - generic [ref=e708] [cursor=pointer]: "55"
+                          - generic [ref=e709] [cursor=pointer]: "56"
+                          - generic [ref=e710] [cursor=pointer]: "57"
+                          - generic [ref=e711] [cursor=pointer]: "58"
+                          - generic [ref=e712] [cursor=pointer]: "59"
+                          - generic [ref=e713] [cursor=pointer]: "60"
+                          - generic [ref=e714] [cursor=pointer]: "61"
+                          - generic [ref=e715] [cursor=pointer]: "62"
+                          - generic [ref=e716] [cursor=pointer]: "63"
+                          - generic [ref=e717] [cursor=pointer]: "64"
+                          - generic [ref=e718] [cursor=pointer]: "65"
+                          - generic [ref=e719] [cursor=pointer]: "66"
+                          - generic [ref=e720] [cursor=pointer]: "67"
+                          - generic [ref=e721] [cursor=pointer]: "68"
+                          - generic [ref=e722] [cursor=pointer]: "69"
+                          - generic [ref=e723] [cursor=pointer]: "70"
+                          - generic [ref=e724] [cursor=pointer]: "71"
+                          - generic [ref=e725] [cursor=pointer]: "72"
+                          - generic [ref=e726] [cursor=pointer]: "73"
+                          - generic [ref=e727] [cursor=pointer]: "74"
+                          - generic [ref=e728] [cursor=pointer]: "75"
+                          - generic [ref=e729] [cursor=pointer]: "76"
+                          - generic [ref=e730] [cursor=pointer]: "77"
+                          - generic [ref=e731] [cursor=pointer]: "78"
+                          - generic [ref=e732] [cursor=pointer]: "79"
+                          - generic [ref=e733] [cursor=pointer]: "80"
+                          - generic [ref=e734] [cursor=pointer]: "81"
+                          - generic [ref=e735] [cursor=pointer]: "82"
+                          - generic [ref=e736] [cursor=pointer]: "83"
+                          - generic [ref=e737] [cursor=pointer]: "84"
+                          - generic [ref=e738] [cursor=pointer]: "85"
+                          - generic [ref=e739] [cursor=pointer]: "86"
+                          - generic [ref=e740] [cursor=pointer]: "87"
+                          - generic [ref=e741] [cursor=pointer]: "88"
+                          - generic [ref=e742] [cursor=pointer]: "89"
+                          - generic [ref=e743] [cursor=pointer]: "90"
+                          - generic [ref=e744] [cursor=pointer]: "91"
+                          - generic [ref=e745] [cursor=pointer]: "92"
+                          - generic [ref=e746] [cursor=pointer]: "93"
+                          - generic [ref=e747] [cursor=pointer]: "94"
+                          - generic [ref=e748] [cursor=pointer]: "95"
+                          - generic [ref=e749] [cursor=pointer]: "96"
+                          - generic [ref=e750] [cursor=pointer]: "97"
+                          - generic [ref=e751] [cursor=pointer]: "98"
+                          - generic [ref=e752] [cursor=pointer]: "99"
+                          - generic [ref=e753] [cursor=pointer]: "100"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: "{"
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"name\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: rbl-tools-web
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"private\""
+                                - text: ":"
+                                - generic: "true"
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"version\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: 0.0.0
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"type\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: module
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"scripts\""
+                                - text: ": {"
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"dev\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: vite
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"dev:wrangler\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: wrangler pages dev . --local --d1 yifang-tool:afdabfae-6edd-4def-8e77-6a1171009b9c
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"build\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: vue-tsc --noEmit && node --max_old_space_size=8192 node_modules/vite/bin/vite.js build --mode development
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"build:pro\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: vue-tsc --noEmit && node --max_old_space_size=8192 node_modules/vite/bin/vite.js build --mode production
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"preview\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: vite preview
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"generate:sitemap\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: node scripts/generate-sitemap.js
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"postinstall\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: node -e
+                                  - generic: \"
+                                  - text: "['sql-wasm.wasm','sql-wasm-browser.wasm'].forEach(f=>{try{require('fs').copyFileSync('node_modules/sql.js/dist/'+f,'public/'+f)}catch(e){}})"
+                                  - generic: \"
+                                  - generic: "\""
+                          - generic:
+                            - generic:
+                              - generic: "},"
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"dependencies\""
+                                - text: ": {"
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"@codemirror/commands\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^6.3.2
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"@codemirror/lang-javascript\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^6.2.1
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"@codemirror/lang-json\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^6.0.1
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"@codemirror/language\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^6.9.3
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"@codemirror/lint\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^6.4.2
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"@codemirror/search\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^6.5.5
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"@codemirror/state\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^6.4.1
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"@codemirror/theme-one-dark\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^6.1.2
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"@codemirror/view\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^6.22.1
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"@element-plus/icons-vue\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^2.3.1
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"@google-cloud/local-auth\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^3.0.1
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"@kangc/v-md-editor\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^2.3.18
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"@supabase/supabase-js\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^2.95.3
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"@toast-ui/editor\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^3.2.2
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"@types/three\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^0.160.0
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"@vueuse/core\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^10.9.0
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"@wangeditor/editor\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^5.1.23
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"@wangeditor/editor-for-vue\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^5.1.12
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"axios\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^1.6.2
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"codemirror\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^5.65.19
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"codemirror-editor-vue3\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^2.8.0
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"colord\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^2.9.3
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"compressorjs\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^1.2.1
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"cron-parser\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^5.3.0
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"crypto-js\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^4.2.0
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"csso\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^5.0.5
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"default-passive-events\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^2.0.0
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"echarts\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^5.5.0
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"element-plus\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^2.11.1
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"figlet\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^1.7.0
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"googleapis\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^156.0.0
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"gun\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^0.2020.1241
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"highlight.js\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^11.9.0
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"html2canvas\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^1.4.1
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"imorse\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^1.0.0
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"jsdom\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^27.0.0
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"jspdf\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^3.0.2
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"jszip\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^3.10.1
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"jwt-decode\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^4.0.0
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"lodash\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^4.17.21
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"markdown-it\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^14.1.0
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"pdfjs-dist\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^4.0.379
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"prettier\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^3.3.2
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"prismjs\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^1.29.0
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"qrcode-reader-vue3\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^3.1.4
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"qrcode-vue3\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^1.7.1
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"randomatic\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^3.1.1
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"sass\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^1.69.5
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"sass-loader\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^13.3.2
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"sql.js\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^1.14.1
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"terser\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^5.31.1
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"three\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^0.160.0
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"ts-md5\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^1.3.1
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"tui-image-editor\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^3.15.3
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"uuid\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^9.0.1
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"v-code-diff\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^1.8.0
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"v-viewer\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^3.0.22
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"viewerjs\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^1.11.7
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"vite-plugin-seo-prerender\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^0.5.0
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"vue\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^3.3.10
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"vue-clipboard3\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^2.0.0
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"vue-codemirror\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^6.1.1
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"vue3-danmaku\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^1.6.0
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"x-data-spreadsheet\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^1.1.9
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"xlsx\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^0.18.5
+                                  - generic: "\""
+                          - generic:
+                            - generic:
+                              - generic: "},"
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"devDependencies\""
+                                - text: ": {"
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"@vitejs/plugin-vue\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^4.5.1
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"autoprefixer\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^10.4.16
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"fast-glob\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^3.3.2
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"jimp\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^1.6.1
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"less\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^4.2.0
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"path\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^0.12.7
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"pinia\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^2.1.7
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"sharp\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^0.34.5
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"tailwindcss\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^3.3.5
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"typescript\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^5.9.2
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"vite\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^4.5.1
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"vite-plugin-html\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^3.2.0
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"vite-plugin-pwa\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^0.17.5
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"vite-plugin-svg-icons\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^2.0.1
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"vue-router\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^4.2.5
+                                  - generic: "\""
+                                - text: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "\"vue-tsc\""
+                                - text: ":"
+                                - generic:
+                                  - generic: "\""
+                                  - text: ^3.0.4
+                                  - generic: "\""
+                          - generic:
+                            - generic:
+                              - generic: "}"
+                          - generic:
+                            - generic:
+                              - generic: "}"
+  - alert [ref=e759]

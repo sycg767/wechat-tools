@@ -26,6 +26,7 @@
         "rename/rename",
         "compress-image/index",
         "id-photo-bg/index",
+        "id-photo-create/index",
         "qr-tool/index",
         "signature/index",
         "signature-editor/index",
@@ -34,9 +35,17 @@
         "pdf-sign/index",
         "md-export/index",
         "dev-toolkit/index",
+        "morse-code/index",
+        "base-convert/index",
+        "ascii-table/index",
+        "math-formula/index",
+        "physics-formula/index",
+        "zodiac-fortune/index",
+        "bagua-fortune/index",
         "password-vault/index",
         "password-vault/edit",
-        "password-vault/detail"
+        "password-vault/detail",
+        "ai-config/index"
       ]
     },
     {

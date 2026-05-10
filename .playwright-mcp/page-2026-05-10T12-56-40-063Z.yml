@@ -1,0 +1,78 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - generic [ref=e7]:
+        - link "一个轻量的在线工具箱 一方工具箱 一个轻量的在线工具箱" [ref=e9] [cursor=pointer]:
+          - /url: /
+          - img "一个轻量的在线工具箱" [ref=e10]
+          - generic [ref=e11]:
+            - generic [ref=e12]: 一方工具箱
+            - generic [ref=e13]: 一个轻量的在线工具箱
+        - menubar [ref=e15]:
+          - menuitem "分类" [expanded] [ref=e16]:
+            - generic [ref=e17] [cursor=pointer]:
+              - img [ref=e18]
+              - generic [ref=e20]: 分类
+              - img [ref=e22]
+            - menu [ref=e24]:
+              - listitem [ref=e25]:
+                - list [ref=e27]:
+                  - menuitem "开发运维" [ref=e28] [cursor=pointer]
+                  - menuitem "文本处理" [ref=e29] [cursor=pointer]
+                  - menuitem "教育学术" [ref=e30] [cursor=pointer]
+                  - menuitem "图片处理" [ref=e31] [cursor=pointer]
+                  - menuitem "数据图表" [ref=e32] [cursor=pointer]
+                  - menuitem "趣味互动" [ref=e33] [cursor=pointer]
+                  - menuitem "选择随机" [ref=e34] [cursor=pointer]
+                  - menuitem "其他工具" [ref=e35] [cursor=pointer]
+                  - menuitem "AI工具" [ref=e36] [cursor=pointer]
+                  - menuitem "好物网站" [ref=e37] [cursor=pointer]
+                  - menuitem "内容管理" [ref=e38] [cursor=pointer]
+          - menuitem "关于本站" [ref=e39] [cursor=pointer]:
+            - img [ref=e40]
+            - generic [ref=e42]: 关于本站
+    - generic [ref=e43]:
+      - generic [ref=e45]:
+        - generic [ref=e46]:
+          - img [ref=e47]
+          - link [ref=e50] [cursor=pointer]:
+            - /url: /
+            - img [ref=e51]
+          - generic [ref=e56]:
+            - generic [ref=e57]:
+              - combobox [ref=e59]
+              - generic [ref=e60]: 输入关键词搜索，如文本、json、图片等
+            - img [ref=e63] [cursor=pointer]
+        - list [ref=e66]:
+          - listitem [ref=e67]:
+            - link "登录" [ref=e68] [cursor=pointer]:
+              - /url: /login
+              - button "登录" [ref=e69]:
+                - generic [ref=e70]: 登录
+      - main [ref=e71]:
+        - generic [ref=e73]:
+          - img [ref=e75]
+          - paragraph [ref=e92]: 暂无数据
+        - generic [ref=e94]:
+          - heading "评论交流" [level=3] [ref=e95]:
+            - img [ref=e96]
+            - text: 评论交流
+          - paragraph [ref=e99]:
+            - text: 欢迎在下方留言讨论，如有问题或建议请提交
+            - link "GitHub Issue" [ref=e100] [cursor=pointer]:
+              - /url: https://github.com/2424004764/tools-web/issues
+      - generic [ref=e103]:
+        - generic [ref=e104]: 一个轻量的在线工具箱 © 2019 - 2025 BY Bucaicai
+        - generic [ref=e105]:
+          - link "湘ICP备16007032号-1" [ref=e106] [cursor=pointer]:
+            - /url: https://beian.miit.gov.cn/
+          - generic [ref=e107]: "|"
+          - link "湘公安网备43030202001052号" [ref=e108] [cursor=pointer]:
+            - /url: https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=43030202001052&token=2be051c1-22dd-44ec-9f4b-d41155f2d855
+          - generic [ref=e109]: "|"
+          - link "Tools-Web" [ref=e110] [cursor=pointer]:
+            - /url: https://github.com/2424004764/tools-web
+          - generic [ref=e111]: "|"
+          - link "反馈建议" [ref=e112] [cursor=pointer]:
+            - /url: https://github.com/2424004764/tools-web/issues/new
+  - img

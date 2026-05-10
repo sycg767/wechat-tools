@@ -95,12 +95,18 @@ tencent:
     timeout-seconds: ${TENCENT_CI_TIMEOUT_SECONDS:180}
     keep-remote-files: ${TENCENT_CI_KEEP_REMOTE_FILES:false}
 
-# 监控端点：仅暴露 health/info/prometheus，避免内部接口被外部探测
+free-astro:
+  enabled: ${FREE_ASTRO_ENABLED:false}
+  api-key: ${FREE_ASTRO_API_KEY:}
+  base-url: ${FREE_ASTRO_BASE_URL:https://api.freeastroapi.com}
+  timeout-millis: ${FREE_ASTRO_TIMEOUT_MILLIS:5000}
+
 vault:
   crypto-key: ${VAULT_CRYPTO_KEY:change-this-in-env}
   demo-user-id: ${VAULT_DEMO_USER_ID:}
   demo-openid: ${VAULT_DEMO_OPENID:vault-demo-user}
 
+# 监控端点：仅暴露 health/info/prometheus，避免内部接口被外部探测
 management:
   endpoints:
     web:

@@ -10,10 +10,7 @@ const DEFAULT_SETTINGS = {
   deductStep: 10,
   gloryLine: 60,
   maxHistory: 30,
-  ocrMode: 'ai',
-  aiBaseUrl: '',
-  aiModel: '',
-  aiApiKey: ''
+  ocrMode: 'ai'
 }
 
 function todayText() {

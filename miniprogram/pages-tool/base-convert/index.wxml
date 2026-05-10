@@ -1,0 +1,48 @@
+<view class="container base-page">
+  <view class="page-header">
+    <view class="page-title">常用进制转换</view>
+    <view class="page-desc">输入一个数值，自动输出常用进制结果。</view>
+  </view>
+
+  <view class="card convert-card">
+    <view class="field-row">
+      <picker class="base-picker" range="{{bases}}" range-key="label" value="{{baseIndex}}" bindchange="onBaseChange">
+        <view class="picker-value">{{bases[baseIndex].label}}</view>
+      </picker>
+      <view class="detected">识别：{{detectedBase}} 进制</view>
+    </view>
+
+    <input class="input" value="{{input}}" bindinput="onInput" placeholder="输入数值，如 0xFF、0b1010、12.5" />
+
+    <view class="actions">
+      <button class="action-btn primary" bindtap="convert">转换</button>
+      <button class="action-btn" bindtap="clear">清空</button>
+    </view>
+    <view class="error" wx:if="{{error}}">{{error}}</view>
+  </view>
+
+  <view class="result-grid" wx:if="{{results.length > 0}}">
+    <view class="result-item" wx:for="{{results}}" wx:key="base" bindtap="copyItem" data-value="{{item.value}}">
+      <view class="result-head">
+        <text class="result-label">{{item.label}}</text>
+        <text class="copy-btn">复制</text>
+      </view>
+      <text class="result-value">{{item.value}}</text>
+    </view>
+  </view>
+
+  <view class="card history-card" wx:if="{{history.length}}">
+    <view class="section-head">
+      <text class="section-title">历史记录</text>
+      <text class="copy-btn" bindtap="clearHistory">清空</text>
+    </view>
+    <view class="history-item" wx:for="{{history}}" wx:key="id">
+      <view class="history-main">
+        <text>{{item.title}} · {{item.time}}</text>
+        <text>{{item.text}}</text>
+        <text class="history-output">{{item.output}}</text>
+      </view>
+      <text class="copy-btn" bindtap="copyItem" data-value="{{item.output}}">复制</text>
+    </view>
+  </view>
+</view>

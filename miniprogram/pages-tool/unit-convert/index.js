@@ -395,6 +395,22 @@ const groupDefinitions = [
   { id: 'engineering', name: '工程计量', typeIds: ['pressure', 'flowRate', 'torque', 'power', 'energy', 'viscosity'] }
 ];
 
+const quickTypeAliasMap = {
+  weight: 'mass',
+  heat: 'energy'
+};
+
+const quickTypeGroupMap = {
+  length: 'geo',
+  area: 'geo',
+  mass: 'fluid',
+  time: 'motion',
+  temperature: 'fluid',
+  pressure: 'fluid',
+  energy: 'fluid',
+  power: 'fluid'
+};
+
 function getTypeMeta(typeId) {
   return unitData[typeId] || null;
 }
@@ -416,10 +432,15 @@ Page({
     quickResults: []
   },
 
-  onLoad() {
+  onLoad(options = {}) {
     const groups = groupDefinitions.map((group) => ({ id: group.id, name: group.name }));
-    this.setData({ groups }, () => {
-      this.updateTypesForGroup();
+    const requestedType = quickTypeAliasMap[options.type] || options.type;
+    const preferredType = unitData[requestedType] ? requestedType : '';
+    const activeGroup = quickTypeGroupMap[preferredType] || this.data.activeGroup;
+    const activeType = preferredType || this.data.activeType;
+
+    this.setData({ groups, activeGroup, activeType }, () => {
+      this.updateTypesForGroup(preferredType);
     });
   },
 

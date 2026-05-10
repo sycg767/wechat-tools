@@ -129,6 +129,17 @@ const TOOL_DEFS = [
     size: 'small'
   },
   {
+    id: 'id-photo-create',
+    title: '证件照生成',
+    desc: '本地裁剪照片并导出常用证件照尺寸',
+    path: '/pages-tool/id-photo-create/index',
+    iconClass: 'icon-id-photo',
+    tag: '新增',
+    category: '图片处理',
+    order: 30,
+    size: 'small'
+  },
+  {
     id: 'qr-tool',
     title: '二维码工具',
     desc: '生成二维码或识别二维码图片内容',
@@ -156,10 +167,94 @@ const TOOL_DEFS = [
     desc: '长度、重量、面积等常用单位互转',
     path: '/pages-tool/unit-convert/index',
     iconClass: 'icon-unit',
-    tag: '新增',
-    category: '效率工具',
-    order: 40,
+    tag: '学习',
+    category: '学习工具',
+    order: 10,
     svgPath: 'M8 3v18M16 3v18M3 8h18M3 16h18'
+  },
+  {
+    id: 'math-formula',
+    title: '数学公式查询',
+    desc: '代数、几何、微积分等公式速查',
+    path: '/pages-tool/math-formula/index',
+    iconClass: 'icon-study',
+    tag: '公式',
+    category: '学习工具',
+    order: 20,
+    keywords: '数学 公式 代数 几何 三角 微积分 概率 统计 例题 变量 收藏',
+    svgPath: 'M4 18c2-6 4-10 8-10s6 4 8 10 M6 8h4 M14 8h4 M8 14h8'
+  },
+  {
+    id: 'physics-formula',
+    title: '物理公式查询',
+    desc: '力学、热学、电学、光学公式速查',
+    path: '/pages-tool/physics-formula/index',
+    iconClass: 'icon-study',
+    tag: '公式',
+    category: '学习工具',
+    order: 30,
+    keywords: '物理 公式 力学 热学 电学 电磁 光学 波动 原子 单位 题型',
+    svgPath: 'M12 3v18 M6 7h12 M8 7c0 6-2 10-4 14 M16 7c0 6 2 10 4 14 M4 14h16'
+  },
+  {
+    id: 'morse-code',
+    title: '摩斯电码',
+    desc: '文本与摩斯码互相转换',
+    path: '/pages-tool/morse-code/index',
+    iconClass: 'icon-study',
+    tag: '编码',
+    category: '学习工具',
+    order: 40,
+    keywords: 'morse 摩斯 电码 编码 解码 SOS 点划 节奏 历史',
+    svgPath: 'M4 12h2M9 12h6M18 12h2M4 7h6M14 7h2M4 17h2M10 17h10'
+  },
+  {
+    id: 'base-convert',
+    title: '常用进制转换',
+    desc: '2 到 64 进制常用转换',
+    path: '/pages-tool/base-convert/index',
+    iconClass: 'icon-study',
+    tag: '进制',
+    category: '学习工具',
+    order: 50,
+    keywords: '进制 二进制 八进制 十进制 十六进制 base64 base58 base62 前缀 小数 负数',
+    svgPath: 'M5 6h14 M5 12h14 M5 18h14 M8 4v4 M12 10v4 M16 16v4'
+  },
+  {
+    id: 'ascii-table',
+    title: 'ASCII 码表',
+    desc: '控制字符与可打印字符速查',
+    path: '/pages-tool/ascii-table/index',
+    iconClass: 'icon-study',
+    tag: '速查',
+    category: '学习工具',
+    order: 60,
+    keywords: 'ASCII Unicode 码表 字符 控制字符 十进制 十六进制 收藏',
+    svgPath: 'M4 5h16M4 12h16M4 19h16M8 5v14M16 5v14'
+  },
+  {
+    id: 'zodiac-fortune',
+    title: '星座运势查询',
+    desc: '每日学习、工作和心情提醒',
+    path: '/pages-tool/zodiac-fortune/index',
+    iconClass: 'icon-study',
+    tag: '运势',
+    category: '学习工具',
+    order: 240,
+    keywords: '星座 运势 学习提醒 每日缓存 工作 心情 幸运建议 轻娱乐 历史',
+    svgPath: 'M12 3v3 M12 18v3 M4.5 7.5l2.2 2.2 M17.3 14.3l2.2 2.2 M3 12h3 M18 12h3 M4.5 16.5l2.2-2.2 M17.3 9.7l2.2-2.2 M12 8a4 4 0 1 1 0 8a4 4 0 0 1 0-8'
+  },
+  {
+    id: 'bagua-fortune',
+    title: '命理八卦工具',
+    desc: '八卦符号生成轻量行动建议',
+    path: '/pages-tool/bagua-fortune/index',
+    iconClass: 'icon-study',
+    tag: '八卦',
+    category: '学习工具',
+    order: 250,
+    keywords: '八卦 命理 行动建议 乾兑离震巽坎艮坤 上卦 下卦 轻娱乐 历史',
+    svgPath: 'M6 6h12 M6 12h12 M6 18h12 M9 6v0 M15 12v0 M12 18v0 M4 4l2 2 M20 4l-2 2 M4 20l2-2 M20 20l-2-2'
   },
   {
     id: 'random-gen',
@@ -316,10 +411,10 @@ const TOOL_DEFS = [
     category: '游戏工具',
     order: 2,
     svgPath: 'M12 2l3 7h7l-5.5 4.2 2.2 7L12 16l-6.7 4.2 2.2-7L2 9h7z'
-  }
+  },
 ]
 
-const CATEGORY_ORDER = ['游戏工具', '文档处理', '图片处理', '效率工具', '轻娱乐']
+const CATEGORY_ORDER = ['游戏工具', '文档处理', '学习工具', '图片处理', '效率工具', '轻娱乐']
 
 function createToolPresentation(tool, favorites) {
   const svgPath = tool.svgPath || 'M12 2v20M2 12h20'
@@ -352,9 +447,10 @@ Page({
       { id: 'password-vault', toolId: 'password-vault', title: '密码保险箱', desc: '账号密码加密保存', path: '/pages-tool/password-vault/index', iconClass: 'icon-vault', theme: 'theme-emerald', svgPath: 'M12 2 4 7v6c0 5 3.5 9.4 8 10 4.5-.6 8-5 8-10V7l-8-5z M9 11a3 3 0 1 1 6 0v2 M8 13h8v5H8z' },
       { id: '游戏工具', categoryId: '游戏工具', title: '游戏工具', desc: '王者计分与辅助', iconClass: 'icon-eat', theme: 'theme-yellow', svgPath: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z' },
       { id: '文档处理', categoryId: '文档处理', title: '文档处理', desc: 'PDF、Word 转换', iconClass: 'icon-pdf-word', theme: 'theme-rose', svgPath: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8' },
+      { id: '学习工具', categoryId: '学习工具', title: '学习工具', desc: '单位、进制与学术辅助', iconClass: 'icon-study', theme: 'theme-indigo', svgPath: 'M4 5h16v14H4z M8 9h8 M8 13h5 M6 3v4 M18 3v4' },
       { id: '图片处理', categoryId: '图片处理', title: '图片处理', desc: '压缩、背景切换', iconClass: 'icon-id-photo', theme: 'theme-blue', svgPath: 'M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h18a2 2 0 0 1 2 2z M8.5 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z M21 15l-5-5L5 21' },
       { id: '效率工具', categoryId: '效率工具', title: '效率工具', desc: '重命名、二维码', iconClass: 'icon-rename', theme: 'theme-emerald', svgPath: 'M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z' },
-      { id: '轻娱乐', categoryId: '轻娱乐', title: '轻娱乐', desc: '解压、抽签小玩具', iconClass: 'icon-eat', theme: 'theme-purple', svgPath: 'M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z M6 1v3M10 1v3M14 1v3' }
+      { id: '轻娱乐', categoryId: '轻娱乐', title: '轻娱乐', desc: '解压、抽签小玩具', iconClass: 'icon-eat', theme: 'theme-purple', svgPath: 'M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z M6 1v3M10 1v3M14 1v3' },
     ]
   },
 
@@ -562,7 +658,10 @@ Page({
     const results = this.data.tools.filter(tool =>
       tool.title.toLowerCase().includes(query) ||
       tool.desc.toLowerCase().includes(query) ||
-      tool.category.toLowerCase().includes(query)
+      tool.category.toLowerCase().includes(query) ||
+      (tool.tag || '').toLowerCase().includes(query) ||
+      (tool.id || '').toLowerCase().includes(query) ||
+      (tool.keywords || '').toLowerCase().includes(query)
     ).map(tool => {
       const svgPath = tool.svgPath || 'M12 2v20M2 12h20'
       const maskImage = `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="${svgPath}"></path></svg>')`
@@ -608,5 +707,9 @@ Page({
 
   goToTasks() {
     wx.navigateTo({ url: '/pages/tasks/index' })
+  },
+
+  goToAiConfig() {
+    wx.navigateTo({ url: '/pages-tool/ai-config/index' })
   }
 })

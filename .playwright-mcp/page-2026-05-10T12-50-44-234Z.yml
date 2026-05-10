@@ -1,0 +1,199 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - generic [ref=e7]:
+        - link "一个轻量的在线工具箱 一方工具箱 一个轻量的在线工具箱" [ref=e9] [cursor=pointer]:
+          - /url: /
+          - img "一个轻量的在线工具箱" [ref=e10]
+          - generic [ref=e11]:
+            - generic [ref=e12]: 一方工具箱
+            - generic [ref=e13]: 一个轻量的在线工具箱
+        - menubar [ref=e15]:
+          - menuitem "分类" [expanded] [ref=e16]:
+            - generic [ref=e17] [cursor=pointer]:
+              - img [ref=e18]
+              - generic [ref=e20]: 分类
+              - img [ref=e22]
+            - menu [ref=e24]:
+              - listitem [ref=e25]:
+                - list [ref=e27]:
+                  - menuitem "开发运维" [ref=e28] [cursor=pointer]
+                  - menuitem "文本处理" [ref=e29] [cursor=pointer]
+                  - menuitem "教育学术" [ref=e30] [cursor=pointer]
+                  - menuitem "图片处理" [ref=e31] [cursor=pointer]
+                  - menuitem "数据图表" [ref=e32] [cursor=pointer]
+                  - menuitem "趣味互动" [ref=e33] [cursor=pointer]
+                  - menuitem "选择随机" [ref=e34] [cursor=pointer]
+                  - menuitem "其他工具" [ref=e35] [cursor=pointer]
+                  - menuitem "AI工具" [ref=e36] [cursor=pointer]
+                  - menuitem "好物网站" [ref=e37] [cursor=pointer]
+                  - menuitem "内容管理" [ref=e38] [cursor=pointer]
+          - menuitem "关于本站" [ref=e39] [cursor=pointer]:
+            - img [ref=e40]
+            - generic [ref=e42]: 关于本站
+    - generic [ref=e43]:
+      - generic [ref=e45]:
+        - generic [ref=e46]:
+          - img [ref=e47]
+          - link [ref=e50] [cursor=pointer]:
+            - /url: /
+            - img [ref=e51]
+          - generic [ref=e56]:
+            - generic [ref=e57]:
+              - combobox [ref=e59]
+              - generic [ref=e60]: 输入关键词搜索，如文本、json、图片等
+            - img [ref=e63] [cursor=pointer]
+        - list [ref=e66]:
+          - listitem [ref=e67]:
+            - link "登录" [ref=e68] [cursor=pointer]:
+              - /url: /login
+              - button "登录" [ref=e69]:
+                - generic [ref=e70]: 登录
+      - main [ref=e71]:
+        - generic [ref=e72]:
+          - generic [ref=e73]:
+            - button "返回" [ref=e74] [cursor=pointer]:
+              - img [ref=e76]
+              - generic [ref=e78]: 返回
+            - generic [ref=e79]: 图片压缩
+            - button "扫码访问/分享" [ref=e81] [cursor=pointer]:
+              - img [ref=e82]
+              - generic [ref=e88]: 扫码访问/分享
+          - generic [ref=e89]:
+            - generic [ref=e90]:
+              - heading "压缩设置" [level=3] [ref=e91]
+              - generic [ref=e92]:
+                - generic [ref=e93]:
+                  - checkbox "智能压缩（根据文件大小自动优化质量参数）" [checked] [ref=e94]
+                  - generic [ref=e95]: 智能压缩（根据文件大小自动优化质量参数）
+                - generic [ref=e96]:
+                  - generic [ref=e97]: 压缩质量
+                  - generic [ref=e98]:
+                    - slider [ref=e99]: "0.6"
+                    - generic [ref=e100]: 60%
+                  - paragraph [ref=e101]: 图片将保持原始尺寸，仅调整压缩质量
+                - generic [ref=e102]:
+                  - generic [ref=e103]: 转换阈值 (超过此大小的图片自动转换为WebP格式)
+                  - generic [ref=e104]:
+                    - slider [ref=e105]: "1000000"
+                    - generic [ref=e106]:
+                      - generic [ref=e107]: 100KB
+                      - generic [ref=e108]: 976.56 KB
+                      - generic [ref=e109]: 10MB
+                    - paragraph [ref=e110]: 当前设置：当图片超过 976.56 KB 时，自动转换为WebP格式以获得更好的压缩效果
+                - generic [ref=e111]:
+                  - checkbox "转换为WebP格式" [ref=e112]
+                  - generic [ref=e113]: 转换为WebP格式
+                - generic [ref=e114]:
+                  - checkbox "保留EXIF信息" [ref=e115]
+                  - generic [ref=e116]: 保留EXIF信息
+            - generic [ref=e118]:
+              - generic [ref=e119]: ️
+              - paragraph [ref=e120]: 拖拽图片到此处或点击选择
+              - paragraph [ref=e121]: 支持 JPG、PNG、WebP、GIF 等格式
+              - generic [ref=e122] [cursor=pointer]: 选择图片
+            - button "清空所有" [ref=e124] [cursor=pointer]
+          - generic [ref=e125]:
+            - separator [ref=e126]:
+              - generic [ref=e127]: 描述
+            - generic [ref=e129]: 图片压缩工具使用先进的Compressor.js库，支持多种图片格式的在线压缩。 可以调节压缩质量、最大尺寸等参数，在保持图片质量的同时有效减小文件大小。 支持批量处理，适合网站优化、邮件发送等场景。
+          - generic [ref=e130]:
+            - separator [ref=e131]:
+              - generic [ref=e132]: 功能特点
+            - list [ref=e134]:
+              - listitem [ref=e135]: 支持多种格式：JPG、PNG、WebP、GIF等
+              - listitem [ref=e136]: 可调节压缩质量：0.1-1.0，平衡文件大小和质量
+              - listitem [ref=e137]: 智能转换：大文件自动转换为WebP格式
+              - listitem [ref=e138]: 保留EXIF：可选择保留图片的元数据信息
+              - listitem [ref=e139]: 批量处理：支持多张图片同时压缩
+              - listitem [ref=e140]: 实时预览：压缩前后对比，显示压缩率
+              - listitem [ref=e141]: 拖拽上传：支持拖拽文件到页面
+              - listitem [ref=e142]: 保持原尺寸：图片压缩后保持原始宽度和高度
+          - generic [ref=e143]:
+            - separator [ref=e144]:
+              - generic [ref=e145]: 使用说明
+            - list [ref=e147]:
+              - listitem [ref=e148]: 调整压缩参数：设置质量、尺寸等参数
+              - listitem [ref=e149]: 上传图片：拖拽或点击选择图片文件
+              - listitem [ref=e150]: 开始压缩：点击"开始压缩"按钮
+              - listitem [ref=e151]: 查看结果：对比压缩前后的文件大小和压缩率
+              - listitem [ref=e152]: 下载图片：单张下载或批量下载压缩后的图片
+          - generic [ref=e153]:
+            - separator [ref=e154]:
+              - generic [ref=e155]: 为什么有的图片越压缩越大？
+            - generic [ref=e157]:
+              - paragraph [ref=e158]: 图片压缩后文件变大是一个常见现象，主要原因如下：
+              - generic [ref=e159]:
+                - heading "1. 压缩质量设置过高" [level=4] [ref=e160]
+                - paragraph [ref=e161]: 如果压缩质量设置为1.0（100%），实际上没有进行任何压缩，反而可能因为格式转换导致文件变大。
+                - heading "2. 尺寸限制设置不当" [level=4] [ref=e162]
+                - paragraph [ref=e163]: 如果设置的最大宽度/高度比原图尺寸还大，图片不会被缩小，反而可能因为重新编码而增大。
+                - heading "3. 格式转换问题" [level=4] [ref=e164]
+                - paragraph [ref=e165]: 某些格式转换（如PNG转JPG）可能会增加文件大小，特别是当原图包含大量透明区域或简单图形时。
+                - heading "4. EXIF信息保留" [level=4] [ref=e166]
+                - paragraph [ref=e167]: 保留EXIF信息（相机参数、GPS位置等）会增加文件大小，建议关闭此选项以获得更好的压缩效果。
+                - heading "5. 原图已经高度压缩" [level=4] [ref=e168]
+                - paragraph [ref=e169]: 如果原图已经是高度压缩的格式（如低质量JPG），再次压缩可能无法获得更好的效果。
+              - generic [ref=e170]:
+                - heading "💡 压缩建议" [level=4] [ref=e171]
+                - list [ref=e172]:
+                  - listitem [ref=e173]: • 大文件（>5MB）：质量0.5以下，最大尺寸1200×800
+                  - listitem [ref=e174]: • 中等文件（2-5MB）：质量0.6以下，最大尺寸1200×800
+                  - listitem [ref=e175]: • 小文件（<2MB）：质量0.7以下，关闭EXIF保留
+                  - listitem [ref=e176]: • 开启"智能压缩"选项，让工具自动优化参数
+                  - listitem [ref=e177]: • 对于PNG图片，考虑转换为WebP格式以获得更好的压缩效果
+              - generic [ref=e178]:
+                - heading "⚠️ 注意事项" [level=4] [ref=e179]
+                - list [ref=e180]:
+                  - listitem [ref=e181]: • 压缩质量越低，文件越小，但图片质量也越差
+                  - listitem [ref=e182]: • 尺寸压缩会改变图片分辨率，影响显示效果
+                  - listitem [ref=e183]: • 某些特殊格式的图片可能不适合压缩
+                  - listitem [ref=e184]: • 建议先压缩少量图片测试效果，再批量处理
+        - generic [ref=e185]:
+          - generic [ref=e186]: 类似功能推荐
+          - generic [ref=e187]:
+            - link "PDF转图片" [ref=e188] [cursor=pointer]:
+              - /url: /pdf-to-image/
+            - link "二维码生成" [ref=e189] [cursor=pointer]:
+              - /url: /qrcode/
+            - link "二维码识别" [ref=e190] [cursor=pointer]:
+              - /url: /qrcode-scan/
+            - link "文本转图片" [ref=e191] [cursor=pointer]:
+              - /url: /texttoimg/
+            - link "图片分割" [ref=e192] [cursor=pointer]:
+              - /url: /imgcut/
+            - link "图片、Base64互转" [ref=e193] [cursor=pointer]:
+              - /url: /imagetobase64/
+            - link "闲鱼技能海报生成器" [ref=e194] [cursor=pointer]:
+              - /url: /skill-poster/
+            - link "视频转GIF动图" [ref=e195] [cursor=pointer]:
+              - /url: /video-to-gif/
+            - link "证件照生成" [ref=e196] [cursor=pointer]:
+              - /url: /id-photo/
+            - link "PNG/JPG格式互转" [ref=e197] [cursor=pointer]:
+              - /url: /img-convert/
+            - link "图片水印" [ref=e198] [cursor=pointer]:
+              - /url: /img-watermark/
+        - generic [ref=e200]:
+          - heading "评论交流" [level=3] [ref=e201]:
+            - img [ref=e202]
+            - text: 评论交流
+          - paragraph [ref=e205]:
+            - text: 欢迎在下方留言讨论，如有问题或建议请提交
+            - link "GitHub Issue" [ref=e206] [cursor=pointer]:
+              - /url: https://github.com/2424004764/tools-web/issues
+      - generic [ref=e209]:
+        - generic [ref=e210]: 一个轻量的在线工具箱 © 2019 - 2025 BY Bucaicai
+        - generic [ref=e211]:
+          - link "湘ICP备16007032号-1" [ref=e212] [cursor=pointer]:
+            - /url: https://beian.miit.gov.cn/
+          - generic [ref=e213]: "|"
+          - link "湘公安网备43030202001052号" [ref=e214] [cursor=pointer]:
+            - /url: https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=43030202001052&token=2be051c1-22dd-44ec-9f4b-d41155f2d855
+          - generic [ref=e215]: "|"
+          - link "Tools-Web" [ref=e216] [cursor=pointer]:
+            - /url: https://github.com/2424004764/tools-web
+          - generic [ref=e217]: "|"
+          - link "反馈建议" [ref=e218] [cursor=pointer]:
+            - /url: https://github.com/2424004764/tools-web/issues/new
+  - img

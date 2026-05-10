@@ -1,6 +1,7 @@
 const store = require('../../utils/king-score-store')
 const request = require('../../utils/request')
 const upload = require('../../utils/upload')
+const { getAiConfig } = require('../../utils/ai-config')
 
 function todayText() {
   const now = new Date()
@@ -624,10 +625,7 @@ Page({
     showAddModal: false,
     showSettingsModal: false,
     settingsForm: {
-      ocrMode: 'ai',
-      aiBaseUrl: '',
-      aiModel: '',
-      aiApiKey: ''
+      ocrMode: 'ai'
     },
     editingMemberId: '',
     resultRows: [],
@@ -665,10 +663,7 @@ Page({
       records,
       settings,
       settingsForm: {
-        ocrMode: settings.ocrMode || 'default',
-        aiBaseUrl: settings.aiBaseUrl || '',
-        aiModel: settings.aiModel || '',
-        aiApiKey: settings.aiApiKey || ''
+        ocrMode: settings.ocrMode || 'default'
       },
       historySessions,
       selectedSession: historySessions.find((item) => item.id === this.data.selectedSessionId) || null
@@ -829,10 +824,7 @@ Page({
     this.setData({
       showSettingsModal: true,
       settingsForm: {
-        ocrMode: settings.ocrMode || 'default',
-        aiBaseUrl: settings.aiBaseUrl || '',
-        aiModel: settings.aiModel || '',
-        aiApiKey: settings.aiApiKey || ''
+        ocrMode: settings.ocrMode || 'default'
       }
     })
   },
@@ -848,38 +840,20 @@ Page({
     })
   },
 
-  onAiBaseUrlInput(e) {
-    this.setData({ 'settingsForm.aiBaseUrl': e.detail.value || '' })
-  },
-
-  onAiModelInput(e) {
-    this.setData({ 'settingsForm.aiModel': e.detail.value || '' })
-  },
-
-  onAiApiKeyInput(e) {
-    this.setData({ 'settingsForm.aiApiKey': e.detail.value || '' })
+  goToAiConfig() {
+    wx.navigateTo({ url: '/pages-tool/ai-config/index' })
   },
 
   saveOcrSettings() {
     const form = this.data.settingsForm || {}
     const payload = {
-      ocrMode: form.ocrMode === 'ai' ? 'ai' : 'default',
-      aiBaseUrl: (form.aiBaseUrl || '').trim(),
-      aiModel: (form.aiModel || '').trim(),
-      aiApiKey: (form.aiApiKey || '').trim()
+      ocrMode: form.ocrMode === 'ai' ? 'ai' : 'default'
     }
 
     if (payload.ocrMode === 'ai') {
-      if (!payload.aiBaseUrl) {
-        wx.showToast({ title: '请先填写 AI 请求地址', icon: 'none' })
-        return
-      }
-      if (!payload.aiModel) {
-        wx.showToast({ title: '请先填写 AI 模型', icon: 'none' })
-        return
-      }
-      if (!payload.aiApiKey) {
-        wx.showToast({ title: '请先填写 AI 密钥', icon: 'none' })
+      const aiConfig = getAiConfig()
+      if (!aiConfig.baseUrl || !aiConfig.model || !aiConfig.apiKey) {
+        wx.showToast({ title: '请先在「AI 配置」中填写完整', icon: 'none' })
         return
       }
     }
@@ -888,10 +862,7 @@ Page({
     this.setData({
       settings,
       settingsForm: {
-        ocrMode: settings.ocrMode || 'default',
-        aiBaseUrl: settings.aiBaseUrl || '',
-        aiModel: settings.aiModel || '',
-        aiApiKey: settings.aiApiKey || ''
+        ocrMode: settings.ocrMode || 'default'
       },
       showSettingsModal: false
     })
@@ -919,21 +890,14 @@ Page({
   async uploadOcrImage(filePath) {
     const settings = this.data.settings || store.getSettings()
     const ocrMode = settings.ocrMode === 'ai' ? 'ai' : 'default'
-    const aiBaseUrl = (settings.aiBaseUrl || '').trim()
-    const aiModel = (settings.aiModel || '').trim()
-    const aiApiKey = (settings.aiApiKey || '').trim()
-
+    let aiBaseUrl = '', aiModel = '', aiApiKey = ''
     if (ocrMode === 'ai') {
-      if (!aiBaseUrl) {
-        wx.showToast({ title: '请先填写 AI 请求地址', icon: 'none' })
-        return
-      }
-      if (!aiModel) {
-        wx.showToast({ title: '请先填写 AI 模型', icon: 'none' })
-        return
-      }
-      if (!aiApiKey) {
-        wx.showToast({ title: '请先填写 AI 密钥', icon: 'none' })
+      const aiConfig = getAiConfig()
+      aiBaseUrl = (aiConfig.baseUrl || '').trim()
+      aiModel = (aiConfig.model || '').trim()
+      aiApiKey = (aiConfig.apiKey || '').trim()
+      if (!aiBaseUrl || !aiModel || !aiApiKey) {
+        wx.showToast({ title: '请先在「AI 配置」中填写完整', icon: 'none' })
         return
       }
     }

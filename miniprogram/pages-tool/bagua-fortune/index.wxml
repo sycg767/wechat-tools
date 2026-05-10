@@ -1,0 +1,146 @@
+<view class="container bagua-page">
+  <view class="page-header">
+    <view class="page-title">易经八卦工具</view>
+    <view class="page-desc">输入事项，生成本卦、动爻与变卦，辅助梳理行动方向。</view>
+  </view>
+
+  <view class="card trigram-card">
+    <view class="section-head compact">
+      <view>
+        <text class="section-title">八卦基础</text>
+        <text class="section-subtitle">八个三爻卦用于组合 64 卦</text>
+      </view>
+    </view>
+    <view class="trigram-grid">
+      <view class="trigram" wx:for="{{trigrams}}" wx:key="name">
+        <text class="trigram-symbol">{{item.symbol}}</text>
+        <text class="trigram-name">{{item.name}} · {{item.nature}}</text>
+        <text class="trigram-trait">{{item.trait}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="card input-card">
+    <text class="label">想整理的事项</text>
+    <textarea class="input" placeholder="例如：今天适合推进项目汇报吗" value="{{question}}" maxlength="80" bindinput="onQuestionInput" />
+    <button class="primary-action" bindtap="generate">生成卦象建议</button>
+  </view>
+
+  <view wx:if="{{result}}">
+    <view class="card result-card">
+      <view class="result-head">
+        <view class="result-title-block">
+          <text class="hex-name">{{result.primaryHexagram.name}}</text>
+          <text class="date">{{result.date}}</text>
+          <text class="question-text">{{result.question}}</text>
+        </view>
+        <button class="copy-btn" bindtap="copyResult">复制</button>
+      </view>
+
+      <view class="hex-symbol">
+        <view class="line-row {{line.yang ? 'yang' : 'yin'}} {{line.moving ? 'moving' : ''}}" wx:for="{{result.lines}}" wx:for-item="line" wx:key="label">
+          <view class="line-part"></view>
+          <view class="line-gap" wx:if="{{!line.yang}}"></view>
+          <view class="line-part" wx:if="{{!line.yang}}"></view>
+          <text class="moving-dot" wx:if="{{line.moving}}">变</text>
+        </view>
+      </view>
+
+      <view class="hex-tags">
+        <text wx:for="{{result.primaryHexagram.keywords}}" wx:for-item="keyword" wx:key="*this">{{keyword}}</text>
+      </view>
+
+      <view class="hex-summary">{{result.summary}}</view>
+    </view>
+
+    <!-- AI Interpretation -->
+    <view class="card ai-card" wx:if="{{aiLoading}}">
+      <view class="ai-loading">
+        <text class="card-label">AI 解读中...</text>
+        <text class="ai-loading-text">正在生成贴合语境的卦象解读</text>
+      </view>
+    </view>
+    <view class="card ai-card ai-result" wx:elif="{{result.aiInterpretation}}">
+      <view class="ai-head">
+        <text class="card-label">AI 解读</text>
+      </view>
+      <view class="ai-text">
+        <rich-text nodes="{{result.aiHtml}}"></rich-text>
+      </view>
+    </view>
+    <view class="card ai-card ai-hint-card" wx:elif="{{aiError === '未配置 AI'}}">
+      <text class="card-label">AI 解读未启用</text>
+      <text class="ai-hint">首页右上角配置 AI 后，可获得更贴合语境的卦象解读</text>
+      <button class="ai-config-btn" bindtap="goToAiConfig">去配置</button>
+    </view>
+
+    <view class="hex-card-grid">
+      <view class="card hex-info-card">
+        <text class="card-label">本卦</text>
+        <text class="hex-card-title">第{{result.primaryHexagram.number}}卦 {{result.primaryHexagram.name}}</text>
+        <text class="hex-card-sub">上{{result.primaryHexagram.upper}} 下{{result.primaryHexagram.lower}}</text>
+        <text class="hex-card-text">{{result.judgement}}</text>
+        <text class="hex-card-text muted">{{result.primaryHexagram.image}}</text>
+      </view>
+
+      <view class="card hex-info-card">
+        <text class="card-label">变卦</text>
+        <text class="hex-card-title">第{{result.changedHexagram.number}}卦 {{result.changedHexagram.name}}</text>
+        <text class="hex-card-sub">上{{result.changedHexagram.upper}} 下{{result.changedHexagram.lower}}</text>
+        <text class="hex-card-text">{{result.changedHexagram.judgement}}</text>
+        <text class="hex-card-text muted">{{result.changedHexagram.advice}}</text>
+      </view>
+    </view>
+
+    <view class="card moving-card">
+      <view class="section-head compact">
+        <view>
+          <text class="section-title">动爻提示</text>
+          <text class="section-subtitle">动爻代表本次事项中最容易发生变化的位置</text>
+        </view>
+      </view>
+      <view class="moving-item" wx:for="{{result.changingLines}}" wx:key="label">
+        <text class="moving-label">{{item.label}}{{item.reference ? ' · 参考' : ''}}</text>
+        <text class="moving-text">{{item.text}}</text>
+      </view>
+    </view>
+
+    <view class="card advice-card" wx:if="{{!result.aiInterpretation}}">
+      <view class="advice-row">
+        <text class="advice-label">本地建议</text>
+        <text class="advice-text">{{result.focus}}</text>
+      </view>
+      <view class="advice-row">
+        <text class="advice-label">宜做</text>
+        <text class="advice-text">{{result.advice}}</text>
+      </view>
+      <view class="advice-row caution">
+        <text class="advice-label">慎做</text>
+        <text class="advice-text">{{result.caution}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="card history-card" wx:if="{{history.length}}">
+    <view class="section-head compact">
+      <view>
+        <text class="section-title">历史记录</text>
+        <text class="section-subtitle">最近生成的卦象建议</text>
+      </view>
+    </view>
+    <view class="history-item" wx:for="{{history}}" wx:key="id" wx:for-index="index">
+      <view class="history-top">
+        <text class="history-title">{{item.question}}</text>
+        <button class="history-copy" data-index="{{index}}" bindtap="copyHistory">复制</button>
+      </view>
+      <view class="history-meta">
+        <text class="history-badge">{{item.primaryHexagram.name}}</text>
+        <text class="history-arrow">→</text>
+        <text class="history-badge">{{item.changedHexagram.name}}</text>
+        <text class="history-date">{{item.date}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="disclaimer">{{disclaimer}}</view>
+</view>

@@ -1,0 +1,844 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - complementary [ref=e4]:
+      - generic [ref=e7]:
+        - link "一个轻量的在线工具箱 一方工具箱 一个轻量的在线工具箱" [ref=e9] [cursor=pointer]:
+          - /url: /
+          - img "一个轻量的在线工具箱" [ref=e10]
+          - generic [ref=e11]:
+            - generic [ref=e12]: 一方工具箱
+            - generic [ref=e13]: 一个轻量的在线工具箱
+        - menubar [ref=e15]:
+          - menuitem "分类" [expanded] [ref=e16]:
+            - generic [ref=e17] [cursor=pointer]:
+              - img [ref=e18]
+              - generic [ref=e20]: 分类
+              - img [ref=e22]
+            - menu [ref=e24]:
+              - listitem [ref=e25]:
+                - list [ref=e27]:
+                  - menuitem "开发运维" [ref=e28] [cursor=pointer]
+                  - menuitem "文本处理" [ref=e29] [cursor=pointer]
+                  - menuitem "教育学术" [ref=e30] [cursor=pointer]
+                  - menuitem "图片处理" [ref=e31] [cursor=pointer]
+                  - menuitem "数据图表" [ref=e32] [cursor=pointer]
+                  - menuitem "趣味互动" [ref=e33] [cursor=pointer]
+                  - menuitem "选择随机" [ref=e34] [cursor=pointer]
+                  - menuitem "其他工具" [ref=e35] [cursor=pointer]
+                  - menuitem "AI工具" [ref=e36] [cursor=pointer]
+                  - menuitem "好物网站" [ref=e37] [cursor=pointer]
+                  - menuitem "内容管理" [ref=e38] [cursor=pointer]
+          - menuitem "关于本站" [ref=e39] [cursor=pointer]:
+            - img [ref=e40]
+            - generic [ref=e42]: 关于本站
+    - generic [ref=e43]:
+      - generic [ref=e45]:
+        - generic [ref=e46]:
+          - img [ref=e47]
+          - link [ref=e50] [cursor=pointer]:
+            - /url: /
+            - img [ref=e51]
+          - generic [ref=e56]:
+            - generic [ref=e57]:
+              - combobox [ref=e59]
+              - generic [ref=e60]: 输入关键词搜索，如文本、json、图片等
+            - img [ref=e63] [cursor=pointer]
+        - list [ref=e66]:
+          - listitem [ref=e67]:
+            - link "登录" [ref=e68] [cursor=pointer]:
+              - /url: /login
+              - button "登录" [ref=e69]:
+                - generic [ref=e70]: 登录
+      - main [ref=e71]:
+        - generic [ref=e72]:
+          - generic [ref=e73]:
+            - generic [ref=e74] [cursor=pointer]: 开发运维
+            - generic [ref=e75]:
+              - link "随机密码生成 开发运维 密码生成器、随机字符串生成,批量生成" [ref=e76] [cursor=pointer]:
+                - /url: /randompassword/
+                - generic [ref=e78]:
+                  - generic [ref=e80]: 随机密码生成
+                  - generic [ref=e82]: 开发运维
+                - generic [ref=e84]: 密码生成器、随机字符串生成,批量生成
+              - link "URL编码/解码 开发运维 URL在线编码解码工具（UrlEncode编码 和 UrlDecode解码）" [ref=e85] [cursor=pointer]:
+                - /url: /urlencode/
+                - generic [ref=e87]:
+                  - generic [ref=e89]: URL编码/解码
+                  - generic [ref=e91]: 开发运维
+                - generic "URL在线编码解码工具（UrlEncode编码 和 UrlDecode解码）" [ref=e93]
+              - link "UUID生成器 开发运维 批量生成UUID" [ref=e94] [cursor=pointer]:
+                - /url: /uuid/
+                - generic [ref=e96]:
+                  - generic [ref=e98]: UUID生成器
+                  - generic [ref=e100]: 开发运维
+                - generic [ref=e102]: 批量生成UUID
+              - link "时间戳转换 开发运维 在线时间戳转换工具以及获取当前时间戳" [ref=e103] [cursor=pointer]:
+                - /url: /timetran/
+                - generic [ref=e105]:
+                  - generic [ref=e107]: 时间戳转换
+                  - generic [ref=e109]: 开发运维
+                - generic [ref=e111]: 在线时间戳转换工具以及获取当前时间戳
+              - link "MD5在线加密 开发运维 MD5在线加密,长度包含32位、16位" [ref=e112] [cursor=pointer]:
+                - /url: /md5/
+                - generic [ref=e114]:
+                  - generic [ref=e116]: MD5在线加密
+                  - generic [ref=e118]: 开发运维
+                - generic [ref=e120]: MD5在线加密,长度包含32位、16位
+              - link "Json在线转换 开发运维 提供实时编辑和预览JSON 数据，语法高亮、校验、格式化、转义，去转义、压缩等功能，可以提高阅读修改的效率和准确性" [ref=e121] [cursor=pointer]:
+                - /url: /json/
+                - generic [ref=e123]:
+                  - generic [ref=e125]: Json在线转换
+                  - generic [ref=e127]: 开发运维
+                - generic "提供实时编辑和预览JSON 数据，语法高亮、校验、格式化、转义，去转义、压缩等功能，可以提高阅读修改的效率和准确性" [ref=e129]
+              - link "CSV/TSV ↔ JSON 互转 开发运维 CSV、TSV 与 JSON 相互转换，支持列头推断与分隔符选择" [ref=e130] [cursor=pointer]:
+                - /url: /csv-json/
+                - generic [ref=e132]:
+                  - generic [ref=e134]: CSV/TSV ↔ JSON 互转
+                  - generic [ref=e136]: 开发运维
+                - generic "CSV、TSV 与 JSON 相互转换，支持列头推断与分隔符选择" [ref=e138]
+              - link "JSON/YAML 格式化对比 开发运维 JSON/YAML 格式化对比，支持两种格式的对比和转换" [ref=e139] [cursor=pointer]:
+                - /url: /json-yaml/
+                - generic [ref=e141]:
+                  - generic [ref=e143]: JSON/YAML 格式化对比
+                  - generic [ref=e145]: 开发运维
+                - generic "JSON/YAML 格式化对比，支持两种格式的对比和转换" [ref=e147]
+              - link "正则测试工具 开发运维 正则表达式测试工具, 常用正则表达式" [ref=e148] [cursor=pointer]:
+                - /url: /reg/
+                - generic [ref=e150]:
+                  - generic [ref=e152]: 正则测试工具
+                  - generic [ref=e154]: 开发运维
+                - generic [ref=e156]: 正则表达式测试工具, 常用正则表达式
+              - link "正则表达式可视化 开发运维 图形化展示正则匹配过程，颜色标记匹配结果，逐步播放理解正则" [ref=e157] [cursor=pointer]:
+                - /url: /reg-viz/
+                - generic [ref=e159]:
+                  - generic [ref=e161]: 正则表达式可视化
+                  - generic [ref=e163]: 开发运维
+                - generic "图形化展示正则匹配过程，颜色标记匹配结果，逐步播放理解正则" [ref=e165]
+              - link "Unicode转中文 开发运维 Unicode和中文的相互转换" [ref=e166] [cursor=pointer]:
+                - /url: /unicode/
+                - generic [ref=e168]:
+                  - generic [ref=e170]: Unicode转中文
+                  - generic [ref=e172]: 开发运维
+                - generic [ref=e174]: Unicode和中文的相互转换
+              - link "HTTP状态码 开发运维 http状态对应的名称和含义解释" [ref=e175] [cursor=pointer]:
+                - /url: /httpstatuscode/
+                - generic [ref=e177]:
+                  - generic [ref=e179]: HTTP状态码
+                  - generic [ref=e181]: 开发运维
+                - generic [ref=e183]: http状态对应的名称和含义解释
+              - link "JWT解析 开发运维 解析和解码JSON Web Token（jwt）" [ref=e184] [cursor=pointer]:
+                - /url: /jwt/
+                - generic [ref=e186]:
+                  - generic [ref=e188]: JWT解析
+                  - generic [ref=e190]: 开发运维
+                - generic [ref=e192]: 解析和解码JSON Web Token（jwt）
+              - link "文件大小转换 开发运维 文件大小单位转换，支持字节、KB、MB、GB、TB等单位互转" [ref=e193] [cursor=pointer]:
+                - /url: /filesize/
+                - generic [ref=e195]:
+                  - generic [ref=e197]: 文件大小转换
+                  - generic [ref=e199]: 开发运维
+                - generic "文件大小单位转换，支持字节、KB、MB、GB、TB等单位互转" [ref=e201]
+              - link "Cron表达式生成器 开发运维 在线生成和解析Cron表达式，支持定时任务配置" [ref=e202] [cursor=pointer]:
+                - /url: /cron/
+                - generic [ref=e204]:
+                  - generic [ref=e206]: Cron表达式生成器
+                  - generic [ref=e208]: 开发运维
+                - generic "在线生成和解析Cron表达式，支持定时任务配置" [ref=e210]
+              - link "html实体转义 开发运维 html实体转义，实体转义成html" [ref=e211] [cursor=pointer]:
+                - /url: /htmlentity/
+                - generic [ref=e213]:
+                  - generic [ref=e215]: html实体转义
+                  - generic [ref=e217]: 开发运维
+                - generic [ref=e219]: html实体转义，实体转义成html
+              - link "在线请求调试 开发运维 简化版Postman：构造HTTP请求、查看响应，支持JSON、表单、Raw" [ref=e220] [cursor=pointer]:
+                - /url: /postman/
+                - generic [ref=e222]:
+                  - generic [ref=e224]: 在线请求调试
+                  - generic [ref=e226]: 开发运维
+                - generic "简化版Postman：构造HTTP请求、查看响应，支持JSON、表单、Raw" [ref=e228]
+              - link "URL 参数解析/构造 开发运维 一键解析 ?a=1&b=2，支持编辑后重新拼接" [ref=e229] [cursor=pointer]:
+                - /url: /urlparams/
+                - generic [ref=e231]:
+                  - generic [ref=e233]: URL 参数解析/构造
+                  - generic [ref=e235]: 开发运维
+                - generic "一键解析 ?a=1&b=2，支持编辑后重新拼接" [ref=e237]
+              - link "命名风格转换 开发运维 snake_case、camelCase、PascalCase、kebab-case 相互转换，支持逐行转换与复制" [ref=e238] [cursor=pointer]:
+                - /url: /naming-case/
+                - generic [ref=e240]:
+                  - generic [ref=e242]: 命名风格转换
+                  - generic [ref=e244]: 开发运维
+                - generic "snake_case、camelCase、PascalCase、kebab-case 相互转换，支持逐行转换与复制" [ref=e246]
+              - link "哈希校验/HMAC 开发运维 SHA-1/256/512、HMAC-SHA256，文本/文件摘要" [ref=e247] [cursor=pointer]:
+                - /url: /hash/
+                - generic [ref=e249]:
+                  - generic [ref=e251]: 哈希校验/HMAC
+                  - generic [ref=e253]: 开发运维
+                - generic "SHA-1/256/512、HMAC-SHA256，文本/文件摘要" [ref=e255]
+              - link "Cookie解析/构造 开发运维 Cookie字符串解析与构造，支持请求头和响应头格式，包含Domain、Path、Expires等属性编辑" [ref=e256] [cursor=pointer]:
+                - /url: /cookie/
+                - generic [ref=e258]:
+                  - generic [ref=e260]: Cookie解析/构造
+                  - generic [ref=e262]: 开发运维
+                - generic "Cookie字符串解析与构造，支持请求头和响应头格式，包含Domain、Path、Expires等属性编辑" [ref=e264]
+              - link "Base64编码/解码 开发运维 文本的Base64编码与解码，双向实时转换，支持中文" [ref=e265] [cursor=pointer]:
+                - /url: /base64/
+                - generic [ref=e267]:
+                  - generic [ref=e269]: Base64编码/解码
+                  - generic [ref=e271]: 开发运维
+                - generic "文本的Base64编码与解码，双向实时转换，支持中文" [ref=e273]
+              - link "MySQL转Go结构体 开发运维 将MySQL数据表字段转换为Go语言结构体，支持字段类型映射、标签生成和命名规范转换" [ref=e274] [cursor=pointer]:
+                - /url: /mysql-to-go/
+                - generic [ref=e276]:
+                  - generic [ref=e278]: MySQL转Go结构体
+                  - generic [ref=e280]: 开发运维
+                - generic "将MySQL数据表字段转换为Go语言结构体，支持字段类型映射、标签生成和命名规范转换" [ref=e282]
+              - link "MongoDB JSON 转 SQLite SQL 开发运维 将MongoDB导出的JSON数据转换为SQLite SQL语句，支持JSON数组和NDJSON格式，自动推断表结构，可复制或下载SQL文件" [ref=e283] [cursor=pointer]:
+                - /url: /mongo-to-sqlite/
+                - generic [ref=e285]:
+                  - generic [ref=e287]: MongoDB JSON 转 SQLite SQL
+                  - generic [ref=e289]: 开发运维
+                - generic "将MongoDB导出的JSON数据转换为SQLite SQL语句，支持JSON数组和NDJSON格式，自动推断表结构，可复制或下载SQL文件" [ref=e291]
+              - link "短链接生成器 开发运维 将长链接转换为短链接，支持自定义后缀，方便分享" [ref=e292] [cursor=pointer]:
+                - /url: /short-link/
+                - generic [ref=e294]:
+                  - generic [ref=e296]: 短链接生成器
+                  - generic [ref=e298]: 开发运维
+                - generic "将长链接转换为短链接，支持自定义后缀，方便分享" [ref=e300]
+          - generic [ref=e302]:
+            - generic [ref=e303] [cursor=pointer]: 文本处理
+            - generic [ref=e304]:
+              - link "文本对比 文本处理 文本差异比对支持中文、英文、代码比对" [ref=e305] [cursor=pointer]:
+                - /url: /diff/
+                - generic [ref=e307]:
+                  - generic [ref=e309]: 文本对比
+                  - generic [ref=e311]: 文本处理
+                - generic [ref=e313]: 文本差异比对支持中文、英文、代码比对
+              - link "markdown编辑器 文本处理 在线创建或编辑markdown, 实时预览，导出markdown" [ref=e314] [cursor=pointer]:
+                - /url: /markdown/
+                - generic [ref=e316]:
+                  - generic [ref=e318]: markdown编辑器
+                  - generic [ref=e320]: 文本处理
+                - generic "在线创建或编辑markdown, 实时预览，导出markdown" [ref=e322]
+              - link "字数统计 文本处理 在线统计字符串的字数、段落、标点符号数量" [ref=e323] [cursor=pointer]:
+                - /url: /wordcount/
+                - generic [ref=e325]:
+                  - generic [ref=e327]: 字数统计
+                  - generic [ref=e329]: 文本处理
+                - generic "在线统计字符串的字数、段落、标点符号数量" [ref=e331]
+              - link "文本去重 文本处理 可以删除或去除文本或字符串中的重复行" [ref=e332] [cursor=pointer]:
+                - /url: /textremoveduplicate/
+                - generic [ref=e334]:
+                  - generic [ref=e336]: 文本去重
+                  - generic [ref=e338]: 文本处理
+                - generic [ref=e340]: 可以删除或去除文本或字符串中的重复行
+              - link "字符串去空格 文本处理 支持去除所有空格、去除首尾空格、去除多余空格、去除空行等多种模式" [ref=e341] [cursor=pointer]:
+                - /url: /stringclean/
+                - generic [ref=e343]:
+                  - generic [ref=e345]: 字符串去空格
+                  - generic [ref=e347]: 文本处理
+                - generic "支持去除所有空格、去除首尾空格、去除多余空格、去除空行等多种模式" [ref=e349]
+              - link "ASCII字形生成器 文本处理 在线生成字形ASCII画" [ref=e350] [cursor=pointer]:
+                - /url: /asciiwordpic/
+                - generic [ref=e352]:
+                  - generic [ref=e354]: ASCII字形生成器
+                  - generic [ref=e356]: 文本处理
+                - generic [ref=e358]: 在线生成字形ASCII画
+              - link "在线文本编辑/HTML获取 文本处理 在线富文本编辑, html实时预览，在线编辑文本，文本编辑获取html" [ref=e359] [cursor=pointer]:
+                - /url: /textedit/
+                - generic [ref=e361]:
+                  - generic [ref=e363]: 在线文本编辑/HTML获取
+                  - generic [ref=e365]: 文本处理
+                - generic "在线富文本编辑, html实时预览，在线编辑文本，文本编辑获取html" [ref=e367]
+              - link "PDF页眉页脚编辑器 文本处理 在线PDF页眉页脚编辑工具，支持自定义文本、字体、字号和对齐方式" [ref=e368] [cursor=pointer]:
+                - /url: /pdf-editor/
+                - generic [ref=e370]:
+                  - generic [ref=e372]: PDF页眉页脚编辑器
+                  - generic [ref=e374]: 文本处理
+                - generic "在线PDF页眉页脚编辑工具，支持自定义文本、字体、字号和对齐方式" [ref=e376]
+              - link "公众号排版 文本处理 专业的公众号排版工具，支持Markdown编辑、多种主题模板、代码高亮、目录生成等功能" [ref=e377] [cursor=pointer]:
+                - /url: /wechat-format/
+                - generic [ref=e379]:
+                  - generic [ref=e381]: 公众号排版
+                  - generic [ref=e383]: 文本处理
+                - generic "专业的公众号排版工具，支持Markdown编辑、多种主题模板、代码高亮、目录生成等功能" [ref=e385]
+              - link "词频统计分析 文本处理 文本词频分析工具，支持中英文混合分词，自动统计词语出现频率并可视化展示，支持导出CSV" [ref=e386] [cursor=pointer]:
+                - /url: /word-frequency/
+                - generic [ref=e388]:
+                  - generic [ref=e390]: 词频统计分析
+                  - generic [ref=e392]: 文本处理
+                - generic "文本词频分析工具，支持中英文混合分词，自动统计词语出现频率并可视化展示，支持导出CSV" [ref=e394]
+              - link "文本加密/解密 文本处理 AES-GCM 文本加密解密工具，支持密码派生秘钥与 Base64 输出，适合保护敏感文本。" [ref=e395] [cursor=pointer]:
+                - /url: /text-crypto/
+                - generic [ref=e397]:
+                  - generic [ref=e399]: 文本加密/解密
+                  - generic [ref=e401]: 文本处理
+                - generic "AES-GCM 文本加密解密工具，支持密码派生秘钥与 Base64 输出，适合保护敏感文本。" [ref=e403]
+          - generic [ref=e405]:
+            - generic [ref=e406] [cursor=pointer]: 教育学术
+            - generic [ref=e407]:
+              - link "单位换算 教育学术 在线重量、长度、面积、时间、角度、速度、温度、压力、热量、功率等换算" [ref=e408] [cursor=pointer]:
+                - /url: /unit/
+                - generic [ref=e410]:
+                  - generic [ref=e412]: 单位换算
+                  - generic [ref=e414]: 教育学术
+                - generic "在线重量、长度、面积、时间、角度、速度、温度、压力、热量、功率等换算" [ref=e416]
+              - link "物理公式查询 教育学术 常用物理公式速查工具，涵盖力学、热学、电学、光学、原子物理等" [ref=e417] [cursor=pointer]:
+                - /url: /physics/
+                - generic [ref=e419]:
+                  - generic [ref=e421]: 物理公式查询
+                  - generic [ref=e423]: 教育学术
+                - generic "常用物理公式速查工具，涵盖力学、热学、电学、光学、原子物理等" [ref=e425]
+              - link "数学公式查询 教育学术 常用数学公式速查工具，涵盖代数、三角函数、几何、微积分、线性代数、概率统计等" [ref=e426] [cursor=pointer]:
+                - /url: /math/
+                - generic [ref=e428]:
+                  - generic [ref=e430]: 数学公式查询
+                  - generic [ref=e432]: 教育学术
+                - generic "常用数学公式速查工具，涵盖代数、三角函数、几何、微积分、线性代数、概率统计等" [ref=e434]
+              - link "摩斯电码 教育学术 支持中文的摩斯电码编码解码" [ref=e435] [cursor=pointer]:
+                - /url: /morse/
+                - generic [ref=e437]:
+                  - generic [ref=e439]: 摩斯电码
+                  - generic [ref=e441]: 教育学术
+                - generic [ref=e443]: 支持中文的摩斯电码编码解码
+              - link "常用进制转换 教育学术 在线进制转换工具,可在2到64进制之间相互转换" [ref=e444] [cursor=pointer]:
+                - /url: /scaletran/
+                - generic [ref=e446]:
+                  - generic [ref=e448]: 常用进制转换
+                  - generic [ref=e450]: 教育学术
+                - generic "在线进制转换工具,可在2到64进制之间相互转换" [ref=e452]
+              - link "ASCII码表 教育学术 ASCII码表,控制代码、标准ASCII字符和非标准ASCII字符对照表" [ref=e453] [cursor=pointer]:
+                - /url: /ascii/
+                - generic [ref=e455]:
+                  - generic [ref=e457]: ASCII码表
+                  - generic [ref=e459]: 教育学术
+                - generic "ASCII码表,控制代码、标准ASCII字符和非标准ASCII字符对照表" [ref=e461]
+              - link "长度单位转换 教育学术 长度转换工具-支持国际长度单位，中国传统长度单位，英制长度单位" [ref=e462] [cursor=pointer]:
+                - /url: /unit/?active=length
+                - generic [ref=e464]:
+                  - generic [ref=e466]: 长度单位转换
+                  - generic [ref=e468]: 教育学术
+                - generic "长度转换工具-支持国际长度单位，中国传统长度单位，英制长度单位" [ref=e470]
+              - link "面积单位转换 教育学术 面积转换工具-支持国际面积单位，中国传统面积单位，英制面积单位" [ref=e471] [cursor=pointer]:
+                - /url: /unit/?active=area
+                - generic [ref=e473]:
+                  - generic [ref=e475]: 面积单位转换
+                  - generic [ref=e477]: 教育学术
+                - generic "面积转换工具-支持国际面积单位，中国传统面积单位，英制面积单位" [ref=e479]
+              - link "重量单位转换 教育学术 重量转换工具-支持国际重量单位，中国传统重量单位，英制重量单位(常衡制和金衡制)" [ref=e480] [cursor=pointer]:
+                - /url: /unit/?active=weight
+                - generic [ref=e482]:
+                  - generic [ref=e484]: 重量单位转换
+                  - generic [ref=e486]: 教育学术
+                - generic "重量转换工具-支持国际重量单位，中国传统重量单位，英制重量单位(常衡制和金衡制)" [ref=e488]
+              - link "时间单位转换 教育学术 时间单位转换工具-支持国际时间单位" [ref=e489] [cursor=pointer]:
+                - /url: /unit/?active=time
+                - generic [ref=e491]:
+                  - generic [ref=e493]: 时间单位转换
+                  - generic [ref=e495]: 教育学术
+                - generic [ref=e497]: 时间单位转换工具-支持国际时间单位
+              - link "温度单位转换 教育学术 温度单位转换工具-支持国际温度单位" [ref=e498] [cursor=pointer]:
+                - /url: /unit/?active=temperature
+                - generic [ref=e500]:
+                  - generic [ref=e502]: 温度单位转换
+                  - generic [ref=e504]: 教育学术
+                - generic [ref=e506]: 温度单位转换工具-支持国际温度单位
+              - link "压力单位转换 教育学术 压力单位转换工具-Pa/kPa/hPa/MPa/bar/torr/psi等" [ref=e507] [cursor=pointer]:
+                - /url: /unit/?active=pressure
+                - generic [ref=e509]:
+                  - generic [ref=e511]: 压力单位转换
+                  - generic [ref=e513]: 教育学术
+                - generic "压力单位转换工具-Pa/kPa/hPa/MPa/bar/torr/psi等" [ref=e515]
+              - link "热量单位转换 教育学术 热量单位转换工具-Wh/mWh/kWh/MWh/J/kJ等" [ref=e516] [cursor=pointer]:
+                - /url: /unit/?active=heat
+                - generic [ref=e518]:
+                  - generic [ref=e520]: 热量单位转换
+                  - generic [ref=e522]: 教育学术
+                - generic "热量单位转换工具-Wh/mWh/kWh/MWh/J/kJ等" [ref=e524]
+              - link "功率单位转换 教育学术 功率单位转换工具-W/mW/kW/MW/GW等" [ref=e525] [cursor=pointer]:
+                - /url: /unit/?active=power
+                - generic [ref=e527]:
+                  - generic [ref=e529]: 功率单位转换
+                  - generic [ref=e531]: 教育学术
+                - generic "功率单位转换工具-W/mW/kW/MW/GW等" [ref=e533]
+              - link "物品辐射量示例 教育学术 展示常见物品的辐射量参考数据，帮助了解日常生活中的辐射水平" [ref=e534] [cursor=pointer]:
+                - /url: /radiation-sample/
+                - generic [ref=e536]:
+                  - generic [ref=e538]: 物品辐射量示例
+                  - generic [ref=e540]: 教育学术
+                - generic "展示常见物品的辐射量参考数据，帮助了解日常生活中的辐射水平" [ref=e542]
+              - link "3D数学方程式 教育学术 3D数学方程式可视化工具，支持参数方程、隐式方程、函数图像的三维展示" [ref=e543] [cursor=pointer]:
+                - /url: /math-equation-3d/
+                - generic [ref=e545]:
+                  - generic [ref=e547]: 3D数学方程式
+                  - generic [ref=e549]: 教育学术
+                - generic "3D数学方程式可视化工具，支持参数方程、隐式方程、函数图像的三维展示" [ref=e551]
+              - link "算法可视化 教育学术 排序算法、搜索算法等算法处理过程的可视化展示，帮助理解算法原理" [ref=e552] [cursor=pointer]:
+                - /url: /algorithm-visualization/
+                - generic [ref=e554]:
+                  - generic [ref=e556]: 算法可视化
+                  - generic [ref=e558]: 教育学术
+                - generic "排序算法、搜索算法等算法处理过程的可视化展示，帮助理解算法原理" [ref=e560]
+              - link "土地亩数计算器 教育学术 在线土地亩数计算器，输入土地长宽自动计算亩数，支持平方米、公顷、平方千米等多种单位换算" [ref=e561] [cursor=pointer]:
+                - /url: /land-area/
+                - generic [ref=e563]:
+                  - generic [ref=e565]: 土地亩数计算器
+                  - generic [ref=e567]: 教育学术
+                - generic "在线土地亩数计算器，输入土地长宽自动计算亩数，支持平方米、公顷、平方千米等多种单位换算" [ref=e569]
+              - link "后端技能文档 教育学术 系统化学习后端开发技术栈，包含MongoDB、Docker、Go、Redis等主流技术文档" [ref=e570] [cursor=pointer]:
+                - /url: /backend-docs/
+                - generic [ref=e572]:
+                  - generic [ref=e574]: 后端技能文档
+                  - generic [ref=e576]: 教育学术
+                - generic "系统化学习后端开发技术栈，包含MongoDB、Docker、Go、Redis等主流技术文档" [ref=e578]
+              - link "逻辑思维训练 教育学术 真话谎话题、逻辑推理题、数学思维题、序列推理题等多种题型，锻炼逻辑思维能力和严谨性" [ref=e579] [cursor=pointer]:
+                - /url: /logic-training/
+                - generic [ref=e581]:
+                  - generic [ref=e583]: 逻辑思维训练
+                  - generic [ref=e585]: 教育学术
+                - generic "真话谎话题、逻辑推理题、数学思维题、序列推理题等多种题型，锻炼逻辑思维能力和严谨性" [ref=e587]
+              - link "倒计时计时器 教育学术 自定义倒计时工具，支持分钟/秒钟设置、开始、暂停和重置，适合专注学习、办公和运动场景。" [ref=e588] [cursor=pointer]:
+                - /url: /countdown-timer/
+                - generic [ref=e590]:
+                  - generic [ref=e592]: 倒计时计时器
+                  - generic [ref=e594]: 教育学术
+                - generic "自定义倒计时工具，支持分钟/秒钟设置、开始、暂停和重置，适合专注学习、办公和运动场景。" [ref=e596]
+              - link "番茄工作法 教育学术 番茄工作法计时器，支持工作/短休息/长休息周期设置，自动循环切换，提升专注效率。" [ref=e597] [cursor=pointer]:
+                - /url: /pomodoro-timer/
+                - generic [ref=e599]:
+                  - generic [ref=e601]: 番茄工作法
+                  - generic [ref=e603]: 教育学术
+                - generic "番茄工作法计时器，支持工作/短休息/长休息周期设置，自动循环切换，提升专注效率。" [ref=e605]
+              - link "小学加减法练习 教育学术 面向小学生的加减法练习工具，支持加法、减法和加减混合题型快速生成与批改" [ref=e606] [cursor=pointer]:
+                - /url: /arithmetic-practice/
+                - generic [ref=e608]:
+                  - generic [ref=e610]: 小学加减法练习
+                  - generic [ref=e612]: 教育学术
+                - generic "面向小学生的加减法练习工具，支持加法、减法和加减混合题型快速生成与批改" [ref=e614]
+              - link "星座运势查询 教育学术 星座运势查询工具，根据出生日期自动判断星座，提供今日、本周和本月运势分析。" [ref=e615] [cursor=pointer]:
+                - /url: /zodiac-fortune/
+                - generic [ref=e617]:
+                  - generic [ref=e619]: 星座运势查询
+                  - generic [ref=e621]: 教育学术
+                - generic "星座运势查询工具，根据出生日期自动判断星座，提供今日、本周和本月运势分析。" [ref=e623]
+              - link "命理八卦工具 教育学术 命理八卦工具，根据出生日期生成生肖和八卦卦象，提供五行属性、吉祥色与吉位建议。" [ref=e624] [cursor=pointer]:
+                - /url: /bagua-fortune/
+                - generic [ref=e626]:
+                  - generic [ref=e628]: 命理八卦工具
+                  - generic [ref=e630]: 教育学术
+                - generic "命理八卦工具，根据出生日期生成生肖和八卦卦象，提供五行属性、吉祥色与吉位建议。" [ref=e632]
+              - link "毛选名句 教育学术 精选《毛泽东选集》经典名句，精致卡片展示，适合日常励志、学习思考与分享" [ref=e633] [cursor=pointer]:
+                - /url: /mao-quotes/
+                - generic [ref=e635]:
+                  - generic [ref=e637]: 毛选名句
+                  - generic [ref=e639]: 教育学术
+                - generic "精选《毛泽东选集》经典名句，精致卡片展示，适合日常励志、学习思考与分享" [ref=e641]
+          - generic [ref=e643]:
+            - generic [ref=e644] [cursor=pointer]: 图片处理
+            - generic [ref=e645]:
+              - link "PDF转图片 图片处理 在线将PDF文件转换为高清图片，支持多页转换，保持原始清晰度" [ref=e646] [cursor=pointer]:
+                - /url: /pdf-to-image/
+                - generic [ref=e648]:
+                  - generic [ref=e650]: PDF转图片
+                  - generic [ref=e652]: 图片处理
+                - generic "在线将PDF文件转换为高清图片，支持多页转换，保持原始清晰度" [ref=e654]
+              - link "二维码生成 图片处理 在线生成二维码，支持带logo、透明、艺术的二维码生成" [ref=e655] [cursor=pointer]:
+                - /url: /qrcode/
+                - generic [ref=e657]:
+                  - generic [ref=e659]: 二维码生成
+                  - generic [ref=e661]: 图片处理
+                - generic "在线生成二维码，支持带logo、透明、艺术的二维码生成" [ref=e663]
+              - link "二维码识别 图片处理 在线识别二维码，支持摄像头扫描、图片上传、拖拽等多种方式" [ref=e664] [cursor=pointer]:
+                - /url: /qrcode-scan/
+                - generic [ref=e666]:
+                  - generic [ref=e668]: 二维码识别
+                  - generic [ref=e670]: 图片处理
+                - generic "在线识别二维码，支持摄像头扫描、图片上传、拖拽等多种方式" [ref=e672]
+              - link "文本转图片 图片处理 把文本转换成图片，生成长图，具有超多个性文字排版" [ref=e673] [cursor=pointer]:
+                - /url: /texttoimg/
+                - generic [ref=e675]:
+                  - generic [ref=e677]: 文本转图片
+                  - generic [ref=e679]: 图片处理
+                - generic "把文本转换成图片，生成长图，具有超多个性文字排版" [ref=e681]
+              - link "图片分割 图片处理 将图片分割成四宫格、九宫格、十六宫格，支持自定义行与列" [ref=e682] [cursor=pointer]:
+                - /url: /imgcut/
+                - generic [ref=e684]:
+                  - generic [ref=e686]: 图片分割
+                  - generic [ref=e688]: 图片处理
+                - generic "将图片分割成四宫格、九宫格、十六宫格，支持自定义行与列" [ref=e690]
+              - link "图片、Base64互转 图片处理 图片与Base64双向互转，支持图片转Base64编码和Base64转图片" [ref=e691] [cursor=pointer]:
+                - /url: /imagetobase64/
+                - generic [ref=e693]:
+                  - generic [ref=e695]: 图片、Base64互转
+                  - generic [ref=e697]: 图片处理
+                - generic "图片与Base64双向互转，支持图片转Base64编码和Base64转图片" [ref=e699]
+              - link "图片压缩 图片处理 在线图片压缩工具，支持多种格式，可调节压缩质量，减小文件大小" [ref=e700] [cursor=pointer]:
+                - /url: /image-compress/
+                - generic [ref=e702]:
+                  - generic [ref=e704]: 图片压缩
+                  - generic [ref=e706]: 图片处理
+                - generic "在线图片压缩工具，支持多种格式，可调节压缩质量，减小文件大小" [ref=e708]
+              - link "闲鱼技能海报生成器 图片处理 专为闲鱼技能服务设计的海报生成工具，提供多种精美模板，支持自定义文字内容，一键生成高清海报图片" [ref=e709] [cursor=pointer]:
+                - /url: /skill-poster/
+                - generic [ref=e711]:
+                  - generic [ref=e713]: 闲鱼技能海报生成器
+                  - generic [ref=e715]: 图片处理
+                - generic "专为闲鱼技能服务设计的海报生成工具，提供多种精美模板，支持自定义文字内容，一键生成高清海报图片" [ref=e717]
+              - link "视频转GIF动图 图片处理 在线视频转GIF工具，支持选择视频片段、自定义帧率、尺寸和质量，纯前端处理保护隐私" [ref=e718] [cursor=pointer]:
+                - /url: /video-to-gif/
+                - generic [ref=e720]:
+                  - generic [ref=e722]: 视频转GIF动图
+                  - generic [ref=e724]: 图片处理
+                - generic "在线视频转GIF工具，支持选择视频片段、自定义帧率、尺寸和质量，纯前端处理保护隐私" [ref=e726]
+              - link "证件照生成 图片处理 在线制作证件照，支持一寸、二寸、护照、身份证等预设尺寸，支持矩形和四边形透视裁剪，可导出JPG和PNG格式" [ref=e727] [cursor=pointer]:
+                - /url: /id-photo/
+                - generic [ref=e729]:
+                  - generic [ref=e731]: 证件照生成
+                  - generic [ref=e733]: 图片处理
+                - generic "在线制作证件照，支持一寸、二寸、护照、身份证等预设尺寸，支持矩形和四边形透视裁剪，可导出JPG和PNG格式" [ref=e735]
+              - link "PNG/JPG格式互转 图片处理 在线PNG与JPG格式互转工具，支持质量调节，实时预览对比，纯前端处理保护隐私" [ref=e736] [cursor=pointer]:
+                - /url: /img-convert/
+                - generic [ref=e738]:
+                  - generic [ref=e740]: PNG/JPG格式互转
+                  - generic [ref=e742]: 图片处理
+                - generic "在线PNG与JPG格式互转工具，支持质量调节，实时预览对比，纯前端处理保护隐私" [ref=e744]
+              - link "图片水印 图片处理 在线图片水印添加工具，支持文字水印和图片水印，可自定义位置、透明度、缩放等参数" [ref=e745] [cursor=pointer]:
+                - /url: /img-watermark/
+                - generic [ref=e747]:
+                  - generic [ref=e749]: 图片水印
+                  - generic [ref=e751]: 图片处理
+                - generic "在线图片水印添加工具，支持文字水印和图片水印，可自定义位置、透明度、缩放等参数" [ref=e753]
+          - generic [ref=e754]:
+            - generic [ref=e755] [cursor=pointer]: 数据图表
+            - generic [ref=e756]:
+              - link "柱状图 数据图表 在线制作柱状图，像做表格一样制作可视化图表，支持导出静态或动态图表" [ref=e757] [cursor=pointer]:
+                - /url: /bar/
+                - generic [ref=e759]:
+                  - generic [ref=e761]: 柱状图
+                  - generic [ref=e763]: 数据图表
+                - generic "在线制作柱状图，像做表格一样制作可视化图表，支持导出静态或动态图表" [ref=e765]
+              - link "折线图 数据图表 在线制作折线图，像做表格一样制作可视化图表，支持导出静态或动态图表" [ref=e766] [cursor=pointer]:
+                - /url: /line/
+                - generic [ref=e768]:
+                  - generic [ref=e770]: 折线图
+                  - generic [ref=e772]: 数据图表
+                - generic "在线制作折线图，像做表格一样制作可视化图表，支持导出静态或动态图表" [ref=e774]
+              - link "饼图 数据图表 在线制作饼图，像做表格一样制作可视化图表，支持导出静态或动态图表" [ref=e775] [cursor=pointer]:
+                - /url: /pie/
+                - generic [ref=e777]:
+                  - generic [ref=e779]: 饼图
+                  - generic [ref=e781]: 数据图表
+                - generic "在线制作饼图，像做表格一样制作可视化图表，支持导出静态或动态图表" [ref=e783]
+              - link "散点图 数据图表 在线制作散点图，像做表格一样制作可视化图表，支持导出静态或动态图表" [ref=e784] [cursor=pointer]:
+                - /url: /scatter/
+                - generic [ref=e786]:
+                  - generic [ref=e788]: 散点图
+                  - generic [ref=e790]: 数据图表
+                - generic "在线制作散点图，像做表格一样制作可视化图表，支持导出静态或动态图表" [ref=e792]
+          - generic [ref=e793]:
+            - generic [ref=e794] [cursor=pointer]: 趣味互动
+            - generic [ref=e795]:
+              - link "贪吃蛇 趣味互动 经典贪吃蛇游戏，支持键盘控制，挑战你的反应速度" [ref=e796] [cursor=pointer]:
+                - /url: /snake/
+                - generic [ref=e798]:
+                  - generic [ref=e800]: 贪吃蛇
+                  - generic [ref=e802]: 趣味互动
+                - generic "经典贪吃蛇游戏，支持键盘控制，挑战你的反应速度" [ref=e804]
+              - link "记忆力翻牌 趣味互动 翻牌配对游戏，考验记忆力，找到相同的卡片" [ref=e805] [cursor=pointer]:
+                - /url: /memory/
+                - generic [ref=e807]:
+                  - generic [ref=e809]: 记忆力翻牌
+                  - generic [ref=e811]: 趣味互动
+                - generic "翻牌配对游戏，考验记忆力，找到相同的卡片" [ref=e813]
+              - link "俄罗斯方块 趣味互动 经典俄罗斯方块游戏，考验空间思维和反应速度" [ref=e814] [cursor=pointer]:
+                - /url: /tetris/
+                - generic [ref=e816]:
+                  - generic [ref=e818]: 俄罗斯方块
+                  - generic [ref=e820]: 趣味互动
+                - generic "经典俄罗斯方块游戏，考验空间思维和反应速度" [ref=e822]
+              - link "打地鼠 趣味互动 经典打地鼠游戏，考验反应速度和手眼协调" [ref=e823] [cursor=pointer]:
+                - /url: /whackamole/
+                - generic [ref=e825]:
+                  - generic [ref=e827]: 打地鼠
+                  - generic [ref=e829]: 趣味互动
+                - generic "经典打地鼠游戏，考验反应速度和手眼协调" [ref=e831]
+              - link "2048 趣味互动 经典2048益智游戏，考验策略思维和数字逻辑" [ref=e832] [cursor=pointer]:
+                - /url: /game2048/
+                - generic [ref=e834]:
+                  - generic [ref=e836]: "2048"
+                  - generic [ref=e838]: 趣味互动
+                - generic "经典2048益智游戏，考验策略思维和数字逻辑" [ref=e840]
+              - link "扫雷 趣味互动 经典扫雷游戏，考验逻辑推理能力" [ref=e841] [cursor=pointer]:
+                - /url: /minesweeper/
+                - generic [ref=e843]:
+                  - generic [ref=e845]: 扫雷
+                  - generic [ref=e847]: 趣味互动
+                - generic [ref=e849]: 经典扫雷游戏，考验逻辑推理能力
+              - link "数字华容道 趣味互动 经典数字华容道游戏，考验逻辑思维和空间规划能力" [ref=e850] [cursor=pointer]:
+                - /url: /puzzle/
+                - generic [ref=e852]:
+                  - generic [ref=e854]: 数字华容道
+                  - generic [ref=e856]: 趣味互动
+                - generic "经典数字华容道游戏，考验逻辑思维和空间规划能力" [ref=e858]
+              - link "数独游戏 趣味互动 经典数独游戏，考验逻辑推理和数字分析能力" [ref=e859] [cursor=pointer]:
+                - /url: /sudoku/
+                - generic [ref=e861]:
+                  - generic [ref=e863]: 数独游戏
+                  - generic [ref=e865]: 趣味互动
+                - generic "经典数独游戏，考验逻辑推理和数字分析能力" [ref=e867]
+              - link "AI五子棋 趣味互动 智能五子棋游戏，与AI对战，考验策略思维" [ref=e868] [cursor=pointer]:
+                - /url: /ai-gomoku/
+                - generic [ref=e870]:
+                  - generic [ref=e872]: AI五子棋
+                  - generic [ref=e874]: 趣味互动
+                - generic "智能五子棋游戏，与AI对战，考验策略思维" [ref=e876]
+              - link "双人对战五子棋 趣味互动 在线双人对战五子棋，支持房间匹配、实时对战、悔棋和聊天功能" [ref=e877] [cursor=pointer]:
+                - /url: /gomoku-online/
+                - generic [ref=e879]:
+                  - generic [ref=e881]: 双人对战五子棋
+                  - generic [ref=e883]: 趣味互动
+                - generic "在线双人对战五子棋，支持房间匹配、实时对战、悔棋和聊天功能" [ref=e885]
+              - link "猜数字游戏 趣味互动 经典猜数字游戏，在1-100范围内猜出系统随机数字" [ref=e886] [cursor=pointer]:
+                - /url: /guess-number/
+                - generic [ref=e888]:
+                  - generic [ref=e890]: 猜数字游戏
+                  - generic [ref=e892]: 趣味互动
+                - generic "经典猜数字游戏，在1-100范围内猜出系统随机数字" [ref=e894]
+              - link "数字序号记忆 趣味互动 测试记忆力的趣味游戏，先显示数字位置，隐藏后按顺序点击，挑战你的瞬时记忆" [ref=e895] [cursor=pointer]:
+                - /url: /number-memory/
+                - generic [ref=e897]:
+                  - generic [ref=e899]: 数字序号记忆
+                  - generic [ref=e901]: 趣味互动
+                - generic "测试记忆力的趣味游戏，先显示数字位置，隐藏后按顺序点击，挑战你的瞬时记忆" [ref=e903]
+              - link "假如你有100亿 趣味互动 假如你有100亿人民币，看看你会买什么？房产、汽车、产业任你选择" [ref=e904] [cursor=pointer]:
+                - /url: /hundred-billion/
+                - generic [ref=e906]:
+                  - generic [ref=e908]: 假如你有100亿
+                  - generic [ref=e910]: 趣味互动
+                - generic "假如你有100亿人民币，看看你会买什么？房产、汽车、产业任你选择" [ref=e912]
+              - link "临时聊天室 趣味互动 在线临时聊天室，无需注册，不存储数据，关闭即消失" [ref=e913] [cursor=pointer]:
+                - /url: /temp-chat/
+                - generic [ref=e915]:
+                  - generic [ref=e917]: 临时聊天室
+                  - generic [ref=e919]: 趣味互动
+                - generic "在线临时聊天室，无需注册，不存储数据，关闭即消失" [ref=e921]
+              - link "翻页时钟 趣味互动 经典翻页时钟，3D翻转动画效果，实时显示时间和日期" [ref=e922] [cursor=pointer]:
+                - /url: /flip-clock/
+                - generic [ref=e924]:
+                  - generic [ref=e926]: 翻页时钟
+                  - generic [ref=e928]: 趣味互动
+                - generic "经典翻页时钟，3D翻转动画效果，实时显示时间和日期" [ref=e930]
+          - generic [ref=e932]:
+            - generic [ref=e933] [cursor=pointer]: 选择随机
+            - generic [ref=e934]:
+              - link "生成随机数 选择随机 可定制范围内进行随机数字，可用于抽奖、点名等用途" [ref=e935] [cursor=pointer]:
+                - /url: /random/
+                - generic [ref=e937]:
+                  - generic [ref=e939]: 生成随机数
+                  - generic [ref=e941]: 选择随机
+                - generic "可定制范围内进行随机数字，可用于抽奖、点名等用途" [ref=e943]
+              - link "帮我决定 选择随机 选择困难，难以决定，今天吃什么，现在做什么，自定义选项都给你安排的明明白白" [ref=e944] [cursor=pointer]:
+                - /url: /decision/
+                - generic [ref=e946]:
+                  - generic [ref=e948]: 帮我决定
+                  - generic [ref=e950]: 选择随机
+                - generic "选择困难，难以决定，今天吃什么，现在做什么，自定义选项都给你安排的明明白白" [ref=e952]
+              - link "抛硬币 选择随机 在线抛硬币，选择困难那么交给硬币来帮你选择吧" [ref=e953] [cursor=pointer]:
+                - /url: /coin/
+                - generic [ref=e955]:
+                  - generic [ref=e957]: 抛硬币
+                  - generic [ref=e959]: 选择随机
+                - generic "在线抛硬币，选择困难那么交给硬币来帮你选择吧" [ref=e961]
+              - link "投骰子 选择随机 在线投骰子，可自定义骰子数量，简单好用的骰子工具" [ref=e962] [cursor=pointer]:
+                - /url: /dice/
+                - generic [ref=e964]:
+                  - generic [ref=e966]: 投骰子
+                  - generic [ref=e968]: 选择随机
+                - generic "在线投骰子，可自定义骰子数量，简单好用的骰子工具" [ref=e970]
+              - link "随机中文人名生成 选择随机 随机生成中文人名，支持单姓/复姓、性别筛选、批量生成，适合测试数据、小说创作" [ref=e971] [cursor=pointer]:
+                - /url: /chinese-name/
+                - generic [ref=e973]:
+                  - generic [ref=e975]: 随机中文人名生成
+                  - generic [ref=e977]: 选择随机
+                - generic "随机生成中文人名，支持单姓/复姓、性别筛选、批量生成，适合测试数据、小说创作" [ref=e979]
+          - generic [ref=e981]:
+            - generic [ref=e982] [cursor=pointer]: 其他工具
+            - generic [ref=e983]:
+              - link "数字转金额大写 其他工具 在线数字一键转换成人民币大写，中文大写转换数字" [ref=e984] [cursor=pointer]:
+                - /url: /numbertochinese/
+                - generic [ref=e986]:
+                  - generic [ref=e988]: 数字转金额大写
+                  - generic [ref=e990]: 其他工具
+                - generic "在线数字一键转换成人民币大写，中文大写转换数字" [ref=e992]
+              - link "手持弹幕 其他工具 手持滚动弹幕" [ref=e993] [cursor=pointer]:
+                - /url: /barrage/
+                - generic [ref=e995]:
+                  - generic [ref=e997]: 手持弹幕
+                  - generic [ref=e999]: 其他工具
+                - generic [ref=e1001]: 手持滚动弹幕
+              - link "色板 其他工具 包含纯色、渐变与阶梯色和常用色彩组合" [ref=e1002] [cursor=pointer]:
+                - /url: /palettes/
+                - generic [ref=e1004]:
+                  - generic [ref=e1006]: 色板
+                  - generic [ref=e1008]: 其他工具
+                - generic [ref=e1010]: 包含纯色、渐变与阶梯色和常用色彩组合
+              - link "Color选择器 其他工具 颜色选择器、在各种颜色空间如十六进制、rgb、hsl、css等等之间转换颜色" [ref=e1011] [cursor=pointer]:
+                - /url: /colorpicker/
+                - generic [ref=e1013]:
+                  - generic [ref=e1015]: Color选择器
+                  - generic [ref=e1017]: 其他工具
+                - generic "颜色选择器、在各种颜色空间如十六进制、rgb、hsl、css等等之间转换颜色" [ref=e1019]
+              - link "公司对比 其他工具 公司待遇对比工具，支持双休情况、福利待遇、工资等多维度对比，历史记录存储" [ref=e1020] [cursor=pointer]:
+                - /url: /company-compare/
+                - generic [ref=e1022]:
+                  - generic [ref=e1024]: 公司对比
+                  - generic [ref=e1026]: 其他工具
+                - generic "公司待遇对比工具，支持双休情况、福利待遇、工资等多维度对比，历史记录存储" [ref=e1028]
+              - link "最低工资标准查询 其他工具 全国各省市最低工资标准查询，提供最新的月最低工资和小时最低工资标准数据" [ref=e1029] [cursor=pointer]:
+                - /url: /minimum-wage/
+                - generic [ref=e1031]:
+                  - generic [ref=e1033]: 最低工资标准查询
+                  - generic [ref=e1035]: 其他工具
+                - generic "全国各省市最低工资标准查询，提供最新的月最低工资和小时最低工资标准数据" [ref=e1037]
+              - link "号码一览 其他工具 各种国家机构、公共服务、紧急救援等常用电话号码查询服务" [ref=e1038] [cursor=pointer]:
+                - /url: /phone-directory/
+                - generic [ref=e1040]:
+                  - generic [ref=e1042]: 号码一览
+                  - generic [ref=e1044]: 其他工具
+                - generic "各种国家机构、公共服务、紧急救援等常用电话号码查询服务" [ref=e1046]
+              - link "VIP视频解析 其他工具 免费解析VIP视频，支持腾讯/爱奇艺/优酷/芒果TV等平台" [ref=e1047] [cursor=pointer]:
+                - /url: /video-parser/
+                - generic [ref=e1049]:
+                  - generic [ref=e1051]: VIP视频解析
+                  - generic [ref=e1053]: 其他工具
+                - generic "免费解析VIP视频，支持腾讯/爱奇艺/优酷/芒果TV等平台" [ref=e1055]
+          - generic [ref=e1056]:
+            - generic [ref=e1057] [cursor=pointer]: AI工具
+            - generic [ref=e1058]:
+              - link "在线文生图 AI工具 提供在线免费无限次数的AI文生图服务" [ref=e1059] [cursor=pointer]:
+                - /url: /ai-text-to-image/
+                - generic [ref=e1061]:
+                  - generic [ref=e1063]: 在线文生图
+                  - generic [ref=e1065]: AI工具
+                - generic [ref=e1067]: 提供在线免费无限次数的AI文生图服务
+              - link "AI工具导航 AI工具 精选第三方AI工具分类导航，一键直达" [ref=e1068] [cursor=pointer]:
+                - /url: /aihub/
+                - generic [ref=e1070]:
+                  - generic [ref=e1072]: AI工具导航
+                  - generic [ref=e1074]: AI工具
+                - generic [ref=e1076]: 精选第三方AI工具分类导航，一键直达
+              - link "AI起变量名 AI工具 根据描述自动生成符合命名规范的变量名，支持多种命名风格与语言" [ref=e1077] [cursor=pointer]:
+                - /url: /ai-variable-name/
+                - generic [ref=e1079]:
+                  - generic [ref=e1081]: AI起变量名
+                  - generic [ref=e1083]: AI工具
+                - generic "根据描述自动生成符合命名规范的变量名，支持多种命名风格与语言" [ref=e1085]
+              - link "AI起名 AI工具 输入父母姓氏、选择名长与性别，生成多个姓名并附命名理由" [ref=e1086] [cursor=pointer]:
+                - /url: /ai-name/
+                - generic [ref=e1088]:
+                  - generic [ref=e1090]: AI起名
+                  - generic [ref=e1092]: AI工具
+                - generic "输入父母姓氏、选择名长与性别，生成多个姓名并附命名理由" [ref=e1094]
+              - link "AI翻译 AI工具 支持多语言互译，源语言自动检测" [ref=e1095] [cursor=pointer]:
+                - /url: /ai-translate/
+                - generic [ref=e1097]:
+                  - generic [ref=e1099]: AI翻译
+                  - generic [ref=e1101]: AI工具
+                - generic [ref=e1103]: 支持多语言互译，源语言自动检测
+              - link "AI小学作文 AI工具 按年级/题材/关键词生成贴合小学生水平的作文" [ref=e1104] [cursor=pointer]:
+                - /url: /ai-elementary-essay/
+                - generic [ref=e1106]:
+                  - generic [ref=e1108]: AI小学作文
+                  - generic [ref=e1110]: AI工具
+                - generic "按年级/题材/关键词生成贴合小学生水平的作文" [ref=e1112]
+              - link "AI每日励志鸡汤文 AI工具 AI智能生成每日励志鸡汤文，支持多种风格选择，定时刷新，为你的每一天注入正能量" [ref=e1113] [cursor=pointer]:
+                - /url: /ai-daily-motivation/
+                - generic [ref=e1115]:
+                  - generic [ref=e1117]: AI每日励志鸡汤文
+                  - generic [ref=e1119]: AI工具
+                - generic "AI智能生成每日励志鸡汤文，支持多种风格选择，定时刷新，为你的每一天注入正能量" [ref=e1121]
+              - link "AI对话 AI工具 智能AI对话助手，支持多轮对话，提供专业、准确的回答" [ref=e1122] [cursor=pointer]:
+                - /url: /ai-chat/
+                - generic [ref=e1124]:
+                  - generic [ref=e1126]: AI对话
+                  - generic [ref=e1128]: AI工具
+                - generic "智能AI对话助手，支持多轮对话，提供专业、准确的回答" [ref=e1130]
+              - link "AI面试 AI工具 AI智能面试助手，模拟真实面试场景，支持多种岗位类型，提升面试表现" [ref=e1131] [cursor=pointer]:
+                - /url: /ai-interview/
+                - generic [ref=e1133]:
+                  - generic [ref=e1135]: AI面试
+                  - generic [ref=e1137]: AI工具
+                - generic "AI智能面试助手，模拟真实面试场景，支持多种岗位类型，提升面试表现" [ref=e1139]
+              - link "AI提示词仓库 AI工具 精选顶级AI提示词库，涵盖写作、编程、创意、分析等多个领域，助力提升AI对话效果" [ref=e1140] [cursor=pointer]:
+                - /url: /ai-prompt/
+                - generic [ref=e1142]:
+                  - generic [ref=e1144]: AI提示词仓库
+                  - generic [ref=e1146]: AI工具
+                - generic "精选顶级AI提示词库，涵盖写作、编程、创意、分析等多个领域，助力提升AI对话效果" [ref=e1148]
+          - generic [ref=e1150]:
+            - generic [ref=e1151] [cursor=pointer]: 好物网站
+            - link "好物网站导航 好物网站 精选优质网站分类导航，一键直达常用服务与网站" [ref=e1153] [cursor=pointer]:
+              - /url: /good-sites/
+              - generic [ref=e1155]:
+                - generic [ref=e1157]: 好物网站导航
+                - generic [ref=e1159]: 好物网站
+              - generic "精选优质网站分类导航，一键直达常用服务与网站" [ref=e1161]
+          - generic [ref=e1163]:
+            - generic [ref=e1164] [cursor=pointer]: 内容管理
+            - generic [ref=e1165]:
+              - link "在线密码管理 内容管理 安全的密码存储工具，支持分组管理和备注，AES加密保护" [ref=e1166] [cursor=pointer]:
+                - /url: /password-manager/
+                - generic [ref=e1168]:
+                  - generic [ref=e1170]: 在线密码管理
+                  - generic [ref=e1172]: 内容管理
+                - generic "安全的密码存储工具，支持分组管理和备注，AES加密保护" [ref=e1174]
+              - link "待办事项 内容管理 在线待办事项管理，支持优先级设置、截止日期提醒，高效管理任务" [ref=e1175] [cursor=pointer]:
+                - /url: /userinfo/todos/
+                - generic [ref=e1177]:
+                  - generic [ref=e1179]: 待办事项
+                  - generic [ref=e1181]: 内容管理
+                - generic "在线待办事项管理，支持优先级设置、截止日期提醒，高效管理任务" [ref=e1183]
+              - link "简历管理 内容管理 在线简历制作与管理，支持多种模板，安全存储个人简历信息" [ref=e1184] [cursor=pointer]:
+                - /url: /resume/
+                - generic [ref=e1186]:
+                  - generic [ref=e1188]: 简历管理
+                  - generic [ref=e1190]: 内容管理
+                - generic "在线简历制作与管理，支持多种模板，安全存储个人简历信息" [ref=e1192]
+              - link "笔记备忘录 内容管理 在线笔记记录工具，支持创建、编辑、删除笔记，数据安全存储" [ref=e1193] [cursor=pointer]:
+                - /url: /notes/
+                - generic [ref=e1195]:
+                  - generic [ref=e1197]: 笔记备忘录
+                  - generic [ref=e1199]: 内容管理
+                - generic "在线笔记记录工具，支持创建、编辑、删除笔记，数据安全存储" [ref=e1201]
+              - link "QA问答页面制作 内容管理 创建个性化的QA问答页面，支持自定义头部和尾部内容，可生成公开链接供他人访问" [ref=e1202] [cursor=pointer]:
+                - /url: /qa/
+                - generic [ref=e1204]:
+                  - generic [ref=e1206]: QA问答页面制作
+                  - generic [ref=e1208]: 内容管理
+                - generic "创建个性化的QA问答页面，支持自定义头部和尾部内容，可生成公开链接供他人访问" [ref=e1210]
+              - link "体重记录 内容管理 家庭成员体重追踪记录，支持趋势图表展示、BMI自动计算、数据统计分析" [ref=e1211] [cursor=pointer]:
+                - /url: /weight-tracker/
+                - generic [ref=e1213]:
+                  - generic [ref=e1215]: 体重记录
+                  - generic [ref=e1217]: 内容管理
+                - generic "家庭成员体重追踪记录，支持趋势图表展示、BMI自动计算、数据统计分析" [ref=e1219]
+              - link "收藏夹/稍后读 内容管理 在线链接收藏与管理工具，支持标签分类、阅读状态标记、搜索筛选" [ref=e1220] [cursor=pointer]:
+                - /url: /bookmarks/
+                - generic [ref=e1222]:
+                  - generic [ref=e1224]: 收藏夹/稍后读
+                  - generic [ref=e1226]: 内容管理
+                - generic "在线链接收藏与管理工具，支持标签分类、阅读状态标记、搜索筛选" [ref=e1228]
+      - generic [ref=e1232]:
+        - generic [ref=e1233]: 一个轻量的在线工具箱 © 2019 - 2025 BY Bucaicai
+        - generic [ref=e1234]:
+          - link "湘ICP备16007032号-1" [ref=e1235] [cursor=pointer]:
+            - /url: https://beian.miit.gov.cn/
+          - generic [ref=e1236]: "|"
+          - link "湘公安网备43030202001052号" [ref=e1237] [cursor=pointer]:
+            - /url: https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=43030202001052&token=2be051c1-22dd-44ec-9f4b-d41155f2d855
+          - generic [ref=e1238]: "|"
+          - link "Tools-Web" [ref=e1239] [cursor=pointer]:
+            - /url: https://github.com/2424004764/tools-web
+          - generic [ref=e1240]: "|"
+          - link "反馈建议" [ref=e1241] [cursor=pointer]:
+            - /url: https://github.com/2424004764/tools-web/issues/new
+  - img

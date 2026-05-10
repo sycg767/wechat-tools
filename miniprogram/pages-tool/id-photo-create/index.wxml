@@ -1,0 +1,101 @@
+<view class="container">
+  <view class="page-header">
+    <view class="page-title">证件照生成</view>
+    <view class="page-desc">上传照片后本地裁剪并导出常用证件照尺寸</view>
+  </view>
+
+  <file-picker
+    file="{{selectedFile}}"
+    accept="image"
+    title="选择人像照片"
+    description="支持 JPG、PNG、WebP 格式"
+    bind:selected="handleFileSelected"
+  />
+
+  <view class="card form-card {{selectedFile ? 'form-active' : ''}}">
+    <view class="config-title">选择证件照规格</view>
+    <view class="size-list">
+      <view
+        wx:for="{{sizeOptions}}"
+        wx:key="value"
+        class="size-option {{photoSize === item.value ? 'size-option-active' : ''}}"
+        bindtap="handleSizeChange"
+        data-value="{{item.value}}"
+      >
+        <view class="size-label">{{item.label}}</view>
+        <view class="size-meta">{{item.width}} × {{item.height}}</view>
+      </view>
+    </view>
+
+    <view class="config-title">导出格式</view>
+    <view class="format-list">
+      <view
+        wx:for="{{formatOptions}}"
+        wx:key="value"
+        class="format-option {{outputFormat === item.value ? 'format-option-active' : ''}}"
+        bindtap="handleFormatChange"
+        data-value="{{item.value}}"
+      >{{item.label}}</view>
+    </view>
+
+    <view class="notice notice-info info-box">
+      <view class="notice-head">
+        <view class="notice-icon">i</view>
+        <view class="notice-title">使用说明</view>
+      </view>
+      <view class="info-text">选择规格后会自动按证件照比例铺满预览框；通常只需上下拖动人物位置，缩放仅在头像太大或太小时微调。</view>
+    </view>
+  </view>
+
+  <view class="card editor-card {{selectedFile && imageReady ? 'form-active' : ''}}" wx:if="{{selectedFile}}">
+    <view class="config-title">调整证件照位置</view>
+    <view class="editor-tip">先已自动铺满，拖动照片调整人物位置；只在需要时再微调缩放。</view>
+    <view class="editor-stage">
+      <view
+        class="crop-frame"
+        id="crop-frame"
+        bindtouchstart="handleCropTouchStart"
+        bindtouchmove="handleCropTouchMove"
+        bindtouchend="handleCropTouchEnd"
+        bindtouchcancel="handleCropTouchEnd"
+        style="height: {{cropFrameHeightRpx}}rpx;"
+      >
+        <image
+          wx:if="{{imagePath}}"
+          class="source-image"
+          src="{{imagePath}}"
+          mode="scaleToFill"
+          style="width: {{displayWidth}}px; height: {{displayHeight}}px; transform: translate3d({{imageOffsetX}}px, {{imageOffsetY}}px, 0);"
+        ></image>
+        <view class="crop-guide"></view>
+      </view>
+    </view>
+
+    <view class="slider-box">
+      <view class="slider-label">微调缩放</view>
+      <view class="slider-tip">{{scaleTip}}</view>
+      <slider min="1" max="2.2" step="0.01" value="{{imageScale}}" bindchanging="handleScaleChanging" bindchange="handleScaleChange" show-value />
+    </view>
+
+    <button
+      class="btn btn-primary {{!selectedFile || !imageReady ? 'btn-disabled' : ''}}"
+      bindtap="handleGenerate"
+      loading="{{generating}}"
+      hover-class="btn-hover"
+    >
+      生成证件照
+    </button>
+  </view>
+
+  <view class="card result-card" wx:if="{{resultTempFilePath}}">
+    <view class="config-title">生成结果</view>
+    <image class="result-image" src="{{resultTempFilePath}}" mode="widthFix"></image>
+    <view class="result-meta">{{currentSizeLabel}} · {{outputFormatLabel}}</view>
+    <view class="result-actions">
+      <button class="btn btn-secondary" bindtap="handlePreview" hover-class="btn-hover">预览</button>
+      <button class="btn btn-primary" bindtap="handleSave" hover-class="btn-hover">保存到相册</button>
+    </view>
+  </view>
+
+  <canvas type="2d" id="export-canvas" class="export-canvas"></canvas>
+</view>
