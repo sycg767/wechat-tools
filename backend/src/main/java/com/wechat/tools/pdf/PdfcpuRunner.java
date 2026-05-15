@@ -55,15 +55,28 @@ public class PdfcpuRunner {
             candidates.add(configuredBinaryPath.trim());
         }
 
-        boolean isWindows = System.getProperty("os.name", "").toLowerCase().contains("win");
+        String osName = System.getProperty("os.name", "").toLowerCase();
+        boolean isWindows = osName.contains("win");
+        boolean isMac = osName.contains("mac");
         if (isWindows) {
             candidates.add("pdfcpu.exe");
             candidates.add("pdfcpu");
+            candidates.add("backend/tools/pdfcpu/windows/pdfcpu.exe");
+            candidates.add("tools/pdfcpu/windows/pdfcpu.exe");
             candidates.add("backend/tools/pdfcpu/pdfcpu.exe");
             candidates.add("tools/pdfcpu/pdfcpu.exe");
             candidates.add("pdfcpu/pdfcpu.exe");
+        } else if (isMac) {
+            candidates.add("pdfcpu");
+            candidates.add("backend/tools/pdfcpu/macos/pdfcpu");
+            candidates.add("tools/pdfcpu/macos/pdfcpu");
+            candidates.add("backend/tools/pdfcpu/pdfcpu");
+            candidates.add("tools/pdfcpu/pdfcpu");
+            candidates.add("pdfcpu/pdfcpu");
         } else {
             candidates.add("pdfcpu");
+            candidates.add("backend/tools/pdfcpu/linux/pdfcpu");
+            candidates.add("tools/pdfcpu/linux/pdfcpu");
             candidates.add("backend/tools/pdfcpu/pdfcpu");
             candidates.add("tools/pdfcpu/pdfcpu");
             candidates.add("pdfcpu/pdfcpu");
@@ -88,7 +101,7 @@ public class PdfcpuRunner {
             }
         }
 
-        throw new IOException("未找到 pdfcpu 可执行文件。请将 pdfcpu 放到 backend/tools/pdfcpu/ 目录，或配置 pdfcpu.binary-path");
+        throw new IOException("未找到 pdfcpu 可执行文件。请将 pdfcpu 放到 backend/tools/pdfcpu/{windows|linux|macos}/ 目录，或配置 pdfcpu.binary-path");
     }
 
     private boolean isCallable(String binary) {
