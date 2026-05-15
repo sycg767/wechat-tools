@@ -11,8 +11,8 @@ spring:
       mode: never
   jpa:
     hibernate:
-      # validate：仅校验 entity 与表结构是否一致，不自动 DDL（防止改实体毁线上表）
-      ddl-auto: validate
+      # update：自动同步 entity 变更到数据库（本项目为个人单实例部署，风险可控）
+      ddl-auto: update
     show-sql: false
     properties:
       hibernate:
