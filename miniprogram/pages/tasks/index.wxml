@@ -20,7 +20,7 @@
         hover-class="card-active"
       >
         <view class="task-header">
-          <view class="task-type-tag">{{item.toolType || '工具'}}</view>
+          <view class="task-type-tag">{{item.toolTypeText || '工具'}}</view>
           <view class="task-status-tag {{item.status === 'SUCCESS' ? 'status-success' : (item.status === 'FAIL' ? 'status-fail' : 'status-processing')}}">
             {{item.status === 'SUCCESS' ? '已完成' : (item.status === 'FAIL' ? '失败' : '处理中')}}
           </view>

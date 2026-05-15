@@ -37,7 +37,7 @@ public class RateLimitInterceptor implements HandlerInterceptor {
         }
 
         int limit = isVaultReveal ? VAULT_REVEAL_LIMIT_PER_MINUTE : LIMIT_PER_MINUTE;
-        String key = request.getRemoteAddr() + ":" + uri;
+        String key = isVaultReveal ? request.getRemoteAddr() + ":vault-reveal" : request.getRemoteAddr() + ":" + uri;
         SimpleRateLimiter limiter = rateLimiterCache
                 .computeIfAbsent(key, k -> new SimpleRateLimiter(limit, WINDOW_MILLIS));
 
@@ -50,6 +50,7 @@ public class RateLimitInterceptor implements HandlerInterceptor {
         }
 
         response.setStatus(429);
+        response.setHeader("Retry-After", String.valueOf(WINDOW_MILLIS / 1000));
         response.setContentType("application/json;charset=UTF-8");
         response.getWriter().write("{\"code\":429,\"message\":\"请求过于频繁，请稍后再试\",\"data\":null}");
         return false;

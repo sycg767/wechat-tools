@@ -18,6 +18,8 @@ public class VaultCryptoServiceImpl implements VaultCryptoService {
 
     private static final int GCM_TAG_BITS = 128;
     private static final int IV_LENGTH = 12;
+    private static final int MIN_KEY_LENGTH = 32;
+    private static final String DEFAULT_CRYPTO_KEY = "change-this-in-env";
 
     private final VaultProperties vaultProperties;
     private final SecureRandom secureRandom = new SecureRandom();
@@ -33,6 +35,12 @@ public class VaultCryptoServiceImpl implements VaultCryptoService {
         String cryptoKey = vaultProperties.getCryptoKey();
         if (cryptoKey == null || cryptoKey.isBlank()) {
             throw new IllegalStateException("未配置 vault.crypto-key");
+        }
+        if (DEFAULT_CRYPTO_KEY.equals(cryptoKey.trim())) {
+            throw new IllegalStateException("vault.crypto-key 不能使用默认占位密钥");
+        }
+        if (cryptoKey.trim().length() < MIN_KEY_LENGTH) {
+            throw new IllegalStateException("vault.crypto-key 长度不能少于 32 个字符");
         }
         try {
             byte[] keyBytes = MessageDigest.getInstance("SHA-256")

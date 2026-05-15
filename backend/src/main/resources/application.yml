@@ -102,7 +102,7 @@ free-astro:
   timeout-millis: ${FREE_ASTRO_TIMEOUT_MILLIS:5000}
 
 vault:
-  crypto-key: ${VAULT_CRYPTO_KEY:change-this-in-env}
+  crypto-key: ${VAULT_CRYPTO_KEY:dev-local-vault-key-only-for-development-32}
   demo-user-id: ${VAULT_DEMO_USER_ID:}
   demo-openid: ${VAULT_DEMO_OPENID:vault-demo-user}
 

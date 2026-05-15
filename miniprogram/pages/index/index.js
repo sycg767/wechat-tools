@@ -44,7 +44,7 @@ const TOOL_DEFS = [
     desc: '上传 PDF 并提取表格数据到 Excel',
     path: '/pages-doc/pdf-excel/index',
     iconClass: 'icon-pdf-excel',
-    tag: '开发中',
+    tag: '实用',
     disabled: false,
     category: '文档处理',
     order: 30,
@@ -304,7 +304,7 @@ const TOOL_DEFS = [
   {
     id: 'dev-toolkit',
     title: '开发者工具箱',
-    desc: 'JSON / Base64 / 时间戳 / Hash / UUID / 进制',
+    desc: 'JSON / Base64 / URL / 时间戳 / Hash / UUID / 颜色',
     path: '/pages-tool/dev-toolkit/index',
     iconClass: 'icon-random',
     tag: '新增',

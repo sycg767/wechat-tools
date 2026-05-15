@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZoneId;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -60,6 +61,11 @@ public class TaskServiceImpl implements TaskService {
             Map<String, Object> resultData = new HashMap<>();
             if (status.getResultUrl() != null) resultData.put("resultUrl", status.getResultUrl());
             if (status.getResultFileName() != null) resultData.put("resultFileName", status.getResultFileName());
+            if (status.getStrategyTrace() != null) resultData.put("strategyTrace", status.getStrategyTrace());
+            if (status.getSelectedStrategy() != null) resultData.put("selectedStrategy", status.getSelectedStrategy());
+            if (status.getQualityGate() != null) resultData.put("qualityGate", status.getQualityGate());
+            if (status.getFallbackReason() != null) resultData.put("fallbackReason", status.getFallbackReason());
+            if (status.getWarnings() != null) resultData.put("warnings", status.getWarnings());
             if (status.getExtraData() != null) resultData.put("extraData", status.getExtraData());
 
             entity.setResultData(resultData);
@@ -88,9 +94,24 @@ public class TaskServiceImpl implements TaskService {
         if (resultData != null) {
             dto.setResultUrl((String) resultData.get("resultUrl"));
             dto.setResultFileName((String) resultData.get("resultFileName"));
+            dto.setStrategyTrace(asStringList(resultData.get("strategyTrace")));
+            dto.setSelectedStrategy((String) resultData.get("selectedStrategy"));
+            dto.setQualityGate(asObjectMap(resultData.get("qualityGate")));
+            dto.setFallbackReason((String) resultData.get("fallbackReason"));
+            dto.setWarnings(asStringList(resultData.get("warnings")));
             dto.setExtraData((String) resultData.get("extraData"));
         }
 
         return dto;
+    }
+
+    @SuppressWarnings("unchecked")
+    private List<String> asStringList(Object value) {
+        return value instanceof List<?> ? (List<String>) value : null;
+    }
+
+    @SuppressWarnings("unchecked")
+    private Map<String, Object> asObjectMap(Object value) {
+        return value instanceof Map<?, ?> ? (Map<String, Object>) value : null;
     }
 }

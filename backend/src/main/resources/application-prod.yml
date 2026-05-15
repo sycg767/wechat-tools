@@ -18,6 +18,9 @@ spring:
       hibernate:
         format_sql: false
 
+vault:
+  crypto-key: ${VAULT_CRYPTO_KEY:}
+
 # 生产关闭 health 详情，避免连接串等敏感信息泄漏
 management:
   endpoint:

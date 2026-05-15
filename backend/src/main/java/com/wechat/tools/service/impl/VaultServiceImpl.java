@@ -6,10 +6,9 @@ import com.wechat.tools.dto.vault.VaultListResponse;
 import com.wechat.tools.dto.vault.VaultRevealResponse;
 import com.wechat.tools.dto.vault.VaultUpdateRequest;
 import com.wechat.tools.entity.VaultItemEntity;
-import com.wechat.tools.entity.VaultRevealAuditEntity;
 import com.wechat.tools.repository.VaultItemRepository;
-import com.wechat.tools.repository.VaultRevealAuditRepository;
 import com.wechat.tools.service.VaultCryptoService;
+import com.wechat.tools.service.VaultRevealAuditService;
 import com.wechat.tools.service.VaultService;
 import com.wechat.tools.service.VaultUserContextService;
 import org.springframework.data.domain.Page;
@@ -26,19 +25,19 @@ import java.util.UUID;
 public class VaultServiceImpl implements VaultService {
 
     private final VaultItemRepository vaultItemRepository;
-    private final VaultRevealAuditRepository vaultRevealAuditRepository;
     private final VaultCryptoService vaultCryptoService;
+    private final VaultRevealAuditService vaultRevealAuditService;
     private final VaultUserContextService vaultUserContextService;
 
     public VaultServiceImpl(
             VaultItemRepository vaultItemRepository,
-            VaultRevealAuditRepository vaultRevealAuditRepository,
             VaultCryptoService vaultCryptoService,
+            VaultRevealAuditService vaultRevealAuditService,
             VaultUserContextService vaultUserContextService
     ) {
         this.vaultItemRepository = vaultItemRepository;
-        this.vaultRevealAuditRepository = vaultRevealAuditRepository;
         this.vaultCryptoService = vaultCryptoService;
+        this.vaultRevealAuditService = vaultRevealAuditService;
         this.vaultUserContextService = vaultUserContextService;
     }
 
@@ -130,13 +129,7 @@ public class VaultServiceImpl implements VaultService {
     }
 
     private void saveAudit(Long itemId, String clientIp, String userAgent, boolean success) {
-        VaultRevealAuditEntity audit = new VaultRevealAuditEntity();
-        audit.setUserId(currentUserId());
-        audit.setItemId(itemId);
-        audit.setClientIp(trimToNull(clientIp));
-        audit.setUserAgent(trimToNull(userAgent));
-        audit.setSuccess(success);
-        vaultRevealAuditRepository.save(audit);
+        vaultRevealAuditService.recordReveal(itemId, currentUserId(), clientIp, userAgent, success);
     }
 
     private UUID currentUserId() {

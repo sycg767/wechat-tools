@@ -74,9 +74,11 @@ Page({
       'word-pdf': 'Word 转 PDF',
       'pdf-excel': 'PDF 转 Excel',
       'pdf-watermark': 'PDF 水印',
+      'pdf-add-watermark': 'PDF 水印',
       'compress-image': '图片压缩',
       'id-photo-bg': '证件照换底',
-      'csv-excel': 'CSV/Excel 转换',
+      'csv-excel': 'CSV 转 Excel',
+      'excel-csv': 'Excel 转 CSV',
       'rename': '批量重命名',
       'eat-what': '吃什么',
       'random-gen': '随机生成',
@@ -84,7 +86,10 @@ Page({
       'qr-decode': '二维码识别',
       'king-score-ocr': '战绩识别',
       'pdf-page-manage': 'PDF 页面管理',
-      'pdf-images': 'PDF 转图片'
+      'pdf-images': 'PDF 转图片',
+      'md-pdf': 'Markdown 转 PDF',
+      'md-word': 'Markdown 转 Word',
+      'pdf-sign': 'PDF 电子签字'
     }
 
     return {
