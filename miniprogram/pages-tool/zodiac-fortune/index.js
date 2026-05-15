@@ -1,4 +1,4 @@
-const { addHistory, copyText, getHistory, getStore, setStore, todayKey } = require('../../utils/tool-common')
+const { addHistory, copyText, getHistory, getStore, setStore, todayKey } = require('../utils/tool-common')
 const { get } = require('../../utils/request')
 
 const KEY = 'zodiac_fortune'

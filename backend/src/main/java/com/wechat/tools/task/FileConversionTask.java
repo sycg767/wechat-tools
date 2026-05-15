@@ -82,6 +82,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -427,21 +428,16 @@ public class FileConversionTask {
     public void processPdfSplit(String taskId, String sourceFileId, String originalFileName, String range) {
         try {
             taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 20));
-            
+
             byte[] fileData;
             try (java.io.InputStream is = fileStorageService.downloadFile(sourceFileId)) {
                 fileData = is.readAllBytes();
             }
-            
+
             try (PDDocument document = PDDocument.load(fileData)) {
                 Splitter splitter = new Splitter();
-                
-                // 解析范围，例如 "1-3,5"
-                // 为了简单起见，如果 range 为空，则拆分所有页（但目前只支持提取到一个 PDF）
-                // 这里的逻辑改为：提取指定范围的页面到一个新的 PDF
+
                 if (range != null && !range.isBlank()) {
-                    // 简单的范围解析逻辑可以很复杂，这里先实现基础的提取
-                    // 比如 "1-3" 提取前三页
                     String[] parts = range.split("-");
                     if (parts.length == 2) {
                         int start = Integer.parseInt(parts[0].trim());
@@ -454,24 +450,22 @@ public class FileConversionTask {
                         splitter.setEndPage(page);
                     }
                 }
-                
+
                 List<PDDocument> splitDocs = splitter.split(document);
-                
-                // 将拆分后的页面合并成一个新的 PDF（即提取范围内的页面）
+
                 try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
                      PDDocument resultDoc = new PDDocument()) {
-                    
+
                     for (PDDocument part : splitDocs) {
                         for (int i = 0; i < part.getNumberOfPages(); i++) {
-                            // 使用 importPage 确保资源（字体、图片等）被正确复制
                             resultDoc.importPage(part.getPage(i));
                         }
                         part.close();
                     }
-                    
+
                     resultDoc.save(baos);
                     byte[] resultData = baos.toByteArray();
-                    
+
                     String resultFileName = "split_" + originalFileName;
                     String resultFileId = fileStorageService.uploadFile(
                         resultFileName,
@@ -483,10 +477,97 @@ public class FileConversionTask {
                     taskService.updateTaskStatus(taskId, TaskStatusResult.success(taskId, resultUrl, resultFileName));
                 }
             }
-            
+
             fileStorageService.deleteFile(sourceFileId);
         } catch (Exception e) {
             taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "拆分失败: " + e.getMessage()));
+        }
+    }
+
+    @Async("taskExecutor")
+    public void processPdfToImages(String taskId, String sourceFileId, String originalFileName,
+                                   String format, String range, Integer dpi) {
+        try {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 10));
+
+            byte[] fileData;
+            try (java.io.InputStream is = fileStorageService.downloadFile(sourceFileId)) {
+                fileData = is.readAllBytes();
+            }
+
+            String normalizedFormat = normalizePdfImageFormat(format);
+            int resolvedDpi = normalizePdfImageDpi(dpi);
+
+            try (PDDocument document = PDDocument.load(fileData)) {
+                int totalPages = document.getNumberOfPages();
+                if (totalPages <= 0) {
+                    throw new IllegalArgumentException("PDF 无内容");
+                }
+
+                List<Integer> selectedPages = parsePdfPageSelection(range, totalPages);
+                if (selectedPages.isEmpty()) {
+                    throw new IllegalArgumentException("没有可导出的页面");
+                }
+
+                PDFRenderer renderer = new PDFRenderer(document);
+                String baseName = safeFileBaseName(originalFileName);
+
+                if (selectedPages.size() == 1) {
+                    int pageIndex = selectedPages.get(0) - 1;
+                    taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, 55));
+
+                    BufferedImage image = renderer.renderImageWithDPI(pageIndex, resolvedDpi);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    ImageIO.write(image, normalizedFormat, baos);
+                    byte[] imageBytes = baos.toByteArray();
+
+                    String resultFileName = baseName + "." + normalizedFormat;
+                    String resultFileId = fileStorageService.uploadFile(
+                        resultFileName,
+                        new ByteArrayInputStream(imageBytes),
+                        imageBytes.length,
+                        resolveImageContentType(normalizedFormat)
+                    );
+                    String resultUrl = fileStorageService.getFileUrl(resultFileId, resultFileName);
+                    taskService.updateTaskStatus(taskId, TaskStatusResult.success(taskId, resultUrl, resultFileName));
+                } else {
+                    List<Map<String, String>> imageList = new ArrayList<>();
+                    int total = selectedPages.size();
+                    for (int i = 0; i < total; i++) {
+                        int pageNo = selectedPages.get(i);
+                        BufferedImage image = renderer.renderImageWithDPI(pageNo - 1, resolvedDpi);
+                        ByteArrayOutputStream imageBaos = new ByteArrayOutputStream();
+                        ImageIO.write(image, normalizedFormat, imageBaos);
+                        byte[] imageBytes = imageBaos.toByteArray();
+
+                        String imageFileName = buildPdfImageFileName(baseName, pageNo, normalizedFormat);
+                        String imageFileId = fileStorageService.uploadFile(
+                            imageFileName,
+                            new ByteArrayInputStream(imageBytes),
+                            imageBytes.length,
+                            resolveImageContentType(normalizedFormat)
+                        );
+                        String imageUrl = fileStorageService.getFileUrl(imageFileId, imageFileName);
+
+                        Map<String, String> entry = new LinkedHashMap<>();
+                        entry.put("url", imageUrl);
+                        entry.put("fileName", imageFileName);
+                        imageList.add(entry);
+
+                        int progress = 20 + (int) Math.round(((i + 1) * 60.0) / total);
+                        taskService.updateTaskStatus(taskId, TaskStatusResult.processing(taskId, Math.min(progress, 85)));
+                    }
+
+                    String extraData = new ObjectMapper().writeValueAsString(imageList);
+                    Map<String, String> firstImage = imageList.get(0);
+                    taskService.updateTaskStatus(taskId,
+                        TaskStatusResult.success(taskId, firstImage.get("url"), firstImage.get("fileName"), extraData));
+                }
+            }
+
+            fileStorageService.deleteFile(sourceFileId);
+        } catch (Exception e) {
+            taskService.updateTaskStatus(taskId, TaskStatusResult.fail(taskId, "PDF 转图片失败: " + e.getMessage()));
         }
     }
 
@@ -919,6 +1000,78 @@ public class FileConversionTask {
         int dotIndex = originalFileName.lastIndexOf('.');
         String baseName = dotIndex > 0 ? originalFileName.substring(0, dotIndex) : originalFileName;
         return baseName + "_compressed.jpg";
+    }
+
+    private String normalizePdfImageFormat(String format) {
+        String normalized = format == null ? "png" : format.trim().toLowerCase(Locale.ROOT);
+        return "jpg".equals(normalized) || "jpeg".equals(normalized) ? "jpg" : "png";
+    }
+
+    private int normalizePdfImageDpi(Integer dpi) {
+        if (dpi == null) {
+            return 144;
+        }
+        return Math.max(72, Math.min(300, dpi));
+    }
+
+    private List<Integer> parsePdfPageSelection(String range, int totalPages) {
+        if (totalPages <= 0) {
+            return Collections.emptyList();
+        }
+        if (range == null || range.isBlank()) {
+            List<Integer> pages = new ArrayList<>();
+            for (int i = 1; i <= totalPages; i++) {
+                pages.add(i);
+            }
+            return pages;
+        }
+
+        Set<Integer> selected = new TreeSet<>();
+        String[] segments = range.split(",");
+        for (String segment : segments) {
+            String token = segment == null ? "" : segment.trim();
+            if (token.isEmpty()) {
+                continue;
+            }
+            if (token.contains("-")) {
+                String[] bounds = token.split("-");
+                if (bounds.length != 2) {
+                    throw new IllegalArgumentException("页码范围格式不正确");
+                }
+                int start = Integer.parseInt(bounds[0].trim());
+                int end = Integer.parseInt(bounds[1].trim());
+                if (start <= 0 || end <= 0 || start > totalPages || end > totalPages || start > end) {
+                    throw new IllegalArgumentException("页码范围超出限制");
+                }
+                for (int page = start; page <= end; page++) {
+                    selected.add(page);
+                }
+            } else {
+                int page = Integer.parseInt(token);
+                if (page <= 0 || page > totalPages) {
+                    throw new IllegalArgumentException("页码范围超出限制");
+                }
+                selected.add(page);
+            }
+        }
+        return new ArrayList<>(selected);
+    }
+
+    private String safeFileBaseName(String originalFileName) {
+        String baseName = stripExtension(originalFileName);
+        if (baseName == null || baseName.isBlank()) {
+            return "pdf_images";
+        }
+        String sanitized = baseName.replaceAll("[\\\\/:*?\"<>|]", "_").trim();
+        return sanitized.isEmpty() ? "pdf_images" : sanitized;
+    }
+
+    private String buildPdfImageFileName(String baseName, int pageNo, String format) {
+        return baseName + "_p" + String.format(Locale.ROOT, "%03d", pageNo) + "." + format;
+    }
+
+    private String resolveImageContentType(String format) {
+        return "jpg".equals(format) ? "image/jpeg" : "image/png";
     }
 
     private String buildZipFileName(String originalFileName) {

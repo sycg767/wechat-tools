@@ -1,4 +1,4 @@
-const store = require('../../utils/king-score-store')
+const store = require('../utils/king-score-store')
 
 const RATING_MAX = 16
 const SCORE_MAX = 100

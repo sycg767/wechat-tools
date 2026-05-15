@@ -1,4 +1,4 @@
-const { copyText, filterItems } = require('../../utils/tool-common.js')
+const { copyText, filterItems } = require('../utils/tool-common.js')
 
 const FORMULAS = [
   { id: 'alg-square-diff', category: '代数', name: '平方差公式', formula: 'a² - b² = (a + b)(a - b)', variables: 'a、b：任意实数或代数式', scene: '因式分解、整式化简、快速计算两个平方数差', example: '例：99² - 1² = (99 + 1)(99 - 1) = 9800' },

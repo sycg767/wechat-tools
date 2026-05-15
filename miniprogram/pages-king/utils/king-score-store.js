@@ -1,4 +1,4 @@
-const request = require('./request')
+const request = require('../../utils/request')
 
 const MEMBERS_KEY = 'king_score_members_v1'
 const SESSIONS_KEY = 'king_score_sessions_v1'

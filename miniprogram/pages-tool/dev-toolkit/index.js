@@ -7,8 +7,7 @@ const TABS = [
   { id: 'time', name: '时间戳' },
   { id: 'hash', name: 'Hash' },
   { id: 'uuid', name: 'UUID' },
-  { id: 'color', name: '颜色' },
-  { id: 'radix', name: '进制' }
+  { id: 'color', name: '颜色' }
 ]
 
 Page({
@@ -19,18 +18,22 @@ Page({
     jsonInput: '',
     jsonOutput: '',
     jsonError: '',
+    jsonStats: null,
     // Base64
     base64Input: '',
     base64Output: '',
     base64Mode: 'encode',
+    base64Variant: 'std',
     // URL
     urlInput: '',
     urlOutput: '',
     urlMode: 'encode',
+    urlMethod: 'component',  // component | uri
     // 时间戳
     timeStamp: '',
     timeFormatted: '',
     timeMode: 'stamp2date',  // stamp2date | date2stamp
+    timeNowMs: '',
     timeNow: '',
     timeNowSeconds: '',
     // Hash
@@ -46,11 +49,7 @@ Page({
     colorHex: '#1f6feb',
     colorRgb: 'rgb(31, 111, 235)',
     colorHsl: 'hsl(214, 84%, 52%)',
-    // 进制
-    radixInput: '',
-    radixFrom: 10,
-    radixResults: { bin: '', oct: '', dec: '', hex: '' },
-    radixError: ''
+    colorComplementary: '#eb6f1f',
   },
 
   onLoad() {
@@ -69,26 +68,44 @@ Page({
   jsonFormat() {
     try {
       const obj = JSON.parse(this.data.jsonInput)
-      this.setData({ jsonOutput: JSON.stringify(obj, null, 2), jsonError: '' })
+      const stats = this.calcJsonStats(obj)
+      this.setData({ jsonOutput: JSON.stringify(obj, null, 2), jsonError: '', jsonStats: stats })
     } catch (err) {
-      this.setData({ jsonOutput: '', jsonError: err.message })
+      this.setData({ jsonOutput: '', jsonError: err.message, jsonStats: null })
     }
   },
   jsonMinify() {
     try {
       const obj = JSON.parse(this.data.jsonInput)
-      this.setData({ jsonOutput: JSON.stringify(obj), jsonError: '' })
+      this.setData({ jsonOutput: JSON.stringify(obj), jsonError: '', jsonStats: null })
     } catch (err) {
-      this.setData({ jsonOutput: '', jsonError: err.message })
+      this.setData({ jsonOutput: '', jsonError: err.message, jsonStats: null })
     }
   },
   jsonValidate() {
     try {
-      JSON.parse(this.data.jsonInput)
-      this.setData({ jsonOutput: '✓ JSON 合法', jsonError: '' })
+      const obj = JSON.parse(this.data.jsonInput)
+      const stats = this.calcJsonStats(obj)
+      this.setData({ jsonOutput: '✓ JSON 合法', jsonError: '', jsonStats: stats })
     } catch (err) {
-      this.setData({ jsonOutput: '', jsonError: err.message })
+      this.setData({ jsonOutput: '', jsonError: err.message, jsonStats: null })
     }
+  },
+  calcJsonStats(obj) {
+    const stats = { keys: 0, items: 0, depth: 0 }
+    const walk = (val, depth) => {
+      stats.depth = Math.max(stats.depth, depth)
+      if (Array.isArray(val)) {
+        stats.items += val.length
+        val.forEach(v => { if (typeof v === 'object' && v !== null) walk(v, depth + 1) })
+      } else if (typeof val === 'object' && val !== null) {
+        const keys = Object.keys(val)
+        stats.keys += keys.length
+        keys.forEach(k => { if (typeof val[k] === 'object' && val[k] !== null) walk(val[k], depth + 1) })
+      }
+    }
+    walk(obj, 1)
+    return stats
   },
 
   // ============== Base64 ==============
@@ -98,9 +115,40 @@ Page({
   setBase64Mode(e) {
     this.setData({ base64Mode: e.currentTarget.dataset.mode, base64Output: '' })
   },
+  setBase64Variant(e) {
+    this.setData({ base64Variant: e.currentTarget.dataset.variant, base64Output: '' })
+  },
   async base64Run() {
-    const { base64Input, base64Mode } = this.data
+    const { base64Input, base64Mode, base64Variant } = this.data
     if (!base64Input) return wx.showToast({ title: '请输入内容', icon: 'none' })
+
+    // URL-safe 模式前端直接处理
+    if (base64Mode === 'encode' && base64Variant === 'urlsafe') {
+      try {
+        const raw = unescape(encodeURIComponent(base64Input))
+        let encoded = ''
+        for (let i = 0; i < raw.length; i++) {
+          encoded += String.fromCharCode(raw.charCodeAt(i))
+        }
+        encoded = btoa(encoded).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+        this.setData({ base64Output: encoded })
+      } catch (e) {
+        wx.showToast({ title: '编码失败：' + e.message, icon: 'none' })
+      }
+      return
+    }
+    if (base64Mode === 'decode' && base64Variant === 'urlsafe') {
+      try {
+        let padded = base64Input.replace(/-/g, '+').replace(/_/g, '/')
+        while (padded.length % 4) padded += '='
+        this.setData({ base64Output: decodeURIComponent(escape(atob(padded))) })
+      } catch (e) {
+        wx.showToast({ title: '解码失败，请检查输入', icon: 'none' })
+      }
+      return
+    }
+
+    // 标准模式走后端
     try {
       wx.showLoading({ title: '处理中', mask: true })
       const res = await post('/tool/dev/base64', { text: base64Input, mode: base64Mode },
@@ -121,13 +169,16 @@ Page({
   setUrlMode(e) {
     this.setData({ urlMode: e.currentTarget.dataset.mode, urlOutput: '' })
   },
+  setUrlMethod(e) {
+    this.setData({ urlMethod: e.currentTarget.dataset.method, urlOutput: '' })
+  },
   urlRun() {
-    const { urlInput, urlMode } = this.data
+    const { urlInput, urlMode, urlMethod } = this.data
     if (!urlInput) return wx.showToast({ title: '请输入内容', icon: 'none' })
     try {
-      const result = urlMode === 'encode'
-        ? encodeURIComponent(urlInput)
-        : decodeURIComponent(urlInput)
+      const encodeFn = urlMethod === 'uri' ? encodeURI : encodeURIComponent
+      const decodeFn = urlMethod === 'uri' ? decodeURI : decodeURIComponent
+      const result = urlMode === 'encode' ? encodeFn(urlInput) : decodeFn(urlInput)
       this.setData({ urlOutput: result })
     } catch (e) {
       wx.showToast({ title: '处理失败：' + e.message, icon: 'none' })
@@ -139,7 +190,8 @@ Page({
     const now = Date.now()
     this.setData({
       timeNow: this.formatDate(new Date(now)),
-      timeNowSeconds: String(Math.floor(now / 1000))
+      timeNowSeconds: String(Math.floor(now / 1000)),
+      timeNowMs: String(now)
     })
   },
   formatDate(d) {
@@ -177,6 +229,14 @@ Page({
     } else {
       this.setData({ timeStamp: this.formatDate(new Date()) })
     }
+  },
+  copyNowSeconds() {
+    wx.setClipboardData({ data: this.data.timeNowSeconds })
+    wx.showToast({ title: '已复制秒级', icon: 'success' })
+  },
+  copyNowMillis() {
+    wx.setClipboardData({ data: this.data.timeNowMs })
+    wx.showToast({ title: '已复制毫秒级', icon: 'success' })
   },
 
   // ============== Hash ==============
@@ -247,19 +307,36 @@ Page({
   onColorInput(e) {
     let v = (e.detail.value || '').trim()
     if (!v.startsWith('#')) v = '#' + v
+    this.updateColor(v)
+  },
+  updateColor(v) {
     if (!/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(v)) {
-      this.setData({ colorHex: v, colorRgb: '格式：#RRGGBB', colorHsl: '' })
+      this.setData({ colorHex: v, colorRgb: '格式：#RRGGBB', colorHsl: '', colorComplementary: '' })
       return
     }
     if (v.length === 4) v = '#' + v[1] + v[1] + v[2] + v[2] + v[3] + v[3]
     const r = parseInt(v.substr(1, 2), 16)
     const g = parseInt(v.substr(3, 2), 16)
     const b = parseInt(v.substr(5, 2), 16)
+    const comp = this.complementaryHex(r, g, b)
     this.setData({
       colorHex: v.toLowerCase(),
       colorRgb: `rgb(${r}, ${g}, ${b})`,
-      colorHsl: this.rgbToHslStr(r, g, b)
+      colorHsl: this.rgbToHslStr(r, g, b),
+      colorComplementary: comp
     })
+  },
+  complementaryHex(r, g, b) {
+    return '#' + [(255 - r).toString(16).padStart(2, '0'),
+      (255 - g).toString(16).padStart(2, '0'),
+      (255 - b).toString(16).padStart(2, '0')].join('')
+  },
+  randomColor() {
+    const r = Math.floor(Math.random() * 256)
+    const g = Math.floor(Math.random() * 256)
+    const b = Math.floor(Math.random() * 256)
+    const hex = '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('')
+    this.updateColor(hex)
   },
   rgbToHslStr(r, g, b) {
     r /= 255; g /= 255; b /= 255
@@ -278,36 +355,6 @@ Page({
       h /= 6
     }
     return `hsl(${Math.round(h * 360)}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`
-  },
-
-  // ============== 进制 ==============
-  onRadixInput(e) {
-    this.setData({ radixInput: e.detail.value }, () => this.radixConvert())
-  },
-  setRadixFrom(e) {
-    this.setData({ radixFrom: Number(e.currentTarget.dataset.from) }, () => this.radixConvert())
-  },
-  radixConvert() {
-    const { radixInput, radixFrom } = this.data
-    if (!radixInput) {
-      this.setData({ radixResults: { bin: '', oct: '', dec: '', hex: '' }, radixError: '' })
-      return
-    }
-    try {
-      const n = parseInt(radixInput, radixFrom)
-      if (Number.isNaN(n)) throw new Error('输入与所选进制不符')
-      this.setData({
-        radixResults: {
-          bin: n.toString(2),
-          oct: n.toString(8),
-          dec: n.toString(10),
-          hex: n.toString(16).toUpperCase()
-        },
-        radixError: ''
-      })
-    } catch (e) {
-      this.setData({ radixError: e.message })
-    }
   },
 
   // ============== 通用 ==============

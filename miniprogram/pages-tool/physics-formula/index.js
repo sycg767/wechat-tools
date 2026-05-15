@@ -1,4 +1,4 @@
-const { copyText, filterItems } = require('../../utils/tool-common.js')
+const { copyText, filterItems } = require('../utils/tool-common.js')
 
 const FORMULAS = [
   { id: 'mech-uniform', category: '力学', name: '匀速直线运动', formula: 's = vt', units: 's：m，v：m/s，t：s', variables: 's 为位移或路程，v 为恒定速度，t 为时间', tip: '常见于无加速度、速度恒定、追及相遇的基础题' },

@@ -1,0 +1,64 @@
+@import "../../app.wxss";
+
+.form-card {
+  margin-bottom: 24rpx;
+}
+
+.textarea-wrap {
+  margin-bottom: 24rpx;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 320rpx;
+  padding: 32rpx;
+  box-sizing: border-box;
+  border-radius: var(--border-radius-lg);
+  background: #FFFFFF;
+  border: 1px solid rgba(17, 24, 39, 0.06);
+  color: var(--text-main);
+  font-size: 30rpx;
+  line-height: 1.8;
+}
+
+.action-row {
+  display: flex;
+  gap: 16rpx;
+}
+
+.action-row .btn {
+  flex: 1;
+}
+
+.btn-sm {
+  height: 80rpx !important;
+  font-size: 28rpx !important;
+}
+
+.stats-grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -12rpx;
+}
+
+.stat-item {
+  width: calc(50% - 24rpx);
+  margin: 12rpx;
+  padding: 28rpx 20rpx;
+  border-radius: var(--border-radius-lg);
+  background: rgba(17, 24, 39, 0.03);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.stat-value {
+  font-size: 44rpx;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 8rpx;
+}
+
+.stat-label {
+  font-size: 22rpx;
+  color: var(--text-second);
+}

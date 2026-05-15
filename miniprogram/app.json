@@ -10,6 +10,7 @@
       "name": "doc",
       "pages": [
         "pdf-word/index",
+        "pdf-image/index",
         "word-pdf/index",
         "pdf-excel/index",
         "csv-excel/index",
@@ -45,7 +46,8 @@
         "password-vault/index",
         "password-vault/edit",
         "password-vault/detail",
-        "ai-config/index"
+        "ai-config/index",
+        "char-count/index"
       ]
     },
     {

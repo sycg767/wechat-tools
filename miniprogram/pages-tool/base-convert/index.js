@@ -1,4 +1,4 @@
-const { addHistory, getHistory, clearHistory, copyText } = require('../../utils/tool-common')
+const { addHistory, getHistory, clearHistory, copyText } = require('../utils/tool-common')
 
 const DIGITS = {
   2: '01',

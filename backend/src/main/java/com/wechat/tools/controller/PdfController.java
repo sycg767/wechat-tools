@@ -180,6 +180,20 @@ public class PdfController {
         }
     }
 
+    @PostMapping("/pdf-to-images")
+    public Result<String> pdfToImages(@RequestParam("file") MultipartFile file,
+                                      @RequestParam(value = "format", defaultValue = "png") String format,
+                                      @RequestParam(value = "range", required = false) String range,
+                                      @RequestParam(value = "dpi", required = false) Integer dpi,
+                                      @RequestParam(value = "originalFileName", required = false) String originalFileName) {
+        return fileTaskTemplate.submit(file)
+                .originalName(originalFileName)
+                .requireExtension(".pdf")
+                .asTask("pdf-images")
+                .run(ctx -> fileConversionTask.processPdfToImages(
+                        ctx.taskId(), ctx.fileId(), ctx.fileName(), format, range, dpi));
+    }
+
     @PostMapping("/pdf-add-watermark")
     public Result<String> pdfAddWatermark(@RequestParam("file") MultipartFile file,
                                           @RequestParam(value = "watermarkImage", required = false) MultipartFile watermarkImage,

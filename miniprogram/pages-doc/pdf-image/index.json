@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "PDF 转图片",
+  "usingComponents": {
+    "file-picker": "/components/file-picker/index"
+  }
+}

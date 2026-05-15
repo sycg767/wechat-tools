@@ -1,6 +1,8 @@
 const request = require('../../utils/request')
 const taskStore = require('../../utils/task-store')
 const { formatRelativeTime } = require('../../utils/time')
+require('../../utils/file-task')
+require('../../utils/ai-config')
 
 Page({
   data: {

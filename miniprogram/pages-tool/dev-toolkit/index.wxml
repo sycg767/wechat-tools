@@ -28,6 +28,11 @@
     <view class="result" wx:if="{{ jsonOutput }}">
       <view class="result-title">结果<text class="copy" data-text="{{ jsonOutput }}" bindtap="copyResult">复制</text></view>
       <view class="result-content"><text user-select>{{ jsonOutput }}</text></view>
+      <view wx:if="{{ jsonStats }}" class="json-stats">
+        <text wx:if="{{ jsonStats.keys }}" class="stat-pill">键 {{ jsonStats.keys }}</text>
+        <text wx:if="{{ jsonStats.items }}" class="stat-pill">项 {{ jsonStats.items }}</text>
+        <text wx:if="{{ jsonStats.depth }}" class="stat-pill">深 {{ jsonStats.depth }}</text>
+      </view>
     </view>
   </view>
 
@@ -35,6 +40,10 @@
     <view class="seg">
       <view class="seg-item {{ base64Mode === 'encode' ? 'on' : '' }}" data-mode="encode" bindtap="setBase64Mode">编码</view>
       <view class="seg-item {{ base64Mode === 'decode' ? 'on' : '' }}" data-mode="decode" bindtap="setBase64Mode">解码</view>
+    </view>
+    <view class="seg" style="margin-top:0;">
+      <view class="seg-item {{ base64Variant === 'std' ? 'on' : '' }}" data-variant="std" bindtap="setBase64Variant">标准</view>
+      <view class="seg-item {{ base64Variant === 'urlsafe' ? 'on' : '' }}" data-variant="urlsafe" bindtap="setBase64Variant">URL 安全</view>
     </view>
     <text class="label">输入内容</text>
     <textarea class="ta" value="{{ base64Input }}" bindinput="onBase64Input" placeholder="输入文本" auto-height />
@@ -52,6 +61,11 @@
       <view class="seg-item {{ urlMode === 'encode' ? 'on' : '' }}" data-mode="encode" bindtap="setUrlMode">编码</view>
       <view class="seg-item {{ urlMode === 'decode' ? 'on' : '' }}" data-mode="decode" bindtap="setUrlMode">解码</view>
     </view>
+    <view class="seg" style="margin-top:0;">
+      <view class="seg-item {{ urlMethod === 'component' ? 'on' : '' }}" data-method="component" bindtap="setUrlMethod">参数编码</view>
+      <view class="seg-item {{ urlMethod === 'uri' ? 'on' : '' }}" data-method="uri" bindtap="setUrlMethod">完整 URI</view>
+    </view>
+    <view class="tip">参数编码会转义 : / ? = # & 等符号；完整 URI 保留协议结构，只转义非法字符。</view>
     <text class="label">输入内容</text>
     <textarea class="ta" value="{{ urlInput }}" bindinput="onUrlInput" placeholder="输入 URL 或参数" auto-height />
     <view class="btn-row">
@@ -70,7 +84,14 @@
         <view class="notice-title">当前时间</view>
       </view>
       <view class="notice-row">{{ timeNow }}</view>
-      <view class="notice-row">{{ timeNowSeconds }} 秒</view>
+      <view class="notice-row">
+        <text>{{ timeNowSeconds }} 秒</text>
+        <text class="copy-inline" bindtap="copyNowSeconds">复制</text>
+      </view>
+      <view class="notice-row">
+        <text>{{ timeNowMs }} 毫秒</text>
+        <text class="copy-inline" bindtap="copyNowMillis">复制</text>
+      </view>
     </view>
     <view class="seg">
       <view class="seg-item {{ timeMode === 'stamp2date' ? 'on' : '' }}" data-mode="stamp2date" bindtap="setTimeMode">时间戳 → 日期</view>
@@ -142,27 +163,19 @@
   </view>
 
   <view class="card tool-card" wx:if="{{ currentTab === 'color' }}">
-    <text class="label">颜色值</text>
-    <input class="single" value="{{ colorHex }}" bindinput="onColorInput" placeholder="#RRGGBB" />
     <view class="color-preview" style="background: {{ colorHex }};"></view>
+    <view class="btn-row">
+      <button class="btn-mini" bindtap="randomColor">随机颜色</button>
+    </view>
     <view class="kv"><text class="k">HEX</text><text class="v" user-select data-text="{{ colorHex }}" bindtap="copyResult">{{ colorHex }}</text></view>
     <view class="kv"><text class="k">RGB</text><text class="v" user-select data-text="{{ colorRgb }}" bindtap="copyResult">{{ colorRgb }}</text></view>
     <view class="kv"><text class="k">HSL</text><text class="v" user-select data-text="{{ colorHsl }}" bindtap="copyResult">{{ colorHsl }}</text></view>
-  </view>
-
-  <view class="card tool-card" wx:if="{{ currentTab === 'radix' }}">
-    <view class="seg">
-      <view class="seg-item {{ radixFrom === 2 ? 'on' : '' }}" data-from="2" bindtap="setRadixFrom">2</view>
-      <view class="seg-item {{ radixFrom === 8 ? 'on' : '' }}" data-from="8" bindtap="setRadixFrom">8</view>
-      <view class="seg-item {{ radixFrom === 10 ? 'on' : '' }}" data-from="10" bindtap="setRadixFrom">10</view>
-      <view class="seg-item {{ radixFrom === 16 ? 'on' : '' }}" data-from="16" bindtap="setRadixFrom">16</view>
+    <view wx:if="{{ colorComplementary }}" class="comp-row">
+      <text class="k">互补色</text>
+      <view class="comp-swatch" style="background: {{ colorComplementary }};"></view>
+      <text class="v" user-select data-text="{{ colorComplementary }}" bindtap="copyResult">{{ colorComplementary }}</text>
     </view>
-    <text class="label">输入数字</text>
-    <input class="single" value="{{ radixInput }}" bindinput="onRadixInput" placeholder="输入数字" />
-    <view class="error" wx:if="{{ radixError }}">{{ radixError }}</view>
-    <view class="kv"><text class="k">二进制</text><text class="v" user-select data-text="{{ radixResults.bin }}" bindtap="copyResult">{{ radixResults.bin }}</text></view>
-    <view class="kv"><text class="k">八进制</text><text class="v" user-select data-text="{{ radixResults.oct }}" bindtap="copyResult">{{ radixResults.oct }}</text></view>
-    <view class="kv"><text class="k">十进制</text><text class="v" user-select data-text="{{ radixResults.dec }}" bindtap="copyResult">{{ radixResults.dec }}</text></view>
-    <view class="kv"><text class="k">十六进制</text><text class="v" user-select data-text="{{ radixResults.hex }}" bindtap="copyResult">{{ radixResults.hex }}</text></view>
+    <text class="label" style="margin-top:24rpx;">自定义</text>
+    <input class="single" value="{{ colorHex }}" bindinput="onColorInput" placeholder="#RRGGBB" />
   </view>
 </view>

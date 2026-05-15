@@ -1,4 +1,4 @@
-const store = require('../../utils/king-score-store')
+const store = require('../utils/king-score-store')
 
 function average(values) {
   if (!values.length) return 0

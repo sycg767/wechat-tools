@@ -1,4 +1,4 @@
-const { addHistory, copyText, getHistory, todayKey } = require('../../utils/tool-common')
+const { addHistory, copyText, getHistory, todayKey } = require('../utils/tool-common')
 const { post } = require('../../utils/request')
 const { getAiConfig } = require('../../utils/ai-config')
 

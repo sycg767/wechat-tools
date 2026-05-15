@@ -6,7 +6,9 @@ const { formatRelativeTime } = require('../../utils/time')
 Page({
   data: {
     task: null,
-    loading: true
+    loading: true,
+    savingAll: false,
+    saveProgress: 0
   },
 
   onLoad(query) {
@@ -51,6 +53,20 @@ Page({
       'FAIL': '处理失败'
     }
 
+    let resultImages = []
+    let isPdfImagesMulti = false
+    if (task.toolType === 'pdf-images' && task.extraData) {
+      try {
+        const parsed = typeof task.extraData === 'string' ? JSON.parse(task.extraData) : task.extraData
+        if (Array.isArray(parsed) && parsed.length > 1) {
+          resultImages = parsed
+          isPdfImagesMulti = true
+        }
+      } catch (e) {
+        // ignore parse error
+      }
+    }
+
     const toolMap = {
       'pdf-merge': 'PDF 合并',
       'pdf-split': 'PDF 拆分',
@@ -67,7 +83,8 @@ Page({
       'qr-generate': '二维码生成',
       'qr-decode': '二维码识别',
       'king-score-ocr': '战绩识别',
-      'pdf-page-manage': 'PDF 页面管理'
+      'pdf-page-manage': 'PDF 页面管理',
+      'pdf-images': 'PDF 转图片'
     }
 
     return {
@@ -76,6 +93,8 @@ Page({
       toolTypeText: toolMap[task.toolType] || task.toolType || '未知工具',
       canOpen: canOpenFile(task.resultFileName || ''),
       isImage: isImageFile(task.resultFileName || ''),
+      resultImages,
+      isPdfImagesMulti,
       strategyTraceText,
       qualityGateText,
       updatedAtText: formatRelativeTime(task.updatedAt)
@@ -91,6 +110,10 @@ Page({
       taskStore.upsertTask(res.data)
       this.setData({ task, loading: false })
 
+      if (task.status === 'SUCCESS' && task.isPdfImagesMulti) {
+        this.downloadGalleryImages(task.resultImages)
+      }
+
       if (task.status === 'PROCESSING') {
         this.pollTimer = setTimeout(() => this.loadTask(), 1500)
       }
@@ -101,6 +124,20 @@ Page({
         wx.showToast({ title: error.message || '任务状态获取失败', icon: 'none' })
       }
     }
+  },
+
+  downloadGalleryImages(images) {
+    if (!images || !images.length) return
+    images.forEach((img, index) => {
+      wx.downloadFile({
+        url: img.url,
+        success: (res) => {
+          if (res.statusCode === 200) {
+            this.setData({ [`task.resultImages[${index}].localPath`]: res.tempFilePath })
+          }
+        }
+      })
+    })
   },
 
   async handleOpenFile() {
@@ -153,7 +190,7 @@ Page({
 
     try {
       wx.showLoading({ title: '准备中' })
-      
+
       // 1. 下载文件获取临时路径
       const downloadRes = await new Promise((resolve, reject) => {
         wx.downloadFile({
@@ -185,5 +222,80 @@ Page({
       wx.hideLoading()
       wx.showToast({ title: error.message || '分享失败', icon: 'none' })
     }
+  },
+
+  handlePreviewImage(e) {
+    const url = e.currentTarget.dataset.url
+    const allUrls = (this.data.task && this.data.task.resultImages || [])
+      .map(img => img.url)
+    if (allUrls.length === 0) return
+    wx.previewImage({
+      urls: allUrls,
+      current: url || allUrls[0]
+    })
+  },
+
+  async handleSaveImageItem(e) {
+    const url = e.currentTarget.dataset.url
+    const fileName = e.currentTarget.dataset.name || 'image.png'
+    if (!url) return
+
+    try {
+      wx.showLoading({ title: '保存中' })
+      await saveImageToAlbum(url, fileName)
+      wx.hideLoading()
+      wx.showToast({ title: '已保存到相册', icon: 'success' })
+    } catch (error) {
+      wx.hideLoading()
+      const message = error.message || '保存失败'
+      if (message.includes('权限')) {
+        wx.showModal({
+          title: '需要相册权限',
+          content: '请在设置中允许"保存到相册"权限后重试。',
+          confirmText: '去设置',
+          success: (res) => {
+            if (res.confirm) {
+              wx.openSetting({})
+            }
+          }
+        })
+        return
+      }
+      wx.showToast({ title: message, icon: 'none' })
+    }
+  },
+
+  async handleSaveAllImages() {
+    const images = this.data.task && this.data.task.resultImages
+    if (!images || !images.length) return
+
+    this.setData({ savingAll: true, saveProgress: 0 })
+    let saved = 0
+
+    for (let i = 0; i < images.length; i++) {
+      const img = images[i]
+      try {
+        await saveImageToAlbum(img.url, img.fileName || 'image.png')
+        saved++
+      } catch (error) {
+        const msg = error.message || ''
+        if (msg.includes('权限')) {
+          wx.showModal({
+            title: '需要相册权限',
+            content: '请在设置中允许"保存到相册"权限后重试。',
+            confirmText: '去设置',
+            success: (res) => {
+              if (res.confirm) wx.openSetting({})
+            }
+          })
+          break
+        }
+        // 单张失败继续下一张
+      }
+      this.setData({ saveProgress: i + 1 })
+    }
+
+    this.setData({ savingAll: false })
+    wx.showToast({ title: `已保存 ${saved}/${images.length} 张`, icon: 'success' })
   }
 })

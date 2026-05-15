@@ -22,13 +22,58 @@
 
   <view wx:if="{{task && task.status === 'SUCCESS'}}" class="card result-action-card">
     <view class="result-action-title">处理完成</view>
-    <view wx:if="{{task.isImage}}" class="result-action-desc">你可以先预览结果图片，再点击“保存到相册”落地到手机。</view>
-    <view wx:elif="{{task.canOpen}}" class="result-action-desc">点击打开文件，然后在文档界面中自行转发。</view>
-    <view wx:else class="result-action-desc">当前结果文件类型暂不支持在小程序内直接打开。</view>
 
-    <button wx:if="{{task.canOpen}}" class="btn btn-primary action-btn" bindtap="handleOpenFile" hover-class="btn-hover">{{task.isImage ? '预览图片' : '打开文件'}}</button>
-    <button wx:if="{{task.isImage}}" class="btn btn-secondary action-btn" bindtap="handleSaveImage" hover-class="btn-hover">保存到相册</button>
-    <button wx:if="{{!task.isImage}}" class="btn btn-secondary action-btn" bindtap="handleShareFile" hover-class="btn-hover">发送给好友</button>
+    <!-- PDF 转图片多页面：图库模式 -->
+    <block wx:if="{{task.isPdfImagesMulti}}">
+      <view class="result-action-desc">共 {{task.resultImages.length}} 张图片，点击预览或保存到相册。</view>
+      <view class="batch-save-bar">
+        <button
+          wx:if="{{!savingAll}}"
+          class="btn-dark"
+          bindtap="handleSaveAllImages"
+          hover-class="btn-dark-hover"
+        >保存全部 ({{task.resultImages.length}}张)</button>
+        <button
+          wx:else
+          class="btn-dark"
+          disabled
+        >保存中 {{saveProgress}}/{{task.resultImages.length}}</button>
+      </view>
+      <view class="image-gallery">
+        <view
+          wx:for="{{task.resultImages}}"
+          wx:key="url"
+          class="gallery-item"
+          data-url="{{item.url}}"
+          data-name="{{item.fileName}}"
+          bindtap="handlePreviewImage"
+        >
+          <image class="gallery-img" src="{{item.localPath || item.url}}" mode="aspectFill" />
+          <view class="gallery-name">{{item.fileName}}</view>
+          <view
+            class="gallery-save-btn"
+            data-url="{{item.url}}"
+            data-name="{{item.fileName}}"
+            catchtap="handleSaveImageItem"
+          >保存</view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 单图片结果 -->
+    <block wx:elif="{{task.isImage}}">
+      <view class="result-action-desc">你可以先预览结果图片，再点击"保存到相册"落地到手机。</view>
+      <button class="btn btn-primary action-btn" bindtap="handleOpenFile" hover-class="btn-hover">预览图片</button>
+      <button class="btn btn-secondary action-btn" bindtap="handleSaveImage" hover-class="btn-hover">保存到相册</button>
+    </block>
+
+    <!-- 非图片文件结果 -->
+    <block wx:else>
+      <view wx:if="{{task.canOpen}}" class="result-action-desc">点击打开文件，然后在文档界面中自行转发。</view>
+      <view wx:else class="result-action-desc">当前结果文件类型暂不支持在小程序内直接打开。</view>
+      <button wx:if="{{task.canOpen}}" class="btn btn-primary action-btn" bindtap="handleOpenFile" hover-class="btn-hover">打开文件</button>
+      <button wx:if="{{!task.isImage}}" class="btn btn-secondary action-btn" bindtap="handleShareFile" hover-class="btn-hover">发送给好友</button>
+    </block>
   </view>
 
   <view wx:if="{{task && task.status === 'FAIL'}}" class="card fail-card">

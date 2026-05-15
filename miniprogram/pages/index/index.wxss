@@ -286,7 +286,7 @@
 }
 
 /* Icon Colors */
-.icon-pdf-word, .icon-pdf-excel, .icon-pdf-merge, .icon-pdf-split, .icon-pdf-watermark, .icon-pdf-manage, .icon-word-pdf, .icon-signature {
+.icon-pdf-word, .icon-pdf-excel, .icon-pdf-image, .icon-pdf-merge, .icon-pdf-split, .icon-pdf-watermark, .icon-pdf-manage, .icon-word-pdf, .icon-signature {
   background-color: #FFF1F2;
   color: #F43F5E;
 }

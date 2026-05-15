@@ -1,4 +1,4 @@
-const store = require('../../utils/king-score-store')
+const store = require('../utils/king-score-store')
 const request = require('../../utils/request')
 const upload = require('../../utils/upload')
 const { getAiConfig } = require('../../utils/ai-config')
